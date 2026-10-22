@@ -24,7 +24,7 @@ button{font:inherit;padding:12px 16px;border-radius:10px;border:1px solid var(--
 .msg{min-height:24px;font-size:14px;color:var(--mut);margin-top:10px}
 .top{display:flex;justify-content:flex-end;gap:8px}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
-</style></head><body><main id="app"></main>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v3)</p></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 const showErr=m=>document.getElementById('app').insertAdjacentHTML('beforeend','<p style="padding:16px">⚠ '+String(m).replace(/</g,'&lt;')+'</p>');
@@ -53,8 +53,9 @@ function bind(){
   if($('nm'))$('nm').onchange=async e=>{uname=e.target.value.trim();await save();render()};
   if($('cl')){$('cl').oninput=e=>{color=e.target.value;theme()};$('cl').onchange=async e=>{color=e.target.value;await save();msg(t('saved'))}}
 }
+let rendered=false;
 function render(){
-  theme();
+  rendered=true;theme();
   if(!session){
     $('app').innerHTML=`<h1>${appTitle()}</h1><div class="card">
     <label for="em">${t('email')}</label><input id="em" type="email" autocomplete="email">
@@ -77,7 +78,7 @@ async function loadSettings(){
   else await save();
 }
 sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s)await loadSettings();else{uname='';localStorage.removeItem('dname')}}catch(e){}render()},0)});
-setTimeout(()=>{if(!$('app').innerHTML.trim())render()},2500);
+setTimeout(()=>{if(!rendered)render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
 </script></body></html>
