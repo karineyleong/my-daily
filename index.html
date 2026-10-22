@@ -3,23 +3,23 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Plan">
+<meta name="apple-mobile-web-app-title" content="My Daily">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-180.png">
-<title>Plan</title>
+<title>My Daily</title>
 <style>
-:root{--ac:#6C8EBF;--bg:#F4F6F8;--ink:#1F2A33;--mut:#66727D;--card:#fff;--ln:#D8DFE5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--ac:#6C8EBF;--bg:#F4F6F8;--ink:#1F2A33;--mut:#66727D;--card:#fff;--ln:#D8DFE5;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root{--bg:#14191E;--ink:#E8EDF1;--mut:#93A0AB;--card:#1D242B;--ln:#2C363F}}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif}
+html,body{margin:0;background:color-mix(in srgb,var(--ac) 12%,var(--bg));color:var(--ink);font:16px/1.6 -apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif}
 main{max-width:420px;margin:0 auto;padding:28px 20px}
-h1{font-size:28px;margin:8px 0 24px;letter-spacing:.02em}
-.card{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:18px;margin-bottom:16px}
+h1{display:inline-block;font-size:28px;margin:8px 0 24px;letter-spacing:.02em;border-bottom:5px solid var(--ac)}
+.card{background:var(--card);border:1px solid var(--ln);border-top:4px solid var(--ac);border-radius:14px;padding:18px;margin-bottom:16px}
 label{display:block;font-size:14px;color:var(--mut);margin:12px 0 4px}
-input[type=email],input[type=password],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink)}
+input[type=email],input[type=password],input[type=text],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink)}
 input[type=color]{width:56px;height:40px;border:1px solid var(--ln);border-radius:10px;background:none;padding:2px}
 button{font:inherit;padding:12px 16px;border-radius:10px;border:1px solid var(--ac);cursor:pointer}
-.pri{background:var(--ac);color:#fff}.sec{background:none;color:var(--ink);border-color:var(--ln)}
+.pri{background:var(--ac);color:var(--on)}.sec{background:none;color:var(--ink);border-color:var(--ln)}
 .row{display:flex;gap:10px;margin-top:16px}.row button{flex:1}
 .msg{min-height:24px;font-size:14px;color:var(--mut);margin-top:10px}
 .top{display:flex;justify-content:flex-end;gap:8px}
@@ -31,26 +31,30 @@ const SB_URL='https://gogkijhkxbdinddmooli.supabase.co';
 const SB_KEY='sb_publishable_T3jL6eAMlJ72rRk3lOq0tA_dePoGFIs';
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const T={
-zh:{login:'登入',signup:'註冊',email:'電子郵件',pw:'密碼（6 字元以上）',out:'登出',lang:'語言',color:'介面顏色',hi:'已登入',next:'待辦與行程功能會在下一版加入。',errLogin:'無法登入，請確認電子郵件和密碼。',errSign:'無法註冊：',okSign:'註冊完成。如果收到確認信，請先點信中連結再登入。',saved:'已儲存'},
-ja:{login:'ログイン',signup:'新規登録',email:'メールアドレス',pw:'パスワード（6文字以上）',out:'ログアウト',lang:'言語',color:'テーマカラー',hi:'ログイン中',next:'ToDoと予定は次のバージョンで追加します。',errLogin:'ログインできません。メールとパスワードを確認してください。',errSign:'登録できません：',okSign:'登録しました。確認メールが届いた場合は、リンクを開いてからログインしてください。',saved:'保存しました'},
-en:{login:'Log in',signup:'Sign up',email:'Email',pw:'Password (6+ characters)',out:'Log out',lang:'Language',color:'Theme color',hi:'Signed in',next:'To-dos and events arrive in the next version.',errLogin:'Could not log in. Check your email and password.',errSign:'Could not sign up: ',okSign:'Signed up. If you got a confirmation email, open its link, then log in.',saved:'Saved'}};
-let lang=localStorage.lang||'zh',color=localStorage.color||'#6C8EBF',session=null;
+zh:{login:'登入',signup:'註冊',email:'電子郵件',pw:'密碼（6 字元以上）',out:'登出',lang:'語言',name:'你的名字（顯示為「名字’s Daily」）',color:'介面顏色',hi:'已登入',next:'待辦與行程功能會在下一版加入。',errLogin:'無法登入，請確認電子郵件和密碼。',errSign:'無法註冊：',okSign:'註冊完成。如果收到確認信，請先點信中連結再登入。',saved:'已儲存'},
+ja:{login:'ログイン',signup:'新規登録',email:'メールアドレス',pw:'パスワード（6文字以上）',out:'ログアウト',lang:'言語',name:'あなたの名前（「名前’s Daily」と表示）',color:'テーマカラー',hi:'ログイン中',next:'ToDoと予定は次のバージョンで追加します。',errLogin:'ログインできません。メールとパスワードを確認してください。',errSign:'登録できません：',okSign:'登録しました。確認メールが届いた場合は、リンクを開いてからログインしてください。',saved:'保存しました'},
+en:{login:'Log in',signup:'Sign up',email:'Email',pw:'Password (6+ characters)',out:'Log out',lang:'Language',name:'Your name (shown as “Name’s Daily”)',color:'Theme color',hi:'Signed in',next:'To-dos and events arrive in the next version.',errLogin:'Could not log in. Check your email and password.',errSign:'Could not sign up: ',okSign:'Signed up. If you got a confirmation email, open its link, then log in.',saved:'Saved'}};
+let lang=localStorage.lang||'zh',color=localStorage.color||'#6C8EBF',name=localStorage.name||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
-function theme(){root.style.setProperty('--ac',color);document.documentElement.lang={zh:'zh-Hant',ja:'ja',en:'en'}[lang]}
+const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const title=()=>name?esc(name)+'’s Daily':'My Daily';
+function onColor(h){const n=parseInt(h.slice(1),16);return(0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))>160?'#1F2A33':'#fff'}
+function theme(){root.style.setProperty('--ac',color);root.style.setProperty('--on',onColor(color));document.title=name?name+'’s Daily':'My Daily';document.documentElement.lang={zh:'zh-Hant',ja:'ja',en:'en'}[lang]}
 async function save(){
-  localStorage.lang=lang;localStorage.color=color;theme();
-  if(session){await sb.from('user_settings').upsert({user_id:session.user.id,language:lang,theme_color:color})}
+  localStorage.lang=lang;localStorage.color=color;localStorage.name=name;theme();
+  if(session){await sb.from('user_settings').upsert({user_id:session.user.id,language:lang,theme_color:color,display_name:name})}
 }
 function langSelect(){return `<label for="lg">${t('lang')}</label><select id="lg">${[['zh','中文'],['ja','日本語'],['en','English']].map(([v,n])=>`<option value="${v}"${v===lang?' selected':''}>${n}</option>`).join('')}</select>`}
 function bind(){
   $('lg').onchange=async e=>{lang=e.target.value;await save();render()};
-  if($('cl'))$('cl').onchange=async e=>{color=e.target.value;await save();msg(t('saved'))};
+  if($('nm'))$('nm').onchange=async e=>{name=e.target.value.trim();await save();render()};
+  if($('cl')){$('cl').oninput=e=>{color=e.target.value;theme()};$('cl').onchange=async e=>{color=e.target.value;await save();msg(t('saved'))}}
 }
 function render(){
   theme();
   if(!session){
-    $('app').innerHTML=`<h1>Plan</h1><div class="card">
+    $('app').innerHTML=`<h1>${title()}</h1><div class="card">
     <label for="em">${t('email')}</label><input id="em" type="email" autocomplete="email">
     <label for="pw">${t('pw')}</label><input id="pw" type="password" autocomplete="current-password">
     <div class="row"><button class="pri" id="li">${t('login')}</button><button class="sec" id="su">${t('signup')}</button></div>
@@ -59,18 +63,18 @@ function render(){
     $('li').onclick=async()=>{const{error}=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(error)msg(t('errLogin'))};
     $('su').onclick=async()=>{const{data,error}=await sb.auth.signUp({email:$('em').value.trim(),password:$('pw').value});msg(error?t('errSign')+error.message:t('okSign'))};
   }else{
-    $('app').innerHTML=`<h1>Plan</h1><div class="card"><p>${t('hi')}：${session.user.email}</p><p>${t('next')}</p></div>
-    <div class="card">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
+    $('app').innerHTML=`<h1>${title()}</h1><div class="card"><p>${t('hi')}：${session.user.email}</p><p>${t('next')}</p></div>
+    <div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(name)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
     <div class="top"><button class="sec" id="lo">${t('out')}</button></div>`;
     bind();$('lo').onclick=()=>sb.auth.signOut();
   }
 }
 async function loadSettings(){
-  const{data}=await sb.from('user_settings').select('language,theme_color').maybeSingle();
-  if(data){lang=data.language||lang;color=data.theme_color||color;localStorage.lang=lang;localStorage.color=color}
+  const{data}=await sb.from('user_settings').select('language,theme_color,display_name').maybeSingle();
+  if(data){lang=data.language||lang;color=data.theme_color||color;name=data.display_name||'';localStorage.name=name;localStorage.lang=lang;localStorage.color=color}
   else await save();
 }
-sb.auth.onAuthStateChange(async(_e,s)=>{session=s;if(s)await loadSettings();render()});
+sb.auth.onAuthStateChange(async(_e,s)=>{session=s;if(s)await loadSettings();else{name='';localStorage.removeItem('name')}render()});
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
 </script></body></html>
