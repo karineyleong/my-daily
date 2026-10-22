@@ -40,7 +40,21 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 input[type=checkbox]{width:22px;height:22px;accent-color:var(--ac);margin-top:2px;flex:none}
 dialog{border:1px solid var(--ln);border-top:4px solid var(--ac);border-radius:14px;background:var(--card);color:var(--ink);width:min(92vw,400px);padding:18px}
 dialog::backdrop{background:rgba(0,0,0,.5)}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v4)</p></main><dialog id="dlg"></dialog>
+dialog{margin:auto 0 0;width:100%;max-width:none;border:0;border-top:4px solid var(--ac);border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+textarea{width:100%;padding:10px;font:inherit;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink);resize:none;margin-top:8px}
+.tbar{display:flex;gap:8px;margin-top:10px}.tbar>*{flex:1;min-width:0}.snd{flex:none;width:48px;padding:10px;border-radius:50%;font-size:20px}
+.pc{-webkit-appearance:none;appearance:none;width:22px;height:22px;border:2px solid var(--pc);border-radius:6px;background:none;margin-top:2px;flex:none}
+.pc:checked{background:var(--pc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E") center/80% no-repeat}
+.rw{display:flex;justify-content:space-between;gap:8px}
+.ovh{display:flex;align-items:center;gap:8px}.ovh b{flex:1}.lnk{border:0;background:none;color:var(--ac);padding:4px 8px}
+.fab{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));width:56px;height:56px;padding:0;border-radius:50%;background:var(--ac);color:var(--on);font-size:30px;box-shadow:0 4px 14px rgba(0,0,0,.35);z-index:5}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}.ov.op{opacity:1;pointer-events:auto}
+.dr{position:fixed;top:0;bottom:0;left:0;width:min(82vw,320px);background:var(--card);border-right:1px solid var(--ln);transform:translateX(-100%);transition:transform .2s;z-index:30;padding:calc(16px + env(safe-area-inset-top,0px)) 12px 16px;overflow-y:auto}.dr.op{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.di{display:flex;align-items:center;gap:12px;width:100%;border:0;border-radius:12px;background:none;color:var(--ink);padding:12px;text-align:left}.di.on{background:color-mix(in srgb,var(--ac) 22%,transparent)}.di .nm{flex:1}.di i{font-style:normal;color:var(--mut);font-size:14px}.ic2{width:26px;text-align:center}
+.dr hr{border:0;border-top:1px solid var(--ln);margin:8px 0}.df{margin-top:12px}.df button{width:100%}
+.row input[type=text]{flex:1;min-width:0;width:auto}.row .em{flex:none;width:56px;text-align:center}.row input[type=color]{flex:none}.row .sec[data-a=cdel]{flex:none}
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v5)</p></main><dialog id="dlg"></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 const showErr=m=>document.getElementById('app').insertAdjacentHTML('beforeend','<p style="padding:16px">⚠ '+String(m).replace(/</g,'&lt;')+'</p>');
@@ -52,6 +66,9 @@ const T={
 zh:{login:'登入',signup:'註冊',email:'電子郵件',pw:'密碼（6 字元以上）',out:'登出',lang:'語言',name:'你的名字（顯示為「名字’s Daily」）',color:'介面顏色',hi:'已登入',next:'待辦與行程功能會在下一版加入。',errLogin:'無法登入，請確認電子郵件和密碼。',errSign:'無法註冊：',okSign:'註冊完成。如果收到確認信，請先點信中連結再登入。',saved:'已儲存',todo:'待辦',settings:'設定',all:'全部',addTask:'新增待辦',sub:'子項',edit:'編輯',del:'刪除',empty:'還沒有待辦，按上方按鈕新增。',title:'標題',imp:'重要度',impH:'高',impM:'中',impL:'低',due:'截止時間',cat:'類別',prog:'進度',save:'儲存',cancel:'取消',confirmDel:'確定要刪除嗎？子項目也會一起刪除。',catMgr:'類別管理',newCat:'新增類別',done:'完成'},
 ja:{login:'ログイン',signup:'新規登録',email:'メールアドレス',pw:'パスワード（6文字以上）',out:'ログアウト',lang:'言語',name:'あなたの名前（「名前’s Daily」と表示）',color:'テーマカラー',hi:'ログイン中',next:'ToDoと予定は次のバージョンで追加します。',errLogin:'ログインできません。メールとパスワードを確認してください。',errSign:'登録できません：',okSign:'登録しました。確認メールが届いた場合は、リンクを開いてからログインしてください。',saved:'保存しました',todo:'ToDo',settings:'設定',all:'すべて',addTask:'ToDoを追加',sub:'子',edit:'編集',del:'削除',empty:'ToDoはまだありません。上のボタンから追加してください。',title:'タイトル',imp:'重要度',impH:'高',impM:'中',impL:'低',due:'期限',cat:'カテゴリ',prog:'進捗',save:'保存',cancel:'キャンセル',confirmDel:'削除しますか？子項目も一緒に削除されます。',catMgr:'カテゴリ管理',newCat:'カテゴリを追加',done:'完了'},
 en:{login:'Log in',signup:'Sign up',email:'Email',pw:'Password (6+ characters)',out:'Log out',lang:'Language',name:'Your name (shown as “Name’s Daily”)',color:'Theme color',hi:'Signed in',next:'To-dos and events arrive in the next version.',errLogin:'Could not log in. Check your email and password.',errSign:'Could not sign up: ',okSign:'Signed up. If you got a confirmation email, open its link, then log in.',saved:'Saved',todo:'To-do',settings:'Settings',all:'All',addTask:'Add to-do',sub:'Sub',edit:'Edit',del:'Delete',empty:'No to-dos yet. Tap the button above.',title:'Title',imp:'Priority',impH:'High',impM:'Medium',impL:'Low',due:'Due',cat:'Category',prog:'Progress',save:'Save',cancel:'Cancel',confirmDel:'Delete this? Sub-items are deleted too.',catMgr:'Categories',newCat:'Add category',done:'Done'}};
+Object.assign(T.zh,{today:'今天',tomorrow:'明天',completed:'已完成',overdue:'已逾期',postpone:'延期',inbox:'收件匣',ph:'想做什麼？',impN0:'無優先度',newList:'新增清單',listName:'清單名稱',emoji:'圖示（表情符號）',menu:'選單',chk:'完成',lists:'清單',doneEmpty:'還沒有完成的待辦。',note:'備註',back:'返回'});
+Object.assign(T.ja,{today:'今日',tomorrow:'明日',completed:'完了',overdue:'遅延',postpone:'延期する',inbox:'受信トレイ',ph:'何をしたいですか？',impN0:'優先度なし',newList:'リストを追加',listName:'リスト名',emoji:'アイコン（絵文字）',menu:'メニュー',chk:'完了',lists:'リスト',doneEmpty:'完了したToDoはありません。',note:'メモ',back:'戻る'});
+Object.assign(T.en,{today:'Today',tomorrow:'Tomorrow',completed:'Completed',overdue:'Overdue',postpone:'Postpone',inbox:'Inbox',ph:'What do you want to do?',impN0:'No priority',newList:'Add list',listName:'List name',emoji:'Icon (emoji)',menu:'Menu',chk:'Done',lists:'Lists',doneEmpty:'Nothing completed yet.',note:'Note',back:'Back'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#6C8EBF',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -82,60 +99,91 @@ function render(){
     $('li').onclick=async()=>{const{error}=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(error)msg(t('errLogin'))};
     $('su').onclick=async()=>{const{data,error}=await sb.auth.signUp({email:$('em').value.trim(),password:$('pw').value});msg(error?t('errSign')+error.message:t('okSign'))};
   }else{
-    $('app').innerHTML=`<div class="hd"><h1>${appTitle()}</h1><button class="sec ic" data-a="view" aria-label="${t('settings')}">${view==='todo'?'⚙':'←'}</button></div>`+(view==='todo'?todoHTML():setHTML());
-    bind();
+    appView();
   }
 }
-const setHTML=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
-<div class="card"><b>${t('catMgr')}</b>${cats.map(c=>`<div class="row" style="align-items:center"><input type="color" value="${c.color}" data-cc="${c.id}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}"><button class="sec" style="flex:0" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="cadd">＋ ${t('newCat')}</button></div></div>
-<p class="meta">${esc(session.user.email)}</p><div class="top"><button class="sec" data-a="lo">${t('out')}</button></div>`;
-let tasks=[],cats=[],view='todo',flt='all',open=new Set();
-const loc={zh:'zh-TW',ja:'ja-JP',en:'en-US'},impN=[,'impL','impM','impH'],impC=['','#8A96A0','#E0A030','#D9534F'];
+let tasks=[],cats=[],view='all',dr=false,ovOpen=true;
+const PC=['#8A96A0','#3B82F6','#F5A524','#E5484D'];
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
 const T0=d=>d?+new Date(d):1e18;
-const cmp=(a,b)=>(+a.done-+b.done)||(b.importance-a.importance)||(T0(a.due_at)-T0(b.due_at))||(a.created_at<b.created_at?-1:1);
-const pct=x=>{const k=kids(x.id);return k.length?Math.round(k.filter(c=>c.done).length/k.length*100):(x.done?100:x.progress||0)};
-const fmt=d=>new Date(d).toLocaleString(loc[lang],{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
-const loc16=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
+const cmp=(a,b)=>(b.importance-a.importance)||(T0(a.due_at)-T0(b.due_at))||(a.created_at<b.created_at?-1:1);
+const sod=d=>{d=new Date(d);d.setHours(0,0,0,0);return d},nextDay=d=>{d=sod(d);d.setDate(d.getDate()+1);return d};
+const pool=()=>tasks.filter(x=>!x.parent_id&&!x.done);
+const isOv=x=>x.due_at&&new Date(x.due_at)<new Date();
+const todayP=x=>x.due_at&&new Date(x.due_at)<nextDay(new Date());
+const tmrP=x=>{if(!x.due_at)return false;const d=new Date(x.due_at),a=nextDay(new Date());return d>=a&&d<nextDay(a)};
+const fmt=d=>new Date(d).toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang],{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+const toL=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
 async function loadData(){
   const a=await sb.from('tasks').select('*'),b=await sb.from('categories').select('*').eq('kind','task').order('sort_order');
   if(a.error||b.error){alert((a.error||b.error).message);return}
   tasks=a.data;cats=b.data;
 }
+const vname=()=>({all:t('all'),today:t('today'),tomorrow:t('tomorrow'),done:t('completed')}[view]||(catOf(view)?esc((catOf(view).icon||'')+' '+catOf(view).name):t('all')));
 function row(x,sub){
-  const k=kids(x.id),c=catOf(x.category_id),od=x.due_at&&!x.done&&new Date(x.due_at)<new Date();
-  return `<div class="task${sub?' sub':''}${x.done?' done':''}"><input type="checkbox" data-a="chk" data-id="${x.id}"${x.done?' checked':''} aria-label="${t('done')}">
-<div class="tt"><b data-a="tog" data-id="${x.id}">${k.length?(open.has(x.id)?'▾ ':'▸ '):''}${esc(x.title)}</b>
-<div class="meta"><span class="dot" style="background:${impC[x.importance]}"></span>${c?`<span class="tag" style="background:${c.color};color:${onColor(c.color)}">${esc(c.name)}</span>`:''}${x.due_at?`<span class="${od?'od':''}">${fmt(x.due_at)}</span>`:''}</div>
-${(k.length||x.progress)?`<div class="bar"><i style="width:${pct(x)}%"></i></div>`:''}
-<div class="act"><button class="sec" data-a="edit" data-id="${x.id}">${t('edit')}</button>${sub?'':`<button class="sec" data-a="add" data-p="${x.id}">＋${t('sub')}</button>`}<button class="sec" data-a="del" data-id="${x.id}">${t('del')}</button></div></div></div>`;
+  const k=kids(x.id).sort((a,b)=>(+a.done-+b.done)||cmp(a,b)),c=catOf(x.category_id),od=!x.done&&isOv(x);
+  const p=k.length?Math.round(k.filter(y=>y.done).length/k.length*100):(x.done?100:x.progress||0);
+  return `<div class="task${sub?' sub':''}${x.done?' done':''}"><input type="checkbox" class="pc" style="--pc:${PC[x.importance]||PC[0]}" data-a="chk" data-id="${x.id}"${x.done?' checked':''} aria-label="${t('chk')}">
+<div class="tt" data-a="edit" data-id="${x.id}"><b>${esc(x.title)}</b>${x.note?`<div class="meta">${esc(x.note.slice(0,60))}</div>`:''}
+<div class="meta rw"><span class="${od?'od':''}">${x.due_at?fmt(x.due_at):''}</span>${sub?'':`<span>${c?esc((c.icon||'')+' '+c.name):t('inbox')}</span>`}</div>
+${(k.length||p)?`<div class="bar"><i style="width:${p}%"></i></div>`:''}</div></div>`+k.map(y=>row(y,1)).join('');
 }
-function todoHTML(){
-  const list=tasks.filter(x=>!x.parent_id&&(flt==='all'||x.category_id===flt)).sort(cmp);
-  return `<div class="chips"><button class="chip${flt==='all'?' on':''}" data-a="flt" data-id="all">${t('all')}</button>${cats.map(c=>`<button class="chip${flt===c.id?' on':''}" data-a="flt" data-id="${c.id}">${esc(c.name)}</button>`).join('')}</div>
-<button class="pri" style="width:100%;margin-bottom:16px" data-a="add">＋ ${t('addTask')}</button>
-<div class="card">${list.length?list.map(x=>row(x,0)+(open.has(x.id)?kids(x.id).sort(cmp).map(c=>row(c,1)).join(''):'')).join(''):`<p class="meta">${t('empty')}</p>`}</div>`;
+function listHTML(){
+  let items,ov=[];
+  if(view==='done')items=tasks.filter(x=>!x.parent_id&&x.done).sort((a,b)=>a.created_at<b.created_at?1:-1);
+  else{
+    let p=pool();
+    if(view==='today')p=p.filter(todayP);else if(view==='tomorrow')p=p.filter(tmrP);else if(view!=='all')p=p.filter(x=>x.category_id===view);
+    if(view==='all'||view==='today'){ov=p.filter(isOv).sort(cmp);p=p.filter(x=>!isOv(x))}
+    items=p.sort(cmp);
+  }
+  const sec=ov.length?`<div class="card"><div class="ovh"><b>${t('overdue')}</b><button class="lnk" data-a="pst">${t('postpone')}</button><button class="lnk" data-a="ovt">${ov.length} ${ovOpen?'▾':'▸'}</button></div>${ovOpen?ov.map(x=>row(x)).join(''):''}</div>`:'';
+  const body=items.length?`<div class="card">${items.map(x=>row(x)).join('')}</div>`:(ov.length?'':`<div class="card"><p class="meta">${t(view==='done'?'doneEmpty':'empty')}</p></div>`);
+  return sec+body;
 }
-function openTask(id,pid){
-  const x=id?tasks.find(y=>y.id===id):{importance:2,progress:0,category_id:flt==='all'?null:flt,parent_id:pid||null};
+function drawer(){
+  const n=pool(),it=(v,ic,nm,cnt)=>`<button class="di${view===v?' on':''}" data-a="nav" data-v="${v}"><span class="ic2">${ic}</span><span class="nm">${nm}</span><i>${cnt||''}</i></button>`;
+  return `<div class="ov${dr?' op':''}" data-a="dr"></div><aside class="dr${dr?' op':''}" aria-label="${t('menu')}"><div class="dh"><b>${appTitle()}</b><button class="sec ic" data-a="set" aria-label="${t('settings')}">⚙</button></div>
+${it('all','🗂',t('all'),n.length)}${it('today','📅',t('today'),n.filter(todayP).length)}${it('tomorrow','🌅',t('tomorrow'),n.filter(tmrP).length)}<hr>
+${cats.map(c=>it(c.id,c.icon||'📁',esc(c.name),n.filter(x=>x.category_id===c.id).length)).join('')}<hr>${it('done','✅',t('completed'))}
+<div class="df"><button class="sec" data-a="nl">＋ ${t('newList')}</button></div></aside>`;
+}
+const setHTML=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
+<div class="card"><b>${t('lists')}</b>${cats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#6C8EBF'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="nl">＋ ${t('newList')}</button></div></div>
+<p class="meta">${esc(session.user.email)}</p><div class="top"><button class="sec" data-a="lo">${t('out')}</button></div>`;
+function appView(){
+  if(view==='set'){$('app').innerHTML=`<div class="hd"><h1>${t('settings')}</h1><button class="sec ic" data-a="nav" data-v="all" aria-label="${t('back')}">←</button></div>`+setHTML();bind();return}
+  $('app').innerHTML=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><h1>${vname()}</h1><span></span></div>`+listHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`);
+}
+function openSheet(id,pid){
+  const par=pid?tasks.find(y=>y.id===pid):null,dlg=$('dlg');
+  const x=id?tasks.find(y=>y.id===id):{importance:0,note:'',category_id:par?par.category_id:(cats.some(c=>c.id===view)?view:null),parent_id:pid||null};
   const hasK=id&&kids(id).length;
-  $('dlg').innerHTML=`<label for="f-t">${t('title')}</label><input id="f-t" type="text" maxlength="100" value="${esc(x.title||'')}">
-<label for="f-i">${t('imp')}</label><select id="f-i">${[3,2,1].map(v=>`<option value="${v}"${x.importance===v?' selected':''}>${t(impN[v])}</option>`).join('')}</select>
-<label for="f-d">${t('due')}</label><input id="f-d" type="datetime-local" value="${x.due_at?loc16(x.due_at):''}">
-<label for="f-c">${t('cat')}</label><select id="f-c"><option value="">—</option>${cats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc(c.name)}</option>`).join('')}</select>
-${hasK?'':`<label for="f-p">${t('prog')}：<span id="pv">${x.progress||0}</span>%</label><input id="f-p" type="range" min="0" max="100" step="5" value="${x.progress||0}" oninput="document.getElementById('pv').textContent=this.value">`}
-<div class="row"><button class="sec" id="f-x">${t('cancel')}</button><button class="pri" id="f-s">${t('save')}</button></div>`;
-  $('f-x').onclick=()=>$('dlg').close();
+  dlg.innerHTML=`<textarea id="f-t" rows="2" maxlength="200" placeholder="${t('ph')}" aria-label="${t('title')}">${esc(x.title||'')}</textarea>
+<textarea id="f-n" rows="2" placeholder="${t('note')}" aria-label="${t('note')}">${esc(x.note||'')}</textarea>
+<div class="tbar"><input id="f-d" type="datetime-local" value="${x.due_at?toL(x.due_at):''}" aria-label="${t('due')}"><select id="f-i" aria-label="${t('imp')}">${[3,2,1,0].map(v=>`<option value="${v}"${x.importance===v?' selected':''}>🚩 ${t(['impN0','impL','impM','impH'][v])}</option>`).join('')}</select></div>
+<div class="tbar"><select id="f-c" aria-label="${t('cat')}"><option value="">${t('inbox')}</option>${cats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc((c.icon||'')+' '+c.name)}</option>`).join('')}</select><button class="pri snd" id="f-s" aria-label="${t('save')}">↑</button></div>
+${id&&!hasK?`<label for="f-p">${t('prog')}：<span id="pv">${x.progress||0}</span>%</label><input id="f-p" type="range" min="0" max="100" step="5" value="${x.progress||0}" oninput="document.getElementById('pv').textContent=this.value">`:''}
+${id?`<div class="row">${x.parent_id?'':`<button class="sec" id="f-sub">＋ ${t('sub')}</button>`}<button class="sec" id="f-del">${t('del')}</button></div>`:''}`;
   $('f-s').onclick=async()=>{
     const title=$('f-t').value.trim();if(!title)return;
     const p=$('f-p')?+$('f-p').value:(x.progress||0);
-    const row={title,importance:+$('f-i').value,due_at:$('f-d').value?new Date($('f-d').value).toISOString():null,category_id:$('f-c').value||null,progress:p};
-    if($('f-p'))row.done=p===100;
-    if(id){const{error}=await sb.from('tasks').update(row).eq('id',id);if(error)return alert(error.message);Object.assign(x,row)}
-    else{row.parent_id=x.parent_id;const{data,error}=await sb.from('tasks').insert(row).select().single();if(error)return alert(error.message);tasks.push(data);if(x.parent_id)open.add(x.parent_id)}
-    $('dlg').close();render();
+    const v={title,note:$('f-n').value.trim()||null,importance:+$('f-i').value,due_at:$('f-d').value?new Date($('f-d').value).toISOString():null,category_id:$('f-c').value||null,progress:p};
+    if($('f-p'))v.done=p===100;
+    if(id){const{error}=await sb.from('tasks').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
+    else{v.parent_id=x.parent_id;const{data,error}=await sb.from('tasks').insert(v).select().single();if(error)return alert(error.message);tasks.push(data)}
+    dlg.close();render();
   };
-  $('dlg').showModal();
+  if($('f-del'))$('f-del').onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('tasks').delete().eq('id',id);if(error)return alert(error.message);const gone=[id,...kids(id).map(k=>k.id)];tasks=tasks.filter(y=>!gone.includes(y.id));dlg.close();render()};
+  if($('f-sub'))$('f-sub').onclick=()=>{dlg.close();openSheet(null,id)};
+  dlg.showModal();$('f-t').focus();
+}
+function openList(){
+  const dlg=$('dlg');
+  dlg.innerHTML=`<label for="l-n">${t('listName')}</label><input id="l-n" type="text" maxlength="20"><label for="l-e">${t('emoji')}</label><input id="l-e" type="text" maxlength="8" placeholder="😀"><label for="l-c">${t('color')}</label><input id="l-c" type="color" value="#6C8EBF"><div class="row"><button class="sec" id="l-x">${t('cancel')}</button><button class="pri" id="l-s">${t('save')}</button></div>`;
+  $('l-x').onclick=()=>dlg.close();
+  $('l-s').onclick=async()=>{const n=$('l-n').value.trim();if(!n)return;const{data,error}=await sb.from('categories').insert({kind:'task',name:n,icon:$('l-e').value.trim()||null,color:$('l-c').value,sort_order:cats.length}).select().single();if(error)return alert(error.message);cats.push(data);dlg.close();render()};
+  dlg.showModal();$('l-n').focus();
 }
 async function setDone(id,v){
   const ids=[id,...kids(id).map(k=>k.id)],patch={done:v,progress:v?100:0};
@@ -143,28 +191,30 @@ async function setDone(id,v){
   if(error)alert(error.message);else tasks.forEach(x=>{if(ids.includes(x.id))Object.assign(x,patch)});
   render();
 }
-async function delTask(id){
-  const{error}=await sb.from('tasks').delete().eq('id',id);if(error)return alert(error.message);
-  const gone=[id,...kids(id).map(k=>k.id)];tasks=tasks.filter(x=>!gone.includes(x.id));render();
+async function postpone(){
+  const d=new Date();d.setHours(23,59,0,0);const ids=pool().filter(isOv).map(x=>x.id);if(!ids.length)return;
+  const{error}=await sb.from('tasks').update({due_at:d.toISOString()}).in('id',ids);if(error)return alert(error.message);
+  tasks.forEach(x=>{if(ids.includes(x.id))x.due_at=d.toISOString()});render();
 }
+$('dlg').addEventListener('click',e=>{if(e.target.id==='dlg')e.target.close()});
 $('app').addEventListener('click',async e=>{
   const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,id=b.dataset.id;
-  if(a==='view'){view=view==='todo'?'set':'todo';render()}
-  else if(a==='flt'){flt=id;render()}
-  else if(a==='tog'){open.has(id)?open.delete(id):open.add(id);render()}
-  else if(a==='add')openTask(null,b.dataset.p)
-  else if(a==='edit')openTask(id)
-  else if(a==='del'){if(confirm(t('confirmDel')))await delTask(id)}
+  if(a==='dr'){dr=!dr;render()}
+  else if(a==='nav'){view=b.dataset.v;dr=false;render()}
+  else if(a==='set'){view='set';dr=false;render()}
+  else if(a==='add')openSheet()
+  else if(a==='edit')openSheet(id)
+  else if(a==='nl'){dr=false;render();openList()}
+  else if(a==='ovt'){ovOpen=!ovOpen;render()}
+  else if(a==='pst')await postpone()
   else if(a==='chk')await setDone(id,b.checked)
-  else if(a==='lo')sb.auth.signOut()
-  else if(a==='cadd'){const n=prompt(t('newCat'));if(n&&n.trim()){const{data,error}=await sb.from('categories').insert({kind:'task',name:n.trim(),color:'#6C8EBF',sort_order:cats.length}).select().single();if(error)alert(error.message);else{cats.push(data);render()}}}
-  else if(a==='cdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('categories').delete().eq('id',id);if(error)alert(error.message);else{cats=cats.filter(c=>c.id!==id);tasks.forEach(x=>{if(x.category_id===id)x.category_id=null});if(flt===id)flt='all';render()}}}
+  else if(a==='cdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('categories').delete().eq('id',id);if(error)alert(error.message);else{cats=cats.filter(c=>c.id!==id);tasks.forEach(x=>{if(x.category_id===id)x.category_id=null});if(view===id)view='all';render()}}}
+  else if(a==='lo')sb.auth.signOut();
 });
 $('app').addEventListener('change',async e=>{
-  const el=e.target,id=el.dataset.cn||el.dataset.cc;if(!id)return;
-  const patch=el.dataset.cn?{name:el.value.trim()||'—'}:{color:el.value};
-  const{error}=await sb.from('categories').update(patch).eq('id',id);if(error)return alert(error.message);
-  Object.assign(catOf(id),patch);
+  const el=e.target,d=el.dataset,id=d.cn||d.cc||d.ci;if(!id)return;
+  const patch=d.cn?{name:el.value.trim()||'—'}:d.cc?{color:el.value}:{icon:el.value.trim()||null};
+  const{error}=await sb.from('categories').update(patch).eq('id',id);if(error)return alert(error.message);Object.assign(catOf(id),patch);
 });
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(render)});
 async function loadSettings(){
