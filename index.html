@@ -16,7 +16,7 @@ main{max-width:420px;margin:0 auto;padding:28px 20px}
 h1{display:inline-block;font-size:28px;margin:8px 0 24px;letter-spacing:.02em;border-bottom:5px solid var(--ac)}
 .card{background:var(--card);border:1px solid var(--ln);border-top:4px solid var(--ac);border-radius:14px;padding:18px;margin-bottom:16px}
 label{display:block;font-size:14px;color:var(--mut);margin:12px 0 4px}
-input[type=email],input[type=password],input[type=text],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink)}
+input[type=email],input[type=password],input[type=text],input[type=datetime-local],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink)}
 input[type=color]{width:56px;height:40px;border:1px solid var(--ln);border-radius:10px;background:none;padding:2px}
 button{font:inherit;padding:12px 16px;border-radius:10px;border:1px solid var(--ac);cursor:pointer}
 .pri{background:var(--ac);color:var(--on)}.sec{background:none;color:var(--ink);border-color:var(--ln)}
@@ -24,7 +24,23 @@ button{font:inherit;padding:12px 16px;border-radius:10px;border:1px solid var(--
 .msg{min-height:24px;font-size:14px;color:var(--mut);margin-top:10px}
 .top{display:flex;justify-content:flex-end;gap:8px}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v3)</p></main>
+input[type=range]{width:100%;accent-color:var(--ac)}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:12px}.ic{padding:8px 14px;font-size:18px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
+.chip{white-space:nowrap;padding:6px 14px;border-radius:20px;border-color:var(--ln);background:var(--card);color:var(--ink)}
+.chip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
+.task{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--ln)}.task:first-child{border-top:0}
+.task.sub{margin-left:30px}.tt{flex:1;min-width:0}.tt b{font-weight:600;word-break:break-word}
+.done b{text-decoration:line-through;color:var(--mut)}
+.meta{font-size:13px;color:var(--mut);margin-top:2px}.od{color:#D9534F}
+.bar{height:6px;border-radius:3px;background:var(--ln);margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.tag{display:inline-block;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
+.act{display:flex;gap:6px;margin-top:8px}.act button{padding:4px 10px;font-size:14px}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--ac);margin-top:2px;flex:none}
+dialog{border:1px solid var(--ln);border-top:4px solid var(--ac);border-radius:14px;background:var(--card);color:var(--ink);width:min(92vw,400px);padding:18px}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v4)</p></main><dialog id="dlg"></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 const showErr=m=>document.getElementById('app').insertAdjacentHTML('beforeend','<p style="padding:16px">⚠ '+String(m).replace(/</g,'&lt;')+'</p>');
@@ -33,9 +49,9 @@ const SB_URL='https://gogkijhkxbdinddmooli.supabase.co';
 const SB_KEY='sb_publishable_T3jL6eAMlJ72rRk3lOq0tA_dePoGFIs';
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const T={
-zh:{login:'登入',signup:'註冊',email:'電子郵件',pw:'密碼（6 字元以上）',out:'登出',lang:'語言',name:'你的名字（顯示為「名字’s Daily」）',color:'介面顏色',hi:'已登入',next:'待辦與行程功能會在下一版加入。',errLogin:'無法登入，請確認電子郵件和密碼。',errSign:'無法註冊：',okSign:'註冊完成。如果收到確認信，請先點信中連結再登入。',saved:'已儲存'},
-ja:{login:'ログイン',signup:'新規登録',email:'メールアドレス',pw:'パスワード（6文字以上）',out:'ログアウト',lang:'言語',name:'あなたの名前（「名前’s Daily」と表示）',color:'テーマカラー',hi:'ログイン中',next:'ToDoと予定は次のバージョンで追加します。',errLogin:'ログインできません。メールとパスワードを確認してください。',errSign:'登録できません：',okSign:'登録しました。確認メールが届いた場合は、リンクを開いてからログインしてください。',saved:'保存しました'},
-en:{login:'Log in',signup:'Sign up',email:'Email',pw:'Password (6+ characters)',out:'Log out',lang:'Language',name:'Your name (shown as “Name’s Daily”)',color:'Theme color',hi:'Signed in',next:'To-dos and events arrive in the next version.',errLogin:'Could not log in. Check your email and password.',errSign:'Could not sign up: ',okSign:'Signed up. If you got a confirmation email, open its link, then log in.',saved:'Saved'}};
+zh:{login:'登入',signup:'註冊',email:'電子郵件',pw:'密碼（6 字元以上）',out:'登出',lang:'語言',name:'你的名字（顯示為「名字’s Daily」）',color:'介面顏色',hi:'已登入',next:'待辦與行程功能會在下一版加入。',errLogin:'無法登入，請確認電子郵件和密碼。',errSign:'無法註冊：',okSign:'註冊完成。如果收到確認信，請先點信中連結再登入。',saved:'已儲存',todo:'待辦',settings:'設定',all:'全部',addTask:'新增待辦',sub:'子項',edit:'編輯',del:'刪除',empty:'還沒有待辦，按上方按鈕新增。',title:'標題',imp:'重要度',impH:'高',impM:'中',impL:'低',due:'截止時間',cat:'類別',prog:'進度',save:'儲存',cancel:'取消',confirmDel:'確定要刪除嗎？子項目也會一起刪除。',catMgr:'類別管理',newCat:'新增類別',done:'完成'},
+ja:{login:'ログイン',signup:'新規登録',email:'メールアドレス',pw:'パスワード（6文字以上）',out:'ログアウト',lang:'言語',name:'あなたの名前（「名前’s Daily」と表示）',color:'テーマカラー',hi:'ログイン中',next:'ToDoと予定は次のバージョンで追加します。',errLogin:'ログインできません。メールとパスワードを確認してください。',errSign:'登録できません：',okSign:'登録しました。確認メールが届いた場合は、リンクを開いてからログインしてください。',saved:'保存しました',todo:'ToDo',settings:'設定',all:'すべて',addTask:'ToDoを追加',sub:'子',edit:'編集',del:'削除',empty:'ToDoはまだありません。上のボタンから追加してください。',title:'タイトル',imp:'重要度',impH:'高',impM:'中',impL:'低',due:'期限',cat:'カテゴリ',prog:'進捗',save:'保存',cancel:'キャンセル',confirmDel:'削除しますか？子項目も一緒に削除されます。',catMgr:'カテゴリ管理',newCat:'カテゴリを追加',done:'完了'},
+en:{login:'Log in',signup:'Sign up',email:'Email',pw:'Password (6+ characters)',out:'Log out',lang:'Language',name:'Your name (shown as “Name’s Daily”)',color:'Theme color',hi:'Signed in',next:'To-dos and events arrive in the next version.',errLogin:'Could not log in. Check your email and password.',errSign:'Could not sign up: ',okSign:'Signed up. If you got a confirmation email, open its link, then log in.',saved:'Saved',todo:'To-do',settings:'Settings',all:'All',addTask:'Add to-do',sub:'Sub',edit:'Edit',del:'Delete',empty:'No to-dos yet. Tap the button above.',title:'Title',imp:'Priority',impH:'High',impM:'Medium',impL:'Low',due:'Due',cat:'Category',prog:'Progress',save:'Save',cancel:'Cancel',confirmDel:'Delete this? Sub-items are deleted too.',catMgr:'Categories',newCat:'Add category',done:'Done'}};
 let lang=localStorage.lang||'zh',color=localStorage.color||'#6C8EBF',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -49,7 +65,7 @@ async function save(){
 }
 function langSelect(){return `<label for="lg">${t('lang')}</label><select id="lg">${[['zh','中文'],['ja','日本語'],['en','English']].map(([v,n])=>`<option value="${v}"${v===lang?' selected':''}>${n}</option>`).join('')}</select>`}
 function bind(){
-  $('lg').onchange=async e=>{lang=e.target.value;await save();render()};
+  if($('lg'))$('lg').onchange=async e=>{lang=e.target.value;await save();render()};
   if($('nm'))$('nm').onchange=async e=>{uname=e.target.value.trim();await save();render()};
   if($('cl')){$('cl').oninput=e=>{color=e.target.value;theme()};$('cl').onchange=async e=>{color=e.target.value;await save();msg(t('saved'))}}
 }
@@ -66,18 +82,97 @@ function render(){
     $('li').onclick=async()=>{const{error}=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(error)msg(t('errLogin'))};
     $('su').onclick=async()=>{const{data,error}=await sb.auth.signUp({email:$('em').value.trim(),password:$('pw').value});msg(error?t('errSign')+error.message:t('okSign'))};
   }else{
-    $('app').innerHTML=`<h1>${appTitle()}</h1><div class="card"><p>${t('hi')}：${session.user.email}</p><p>${t('next')}</p></div>
-    <div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
-    <div class="top"><button class="sec" id="lo">${t('out')}</button></div>`;
-    bind();$('lo').onclick=()=>sb.auth.signOut();
+    $('app').innerHTML=`<div class="hd"><h1>${appTitle()}</h1><button class="sec ic" data-a="view" aria-label="${t('settings')}">${view==='todo'?'⚙':'←'}</button></div>`+(view==='todo'?todoHTML():setHTML());
+    bind();
   }
 }
+const setHTML=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
+<div class="card"><b>${t('catMgr')}</b>${cats.map(c=>`<div class="row" style="align-items:center"><input type="color" value="${c.color}" data-cc="${c.id}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}"><button class="sec" style="flex:0" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="cadd">＋ ${t('newCat')}</button></div></div>
+<p class="meta">${esc(session.user.email)}</p><div class="top"><button class="sec" data-a="lo">${t('out')}</button></div>`;
+let tasks=[],cats=[],view='todo',flt='all',open=new Set();
+const loc={zh:'zh-TW',ja:'ja-JP',en:'en-US'},impN=[,'impL','impM','impH'],impC=['','#8A96A0','#E0A030','#D9534F'];
+const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
+const T0=d=>d?+new Date(d):1e18;
+const cmp=(a,b)=>(+a.done-+b.done)||(b.importance-a.importance)||(T0(a.due_at)-T0(b.due_at))||(a.created_at<b.created_at?-1:1);
+const pct=x=>{const k=kids(x.id);return k.length?Math.round(k.filter(c=>c.done).length/k.length*100):(x.done?100:x.progress||0)};
+const fmt=d=>new Date(d).toLocaleString(loc[lang],{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+const loc16=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
+async function loadData(){
+  const a=await sb.from('tasks').select('*'),b=await sb.from('categories').select('*').eq('kind','task').order('sort_order');
+  if(a.error||b.error){alert((a.error||b.error).message);return}
+  tasks=a.data;cats=b.data;
+}
+function row(x,sub){
+  const k=kids(x.id),c=catOf(x.category_id),od=x.due_at&&!x.done&&new Date(x.due_at)<new Date();
+  return `<div class="task${sub?' sub':''}${x.done?' done':''}"><input type="checkbox" data-a="chk" data-id="${x.id}"${x.done?' checked':''} aria-label="${t('done')}">
+<div class="tt"><b data-a="tog" data-id="${x.id}">${k.length?(open.has(x.id)?'▾ ':'▸ '):''}${esc(x.title)}</b>
+<div class="meta"><span class="dot" style="background:${impC[x.importance]}"></span>${c?`<span class="tag" style="background:${c.color};color:${onColor(c.color)}">${esc(c.name)}</span>`:''}${x.due_at?`<span class="${od?'od':''}">${fmt(x.due_at)}</span>`:''}</div>
+${(k.length||x.progress)?`<div class="bar"><i style="width:${pct(x)}%"></i></div>`:''}
+<div class="act"><button class="sec" data-a="edit" data-id="${x.id}">${t('edit')}</button>${sub?'':`<button class="sec" data-a="add" data-p="${x.id}">＋${t('sub')}</button>`}<button class="sec" data-a="del" data-id="${x.id}">${t('del')}</button></div></div></div>`;
+}
+function todoHTML(){
+  const list=tasks.filter(x=>!x.parent_id&&(flt==='all'||x.category_id===flt)).sort(cmp);
+  return `<div class="chips"><button class="chip${flt==='all'?' on':''}" data-a="flt" data-id="all">${t('all')}</button>${cats.map(c=>`<button class="chip${flt===c.id?' on':''}" data-a="flt" data-id="${c.id}">${esc(c.name)}</button>`).join('')}</div>
+<button class="pri" style="width:100%;margin-bottom:16px" data-a="add">＋ ${t('addTask')}</button>
+<div class="card">${list.length?list.map(x=>row(x,0)+(open.has(x.id)?kids(x.id).sort(cmp).map(c=>row(c,1)).join(''):'')).join(''):`<p class="meta">${t('empty')}</p>`}</div>`;
+}
+function openTask(id,pid){
+  const x=id?tasks.find(y=>y.id===id):{importance:2,progress:0,category_id:flt==='all'?null:flt,parent_id:pid||null};
+  const hasK=id&&kids(id).length;
+  $('dlg').innerHTML=`<label for="f-t">${t('title')}</label><input id="f-t" type="text" maxlength="100" value="${esc(x.title||'')}">
+<label for="f-i">${t('imp')}</label><select id="f-i">${[3,2,1].map(v=>`<option value="${v}"${x.importance===v?' selected':''}>${t(impN[v])}</option>`).join('')}</select>
+<label for="f-d">${t('due')}</label><input id="f-d" type="datetime-local" value="${x.due_at?loc16(x.due_at):''}">
+<label for="f-c">${t('cat')}</label><select id="f-c"><option value="">—</option>${cats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc(c.name)}</option>`).join('')}</select>
+${hasK?'':`<label for="f-p">${t('prog')}：<span id="pv">${x.progress||0}</span>%</label><input id="f-p" type="range" min="0" max="100" step="5" value="${x.progress||0}" oninput="document.getElementById('pv').textContent=this.value">`}
+<div class="row"><button class="sec" id="f-x">${t('cancel')}</button><button class="pri" id="f-s">${t('save')}</button></div>`;
+  $('f-x').onclick=()=>$('dlg').close();
+  $('f-s').onclick=async()=>{
+    const title=$('f-t').value.trim();if(!title)return;
+    const p=$('f-p')?+$('f-p').value:(x.progress||0);
+    const row={title,importance:+$('f-i').value,due_at:$('f-d').value?new Date($('f-d').value).toISOString():null,category_id:$('f-c').value||null,progress:p};
+    if($('f-p'))row.done=p===100;
+    if(id){const{error}=await sb.from('tasks').update(row).eq('id',id);if(error)return alert(error.message);Object.assign(x,row)}
+    else{row.parent_id=x.parent_id;const{data,error}=await sb.from('tasks').insert(row).select().single();if(error)return alert(error.message);tasks.push(data);if(x.parent_id)open.add(x.parent_id)}
+    $('dlg').close();render();
+  };
+  $('dlg').showModal();
+}
+async function setDone(id,v){
+  const ids=[id,...kids(id).map(k=>k.id)],patch={done:v,progress:v?100:0};
+  const{error}=await sb.from('tasks').update(patch).in('id',ids);
+  if(error)alert(error.message);else tasks.forEach(x=>{if(ids.includes(x.id))Object.assign(x,patch)});
+  render();
+}
+async function delTask(id){
+  const{error}=await sb.from('tasks').delete().eq('id',id);if(error)return alert(error.message);
+  const gone=[id,...kids(id).map(k=>k.id)];tasks=tasks.filter(x=>!gone.includes(x.id));render();
+}
+$('app').addEventListener('click',async e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,id=b.dataset.id;
+  if(a==='view'){view=view==='todo'?'set':'todo';render()}
+  else if(a==='flt'){flt=id;render()}
+  else if(a==='tog'){open.has(id)?open.delete(id):open.add(id);render()}
+  else if(a==='add')openTask(null,b.dataset.p)
+  else if(a==='edit')openTask(id)
+  else if(a==='del'){if(confirm(t('confirmDel')))await delTask(id)}
+  else if(a==='chk')await setDone(id,b.checked)
+  else if(a==='lo')sb.auth.signOut()
+  else if(a==='cadd'){const n=prompt(t('newCat'));if(n&&n.trim()){const{data,error}=await sb.from('categories').insert({kind:'task',name:n.trim(),color:'#6C8EBF',sort_order:cats.length}).select().single();if(error)alert(error.message);else{cats.push(data);render()}}}
+  else if(a==='cdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('categories').delete().eq('id',id);if(error)alert(error.message);else{cats=cats.filter(c=>c.id!==id);tasks.forEach(x=>{if(x.category_id===id)x.category_id=null});if(flt===id)flt='all';render()}}}
+});
+$('app').addEventListener('change',async e=>{
+  const el=e.target,id=el.dataset.cn||el.dataset.cc;if(!id)return;
+  const patch=el.dataset.cn?{name:el.value.trim()||'—'}:{color:el.value};
+  const{error}=await sb.from('categories').update(patch).eq('id',id);if(error)return alert(error.message);
+  Object.assign(catOf(id),patch);
+});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(render)});
 async function loadSettings(){
   const{data}=await sb.from('user_settings').select('language,theme_color,display_name').maybeSingle();
-  if(data){lang=data.language||lang;color=data.theme_color||color;uname=data.display_name||'';localStorage.dname=uname;localStorage.lang=lang;localStorage.color=color}
+  if(data){lang=data.language||lang;color=data.theme_color||color;uname=data.display_name||'';localStorage.lang=lang;localStorage.color=color;localStorage.dname=uname}
   else await save();
 }
-sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s)await loadSettings();else{uname='';localStorage.removeItem('dname')}}catch(e){}render()},0)});
+sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s){await loadSettings();await loadData()}else{uname='';localStorage.removeItem('dname')}}catch(e){}render()},0)});
 setTimeout(()=>{if(!rendered)render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
