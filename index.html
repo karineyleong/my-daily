@@ -27,6 +27,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </style></head><body><main id="app"></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
+const showErr=m=>document.getElementById('app').insertAdjacentHTML('beforeend','<p style="padding:16px">⚠ '+String(m).replace(/</g,'&lt;')+'</p>');
+addEventListener('error',e=>showErr(e.message));addEventListener('unhandledrejection',e=>showErr(e.reason&&e.reason.message||e.reason));
 const SB_URL='https://gogkijhkxbdinddmooli.supabase.co';
 const SB_KEY='sb_publishable_T3jL6eAMlJ72rRk3lOq0tA_dePoGFIs';
 const sb=supabase.createClient(SB_URL,SB_KEY);
@@ -34,27 +36,27 @@ const T={
 zh:{login:'登入',signup:'註冊',email:'電子郵件',pw:'密碼（6 字元以上）',out:'登出',lang:'語言',name:'你的名字（顯示為「名字’s Daily」）',color:'介面顏色',hi:'已登入',next:'待辦與行程功能會在下一版加入。',errLogin:'無法登入，請確認電子郵件和密碼。',errSign:'無法註冊：',okSign:'註冊完成。如果收到確認信，請先點信中連結再登入。',saved:'已儲存'},
 ja:{login:'ログイン',signup:'新規登録',email:'メールアドレス',pw:'パスワード（6文字以上）',out:'ログアウト',lang:'言語',name:'あなたの名前（「名前’s Daily」と表示）',color:'テーマカラー',hi:'ログイン中',next:'ToDoと予定は次のバージョンで追加します。',errLogin:'ログインできません。メールとパスワードを確認してください。',errSign:'登録できません：',okSign:'登録しました。確認メールが届いた場合は、リンクを開いてからログインしてください。',saved:'保存しました'},
 en:{login:'Log in',signup:'Sign up',email:'Email',pw:'Password (6+ characters)',out:'Log out',lang:'Language',name:'Your name (shown as “Name’s Daily”)',color:'Theme color',hi:'Signed in',next:'To-dos and events arrive in the next version.',errLogin:'Could not log in. Check your email and password.',errSign:'Could not sign up: ',okSign:'Signed up. If you got a confirmation email, open its link, then log in.',saved:'Saved'}};
-let lang=localStorage.lang||'zh',color=localStorage.color||'#6C8EBF',name=localStorage.name||'',session=null;
+let lang=localStorage.lang||'zh',color=localStorage.color||'#6C8EBF',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
 const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const title=()=>name?esc(name)+'’s Daily':'My Daily';
+const appTitle=()=>uname?esc(uname)+'’s Daily':'My Daily';
 function onColor(h){const n=parseInt(h.slice(1),16);return(0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))>160?'#1F2A33':'#fff'}
-function theme(){root.style.setProperty('--ac',color);root.style.setProperty('--on',onColor(color));document.title=name?name+'’s Daily':'My Daily';document.documentElement.lang={zh:'zh-Hant',ja:'ja',en:'en'}[lang]}
+function theme(){root.style.setProperty('--ac',color);root.style.setProperty('--on',onColor(color));document.title=uname?uname+'’s Daily':'My Daily';document.documentElement.lang={zh:'zh-Hant',ja:'ja',en:'en'}[lang]}
 async function save(){
-  localStorage.lang=lang;localStorage.color=color;localStorage.name=name;theme();
-  if(session){await sb.from('user_settings').upsert({user_id:session.user.id,language:lang,theme_color:color,display_name:name})}
+  localStorage.lang=lang;localStorage.color=color;localStorage.dname=uname;theme();
+  if(session){await sb.from('user_settings').upsert({user_id:session.user.id,language:lang,theme_color:color,display_name:uname})}
 }
 function langSelect(){return `<label for="lg">${t('lang')}</label><select id="lg">${[['zh','中文'],['ja','日本語'],['en','English']].map(([v,n])=>`<option value="${v}"${v===lang?' selected':''}>${n}</option>`).join('')}</select>`}
 function bind(){
   $('lg').onchange=async e=>{lang=e.target.value;await save();render()};
-  if($('nm'))$('nm').onchange=async e=>{name=e.target.value.trim();await save();render()};
+  if($('nm'))$('nm').onchange=async e=>{uname=e.target.value.trim();await save();render()};
   if($('cl')){$('cl').oninput=e=>{color=e.target.value;theme()};$('cl').onchange=async e=>{color=e.target.value;await save();msg(t('saved'))}}
 }
 function render(){
   theme();
   if(!session){
-    $('app').innerHTML=`<h1>${title()}</h1><div class="card">
+    $('app').innerHTML=`<h1>${appTitle()}</h1><div class="card">
     <label for="em">${t('email')}</label><input id="em" type="email" autocomplete="email">
     <label for="pw">${t('pw')}</label><input id="pw" type="password" autocomplete="current-password">
     <div class="row"><button class="pri" id="li">${t('login')}</button><button class="sec" id="su">${t('signup')}</button></div>
@@ -63,18 +65,19 @@ function render(){
     $('li').onclick=async()=>{const{error}=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(error)msg(t('errLogin'))};
     $('su').onclick=async()=>{const{data,error}=await sb.auth.signUp({email:$('em').value.trim(),password:$('pw').value});msg(error?t('errSign')+error.message:t('okSign'))};
   }else{
-    $('app').innerHTML=`<h1>${title()}</h1><div class="card"><p>${t('hi')}：${session.user.email}</p><p>${t('next')}</p></div>
-    <div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(name)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
+    $('app').innerHTML=`<h1>${appTitle()}</h1><div class="card"><p>${t('hi')}：${session.user.email}</p><p>${t('next')}</p></div>
+    <div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
     <div class="top"><button class="sec" id="lo">${t('out')}</button></div>`;
     bind();$('lo').onclick=()=>sb.auth.signOut();
   }
 }
 async function loadSettings(){
   const{data}=await sb.from('user_settings').select('language,theme_color,display_name').maybeSingle();
-  if(data){lang=data.language||lang;color=data.theme_color||color;name=data.display_name||'';localStorage.name=name;localStorage.lang=lang;localStorage.color=color}
+  if(data){lang=data.language||lang;color=data.theme_color||color;uname=data.display_name||'';localStorage.dname=uname;localStorage.lang=lang;localStorage.color=color}
   else await save();
 }
-sb.auth.onAuthStateChange(async(_e,s)=>{session=s;if(s)await loadSettings();else{name='';localStorage.removeItem('name')}render()});
+sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s)await loadSettings();else{uname='';localStorage.removeItem('dname')}}catch(e){}render()},0)});
+setTimeout(()=>{if(!$('app').innerHTML.trim())render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
 </script></body></html>
