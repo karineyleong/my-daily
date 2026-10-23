@@ -102,6 +102,7 @@ Object.assign(T.zh,{noCat:'（無類別）'});Object.assign(T.ja,{noCat:'（カ�
 Object.assign(T.zh,{bgImg:'背景圖片',bgHint:'上傳你的插圖當作 App 背景（會自動縮小）。',bgPick:'選擇圖片',bgDel:'移除背景',bgErr:'無法讀取這張圖片。',exportImg:'匯出本月行程圖片',share:'分享',shareHint:'可以直接分享，或長按圖片儲存。'});
 Object.assign(T.ja,{bgImg:'背景画像',bgHint:'イラストをアプリの背景にできます（自動で縮小されます）。',bgPick:'画像を選ぶ',bgDel:'背景を削除',bgErr:'この画像を読み込めません。',exportImg:'今月の予定を画像で書き出す',share:'共有',shareHint:'そのまま共有するか、画像を長押しして保存できます。'});
 Object.assign(T.en,{bgImg:'Background image',bgHint:'Upload your illustration as the app background (resized automatically).',bgPick:'Choose image',bgDel:'Remove background',bgErr:'Could not read this image.',exportImg:"Export this month's events as image",share:'Share',shareHint:'Share it directly, or long-press the image to save.'});
+Object.assign(T.zh,{ctoday:'今日',arc:'封存',arcSec:'已封存',unarc:'取消封存'});Object.assign(T.ja,{ctoday:'今日',arc:'アーカイブ',arcSec:'アーカイブ済み',unarc:'アーカイブ解除'});Object.assign(T.en,{ctoday:'Today',arc:'Archive',arcSec:'Archived',unarc:'Restore'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#8A2A21',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -124,7 +125,7 @@ let rendered=false;
 function render(){
   rendered=true;theme();
   if(!session){
-    $('app').innerHTML=`<h1>${appTitle()}</h1><div class="card">
+    $('app').innerHTML=`<img src="icon-192.png" alt="" style="width:84px;height:84px;border-radius:20px;display:block;margin:10px auto 4px"><h1>${appTitle()}</h1><div class="card">
     <label for="em">${t('email')}</label><input id="em" type="email" autocomplete="email">
     <label for="pw">${t('pw')}</label><input id="pw" type="password" autocomplete="current-password">
     <div class="row"><button class="pri" id="li">${t('login')}</button><button class="sec" id="su">${t('signup')}</button></div>
@@ -154,7 +155,7 @@ async function loadData(){
   if(a.error||b.error){alert((a.error||b.error).message);return}
   tasks=a.data;cats=b.data;ideaErr=c.error;ideas=c.error?[]:c.data;habitErr=h.error||l.error;habits=habitErr?[]:h.data;hlogs=habitErr?[]:l.data;evErr=ev.error||ec.error;events=evErr?[]:ev.data;ecats=ec.error?[]:ec.data;
 }
-const vname=()=>({all:t('all'),today:t('today'),tomorrow:t('tomorrow'),done:t('completed')}[view]||(catOf(view)?esc((catOf(view).icon||'')+' '+catOf(view).name):t('all')));
+const vname=()=>({all:t('all'),today:t('today'),tomorrow:t('tomorrow'),inbox:t('inbox'),done:t('completed')}[view]||(catOf(view)?esc((catOf(view).icon||'')+' '+catOf(view).name):t('all')));
 function row(x,sub){
   const k=kids(x.id).sort((a,b)=>(+a.done-+b.done)||cmp(a,b)),c=catOf(x.category_id),od=!x.done&&isOv(x);
   const p=k.length?Math.round(k.filter(y=>y.done).length/k.length*100):(x.done?100:x.progress||0);
@@ -168,7 +169,7 @@ function listHTML(){
   if(view==='done')items=tasks.filter(x=>!x.parent_id&&x.done).sort((a,b)=>a.created_at<b.created_at?1:-1);
   else{
     let p=pool();
-    if(view==='today')p=p.filter(todayP);else if(view==='tomorrow')p=p.filter(tmrP);else if(view!=='all')p=p.filter(x=>x.category_id===view);
+    if(view==='today')p=p.filter(todayP);else if(view==='tomorrow')p=p.filter(tmrP);else if(view==='inbox')p=p.filter(x=>!x.category_id);else if(view!=='all')p=p.filter(x=>x.category_id===view);
     if(view==='all'||view==='today'){ov=p.filter(isOv).sort(cmp);p=p.filter(x=>!isOv(x))}
     items=p.sort(cmp);
   }
@@ -179,7 +180,7 @@ function listHTML(){
 function drawer(){
   const n=pool(),it=(v,ic,nm,cnt)=>`<button class="di${view===v?' on':''}" data-a="nav" data-v="${v}"><span class="ic2">${ic}</span><span class="nm">${nm}</span><i>${cnt||''}</i></button>`;
   return `<div class="ov${dr?' op':''}" data-a="dr"></div><aside class="dr${dr?' op':''}" aria-label="${t('menu')}"><div class="dh"><b>${appTitle()}</b><button class="sec ic" data-a="set" aria-label="${t('settings')}">⚙</button></div>
-${it('all','🗂',t('all'),n.length)}${it('today','📅',t('today'),n.filter(todayP).length)}${it('tomorrow','🌅',t('tomorrow'),n.filter(tmrP).length)}<hr>
+${it('all','🗂',t('all'),n.length)}${it('today','📅',t('today'),n.filter(todayP).length)}${it('tomorrow','🌅',t('tomorrow'),n.filter(tmrP).length)}${it('inbox','📥',t('inbox'),n.filter(x=>!x.category_id).length)}<hr>
 ${cats.map(c=>it(c.id,c.icon||'📁',esc(c.name),n.filter(x=>x.category_id===c.id).length)).join('')}<hr>${it('done','✅',t('completed'))}
 <div class="df"><button class="sec" data-a="nl">＋ ${t('newList')}</button></div></aside>`;
 }
@@ -205,7 +206,7 @@ function calHTML(){
   for(let d=1;d<=n;d++){const k=dk(new Date(y,m,d));cells+=`<button class="cd${dk(cs)===k?' on':''}${dk(new Date())===k?' td':''}" data-a="cday" data-v="${y}-${m}-${d}">${d}${by[k]?'<i></i>':''}</button>`}
   const items=by[dk(cs)]||[],evs=items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks=items.filter(x=>!x.start_at).sort(cmp);
   return `<div class="hd"><h1>${t('calendar')}</h1><span></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
-<div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div><div class="row"><button class="sec" data-a="exp">${t('exportImg')}</button></div></div>
+<div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div><div class="row"><button class="sec" data-a="ctd">${t('ctoday')}</button><button class="sec" data-a="exp">${t('exportImg')}</button></div></div>
 <div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${evErr?`<p class="meta">${t('evSql')}</p>`:''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
 }
 function openEvent(id){
@@ -231,7 +232,7 @@ function openEvent(id){
 const evCatCard=()=>`<div class="card"><b>${t('evCats')}</b>${ecats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="nle">＋ ${t('newEvCat')}</button></div></div>`;
 function ideaHTML(){
   const list=[...ideas].sort((a,b)=>a.created_at<b.created_at?1:-1);
-  return `<div class="hd"><h1>${t('brainstorm')}</h1><span></span></div>`+(ideaErr?`<div class="card"><p class="meta">${t('ideaSql')}</p></div>`:list.length?`<div class="ideas">${list.map(i=>`<div class="idea" style="--ic:${esc(i.color||'#D9A441')}" data-a="idea" data-id="${i.id}"><b>${esc(i.title||'')}</b><p>${esc((i.body||'').slice(0,140))}</p></div>`).join('')}</div>`:`<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`)+(ideaErr?'':`<button class="fab" data-a="nidea" aria-label="${t('newIdea')}">＋</button>`);
+  return `<div class="hd"><h1>${t('brainstorm')}</h1><span></span></div>`+(ideaErr?`<div class="card"><p class="meta">${t('ideaSql')}</p></div>`:list.length?`<div class="ideas">${list.map(i=>`<div class="idea" style="--ic:${esc(i.color||'#D9A441')}" data-a="idea" data-id="${i.id}"><b>${esc(i.title||'')}</b><p>${esc((i.body||'').slice(0,140))}</p><div class="meta">${new Date(i.created_at).toLocaleDateString(LOC[lang],{year:'numeric',month:'numeric',day:'numeric'})}</div></div>`).join('')}</div>`:`<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`)+(ideaErr?'':`<button class="fab" data-a="nidea" aria-label="${t('newIdea')}">＋</button>`);
 }
 const setHTML=()=>{const m='<p class="meta">'+esc(session.user.email)+'</p>';return setHTML0().replace(m,bgCard()+evCatCard()+m)};
 function appView(){
@@ -251,27 +252,31 @@ function habitHTML(){
   const today=ymd(new Date()),has=(h,d)=>hlogs.some(l=>l.habit_id===h.id&&l.log_date===d),done=h=>has(h,today);
   const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return ymd(d)});
   const streak=h=>{let n=0,d=new Date();if(!done(h))d.setDate(d.getDate()-1);while(has(h,ymd(d))){n++;d.setDate(d.getDate()-1)}return n};
-  const rows=habits.map(h=>{const lk=safeLink(h.link),m=false;
+  const act=habits.filter(h=>!h.archived),arc=habits.filter(h=>h.archived);
+  const rows=act.map(h=>{const lk=safeLink(h.link),m=h.metric&&h.metric!=='none';
     return `<div class="task" style="--hc:${esc(h.color||'#8A2A21')}"><input type="checkbox" class="pc" style="--pc:${esc(h.color||'#8A2A21')}" data-a="hchk" data-id="${h.id}"${done(h)?' checked':''} aria-label="${t('chk')}">
 <div class="tt" data-a="hedit" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b><div class="meta rw"><span>🔥 ${streak(h)}</span>${m?`<span>🔗 ${t('m_'+h.metric)}${h.goal?' ≥ '+esc(String(h.goal)):''}</span>`:''}</div><div class="dots">${days.map(d=>`<u class="${has(h,d)?'on':''}"></u>`).join('')}</div></div>
 ${lk?`<a class="go" href="${esc(lk)}" aria-label="${t('open')}">↗</a>`:''}</div>`}).join('');
-  const n=habits.filter(done).length;
-  return `<div class="hd"><h1>${t('habits')}</h1><span class="meta">${n}/${habits.length}</span></div>`+(habitErr?`<div class="card"><p class="meta">${t('habitSql')}</p></div>`:habits.length?`<div class="card">${rows}</div>`:`<div class="card"><p class="meta">${t('habitEmpty')}</p></div>`)+(habitErr?'':`<button class="fab" data-a="nhabit" aria-label="${t('newHabit')}">＋</button>`);
+  const n=act.filter(done).length;
+  const arcSec=arc.length?`<div class="card"><b>${t('arcSec')}</b>${arc.map(h=>`<div class="task" style="--hc:${esc(h.color||'#8A2A21')}"><div class="tt"><b>${esc((h.icon||'')+' '+h.name)}</b></div><button class="sec" data-a="hunarc" data-id="${h.id}">${t('unarc')}</button></div>`).join('')}</div>`:'';
+  return `<div class="hd"><h1>${t('habits')}</h1><span class="meta">${n}/${act.length}</span></div>`+(habitErr?`<div class="card"><p class="meta">${t('habitSql')}</p></div>`:act.length?`<div class="card">${rows}</div>`:`<div class="card"><p class="meta">${t('habitEmpty')}</p></div>`)+arcSec+(habitErr?'':`<button class="fab" data-a="nhabit" aria-label="${t('newHabit')}">＋</button>`);
 }
 function openHabit(id){
   const dlg=$('dlg'),x=id?habits.find(h=>h.id===id):{color:'#8A2A21',metric:'none'};
   dlg.innerHTML=`<textarea id="h-n" rows="1" maxlength="40" placeholder="${t('habitName')}" aria-label="${t('habitName')}">${esc(x.name||'')}</textarea>
 <div class="tbar"><input id="h-i" type="text" maxlength="8" placeholder="😀" value="${esc(x.icon||'')}" aria-label="${t('emoji')}"><input id="h-c" type="color" value="${esc(x.color||'#8A2A21')}" aria-label="${t('color')}"></div>
 <label for="h-l">${t('appLink')}</label><input id="h-l" type="text" placeholder="shortcuts://run-shortcut?name=…" value="${esc(x.link||'')}"><p class="meta">${t('linkHint')}</p>
-<div class="tbar">${id?`<button class="sec" id="h-d">${t('del')}</button>`:''}<button class="pri snd" id="h-s" aria-label="${t('save')}">↑</button></div>`;
+<label for="h-m">${t('metric')}</label><div class="tbar"><select id="h-m">${METRICS.map(mk=>`<option value="${mk}"${(x.metric||'none')===mk?' selected':''}>${t('m_'+mk)}</option>`).join('')}</select><input id="h-g" type="number" min="0" step="any" placeholder="${t('goal')}" value="${x.goal==null?'':esc(String(x.goal))}" aria-label="${t('goal')}"></div>
+<div class="tbar">${id?`<button class="sec" id="h-d">${t('del')}</button><button class="sec" id="h-a">${x.archived?t('unarc'):t('arc')}</button>`:''}<button class="pri snd" id="h-s" aria-label="${t('save')}">↑</button></div>`;
   $('h-s').onclick=async()=>{
     const name=$('h-n').value.trim();if(!name)return;
-    const v={name,icon:$('h-i').value.trim()||null,color:$('h-c').value,link:$('h-l').value.trim()||null};
+    const v={name,icon:$('h-i').value.trim()||null,color:$('h-c').value,link:$('h-l').value.trim()||null,metric:$('h-m').value,goal:$('h-g').value===''?null:+$('h-g').value};
     if(id){const{error}=await sb.from('habits').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('habits').insert(v).select().single();if(error)return alert(error.message);habits.push(data)}
     dlg.close();render();
   };
   if($('h-d'))$('h-d').onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('habits').delete().eq('id',id);if(error)return alert(error.message);habits=habits.filter(h=>h.id!==id);hlogs=hlogs.filter(l=>l.habit_id!==id);dlg.close();render()};
+  if($('h-a'))$('h-a').onclick=async()=>{const{error}=await sb.from('habits').update({archived:!x.archived}).eq('id',id);if(error)return alert(error.message);x.archived=!x.archived;dlg.close();render()};
   dlg.showModal();$('h-n').focus();
 }
 async function hToggle(id,on){
@@ -346,6 +351,8 @@ $('app').addEventListener('click',async e=>{
   else if(a==='tab'){tab=b.dataset.v;dr=false;render()}
   else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);render()}
   else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
+  else if(a==='ctd'){cm=new Date();cs=new Date();render()}
+  else if(a==='hunarc'){const{error}=await sb.from('habits').update({archived:false}).eq('id',id);if(error)alert(error.message);else{const hx=habits.find(h=>h.id===id);if(hx)hx.archived=false;render()}}
   else if(a==='nidea')openIdea()
   else if(a==='exp')exportImg()
   else if(a==='bgdel'){if(bgPath)sb.storage.from('illustrations').remove([bgPath]);await setBgPath('')}
