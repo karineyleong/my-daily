@@ -82,7 +82,12 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .tabs button{padding:10px 6px}
 .bar2{width:4px;border-radius:2px;background:var(--hc);flex:none}.task.ev .tt{min-width:0}
 .btn{display:inline-flex;justify-content:center;align-items:center;flex:1;padding:12px 16px;border-radius:10px;border:1px solid var(--ln);cursor:pointer}.sr{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
-.thumb{width:100%;max-height:160px;object-fit:cover;border-radius:10px;margin-top:10px}dialog{max-height:90vh;overflow:auto}
+.thumb{width:100%;max-height:160px;object-fit:cover;border-radius:10px;margin-top:10px}dialog{max-height:60dvh;overflow:auto}
+.dlg-handle{position:sticky;top:-16px;z-index:6;display:flex;justify-content:center;margin:-16px -16px 2px;padding:12px 0 10px;background:var(--card);border-radius:18px 18px 0 0;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
+.dlg-handle:active{cursor:grabbing}
+.dlg-handle i{display:block;width:52px;height:6px;border-radius:99px;background:var(--mut);opacity:.55;pointer-events:none}
+.dlg-drag{overflow:hidden!important}
+.dlg-drag *{-webkit-user-select:none!important;user-select:none!important}
 .hasbg h1{background:var(--card);padding:4px 14px;border-radius:14px;border-bottom:0}
 .cm b{font-family:var(--fd);letter-spacing:.05em}
 .seg{display:flex;gap:6px}.segbtn{padding:7px 12px;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:13px}.segbtn.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
@@ -303,7 +308,7 @@ function calHTML(){
   const trail=(7-(first+n)%7)%7;for(let d=1;d<=trail;d++)cells+=cell(y,m+1,d,true);
   const items=by[dk(cs)]||[],evs=items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks=items.filter(x=>!x.start_at).sort(cmp);
   return `<div class="hd"><h1>${t('calendar')}</h1><span></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
-<div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div><div class="row calrow"><button class="sec" data-a="ctd">${t('ctoday')}</button><select id="expsel" class="expsel" aria-label="${t('expSched')}"><option value="">${t('expSched')} ▾</option><option value="day">${t('shDay')}</option><option value="week">${t('shWeek')}</option><option value="month">${t('shMonth')}</option><option value="img">${t('exportImg')}</option></select></div></div>
+<div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div><div class="row calrow"><button class="sec" data-a="ctd">${t('ctoday')}</button><select id="expsel" class="expsel" aria-label="${t('expSched')}"><option value="">${t('expSched')} ▾</option><option value="day">${t('shDay')}</option><option value="week">${t('shWeek')}</option><option value="month">${t('shMonth')}</option></select></div></div>
 <div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${evErr?`<p class="meta">${t('evSql')}</p>`:''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`+evCatCard()+gkCard()+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
 }
 function openEvent(id){
@@ -344,10 +349,6 @@ function openEvent(id){
 }
 const gkCard=()=>`<div class="card"><b>🗺 ${t('gkKey')}</b><p class="meta">${t('gkHint')}</p><input id="gk" type="text" placeholder="AIza…" value="${esc(localStorage.gk||'')}"></div>`;
 function loadGk(cb){if(window.google&&google.maps&&google.maps.places)return cb();if(window._gkL)return;window._gkL=true;const sc=document.createElement('script');sc.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(localStorage.gk||'')+'&libraries=places';sc.onload=()=>cb();document.head.appendChild(sc)}
-function shareSched(kind){const d0=sod(cs);let from,to;if(kind==='day'){from=new Date(d0);to=new Date(d0)}else if(kind==='week'){from=new Date(d0);from.setDate(from.getDate()-((from.getDay()+6)%7));to=new Date(from);to.setDate(to.getDate()+6)}else{from=new Date(d0.getFullYear(),d0.getMonth(),1);to=new Date(d0.getFullYear(),d0.getMonth()+1,0)}
-const lines=[(uname?uname+'’s Daily':'My Daily')+' · '+from.toLocaleDateString(LOC[lang],{month:'long',day:'numeric'})+(+from!==+to?' – '+to.toLocaleDateString(LOC[lang],{month:'long',day:'numeric'}):'')];
-for(let d=new Date(from);d<=to;d.setDate(d.getDate()+1)){const it=dayItems(d);if(it.length){lines.push('');lines.push(d.toLocaleDateString(LOC[lang],{month:'numeric',day:'numeric',weekday:'short'}));it.forEach(x=>lines.push(x))}}
-const tx=lines.join('\n');if(navigator.share)navigator.share({text:tx}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(tx).then(()=>say(t('copied')))}
 function dayItems(d){const out=[];events.forEach(e=>{if(occursOn(e,d))out.push({t:+new Date(e.start_at),s:(e.all_day?'':hm(e.start_at)+' ')+(e.title||'')+(e.location?' 📍'+e.location:'')+(e.place_phone?' 📞'+e.place_phone:'')})});tasks.forEach(x=>{if(x.due_at&&!x.done&&+sod(x.due_at)===+sod(d))out.push({t:+new Date(x.due_at),s:'・'+(x.icon?x.icon+' ':'')+x.title})});return out.sort((a,b)=>a.t-b.t).map(o=>o.s)}
 function occursOn(e,d){const st=sod(e.start_at),en=sod(e.end_at||e.start_at),dd=sod(d),kind=e.repeat_kind||'none';if(kind==='none')return dd>=st&&dd<=en;if(dd<st)return false;const dur=Math.round((en-st)/864e5);let cur=new Date(st),g=0;const step=c=>{const n=new Date(c);if(kind==='daily')n.setDate(n.getDate()+1);else if(kind==='weekly')n.setDate(n.getDate()+7);else if(kind==='monthly')n.setMonth(n.getMonth()+1);else if(kind==='yearly')n.setFullYear(n.getFullYear()+1);return n};while(cur<=dd&&g++<900){if(dd>=cur&&dd<=new Date(+cur+dur*864e5))return true;cur=step(cur)}return false}
 const evCatCard=()=>`<div class="card"><b>${t('evCats')}</b>${ecats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="nle">＋ ${t('newEvCat')}</button></div></div>`;
@@ -569,6 +570,17 @@ async function postpone(){
   tasks.forEach(x=>{if(ids.includes(x.id))x.due_at=d.toISOString()});render();
 }
 $('dlg').addEventListener('click',e=>{if(e.target.id==='dlg')e.target.close()});
+(()=>{const dlg=$('dlg');if(!dlg)return;
+const ensure=()=>{const hs=dlg.querySelectorAll(':scope > .dlg-handle');if(hs.length===1&&dlg.firstElementChild===hs[0])return;hs.forEach(h=>h.remove());const h=document.createElement('div');h.className='dlg-handle';h.setAttribute('aria-hidden','true');h.innerHTML='<i></i>';dlg.insertBefore(h,dlg.firstChild)};
+new MutationObserver(()=>ensure()).observe(dlg,{childList:true});ensure();
+const nativeShow=HTMLDialogElement.prototype.showModal;
+dlg.showModal=()=>{dlg.style.maxHeight='60dvh';dlg.style.height='';nativeShow.call(dlg);ensure()};
+let drag=null;
+dlg.addEventListener('pointerdown',e=>{const h=e.target.closest&&e.target.closest('.dlg-handle');if(!h)return;e.preventDefault();drag={y:e.clientY,h:dlg.getBoundingClientRect().height};dlg.classList.add('dlg-drag');try{h.setPointerCapture(e.pointerId)}catch(_){}});
+dlg.addEventListener('pointermove',e=>{if(!drag)return;e.preventDefault();const minH=Math.min(drag.h,Math.round(innerHeight*.38)),maxH=Math.round(innerHeight*.94),nh=Math.max(minH,Math.min(maxH,Math.round(drag.h+(drag.y-e.clientY))));dlg.style.height=nh+'px';dlg.style.maxHeight=nh+'px'});
+const end=()=>{if(!drag)return;drag=null;dlg.classList.remove('dlg-drag')};
+dlg.addEventListener('pointerup',end);dlg.addEventListener('pointercancel',end);
+})();
 $('app').addEventListener('click',async e=>{
   const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,id=b.dataset.id;
   if(a==='dr'){dr=!dr;render()}
@@ -580,9 +592,9 @@ $('app').addEventListener('click',async e=>{
   else if(a==='ctd'){cm=new Date();cs=new Date();render()}
   else if(a==='hunarc'){const{error}=await sb.from('habits').update({archived:false}).eq('id',id);if(error)alert(error.message);else{const hx=habits.find(h=>h.id===id);if(hx)hx.archived=false;render()}}
   else if(a==='nidea')openIdea()
-  else if(a==='exp')exportImg()
+  else if(a==='exp')exportImg('month')
   else if(a==='bgdel'){if(bgPath)sb.storage.from('illustrations').remove([bgPath]);await setBgPath('')}
-  else if(a==='shr')shareSched(b.dataset.v);
+  else if(a==='shr')exportImg(b.dataset.v);
   else if(a==='dmode'){dual=b.dataset.v==='2';render()}
   else if(a==='hchk')await hToggle(id,b.checked)
   else if(a==='hview'){hview=id;hmon=new Date();render()}
@@ -621,7 +633,7 @@ $('app').addEventListener('change',async e=>{
   const{error}=await sb.from('categories').update(patch).eq('id',id);if(error)return alert(error.message);Object.assign(anyCat(id),patch);
 });
 $('app').addEventListener('change',e=>{if(e.target.id==='bgf')upBg(e.target.files[0])});
-document.addEventListener('change',e=>{if(e.target.id==='expsel'){const v=e.target.value;e.target.value='';if(v==='img')exportImg();else if(v)shareSched(v);return}if(e.target.id==='gk')localStorage.gk=e.target.value.trim();if(e.target.dataset&&e.target.dataset.dsel){if(e.target.dataset.dsel==='A')dA=e.target.value;else dB=e.target.value;render()}});
+document.addEventListener('change',e=>{if(e.target.id==='expsel'){const v=e.target.value;e.target.value='';if(v)exportImg(v);return}if(e.target.id==='gk')localStorage.gk=e.target.value.trim();if(e.target.dataset&&e.target.dataset.dsel){if(e.target.dataset.dsel==='A')dA=e.target.value;else dB=e.target.value;render()}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(()=>{if(tab!=='set')render()})});
 async function loadSettings(){
   const{data}=await sb.from('user_settings').select('language,theme_color,display_name').maybeSingle();
@@ -653,14 +665,20 @@ async function upBg(f){
   const old=bgPath;await setBgPath(path);if(old)sb.storage.from('illustrations').remove([old]);
 }
 const bgCard=()=>`<div class="card"><b>${t('bgImg')}</b><p class="meta">${t('bgHint')}</p><div class="row"><label class="btn" for="bgf">${t('bgPick')}</label><input id="bgf" class="sr" type="file" accept="image/*">${bgUrl?`<button class="sec" data-a="bgdel">${t('bgDel')}</button>`:''}</div>${bgUrl?`<img class="thumb" src="${esc(bgUrl)}" alt="">`:''}</div>`;
-function exportImg(){
-  const y=cm.getFullYear(),m=cm.getMonth(),F='-apple-system,"Hiragino Sans","PingFang TC",sans-serif';
-  const list=events.filter(e=>{const s=new Date(e.start_at);return s.getFullYear()===y&&s.getMonth()===m}).sort((a,b)=>a.start_at<b.start_at?-1:1);
+function exportImg(kind){
+  kind=kind||'month';
+  const d0=sod(cs);let from,to;
+  if(kind==='day'){from=new Date(d0);to=new Date(d0)}
+  else if(kind==='week'){from=new Date(d0);from.setDate(from.getDate()-((from.getDay()+6)%7));to=new Date(from);to.setDate(to.getDate()+6)}
+  else{from=new Date(cm.getFullYear(),cm.getMonth(),1);to=new Date(cm.getFullYear(),cm.getMonth()+1,0)}
+  const sub=kind==='day'?from.toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric',weekday:'short'}):kind==='week'?from.toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric'})+' – '+to.toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric'}):from.toLocaleDateString(LOC[lang],{year:'numeric',month:'long'});
+  const F='-apple-system,"Hiragino Sans","PingFang TC",sans-serif';
+  const list=events.filter(e=>{const s=sod(e.start_at);return s>=from&&s<=to}).sort((a,b)=>a.start_at<b.start_at?-1:1);
   const W=1080,P=64,H0=220,RH=150,H=H0+Math.max(list.length,1)*RH+80,c=document.createElement('canvas');c.width=W;c.height=H;
   const g=c.getContext('2d'),cut=(s,w)=>{while(s.length>1&&g.measureText(s).width>w)s=s.slice(0,-1);return s};
   g.fillStyle='#fff';g.fillRect(0,0,W,H);g.fillStyle=color;g.fillRect(0,0,W,170);g.textBaseline='middle';
   g.fillStyle=onColor(color);g.font=`700 56px ${F}`;g.fillText(uname?uname+'’s Daily':'My Daily',P,64);
-  g.font=`400 36px ${F}`;g.fillText(new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'}),P,126);
+  g.font=`400 36px ${F}`;g.fillText(sub,P,126);
   if(!list.length){g.fillStyle='#66727D';g.font=`400 36px ${F}`;g.fillText(t('noItems'),P,H0+40)}
   list.forEach((e,i)=>{
     const yy=H0+i*RH,cc=ecats.find(z=>z.id===e.category_id);
