@@ -66,7 +66,10 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .go{align-self:center;font-size:20px;line-height:1;text-decoration:none;color:var(--ac);padding:8px 12px;border:1px solid var(--ln);border-radius:10px}
 .tabs button{padding:10px 6px}
 .bar2{width:4px;border-radius:2px;background:var(--hc);flex:none}.task.ev .tt{min-width:0}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v9)</p></main><dialog id="dlg"></dialog>
+.btn{display:inline-flex;justify-content:center;align-items:center;flex:1;padding:12px 16px;border-radius:10px;border:1px solid var(--ln);cursor:pointer}.sr{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.thumb{width:100%;max-height:160px;object-fit:cover;border-radius:10px;margin-top:10px}dialog{max-height:90vh;overflow:auto}
+.hasbg h1{background:var(--card);padding:4px 14px;border-radius:14px;border-bottom:0}
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v10)</p></main><dialog id="dlg"></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 const showErr=m=>document.getElementById('app').insertAdjacentHTML('beforeend','<p style="padding:16px">⚠ '+String(m).replace(/</g,'&lt;')+'</p>');
@@ -91,13 +94,17 @@ Object.assign(T.zh,{evTitle:'行程標題',start:'開始',end:'結束',place:'�
 Object.assign(T.ja,{evTitle:'予定のタイトル',start:'開始',end:'終了',place:'場所',placeHint:'住所や店名（Googleマップで開けます）',remind:'通知',r_none:'通知なし',r_0:'時刻ちょうど',r_10:'10分前',r_30:'30分前',r_60:'1時間前',r_1440:'1日前',openMap:'Googleマップで開く',evCats:'予定のカテゴリ',newEvCat:'予定カテゴリを追加',noItems:'この日の予定とToDoはありません。',evSql:'予定のテーブルが未整備です。先にSupabaseでSQLを実行してください。'});
 Object.assign(T.en,{evTitle:'Event title',start:'Start',end:'End',place:'Place',placeHint:'Address or venue (opens in Google Maps)',remind:'Reminder',r_none:'No reminder',r_0:'At start',r_10:'10 min before',r_30:'30 min before',r_60:'1 hour before',r_1440:'1 day before',openMap:'Open in Google Maps',evCats:'Event categories',newEvCat:'Add event category',noItems:'No events or tasks on this day.',evSql:'The events tables are incomplete. Run the SQL in Supabase first.'});
 Object.assign(T.zh,{noCat:'（無類別）'});Object.assign(T.ja,{noCat:'（カテゴリなし）'});Object.assign(T.en,{noCat:'(none)'});
+Object.assign(T.zh,{bgImg:'背景圖片',bgHint:'上傳你的插圖當作 App 背景（會自動縮小）。',bgPick:'選擇圖片',bgDel:'移除背景',bgErr:'無法讀取這張圖片。',exportImg:'匯出本月行程圖片',share:'分享',shareHint:'可以直接分享，或長按圖片儲存。'});
+Object.assign(T.ja,{bgImg:'背景画像',bgHint:'イラストをアプリの背景にできます（自動で縮小されます）。',bgPick:'画像を選ぶ',bgDel:'背景を削除',bgErr:'この画像を読み込めません。',exportImg:'今月の予定を画像で書き出す',share:'共有',shareHint:'そのまま共有するか、画像を長押しして保存できます。'});
+Object.assign(T.en,{bgImg:'Background image',bgHint:'Upload your illustration as the app background (resized automatically).',bgPick:'Choose image',bgDel:'Remove background',bgErr:'Could not read this image.',exportImg:"Export this month's events as image",share:'Share',shareHint:'Share it directly, or long-press the image to save.'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#6C8EBF',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
 const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const appTitle=()=>uname?esc(uname)+'’s Daily':'My Daily';
 function onColor(h){const n=parseInt(h.slice(1),16);return(0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))>160?'#1F2A33':'#fff'}
-function theme(){root.style.setProperty('--ac',color);root.style.setProperty('--on',onColor(color));document.title=uname?uname+'’s Daily':'My Daily';document.documentElement.lang={zh:'zh-Hant',ja:'ja',en:'en'}[lang]}
+let bgPath='',bgUrl='';
+function theme(){const bs=document.body.style;bs.backgroundImage=bgUrl?`url("${bgUrl}")`:'';bs.backgroundSize='cover';bs.backgroundPosition='center';bs.backgroundAttachment='fixed';document.body.classList.toggle('hasbg',!!bgUrl);root.style.setProperty('--ac',color);root.style.setProperty('--on',onColor(color));document.title=uname?uname+'’s Daily':'My Daily';document.documentElement.lang={zh:'zh-Hant',ja:'ja',en:'en'}[lang]}
 async function save(){
   localStorage.lang=lang;localStorage.color=color;localStorage.dname=uname;theme();
   if(session){await sb.from('user_settings').upsert({user_id:session.user.id,language:lang,theme_color:color,display_name:uname})}
@@ -193,7 +200,7 @@ function calHTML(){
   for(let d=1;d<=n;d++){const k=dk(new Date(y,m,d));cells+=`<button class="cd${dk(cs)===k?' on':''}${dk(new Date())===k?' td':''}" data-a="cday" data-v="${y}-${m}-${d}">${d}${by[k]?'<i></i>':''}</button>`}
   const items=by[dk(cs)]||[],evs=items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks=items.filter(x=>!x.start_at).sort(cmp);
   return `<div class="hd"><h1>${t('calendar')}</h1><span></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
-<div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div></div>
+<div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div><div class="row"><button class="sec" data-a="exp">${t('exportImg')}</button></div></div>
 <div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${evErr?`<p class="meta">${t('evSql')}</p>`:''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
 }
 function openEvent(id){
@@ -221,7 +228,7 @@ function ideaHTML(){
   const list=[...ideas].sort((a,b)=>a.created_at<b.created_at?1:-1);
   return `<div class="hd"><h1>${t('brainstorm')}</h1><span></span></div>`+(ideaErr?`<div class="card"><p class="meta">${t('ideaSql')}</p></div>`:list.length?`<div class="ideas">${list.map(i=>`<div class="idea" style="--ic:${esc(i.color||'#6C8EBF')}" data-a="idea" data-id="${i.id}"><b>${esc(i.title||'')}</b><p>${esc((i.body||'').slice(0,140))}</p></div>`).join('')}</div>`:`<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`)+(ideaErr?'':`<button class="fab" data-a="nidea" aria-label="${t('newIdea')}">＋</button>`);
 }
-const setHTML=()=>{const m='<p class="meta">'+esc(session.user.email)+'</p>';return setHTML0().replace(m,evCatCard()+m)};
+const setHTML=()=>{const m='<p class="meta">'+esc(session.user.email)+'</p>';return setHTML0().replace(m,bgCard()+evCatCard()+m)};
 function appView(){
   let body;
   if(tab==='set')body=`<div class="hd"><h1>${t('settings')}</h1><span></span></div>`+setHTML();
@@ -239,7 +246,7 @@ function habitHTML(){
   const today=ymd(new Date()),has=(h,d)=>hlogs.some(l=>l.habit_id===h.id&&l.log_date===d),done=h=>has(h,today);
   const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return ymd(d)});
   const streak=h=>{let n=0,d=new Date();if(!done(h))d.setDate(d.getDate()-1);while(has(h,ymd(d))){n++;d.setDate(d.getDate()-1)}return n};
-  const rows=habits.map(h=>{const lk=safeLink(h.link),m=h.metric&&h.metric!=='none';
+  const rows=habits.map(h=>{const lk=safeLink(h.link),m=false;
     return `<div class="task" style="--hc:${esc(h.color||'#6C8EBF')}"><input type="checkbox" class="pc" style="--pc:${esc(h.color||'#6C8EBF')}" data-a="hchk" data-id="${h.id}"${done(h)?' checked':''} aria-label="${t('chk')}">
 <div class="tt" data-a="hedit" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b><div class="meta rw"><span>🔥 ${streak(h)}</span>${m?`<span>🔗 ${t('m_'+h.metric)}${h.goal?' ≥ '+esc(String(h.goal)):''}</span>`:''}</div><div class="dots">${days.map(d=>`<u class="${has(h,d)?'on':''}"></u>`).join('')}</div></div>
 ${lk?`<a class="go" href="${esc(lk)}" aria-label="${t('open')}">↗</a>`:''}</div>`}).join('');
@@ -251,11 +258,10 @@ function openHabit(id){
   dlg.innerHTML=`<textarea id="h-n" rows="1" maxlength="40" placeholder="${t('habitName')}" aria-label="${t('habitName')}">${esc(x.name||'')}</textarea>
 <div class="tbar"><input id="h-i" type="text" maxlength="8" placeholder="😀" value="${esc(x.icon||'')}" aria-label="${t('emoji')}"><input id="h-c" type="color" value="${esc(x.color||'#6C8EBF')}" aria-label="${t('color')}"></div>
 <label for="h-l">${t('appLink')}</label><input id="h-l" type="text" placeholder="shortcuts://run-shortcut?name=…" value="${esc(x.link||'')}"><p class="meta">${t('linkHint')}</p>
-<label for="h-m">${t('metric')}</label><div class="tbar"><select id="h-m">${METRICS.map(m=>`<option value="${m}"${x.metric===m?' selected':''}>${t('m_'+m)}</option>`).join('')}</select><input id="h-g" type="number" min="0" step="any" placeholder="${t('goal')}" value="${x.goal==null?'':esc(String(x.goal))}" aria-label="${t('goal')}"></div>
 <div class="tbar">${id?`<button class="sec" id="h-d">${t('del')}</button>`:''}<button class="pri snd" id="h-s" aria-label="${t('save')}">↑</button></div>`;
   $('h-s').onclick=async()=>{
     const name=$('h-n').value.trim();if(!name)return;
-    const v={name,icon:$('h-i').value.trim()||null,color:$('h-c').value,link:$('h-l').value.trim()||null,metric:$('h-m').value,goal:$('h-g').value===''?null:+$('h-g').value};
+    const v={name,icon:$('h-i').value.trim()||null,color:$('h-c').value,link:$('h-l').value.trim()||null};
     if(id){const{error}=await sb.from('habits').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('habits').insert(v).select().single();if(error)return alert(error.message);habits.push(data)}
     dlg.close();render();
@@ -336,6 +342,8 @@ $('app').addEventListener('click',async e=>{
   else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);render()}
   else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
   else if(a==='nidea')openIdea()
+  else if(a==='exp')exportImg()
+  else if(a==='bgdel'){if(bgPath)sb.storage.from('illustrations').remove([bgPath]);await setBgPath('')}
   else if(a==='hchk')await hToggle(id,b.checked)
   else if(a==='hedit')openHabit(id)
   else if(a==='nhabit')openHabit()
@@ -357,13 +365,64 @@ $('app').addEventListener('change',async e=>{
   const patch=d.cn?{name:el.value.trim()||'—'}:d.cc?{color:el.value}:{icon:el.value.trim()||null};
   const{error}=await sb.from('categories').update(patch).eq('id',id);if(error)return alert(error.message);Object.assign(anyCat(id),patch);
 });
+$('app').addEventListener('change',e=>{if(e.target.id==='bgf')upBg(e.target.files[0])});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(()=>{if(tab!=='set')render()})});
 async function loadSettings(){
   const{data}=await sb.from('user_settings').select('language,theme_color,display_name').maybeSingle();
   if(data){lang=data.language||lang;color=data.theme_color||color;uname=data.display_name||'';localStorage.lang=lang;localStorage.color=color;localStorage.dname=uname}
   else await save();
 }
-sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s){await loadSettings();await loadData();live()}else{uname='';localStorage.removeItem('dname');if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];events=[];ecats=[];tab='todo';view='all'}}catch(e){}render()},0)});
+async function loadBg(){
+  const{data,error}=await sb.from('user_settings').select('bg_path').maybeSingle();
+  bgPath=!error&&data&&data.bg_path?data.bg_path:'';bgUrl='';
+  if(bgPath){const r=await sb.storage.from('illustrations').createSignedUrl(bgPath,86400);bgUrl=r.data?r.data.signedUrl:''}
+  theme();
+}
+async function setBgPath(p){
+  const{error}=await sb.from('user_settings').update({bg_path:p||null}).eq('user_id',session.user.id);
+  if(error)return alert(error.message);
+  bgPath=p||'';bgUrl='';
+  if(p){const r=await sb.storage.from('illustrations').createSignedUrl(p,86400);bgUrl=r.data?r.data.signedUrl:''}
+  theme();render();
+}
+async function upBg(f){
+  if(!f)return;
+  const img=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=URL.createObjectURL(f)}).catch(()=>null);
+  if(!img)return alert(t('bgErr'));
+  const k=Math.min(1,1600/Math.max(img.width,img.height)),c=document.createElement('canvas');
+  c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+  const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',0.82)),path=`${session.user.id}/bg-${Date.now()}.jpg`;
+  const up=await sb.storage.from('illustrations').upload(path,blob,{contentType:'image/jpeg'});
+  if(up.error)return alert(up.error.message);
+  const old=bgPath;await setBgPath(path);if(old)sb.storage.from('illustrations').remove([old]);
+}
+const bgCard=()=>`<div class="card"><b>${t('bgImg')}</b><p class="meta">${t('bgHint')}</p><div class="row"><label class="btn" for="bgf">${t('bgPick')}</label><input id="bgf" class="sr" type="file" accept="image/*">${bgUrl?`<button class="sec" data-a="bgdel">${t('bgDel')}</button>`:''}</div>${bgUrl?`<img class="thumb" src="${esc(bgUrl)}" alt="">`:''}</div>`;
+function exportImg(){
+  const y=cm.getFullYear(),m=cm.getMonth(),F='-apple-system,"Hiragino Sans","PingFang TC",sans-serif';
+  const list=events.filter(e=>{const s=new Date(e.start_at);return s.getFullYear()===y&&s.getMonth()===m}).sort((a,b)=>a.start_at<b.start_at?-1:1);
+  const W=1080,P=64,H0=220,RH=150,H=H0+Math.max(list.length,1)*RH+80,c=document.createElement('canvas');c.width=W;c.height=H;
+  const g=c.getContext('2d'),cut=(s,w)=>{while(s.length>1&&g.measureText(s).width>w)s=s.slice(0,-1);return s};
+  g.fillStyle='#fff';g.fillRect(0,0,W,H);g.fillStyle=color;g.fillRect(0,0,W,170);g.textBaseline='middle';
+  g.fillStyle=onColor(color);g.font=`700 56px ${F}`;g.fillText(uname?uname+'’s Daily':'My Daily',P,64);
+  g.font=`400 36px ${F}`;g.fillText(new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'}),P,126);
+  if(!list.length){g.fillStyle='#66727D';g.font=`400 36px ${F}`;g.fillText(t('noItems'),P,H0+40)}
+  list.forEach((e,i)=>{
+    const yy=H0+i*RH,cc=catOf(e.category_id);
+    g.fillStyle=cc&&cc.color||color;g.fillRect(P,yy-20,10,RH-34);
+    g.fillStyle='#1F2A33';g.font=`700 40px ${F}`;g.fillText(cut(e.title,W-P*2-40),P+36,yy);
+    g.fillStyle='#66727D';g.font=`400 32px ${F}`;
+    g.fillText(new Date(e.start_at).toLocaleDateString(LOC[lang],{month:'numeric',day:'numeric',weekday:'short'})+' '+hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):''),P+36,yy+46);
+    if(e.location)g.fillText(cut('📍 '+e.location,W-P*2-40),P+36,yy+86);
+  });
+  c.toBlob(b=>{
+    const f=new File([b],'schedule.png',{type:'image/png'}),u=URL.createObjectURL(b),dlg=$('dlg');
+    dlg.innerHTML=`<img src="${u}" alt="" style="width:100%;border-radius:10px;border:1px solid var(--ln)"><p class="meta">${t('shareHint')}</p><div class="row"><button class="sec" id="x-c">${t('cancel')}</button><button class="pri" id="x-s">${t('share')}</button></div>`;
+    $('x-c').onclick=()=>dlg.close();
+    $('x-s').onclick=async()=>{try{if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:'My Daily'});else{const a=document.createElement('a');a.href=u;a.download='schedule.png';a.click()}}catch(e){}};
+    dlg.showModal();
+  });
+}
+sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s){await loadSettings();await loadBg();await loadData();live()}else{uname='';localStorage.removeItem('dname');bgPath='';bgUrl='';theme();if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];events=[];ecats=[];tab='todo';view='all'}}catch(e){}render()},0)});
 setTimeout(()=>{if(!rendered)render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
