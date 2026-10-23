@@ -85,6 +85,8 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .thumb{width:100%;max-height:160px;object-fit:cover;border-radius:10px;margin-top:10px}dialog{max-height:90vh;overflow:auto}
 .hasbg h1{background:var(--card);padding:4px 14px;border-radius:14px;border-bottom:0}
 .cm b{font-family:var(--fd);letter-spacing:.05em}
+.seg{display:flex;gap:6px}.segbtn{padding:7px 12px;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:13px}.segbtn.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
+.pchips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.pchip{padding:8px 14px;border-radius:99px;border:1px solid var(--ln);background:var(--card);cursor:pointer;font-size:14px}.pchip:active{border-color:var(--ac)}
 .igrid{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}.icob{width:44px;height:44px;border-radius:50%;border:2px solid var(--ln);background:var(--card);font-size:20px;cursor:pointer;padding:0}.icob.on{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 15%,var(--card))}
 .dchips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}.dchip{flex:1;min-width:38px;padding:9px 0;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:14px}.dchip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 .hc .off{opacity:.3}
@@ -138,7 +140,8 @@ Object.assign(T.en,{bgImg:'Background image',bgHint:'Upload your illustration as
 Object.assign(T.zh,{ctoday:'今日',arc:'封存',arcSec:'已封存',unarc:'取消封存'});Object.assign(T.ja,{ctoday:'今日',arc:'アーカイブ',arcSec:'アーカイブ済み',unarc:'アーカイブ解除'});Object.assign(T.en,{ctoday:'Today',arc:'Archive',arcSec:'Archived',unarc:'Restore'});
 Object.assign(T.zh,{allDay:'全日',r_120:'2 小時前'});Object.assign(T.ja,{allDay:'終日',r_120:'2時間前'});Object.assign(T.en,{allDay:'All day',r_120:'2 hours before'});
 Object.assign(T.zh,{rpt:'重複',rp_none:'不重複',rp_d:'每日',rp_w:'每週',rp_m:'每月',rp_y:'每年'});Object.assign(T.ja,{rpt:'繰り返し',rp_none:'なし',rp_d:'毎日',rp_w:'毎週',rp_m:'毎月',rp_y:'毎年'});Object.assign(T.en,{rpt:'Repeat',rp_none:'None',rp_d:'Daily',rp_w:'Weekly',rp_m:'Monthly',rp_y:'Yearly'});
-Object.assign(T.zh,{iconL:'圖示',freq:'做嘅日子',startd:'開始日期',restToday:'今日休息 / 未開始'});Object.assign(T.ja,{iconL:'アイコン',freq:'曜日',startd:'開始日',restToday:'今日はお休み / 未開始'});Object.assign(T.en,{iconL:'Icon',freq:'Days',startd:'Start date',restToday:'Resting today / not started'});
+Object.assign(T.zh,{iconL:'圖示',freq:'做嘅日子',startd:'開始日期',restToday:'今日休息 / 未開始'});
+Object.assign(T.zh,{gt_check:'完成就得',gt_amt:'達到數量',unit:'單位',td:'目標日數',tdF:'永遠',tdC:'自訂',pw:'飲水',pex:'做運動',prd:'讀書',cup:'杯',presets:'預設',linkHint:'點 ↗ 會直接開啟手機上的 App。填 App 連結（如 drops://、spotify://）；沒有連結的 App，先在 iOS「捷徑」建一個開啟 App 的捷徑，再填 shortcuts://run-shortcut?name=捷徑名稱。'});Object.assign(T.ja,{gt_check:'完了すればOK',gt_amt:'量を達成',unit:'単位',td:'目標日数',tdF:'永遠',tdC:'カスタム',pw:'水を飲む',pex:'運動する',prd:'読書',cup:'杯',presets:'プリセット',linkHint:'↗でスマホのアプリを直接開きます。アプリのリンク（例：drops://、spotify://）を入力。リンクがないアプリは、iOS「ショートカット」でアプリを開くショートカットを作り、shortcuts://run-shortcut?name=名前 を入力。'});Object.assign(T.en,{gt_check:'Just complete it',gt_amt:'Reach an amount',unit:'Unit',td:'Target days',tdF:'Forever',tdC:'Custom',pw:'Drink water',pex:'Exercise',prd:'Reading',cup:'cups',presets:'Presets',linkHint:'Tap ↗ to open the app on your phone. Enter an app link (e.g. drops://, spotify://). For apps without one, make an iOS Shortcut that opens it, then use shortcuts://run-shortcut?name=ShortcutName.'});Object.assign(T.ja,{iconL:'アイコン',freq:'曜日',startd:'開始日',restToday:'今日はお休み / 未開始'});Object.assign(T.en,{iconL:'Icon',freq:'Days',startd:'Start date',restToday:'Resting today / not started'});
 Object.assign(T.zh,{slot:'時段',slot_any:'隨時',slot_am:'早上',slot_pm:'下午',slot_night:'晚上',streak:'目前連續',stats:'統計',st_m:'本月打卡',st_t:'累計打卡',st_r:'本月達成率',st_s:'目前連續',st_ma:'本月總量',st_ta:'累計總量',times:'次',days:'日',chart:'每日紀錄'});Object.assign(T.ja,{slot:'時間帯',slot_any:'いつでも',slot_am:'朝',slot_pm:'午後',slot_night:'夜',streak:'現在の連続',stats:'統計',st_m:'今月のチェックイン',st_t:'累計チェックイン',st_r:'今月の達成率',st_s:'現在の連続',st_ma:'今月の合計',st_ta:'総累計',times:'回',days:'日',chart:'毎日の記録'});Object.assign(T.en,{slot:'Time of day',slot_any:'Anytime',slot_am:'Morning',slot_pm:'Afternoon',slot_night:'Night',streak:'Current streak',stats:'Stats',st_m:'Check-ins this month',st_t:'Total check-ins',st_r:'Completion this month',st_s:'Current streak',st_ma:'This month total',st_ta:'All-time total',times:'times',days:'d',chart:'Daily record'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#8A2A21',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
@@ -326,6 +329,8 @@ const pad=n=>String(n).padStart(2,'0'),ymd=d=>d.getFullYear()+'-'+pad(d.getMonth
 const safeLink=u=>/^(?!javascript:|data:|vbscript:)[a-z][a-z0-9+.-]*:/i.test((u||'').trim())?u.trim():'';
 const hAmtOf=(h,d)=>{const l=hlogs.find(l=>l.habit_id===h.id&&l.log_date===d);return l?(+l.amount||1):0};
 const HICONS=['💧','📖','🏃','🧘','✏️','🎨','🌱','💪','🚶','😴','🍎','🚭','💊','🧹','💻','🎹','📷','✍️','🧠','☀️','🌙','⭐','❤️','🔥'];
+const PRESETS=()=>[{name:t('pw'),icon:'💧',color:'#4A7FB5',goal:8,unit:t('cup'),slot:'any'},{name:t('pex'),icon:'🏃',color:'#8FA382',goal:null,unit:null,slot:'any'},{name:t('prd'),icon:'📖',color:'#D9A441',goal:null,unit:null,slot:'night'}];
+const APPLINKS=[['Shortcuts','shortcuts://run-shortcut?name='],['Drops','drops://'],['Spotify','spotify://'],['YouTube','youtube://'],['Instagram','instagram://']];
 const hSched=(h,dt)=>{const d=dt instanceof Date?dt:new Date(dt+'T12:00:00');if(h.start_date&&ymd(d)<h.start_date)return false;if(!h.days)return true;return h.days.split(',').map(Number).includes(((d.getDay()+6)%7)+1)};
 const ringPct=(p,c)=>`<svg viewBox="0 0 40 40" class="rsvg"><circle cx="20" cy="20" r="16" class="rb"/><circle cx="20" cy="20" r="16" class="rf" pathLength="100" style="stroke:${c}" stroke-dasharray="${Math.max(0,Math.min(100,Math.round(p*100)))} 100"/></svg>`;
 const METRICS=['none','steps','sleep','exercise','water','mindful'];
@@ -335,7 +340,7 @@ function habitHTML(){
   const streak=h=>{let n=0,d=new Date(),g=0;const ok=dt=>amt(h,ymd(dt))>=(h.goal||1);if(hSched(h,d)&&!ok(d))d.setDate(d.getDate()-1);while(g++<370){if(hSched(h,d)){if(ok(d))n++;else break}d.setDate(d.getDate()-1)}return n};
   const rowH=h=>{const lk=safeLink(h.link),a=amt(h,today);
     return `<div class="task" style="--hc:${esc(h.color||'#8A2A21')}"><input type="checkbox" class="pc" style="--pc:${esc(h.color||'#8A2A21')}" data-a="hchk" data-id="${h.id}"${done(h)?' checked':''} aria-label="${t('chk')}">
-<div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b><div class="meta rw">${h.goal?`<span>${a}/${h.goal}</span>`:''}</div></div>
+<div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b><div class="meta rw">${h.goal?`<span>${a}/${h.goal}${h.unit?' '+esc(h.unit):''}</span>`:''}${h.target_days?`<span>🎯 ${new Set(hlogs.filter(l=>l.habit_id===h.id).map(l=>l.log_date)).size}/${h.target_days}</span>`:''}</div></div>
 <div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div>${lk?`<a class="go" href="${esc(lk)}" aria-label="${t('open')}">↗</a>`:''}</div>`};
   const wdays=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d});
   const strip=act.length?`<div class="card wstrip">${wdays.map(d=>{const ds=ymd(d),sc=act.filter(h=>hSched(h,d)),cnt=sc.filter(h=>amt(h,ds)>0).length,pct=sc.length?cnt/sc.length:0,isT=ds===today;
@@ -344,7 +349,7 @@ function habitHTML(){
   const groups=['am','pm','night','any'].map(k=>{const gs=actT.filter(h=>(h.slot||'any')===k);return gs.length?`<div class="ghd"><b>${t('slot_'+k)}</b><span class="meta">${gs.length}</span></div><div class="card">${gs.map(rowH).join('')}</div>`:''}).join('')+(rest.length?`<div class="ghd"><b>${t('restToday')}</b><span class="meta">${rest.length}</span></div><div class="card">${rest.map(h=>`<div class="task" style="--hc:${esc(h.color||'#8A2A21')};opacity:.55"><div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b></div><div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`).join('')}</div>`:'');
   const n=actT.filter(done).length;
   const arcSec=arc.length?`<div class="card"><b>${t('arcSec')}</b>${arc.map(h=>`<div class="task" style="--hc:${esc(h.color||'#8A2A21')}"><div class="tt"><b>${esc((h.icon||'')+' '+h.name)}</b></div><button class="sec" data-a="hunarc" data-id="${h.id}">${t('unarc')}</button></div>`).join('')}</div>`:'';
-  return `<div class="hd"><h1>${t('habits')}</h1><span class="meta">${n}/${actT.length}</span></div>`+(habitErr?`<div class="card"><p class="meta">${t('habitSql')}</p></div>`:act.length?strip+groups:`<div class="card"><p class="meta">${t('habitEmpty')}</p></div>`)+arcSec+(habitErr?'':`<button class="fab" data-a="nhabit" aria-label="${t('newHabit')}">＋</button>`);
+  return `<div class="hd"><h1>${t('habits')}</h1><span class="meta">${n}/${actT.length}</span></div>`+(habitErr?`<div class="card"><p class="meta">${t('habitSql')}</p></div>`:act.length?strip+groups:`<div class="card"><p class="meta">${t('habitEmpty')}</p><b>${t('presets')}</b><div class="pchips">${PRESETS().map((p,i)=>`<button class="pchip" data-a="hpreset" data-v="${i}">${p.icon} ${esc(p.name)}${p.goal?' · '+p.goal+p.unit:''}</button>`).join('')}</div></div>`)+arcSec+(habitErr?'':`<button class="fab" data-a="nhabit" aria-label="${t('newHabit')}">＋</button>`);
 }
 function habitDetail(hid){
   const h=habits.find(x=>x.id===hid);if(!h){hview=null;return habitHTML()}
@@ -369,10 +374,10 @@ function habitDetail(hid){
   const bars=[...Array(isCurM?new Date().getDate():n)].map((_,i)=>{const a=amtD(ymd(new Date(y,mo,i+1)));return `<i style="height:${a?Math.max(3,Math.round(a/maxV*100)):0}%"></i>`}).join('');
   const a0=amtD(today),tile=(lb,v)=>`<div class="stat"><span>${lb}</span><b>${v}</b></div>`;
   return `<div class="hd"><button class="sec ic" data-a="hback" aria-label="‹">‹</button><h1>${esc((h.icon||'')+' '+h.name)}</h1><span></span></div>
-<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><b>${t('ctoday')}：${goal?a0+' / '+goal:(a0?'✓':'—')}</b><span>${goal?`<button class="sec ic" data-a="hamt" data-v="-1" data-id="${h.id}" aria-label="−">−</button> <button class="sec ic" data-a="hamt" data-v="1" data-id="${h.id}" aria-label="＋">＋</button>`:`<button class="sec" data-a="htog" data-id="${h.id}">${a0?t('cancel'):t('chk')}</button>`}</span></div></div>
+<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><b>${t('ctoday')}：${goal?a0+' / '+goal+(h.unit?' '+esc(h.unit):''):(a0?'✓':'—')}</b><span>${goal?`<button class="sec ic" data-a="hamt" data-v="-1" data-id="${h.id}" aria-label="−">−</button> <button class="sec ic" data-a="hamt" data-v="1" data-id="${h.id}" aria-label="＋">＋</button>`:`<button class="sec" data-a="htog" data-id="${h.id}">${a0?t('cancel'):t('chk')}</button>`}</span></div></div>
 <div class="card"><div class="cm"><button class="sec ic" data-a="hmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,mo,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="hmo" data-v="1" aria-label="›">›</button></div>
 <div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="hcg">${cells}</div></div>
-<div class="card"><b>${t('stats')}</b><div class="stats">${tile('✅ '+t('st_m'),mDays+' '+t('times'))}${tile('🗓 '+t('st_t'),tDays+' '+t('times'))}${tile('％ '+t('st_r'),rate+' %')}${tile('🔥 '+t('st_s'),streak()+' '+t('days'))}${goal?tile('📊 '+t('st_ma'),String(mAmt))+tile('📈 '+t('st_ta'),String(tAmt)):''}</div></div>
+<div class="card"><b>${t('stats')}</b><div class="stats">${tile('✅ '+t('st_m'),mDays+' '+t('times'))}${tile('🗓 '+t('st_t'),tDays+' '+t('times'))}${tile('％ '+t('st_r'),rate+' %')}${tile('🔥 '+t('st_s'),streak()+' '+t('days'))}${goal?tile('📊 '+t('st_ma'),String(mAmt)+(h.unit?' '+esc(h.unit):''))+tile('📈 '+t('st_ta'),String(tAmt)+(h.unit?' '+esc(h.unit):'')):''}${h.target_days?tile('🎯 '+t('td'),tDays+' / '+h.target_days+(tDays>=h.target_days?' 🎉':'')):''}</div></div>
 ${goal?`<div class="card"><b>${t('chart')}</b><div class="bars" style="--hc:${col}">${bars}<span class="gline" style="bottom:${Math.round(goal/maxV*100)}%"></span></div></div>`:''}
 <div class="card"><div class="row"><button class="sec" data-a="hedit" data-id="${h.id}">✎ ${t('edit')}</button><button class="sec" data-a="harc" data-id="${h.id}">${h.archived?t('unarc'):t('arc')}</button><button class="sec" data-a="hdel" data-id="${h.id}">${t('del')}</button>${safeLink(h.link)?`<a class="go" href="${esc(safeLink(h.link))}" aria-label="${t('open')}">↗</a>`:''}</div></div>`;
 }
@@ -384,15 +389,25 @@ async function hAmt(id,dv){
 }
 function openHabit(id){
   const dlg=$('dlg'),x=id?habits.find(h=>h.id===id):{color:'#8A2A21',metric:'none'};
-  dlg.innerHTML=`<textarea id="h-n" rows="1" maxlength="40" placeholder="${t('habitName')}" aria-label="${t('habitName')}">${esc(x.name||'')}</textarea>
+  dlg.innerHTML=`${id?'':`<label>${t('presets')}</label><div class="pchips">${PRESETS().map((p,i)=>`<button type="button" class="pchip" data-pre="${i}">${p.icon} ${esc(p.name)}</button>`).join('')}</div>`}<textarea id="h-n" rows="1" maxlength="40" placeholder="${t('habitName')}" aria-label="${t('habitName')}">${esc(x.name||'')}</textarea>
 <label>${t('iconL')}</label><div class="igrid">${HICONS.map(e=>`<button type="button" class="icob${(x.icon||'')===e?' on':''}" data-ic="${e}">${e}</button>`).join('')}</div>
 <div class="tbar"><input id="h-i" type="text" maxlength="8" placeholder="😀" value="${esc(x.icon||'')}" aria-label="${t('emoji')}"><input id="h-c" type="color" value="${esc(x.color||'#8A2A21')}" aria-label="${t('color')}"></div>
-<label for="h-l">${t('appLink')}</label><input id="h-l" type="text" placeholder="shortcuts://run-shortcut?name=…" value="${esc(x.link||'')}"><p class="meta">${t('linkHint')}</p>
-<div class="frow"><span>${t('goal')}</span><input id="h-g" type="number" min="0" step="any" style="width:110px;margin:0" placeholder="—" value="${x.goal==null?'':esc(String(x.goal))}" aria-label="${t('goal')}"></div>
+<label for="h-l">${t('appLink')}</label><input id="h-l" type="text" placeholder="drops:// 或 shortcuts://run-shortcut?name=…" value="${esc(x.link||'')}"><div class="pchips">${APPLINKS.map(([n,u])=>`<button type="button" class="pchip" data-al="${u}">${n}</button>`).join('')}</div><p class="meta">${t('linkHint')}</p>
+<div class="frow"><span>${t('goal')}</span><span class="seg"><button type="button" id="g-chk" class="segbtn">${t('gt_check')}</button><button type="button" id="g-amt" class="segbtn">${t('gt_amt')}</button></span></div>
+<div class="frow" id="g-row"><span>${t('goal')} · ${t('unit')}</span><span class="dt"><input id="h-g" type="number" min="0" step="any" style="width:90px;margin:0" value="${x.goal==null?'':esc(String(x.goal))}" aria-label="${t('goal')}"><input id="h-u" type="text" maxlength="4" style="width:64px;margin:0" placeholder="${t('unit')}" value="${esc(x.unit||'')}" aria-label="${t('unit')}"></span></div>
+<div class="frow"><span>${t('td')}</span><span class="dt"><select id="h-td" style="margin:0"><option value="">${t('tdF')}</option>${[7,21,30,100,365].map(v=>`<option value="${v}">${v}</option>`).join('')}<option value="c">${t('tdC')}</option></select><input id="h-tdc" type="number" min="1" max="999" style="width:70px;margin:0;display:none"></span></div>
 <label>${t('freq')}</label><div class="dchips">${[1,2,3,4,5,6,7].map(d=>`<button type="button" class="dchip" data-dc="${d}">${WK[lang][d-1]}</button>`).join('')}</div>
 <div class="frow"><span>${t('startd')}</span><input type="date" id="h-sd" style="width:auto;margin:0" value="${x.start_date||ymd(new Date())}"></div>
 <div class="frow"><span>${t('slot')}</span><select id="h-sl">${['any','am','pm','night'].map(k=>`<option value="${k}"${(x.slot||'any')===k?' selected':''}>${t('slot_'+k)}</option>`).join('')}</select></div>
 <div class="tbar">${id?`<button class="sec" id="h-d">${t('del')}</button><button class="sec" id="h-a">${x.archived?t('unarc'):t('arc')}</button>`:''}<button class="pri snd" id="h-s" aria-label="${t('save')}">↑</button></div>`;
+  let gAmt=x.goal!=null;
+  const paintG=()=>{$('g-chk').classList.toggle('on',!gAmt);$('g-amt').classList.toggle('on',gAmt);$('g-row').style.display=gAmt?'':'none'};
+  $('g-chk').onclick=()=>{gAmt=false;paintG()};$('g-amt').onclick=()=>{gAmt=true;paintG()};paintG();
+  const tdSel=$('h-td'),tdInp=$('h-tdc');
+  if(x.target_days){if([7,21,30,100,365].includes(x.target_days))tdSel.value=String(x.target_days);else{tdSel.value='c';tdInp.style.display='';tdInp.value=x.target_days}}
+  tdSel.onchange=()=>{tdInp.style.display=tdSel.value==='c'?'':'none'};
+  dlg.querySelectorAll('[data-al]').forEach(b=>b.onclick=()=>{$('h-l').value=b.dataset.al;$('h-l').focus()});
+  dlg.querySelectorAll('[data-pre]').forEach(b=>b.onclick=()=>{const p=PRESETS()[+b.dataset.pre];$('h-n').value=p.name;$('h-i').value=p.icon;$('h-c').value=p.color;dlg.querySelectorAll('[data-ic]').forEach(z=>z.classList.toggle('on',z.dataset.ic===p.icon));gAmt=p.goal!=null;if(gAmt){$('h-g').value=p.goal;$('h-u').value=p.unit||''}paintG();const sl=$('h-sl');if(sl)sl.value=p.slot});
   let selDays=x.days?x.days.split(',').map(Number):[1,2,3,4,5,6,7];
   const paintD=()=>dlg.querySelectorAll('[data-dc]').forEach(b=>b.classList.toggle('on',selDays.includes(+b.dataset.dc)));
   paintD();
@@ -400,7 +415,7 @@ function openHabit(id){
   dlg.querySelectorAll('[data-ic]').forEach(b=>b.onclick=()=>{$('h-i').value=b.dataset.ic;dlg.querySelectorAll('[data-ic]').forEach(z=>z.classList.toggle('on',z===b))});
   $('h-s').onclick=async()=>{
     const name=$('h-n').value.trim();if(!name)return;
-    const v={name,icon:$('h-i').value.trim()||null,color:$('h-c').value,link:$('h-l').value.trim()||null,goal:$('h-g').value===''?null:+$('h-g').value,slot:$('h-sl').value,days:selDays.slice().sort((a,b)=>a-b).join(','),start_date:$('h-sd').value||null};
+    const v={name,icon:$('h-i').value.trim()||null,color:$('h-c').value,link:$('h-l').value.trim()||null,goal:gAmt&&$('h-g').value!==''?+$('h-g').value:null,unit:gAmt?($('h-u').value.trim()||null):null,target_days:tdSel.value==='c'?(tdInp.value?+tdInp.value:null):(tdSel.value===''?null:+tdSel.value),slot:$('h-sl').value,days:selDays.slice().sort((a,b)=>a-b).join(','),start_date:$('h-sd').value||null};
     if(id){const{error}=await sb.from('habits').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('habits').insert(v).select().single();if(error)return alert(error.message);habits.push(data)}
     dlg.close();render();
@@ -488,6 +503,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='bgdel'){if(bgPath)sb.storage.from('illustrations').remove([bgPath]);await setBgPath('')}
   else if(a==='hchk')await hToggle(id,b.checked)
   else if(a==='hview'){hview=id;hmon=new Date();render()}
+  else if(a==='hpreset'){const p=PRESETS()[+b.dataset.v];const{data,error}=await sb.from('habits').insert({name:p.name,icon:p.icon,color:p.color,goal:p.goal,unit:p.unit,slot:p.slot}).select().single();if(error)alert(error.message);else{habits.push(data);render()}}
   else if(a==='hback'){hview=null;render()}
   else if(a==='hmo'){hmon=new Date(hmon.getFullYear(),hmon.getMonth()+ +b.dataset.v,1);render()}
   else if(a==='hamt')await hAmt(id,+b.dataset.v)
