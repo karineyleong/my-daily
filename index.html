@@ -86,7 +86,12 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .hasbg h1{background:var(--card);padding:4px 14px;border-radius:14px;border-bottom:0}
 .cm b{font-family:var(--fd);letter-spacing:.05em}
 .seg{display:flex;gap:6px}.segbtn{padding:7px 12px;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:13px}.segbtn.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
-.pchips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.pchip{padding:8px 14px;border-radius:99px;border:1px solid var(--ln);background:var(--card);cursor:pointer;font-size:14px}.pchip:active{border-color:var(--ac)}
+.pchips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
+.mmwrap{overflow:auto;border:1px solid var(--ln);border-radius:16px;background:var(--card);max-height:72vh}
+.mm{position:relative}.mm svg{position:absolute;inset:0}
+.mmnode{position:absolute;transform:translate(-50%,-50%);width:148px;max-height:66px;overflow:hidden;padding:9px 10px;border-radius:12px;border:1px solid var(--ic,#D9A441);background:color-mix(in srgb,var(--ic,#D9A441) 20%,var(--card));color:var(--tx);font-size:13px;cursor:pointer;text-align:center;line-height:1.3}
+.mmL1{font-weight:700;font-size:14px;background:var(--ic,#D9A441);color:#fff}
+.mmroot{position:absolute;transform:translate(-50%,-50%);width:164px;padding:14px 10px;border-radius:99px;background:var(--ac);color:var(--on);font-family:var(--fd);font-size:16px;border:0;cursor:pointer}.pchip{padding:8px 14px;border-radius:99px;border:1px solid var(--ln);background:var(--card);cursor:pointer;font-size:14px}.pchip:active{border-color:var(--ac)}
 .igrid{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}.icob{width:44px;height:44px;border-radius:50%;border:2px solid var(--ln);background:var(--card);font-size:20px;cursor:pointer;padding:0}.icob.on{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 15%,var(--card))}
 .dchips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}.dchip{flex:1;min-width:38px;padding:9px 0;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:14px}.dchip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 .hc .off{opacity:.3}
@@ -141,6 +146,7 @@ Object.assign(T.zh,{ctoday:'今日',arc:'封存',arcSec:'已封存',unarc:'取�
 Object.assign(T.zh,{allDay:'全日',r_120:'2 小時前'});Object.assign(T.ja,{allDay:'終日',r_120:'2時間前'});Object.assign(T.en,{allDay:'All day',r_120:'2 hours before'});
 Object.assign(T.zh,{rpt:'重複',rp_none:'不重複',rp_d:'每日',rp_w:'每週',rp_m:'每月',rp_y:'每年'});Object.assign(T.ja,{rpt:'繰り返し',rp_none:'なし',rp_d:'毎日',rp_w:'毎週',rp_m:'毎月',rp_y:'毎年'});Object.assign(T.en,{rpt:'Repeat',rp_none:'None',rp_d:'Daily',rp_w:'Weekly',rp_m:'Monthly',rp_y:'Yearly'});
 Object.assign(T.zh,{iconL:'圖示',freq:'做嘅日子',startd:'開始日期',restToday:'今日休息 / 未開始'});
+Object.assign(T.zh,{mapV:'地圖',listV:'列表',mmChild:'加子節點',mmDel:'刪除這個節點和它下面所有分支？'});Object.assign(T.ja,{mapV:'マップ',listV:'リスト',mmChild:'子ノード追加',mmDel:'このノードと配下すべてを削除しますか？'});Object.assign(T.en,{mapV:'Map',listV:'List',mmChild:'Add sub-node',mmDel:'Delete this node and everything under it?'});
 Object.assign(T.zh,{gt_check:'完成就得',gt_amt:'達到數量',unit:'單位',td:'目標日數',tdF:'永遠',tdC:'自訂',pw:'飲水',pex:'做運動',prd:'讀書',cup:'杯',presets:'預設',linkHint:'點 ↗ 會直接開啟手機上的 App。填 App 連結（如 drops://、spotify://）；沒有連結的 App，先在 iOS「捷徑」建一個開啟 App 的捷徑，再填 shortcuts://run-shortcut?name=捷徑名稱。'});Object.assign(T.ja,{gt_check:'完了すればOK',gt_amt:'量を達成',unit:'単位',td:'目標日数',tdF:'永遠',tdC:'カスタム',pw:'水を飲む',pex:'運動する',prd:'読書',cup:'杯',presets:'プリセット',linkHint:'↗でスマホのアプリを直接開きます。アプリのリンク（例：drops://、spotify://）を入力。リンクがないアプリは、iOS「ショートカット」でアプリを開くショートカットを作り、shortcuts://run-shortcut?name=名前 を入力。'});Object.assign(T.en,{gt_check:'Just complete it',gt_amt:'Reach an amount',unit:'Unit',td:'Target days',tdF:'Forever',tdC:'Custom',pw:'Drink water',pex:'Exercise',prd:'Reading',cup:'cups',presets:'Presets',linkHint:'Tap ↗ to open the app on your phone. Enter an app link (e.g. drops://, spotify://). For apps without one, make an iOS Shortcut that opens it, then use shortcuts://run-shortcut?name=ShortcutName.'});Object.assign(T.ja,{iconL:'アイコン',freq:'曜日',startd:'開始日',restToday:'今日はお休み / 未開始'});Object.assign(T.en,{iconL:'Icon',freq:'Days',startd:'Start date',restToday:'Resting today / not started'});
 Object.assign(T.zh,{slot:'時段',slot_any:'隨時',slot_am:'早上',slot_pm:'下午',slot_night:'晚上',streak:'目前連續',stats:'統計',st_m:'本月打卡',st_t:'累計打卡',st_r:'本月達成率',st_s:'目前連續',st_ma:'本月總量',st_ta:'累計總量',times:'次',days:'日',chart:'每日紀錄'});Object.assign(T.ja,{slot:'時間帯',slot_any:'いつでも',slot_am:'朝',slot_pm:'午後',slot_night:'夜',streak:'現在の連続',stats:'統計',st_m:'今月のチェックイン',st_t:'累計チェックイン',st_r:'今月の達成率',st_s:'現在の連続',st_ma:'今月の合計',st_ta:'総累計',times:'回',days:'日',chart:'毎日の記録'});Object.assign(T.en,{slot:'Time of day',slot_any:'Anytime',slot_am:'Morning',slot_pm:'Afternoon',slot_night:'Night',streak:'Current streak',stats:'Stats',st_m:'Check-ins this month',st_t:'Total check-ins',st_r:'Completion this month',st_s:'Current streak',st_ma:'This month total',st_ta:'All-time total',times:'times',days:'d',chart:'Daily record'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#8A2A21',uname=localStorage.dname||'',session=null;
@@ -177,7 +183,7 @@ function render(){
     appView();
   }
 }
-let tasks=[],cats=[],view='all',dr=false,ovOpen=true,tab='todo',ideas=[],ideaErr=null,habits=[],hlogs=[],habitErr=null,events=[],ecats=[],evErr=null,cm=new Date(),cs=new Date(),ch=null,lt=null,hview=null,hmon=new Date();
+let tasks=[],cats=[],view='all',dr=false,ovOpen=true,tab='todo',ideas=[],ideaErr=null,iview='map',habits=[],hlogs=[],habitErr=null,events=[],ecats=[],evErr=null,cm=new Date(),cs=new Date(),ch=null,lt=null,hview=null,hmon=new Date();
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
 const T0=d=>d?+new Date(d):1e18;
@@ -310,9 +316,35 @@ function openEvent(id){
   dlg.showModal();$('e-t').focus();
 }
 const evCatCard=()=>`<div class="card"><b>${t('evCats')}</b>${ecats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="nle">＋ ${t('newEvCat')}</button></div></div>`;
+const MMW=148,MMH=46,MGAP=16,MLEVEL=178;
+function mmTree(){const byP=new Map();ideas.forEach(i=>{const k=i.parent_id||'';if(!byP.has(k))byP.set(k,[]);byP.get(k).push(i)});const srt=a=>a.sort((x,y)=>x.created_at<y.created_at?-1:1);const build=i=>({i,kids:srt(byP.get(i.id)||[]).map(build)});return srt(byP.get('')||[]).map(build)}
+function mmLayout(){const roots=mmTree(),R=roots.filter((_,x)=>x%2===0),L=roots.filter((_,x)=>x%2===1);const meas=n=>{n.u=n.kids.length?n.kids.reduce((a,k)=>a+meas(k),0):1;return n.u};roots.forEach(meas);const nodes=[],edges=[];const place=(n,x,yT,dir,p)=>{const hgt=n.u*(MMH+MGAP)-MGAP;n.cx=x;n.cy=yT+hgt/2;nodes.push(n);edges.push([p,n,dir]);let cy=yT;n.kids.forEach(k=>{place(k,x+dir*MLEVEL,cy,dir,n);cy+=k.u*(MMH+MGAP)})};const totR=R.reduce((a,n)=>a+n.u,0),totL=L.reduce((a,n)=>a+n.u,0),tot=Math.max(totR,totL,1);const H=tot*(MMH+MGAP)+56,cyC=H/2;const dep=n=>1+(n.kids.length?Math.max(...n.kids.map(dep)):0);const mR=R.reduce((a,n)=>Math.max(a,dep(n)),0),mL=L.reduce((a,n)=>Math.max(a,dep(n)),0);const rootX=24+mL*MLEVEL+MMW/2;let y=cyC-(totR*(MMH+MGAP)-MGAP)/2;R.forEach(n=>{place(n,rootX+MLEVEL,y,1,null);y+=n.u*(MMH+MGAP)});y=cyC-(totL*(MMH+MGAP)-MGAP)/2;L.forEach(n=>{place(n,rootX-MLEVEL,y,-1,null);y+=n.u*(MMH+MGAP)});const W=rootX+mR*MLEVEL+MMW/2+24;return{nodes,edges,W,H,rootX,cyC}}
+function mmHTML(){
+  if(!ideas.length)return `<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`;
+  const{nodes,edges,W,H,rootX,cyC}=mmLayout();
+  const paths=edges.map(([p,n,dir])=>{const x1=p?p.cx+dir*MMW/2:rootX,y1=p?p.cy:cyC,x2=n.cx-dir*MMW/2,y2=n.cy,mx=(x1+x2)/2;return `<path d="M${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}" stroke="${esc(n.i.color||'#D9A441')}" stroke-width="2.5" fill="none" opacity=".5"/>`}).join('');
+  const center=`<button class="mmroot" style="left:${rootX}px;top:${cyC}px" data-a="nidea">${t('brainstorm')}</button>`;
+  const ns=nodes.map(n=>`<button class="mmnode${n.i.parent_id?'':' mmL1'}" style="left:${n.cx}px;top:${n.cy}px;--ic:${esc(n.i.color||'#D9A441')}" data-a="node" data-id="${n.i.id}">${esc(n.i.title||'')}</button>`).join('');
+  return `<div class="mmwrap"><div class="mm" style="width:${W}px;height:${H}px"><svg width="${W}" height="${H}">${paths}</svg>${center}${ns}</div></div>`;
+}
+function openNode(id){
+  const x=ideas.find(i=>i.id===id);if(!x)return;const dlg=$('dlg');
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${esc(x.title||'')}</h3>${x.body?`<p class="meta" style="white-space:pre-wrap">${esc(x.body)}</p>`:''}<div class="acts"><button class="sec" id="n-e">${t('edit')}</button><button class="sec" id="n-c">＋ ${t('mmChild')}</button><button class="sec" id="n-col">🎨 ${t('color')}</button><button class="sec" id="n-d">${t('del')}</button></div><div class="acts"><button class="pri" id="n-x">${t('cancel')}</button></div>`;
+  if(!dlg.open)dlg.showModal();
+  $('n-x').onclick=()=>dlg.close();
+  $('n-e').onclick=()=>openIdea(id);
+  $('n-c').onclick=()=>openIdea(null,id);
+  $('n-col').onclick=async()=>{const cs=['#8A2A21','#D9A441','#8FA382','#4A7FB5','#B5654D','#6B7F5E','#7A6AAE','#C2849A'];const nx=cs[(cs.indexOf(x.color||'#D9A441')+1)%cs.length];const{error}=await sb.from('ideas').update({color:nx}).eq('id',id);if(error)return alert(error.message);x.color=nx;dlg.close();render()};
+  $('n-d').onclick=async()=>{if(!confirm(t('mmDel')))return;const ids=[];const col=iid=>{ids.push(iid);ideas.filter(z=>z.parent_id===iid).forEach(z=>col(z.id))};col(id);const{error}=await sb.from('ideas').delete().in('id',ids);if(error)return alert(error.message);for(let k=ideas.length-1;k>=0;k--)if(ids.includes(ideas[k].id))ideas.splice(k,1);dlg.close();render()};
+}
 function ideaHTML(){
   const list=[...ideas].sort((a,b)=>a.created_at<b.created_at?1:-1);
-  return `<div class="hd"><h1>${t('brainstorm')}</h1><span></span></div>`+(ideaErr?`<div class="card"><p class="meta">${t('ideaSql')}</p></div>`:list.length?`<div class="ideas">${list.map(i=>`<div class="idea" style="--ic:${esc(i.color||'#D9A441')}" data-a="idea" data-id="${i.id}"><b>${esc(i.title||'')}</b><p>${esc((i.body||'').slice(0,140))}</p><div class="meta">${new Date(i.created_at).toLocaleDateString(LOC[lang],{year:'numeric',month:'numeric',day:'numeric'})}</div></div>`).join('')}</div>`:`<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`)+(ideaErr?'':`<button class="fab" data-a="nidea" aria-label="${t('newIdea')}">＋</button>`);
+  const tog=`<span class="seg"><button class="segbtn${iview==='map'?' on':''}" data-a="iview" data-v="map">${t('mapV')}</button><button class="segbtn${iview==='list'?' on':''}" data-a="iview" data-v="list">${t('listV')}</button></span>`;
+  let main;
+  if(ideaErr)main=`<div class="card"><p class="meta">${t('ideaSql')}</p></div>`;
+  else if(iview==='map')main=mmHTML();
+  else main=list.length?`<div class="ideas">${list.map(i=>`<div class="idea" style="--ic:${esc(i.color||'#D9A441')}" data-a="idea" data-id="${i.id}"><b>${esc(i.title||'')}</b><p>${esc((i.body||'').slice(0,140))}</p><div class="meta">${new Date(i.created_at).toLocaleDateString(LOC[lang],{year:'numeric',month:'numeric',day:'numeric'})}</div></div>`).join('')}</div>`:`<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`;
+  return `<div class="hd"><h1>${t('brainstorm')}</h1>${tog}</div>`+main+(ideaErr?'':`<button class="fab" data-a="nidea" aria-label="${t('newIdea')}">＋</button>`);
 }
 const setHTML=()=>{const m='<p class="meta">'+esc(session.user.email)+'</p>';return setHTML0().replace(m,bgCard()+evCatCard()+m)};
 function appView(){
@@ -330,7 +362,6 @@ const safeLink=u=>/^(?!javascript:|data:|vbscript:)[a-z][a-z0-9+.-]*:/i.test((u|
 const hAmtOf=(h,d)=>{const l=hlogs.find(l=>l.habit_id===h.id&&l.log_date===d);return l?(+l.amount||1):0};
 const HICONS=['💧','📖','🏃','🧘','✏️','🎨','🌱','💪','🚶','😴','🍎','🚭','💊','🧹','💻','🎹','📷','✍️','🧠','☀️','🌙','⭐','❤️','🔥'];
 const PRESETS=()=>[{name:t('pw'),icon:'💧',color:'#4A7FB5',goal:8,unit:t('cup'),slot:'any'},{name:t('pex'),icon:'🏃',color:'#8FA382',goal:null,unit:null,slot:'any'},{name:t('prd'),icon:'📖',color:'#D9A441',goal:null,unit:null,slot:'night'}];
-const APPLINKS=[['Shortcuts','shortcuts://run-shortcut?name='],['Drops','drops://'],['Spotify','spotify://'],['YouTube','youtube://'],['Instagram','instagram://']];
 const hSched=(h,dt)=>{const d=dt instanceof Date?dt:new Date(dt+'T12:00:00');if(h.start_date&&ymd(d)<h.start_date)return false;if(!h.days)return true;return h.days.split(',').map(Number).includes(((d.getDay()+6)%7)+1)};
 const ringPct=(p,c)=>`<svg viewBox="0 0 40 40" class="rsvg"><circle cx="20" cy="20" r="16" class="rb"/><circle cx="20" cy="20" r="16" class="rf" pathLength="100" style="stroke:${c}" stroke-dasharray="${Math.max(0,Math.min(100,Math.round(p*100)))} 100"/></svg>`;
 const METRICS=['none','steps','sleep','exercise','water','mindful'];
@@ -338,10 +369,10 @@ function habitHTML(){
   const today=ymd(new Date()),act=habits.filter(h=>!h.archived),arc=habits.filter(h=>h.archived);
   const amt=(h,d)=>hAmtOf(h,d),done=h=>amt(h,today)>=(h.goal||1);
   const streak=h=>{let n=0,d=new Date(),g=0;const ok=dt=>amt(h,ymd(dt))>=(h.goal||1);if(hSched(h,d)&&!ok(d))d.setDate(d.getDate()-1);while(g++<370){if(hSched(h,d)){if(ok(d))n++;else break}d.setDate(d.getDate()-1)}return n};
-  const rowH=h=>{const lk=safeLink(h.link),a=amt(h,today);
+  const rowH=h=>{const a=amt(h,today);
     return `<div class="task" style="--hc:${esc(h.color||'#8A2A21')}"><input type="checkbox" class="pc" style="--pc:${esc(h.color||'#8A2A21')}" data-a="hchk" data-id="${h.id}"${done(h)?' checked':''} aria-label="${t('chk')}">
 <div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b><div class="meta rw">${h.goal?`<span>${a}/${h.goal}${h.unit?' '+esc(h.unit):''}</span>`:''}${h.target_days?`<span>🎯 ${new Set(hlogs.filter(l=>l.habit_id===h.id).map(l=>l.log_date)).size}/${h.target_days}</span>`:''}</div></div>
-<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div>${lk?`<a class="go" href="${esc(lk)}" aria-label="${t('open')}">↗</a>`:''}</div>`};
+<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`};
   const wdays=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d});
   const strip=act.length?`<div class="card wstrip">${wdays.map(d=>{const ds=ymd(d),sc=act.filter(h=>hSched(h,d)),cnt=sc.filter(h=>amt(h,ds)>0).length,pct=sc.length?cnt/sc.length:0,isT=ds===today;
     return `<div class="wd"><span>${WK[lang][(d.getDay()+6)%7]}</span>${pct>=1?`<span class="hd2 full${isT?' tdy':''}" style="background:var(--ac)">${d.getDate()}</span>`:`<span class="hd2${isT?' tdy':''}">${ringPct(pct,'#8A2A21')}<b>${d.getDate()}</b></span>`}</div>`}).join('')}</div>`:'';
@@ -392,7 +423,7 @@ function openHabit(id){
   dlg.innerHTML=`${id?'':`<label>${t('presets')}</label><div class="pchips">${PRESETS().map((p,i)=>`<button type="button" class="pchip" data-pre="${i}">${p.icon} ${esc(p.name)}</button>`).join('')}</div>`}<textarea id="h-n" rows="1" maxlength="40" placeholder="${t('habitName')}" aria-label="${t('habitName')}">${esc(x.name||'')}</textarea>
 <label>${t('iconL')}</label><div class="igrid">${HICONS.map(e=>`<button type="button" class="icob${(x.icon||'')===e?' on':''}" data-ic="${e}">${e}</button>`).join('')}</div>
 <div class="tbar"><input id="h-i" type="text" maxlength="8" placeholder="😀" value="${esc(x.icon||'')}" aria-label="${t('emoji')}"><input id="h-c" type="color" value="${esc(x.color||'#8A2A21')}" aria-label="${t('color')}"></div>
-<label for="h-l">${t('appLink')}</label><input id="h-l" type="text" placeholder="drops:// 或 shortcuts://run-shortcut?name=…" value="${esc(x.link||'')}"><div class="pchips">${APPLINKS.map(([n,u])=>`<button type="button" class="pchip" data-al="${u}">${n}</button>`).join('')}</div><p class="meta">${t('linkHint')}</p>
+
 <div class="frow"><span>${t('goal')}</span><span class="seg"><button type="button" id="g-chk" class="segbtn">${t('gt_check')}</button><button type="button" id="g-amt" class="segbtn">${t('gt_amt')}</button></span></div>
 <div class="frow" id="g-row"><span>${t('goal')} · ${t('unit')}</span><span class="dt"><input id="h-g" type="number" min="0" step="any" style="width:90px;margin:0" value="${x.goal==null?'':esc(String(x.goal))}" aria-label="${t('goal')}"><input id="h-u" type="text" maxlength="4" style="width:64px;margin:0" placeholder="${t('unit')}" value="${esc(x.unit||'')}" aria-label="${t('unit')}"></span></div>
 <div class="frow"><span>${t('td')}</span><span class="dt"><select id="h-td" style="margin:0"><option value="">${t('tdF')}</option>${[7,21,30,100,365].map(v=>`<option value="${v}">${v}</option>`).join('')}<option value="c">${t('tdC')}</option></select><input id="h-tdc" type="number" min="1" max="999" style="width:70px;margin:0;display:none"></span></div>
@@ -406,7 +437,6 @@ function openHabit(id){
   const tdSel=$('h-td'),tdInp=$('h-tdc');
   if(x.target_days){if([7,21,30,100,365].includes(x.target_days))tdSel.value=String(x.target_days);else{tdSel.value='c';tdInp.style.display='';tdInp.value=x.target_days}}
   tdSel.onchange=()=>{tdInp.style.display=tdSel.value==='c'?'':'none'};
-  dlg.querySelectorAll('[data-al]').forEach(b=>b.onclick=()=>{$('h-l').value=b.dataset.al;$('h-l').focus()});
   dlg.querySelectorAll('[data-pre]').forEach(b=>b.onclick=()=>{const p=PRESETS()[+b.dataset.pre];$('h-n').value=p.name;$('h-i').value=p.icon;$('h-c').value=p.color;dlg.querySelectorAll('[data-ic]').forEach(z=>z.classList.toggle('on',z.dataset.ic===p.icon));gAmt=p.goal!=null;if(gAmt){$('h-g').value=p.goal;$('h-u').value=p.unit||''}paintG();const sl=$('h-sl');if(sl)sl.value=p.slot});
   let selDays=x.days?x.days.split(',').map(Number):[1,2,3,4,5,6,7];
   const paintD=()=>dlg.querySelectorAll('[data-dc]').forEach(b=>b.classList.toggle('on',selDays.includes(+b.dataset.dc)));
@@ -415,7 +445,7 @@ function openHabit(id){
   dlg.querySelectorAll('[data-ic]').forEach(b=>b.onclick=()=>{$('h-i').value=b.dataset.ic;dlg.querySelectorAll('[data-ic]').forEach(z=>z.classList.toggle('on',z===b))});
   $('h-s').onclick=async()=>{
     const name=$('h-n').value.trim();if(!name)return;
-    const v={name,icon:$('h-i').value.trim()||null,color:$('h-c').value,link:$('h-l').value.trim()||null,goal:gAmt&&$('h-g').value!==''?+$('h-g').value:null,unit:gAmt?($('h-u').value.trim()||null):null,target_days:tdSel.value==='c'?(tdInp.value?+tdInp.value:null):(tdSel.value===''?null:+tdSel.value),slot:$('h-sl').value,days:selDays.slice().sort((a,b)=>a-b).join(','),start_date:$('h-sd').value||null};
+    const v={name,icon:$('h-i').value.trim()||null,color:$('h-c').value,goal:gAmt&&$('h-g').value!==''?+$('h-g').value:null,unit:gAmt?($('h-u').value.trim()||null):null,target_days:tdSel.value==='c'?(tdInp.value?+tdInp.value:null):(tdSel.value===''?null:+tdSel.value),slot:$('h-sl').value,days:selDays.slice().sort((a,b)=>a-b).join(','),start_date:$('h-sd').value||null};
     if(id){const{error}=await sb.from('habits').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('habits').insert(v).select().single();if(error)return alert(error.message);habits.push(data)}
     dlg.close();render();
@@ -430,13 +460,13 @@ async function hToggle(id,on){
   else{const{error}=await sb.from('habit_logs').delete().eq('habit_id',id).eq('log_date',today);if(error){alert(error.message);return render()}hlogs=hlogs.filter(l=>!(l.habit_id===id&&l.log_date===today))}
   render();
 }
-function openIdea(id){
+function openIdea(id,parentId){
   const dlg=$('dlg'),x=id?ideas.find(i=>i.id===id):{color:'#D9A441'};
   dlg.innerHTML=`<textarea id="i-t" rows="1" maxlength="100" placeholder="${t('ideaTitle')}" aria-label="${t('ideaTitle')}">${esc(x.title||'')}</textarea><textarea id="i-b" rows="8" placeholder="${t('ideaBody')}" aria-label="${t('ideaBody')}">${esc(x.body||'')}</textarea><div class="tbar"><input id="i-c" type="color" value="${esc(x.color||'#D9A441')}" aria-label="${t('color')}">${id?`<button class="sec" id="i-d">${t('del')}</button>`:''}<button class="pri snd" id="i-s" aria-label="${t('save')}">↑</button></div>`;
   $('i-s').onclick=async()=>{
     const v={title:$('i-t').value.trim(),body:$('i-b').value.trim(),color:$('i-c').value};if(!v.title&&!v.body)return;
     if(id){const{error}=await sb.from('ideas').update({...v,updated_at:new Date().toISOString()}).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
-    else{const{data,error}=await sb.from('ideas').insert(v).select().single();if(error)return alert(error.message);ideas.push(data)}
+    else{const{data,error}=await sb.from('ideas').insert({...v,parent_id:parentId||null}).select().single();if(error)return alert(error.message);ideas.push(data)}
     dlg.close();render();
   };
   if($('i-d'))$('i-d').onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('ideas').delete().eq('id',id);if(error)return alert(error.message);ideas=ideas.filter(i=>i.id!==id);dlg.close();render()};
@@ -516,6 +546,8 @@ $('app').addEventListener('click',async e=>{
   else if(a==='eedit')openEvent(id)
   else if(a==='nle')openList('event')
   else if(a==='idea')openIdea(id)
+  else if(a==='iview'){iview=b.dataset.v;render()}
+  else if(a==='node')openNode(id);
   else if(a==='add')openSheet()
   else if(a==='edit')openSheet(id)
   else if(a==='nl'){dr=false;render();openList()}
