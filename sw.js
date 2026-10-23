@@ -1,4 +1,4 @@
-const C='plan-v6';
+const C='plan-v7';
 self.addEventListener('install',()=>self.skipWaiting());
 self.addEventListener('activate',e=>e.waitUntil(clients.claim()));
 self.addEventListener('fetch',e=>{
