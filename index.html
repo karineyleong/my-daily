@@ -85,6 +85,16 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .thumb{width:100%;max-height:160px;object-fit:cover;border-radius:10px;margin-top:10px}dialog{max-height:90vh;overflow:auto}
 .hasbg h1{background:var(--card);padding:4px 14px;border-radius:14px;border-bottom:0}
 .cm b{font-family:var(--fd);letter-spacing:.05em}
+.frow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--ln)}
+.frow select{width:auto;margin:0}
+.frow .dt{display:flex;gap:6px}
+.frow .dt input{width:auto;margin:0}
+.sw{width:48px!important;height:27px;appearance:none;-webkit-appearance:none;background:var(--ln);border:0;border-radius:99px;position:relative;cursor:pointer;transition:.2s;margin:0!important;flex:none;padding:0}
+.sw:checked{background:var(--ac)}
+.sw::after{content:'';position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;transition:.2s}
+.sw:checked::after{left:24px}
+.fchips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+.fchip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 ::selection{background:rgba(217,164,65,.45)}
 </style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v10)</p></main><dialog id="dlg"></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -116,6 +126,7 @@ Object.assign(T.ja,{bgImg:'背景画像',bgHint:'イラストをアプリの背�
 Object.assign(T.en,{bgImg:'Background image',bgHint:'Upload your illustration as the app background (resized automatically).',bgPick:'Choose image',bgDel:'Remove background',bgErr:'Could not read this image.',exportImg:"Export this month's events as image",share:'Share',shareHint:'Share it directly, or long-press the image to save.'});
 Object.assign(T.zh,{ctoday:'今日',arc:'封存',arcSec:'已封存',unarc:'取消封存'});Object.assign(T.ja,{ctoday:'今日',arc:'アーカイブ',arcSec:'アーカイブ済み',unarc:'アーカイブ解除'});Object.assign(T.en,{ctoday:'Today',arc:'Archive',arcSec:'Archived',unarc:'Restore'});
 Object.assign(T.zh,{allDay:'全日',r_120:'2 小時前'});Object.assign(T.ja,{allDay:'終日',r_120:'2時間前'});Object.assign(T.en,{allDay:'All day',r_120:'2 hours before'});
+Object.assign(T.zh,{rpt:'重複',rp_none:'不重複',rp_d:'每日',rp_w:'每週',rp_m:'每月',rp_y:'每年'});Object.assign(T.ja,{rpt:'繰り返し',rp_none:'なし',rp_d:'毎日',rp_w:'毎週',rp_m:'毎月',rp_y:'毎年'});Object.assign(T.en,{rpt:'Repeat',rp_none:'None',rp_d:'Daily',rp_w:'Weekly',rp_m:'Monthly',rp_y:'Yearly'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#8A2A21',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -204,17 +215,33 @@ const LOC={zh:'zh-TW',ja:'ja-JP',en:'en-US'},WK={zh:'一二三四五六日',ja:'
 const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/>',todo:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l3 3 5-6"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',idea:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'};
 const tabbar=()=>`<nav class="tabs">${[['habit','habits'],['todo','tdo'],['cal','calendar'],['idea','brainstorm'],['set','settings']].map(([k,n])=>`<button data-a="tab" data-v="${k}" class="${tab===k?'on':''}" aria-label="${t(n)}"${tab===k?' aria-current="page"':''}><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></button>`).join('')}</nav>`;
 const REM=[['','r_none'],['0','r_0'],['10','r_10'],['30','r_30'],['60','r_60'],['120','r_120'],['1440','r_1440']];
+const RPT=[['none','rp_none'],['daily','rp_d'],['weekly','rp_w'],['monthly','rp_m'],['yearly','rp_y']];
 const anyCat=id=>cats.find(c=>c.id===id)||ecats.find(c=>c.id===id);
 const hm=d=>new Date(d).toLocaleTimeString(LOC[lang],{hour:'2-digit',minute:'2-digit'});
 function evRow(e){
   const c=ecats.find(x=>x.id===e.category_id),map=e.location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}`:'';
-  return `<div class="task ev" style="--hc:${esc(c&&c.color||'#8FA382')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}"><b>${esc(e.title||'')}</b><div class="meta rw"><span>${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}</span><span>${c?esc((c.icon||'')+' '+c.name):''}</span></div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}</div>`;
+  return `<div class="task ev" style="--hc:${esc(c&&c.color||'#8FA382')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}"><b>${esc(e.title||'')}</b><div class="meta rw"><span>${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}</span><span>${c?esc((c.icon||'')+' '+c.name):''}</span>${e.repeat_kind&&e.repeat_kind!=='none'?'<span>🔁</span>':''}</div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}${e.url&&safeLink(e.url)?`<a class="go" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener" aria-label="URL">🔗</a>`:''}</div>`;
 }
 function calHTML(){
   const y=cm.getFullYear(),m=cm.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),pn=new Date(y,m,0).getDate();
   const dk=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate(),by={},mark=(d,x)=>{const k=dk(d);(by[k]=by[k]||[]).push(x)};
   tasks.forEach(x=>{if(!x.done&&x.due_at)mark(new Date(x.due_at),x)});
-  events.forEach(e=>{const en=new Date(e.end_at||e.start_at);for(let d=sod(e.start_at),i=0;d<=en&&i<42;d.setDate(d.getDate()+1),i++)mark(new Date(d),e)});
+  const w0=new Date(y,m-1,1),w1=new Date(y,m+2,0);
+  const shift=(d0,k,kind)=>{const d=new Date(d0);if(kind==='daily')d.setDate(d.getDate()+k);else if(kind==='weekly')d.setDate(d.getDate()+7*k);else if(kind==='monthly')d.setMonth(d.getMonth()+k);else if(kind==='yearly')d.setFullYear(d.getFullYear()+k);return d};
+  events.forEach(e=>{
+    const st0=new Date(e.start_at),dur=(e.end_at?+new Date(e.end_at):+st0)-+st0,kind=e.repeat_kind||'none';
+    let k0=0;
+    if(kind==='daily')k0=Math.max(0,Math.floor((w0-st0)/864e5)-1);
+    else if(kind==='weekly')k0=Math.max(0,Math.floor((w0-st0)/(7*864e5))-1);
+    else if(kind==='monthly')k0=Math.max(0,(w0.getFullYear()-st0.getFullYear())*12+(w0.getMonth()-st0.getMonth())-1);
+    else if(kind==='yearly')k0=Math.max(0,w0.getFullYear()-st0.getFullYear()-1);
+    for(let k=k0;k<k0+600;k++){
+      if(k>0&&kind==='none')break;
+      const os=shift(st0,k,kind);if(os>w1)break;
+      const oe=new Date(+os+dur);if(oe<w0)continue;
+      for(let d=sod(os),i=0;d<=oe&&i<42;d.setDate(d.getDate()+1),i++)mark(new Date(d),e);
+    }
+  });
   const chip=(x,dt)=>{
     if(x.start_at){const c=ecats.find(z=>z.id===x.category_id),s0=sod(x.start_at),e2=sod(x.end_at||x.start_at),cls=s0<dt&&dt<e2?' mid':s0<dt?' en':e2>dt?' st':'';
       return `<span class="chp${cls}" style="--c:${esc(c&&c.color||'#8A2A21')}">${esc(x.title||'')}</span>`}
@@ -234,22 +261,31 @@ function calHTML(){
 }
 function openEvent(id){
   const dlg=$('dlg'),b=new Date(cs);b.setHours(9,0,0,0);
-  const x=id?events.find(e=>e.id===id):{start_at:b.toISOString(),end_at:new Date(+b+36e5).toISOString(),category_id:ecats[0]?ecats[0].id:null,remind_min:null,all_day:false};
-  dlg.innerHTML=`<textarea id="e-t" rows="1" maxlength="100" placeholder="${t('evTitle')}" aria-label="${t('evTitle')}">${esc(x.title||'')}</textarea>
-<div class="row" style="align-items:center;gap:8px"><input type="checkbox" id="e-a" style="width:auto;margin:0"${x.all_day?' checked':''}><label for="e-a" style="margin:0">${t('allDay')}</label></div>
-<label for="e-s">${t('start')}</label><input id="e-s" type="${x.all_day?'date':'datetime-local'}" value="${x.all_day?toL(x.start_at).slice(0,10):toL(x.start_at)}"><label for="e-e">${t('end')}</label><input id="e-e" type="${x.all_day?'date':'datetime-local'}" value="${x.end_at?(x.all_day?toL(x.end_at).slice(0,10):toL(x.end_at)):''}">
-<label for="e-l">${t('place')}</label><input id="e-l" type="text" maxlength="120" placeholder="${t('placeHint')}" value="${esc(x.location||'')}">
-<div class="tbar"><select id="e-c" aria-label="${t('cat')}"><option value="">${t('noCat')}</option>${ecats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc((c.icon||'')+' '+c.name)}</option>`).join('')}</select><select id="e-r" aria-label="${t('remind')}">${REM.map(([v,k])=>`<option value="${v}"${String(x.remind_min==null?'':x.remind_min)===v?' selected':''}>🔔 ${t(k)}</option>`).join('')}</select></div>
-<textarea id="e-n" rows="2" placeholder="${t('note')}" aria-label="${t('note')}">${esc(x.note||'')}</textarea>
+  const x=id?events.find(e=>e.id===id):{start_at:b.toISOString(),end_at:new Date(+b+36e5).toISOString(),category_id:ecats[0]?ecats[0].id:null,remind_min:null,all_day:false,repeat_kind:'none'};
+  const L0=toL(x.start_at),L1=x.end_at?toL(x.end_at):L0;
+  dlg.innerHTML=`<textarea id="e-t" rows="1" maxlength="100" style="font-size:20px;font-weight:700" placeholder="${t('evTitle')}" aria-label="${t('evTitle')}">${esc(x.title||'')}</textarea>
+<div class="frow"><span>🏷 ${t('cat')}</span><select id="e-c" aria-label="${t('cat')}"><option value="">${t('noCat')}</option>${ecats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc((c.icon||'')+' '+c.name)}</option>`).join('')}</select></div>
+<div class="frow"><span>${t('allDay')}</span><input type="checkbox" id="e-a" class="sw"${x.all_day?' checked':''} aria-label="${t('allDay')}"></div>
+<div class="frow"><span>${t('start')}</span><span class="dt"><input type="date" id="e-sd" value="${L0.slice(0,10)}" aria-label="${t('start')}"><input type="time" id="e-st" value="${L0.slice(11,16)}"></span></div>
+<div class="frow"><span>${t('end')}</span><span class="dt"><input type="date" id="e-ed" value="${L1.slice(0,10)}" aria-label="${t('end')}"><input type="time" id="e-et" value="${L1.slice(11,16)}"></span></div>
+<div class="frow"><span>🔔 ${t('remind')}</span><select id="e-r" aria-label="${t('remind')}">${REM.map(([v,k])=>`<option value="${v}"${String(x.remind_min==null?'':x.remind_min)===v?' selected':''}>${t(k)}</option>`).join('')}</select></div>
+<div class="frow"><span>🔁 ${t('rpt')}</span><select id="e-rp" aria-label="${t('rpt')}">${RPT.map(([v,k])=>`<option value="${v}"${(x.repeat_kind||'none')===v?' selected':''}>${t(k)}</option>`).join('')}</select></div>
+<div class="fchips"><button type="button" class="sec fchip" id="c-loc">📍 ${t('place')}</button><button type="button" class="sec fchip" id="c-url">🔗 URL</button><button type="button" class="sec fchip" id="c-note">📝 ${t('note')}</button></div>
+<div id="w-loc"><label for="e-l">${t('place')}</label><input id="e-l" type="text" maxlength="120" placeholder="${t('placeHint')}" value="${esc(x.location||'')}"></div>
+<div id="w-url"><label for="e-u">URL</label><input id="e-u" type="url" placeholder="https://…" value="${esc(x.url||'')}"></div>
+<div id="w-note"><label for="e-n">${t('note')}</label><textarea id="e-n" rows="3">${esc(x.note||'')}</textarea></div>
 <div class="tbar">${id?`<button class="sec" id="e-d">${t('del')}</button>`:''}<button class="pri snd" id="e-ok" aria-label="${t('save')}">↑</button></div>`;
-  $('e-a').onchange=e=>{const on=e.target.checked;[['e-s','T09:00'],['e-e','T10:00']].forEach(([id,hh])=>{const el=$(id);el.type=on?'date':'datetime-local';if(el.value)el.value=on?el.value.slice(0,10):el.value+hh})};
+  const syncA=()=>{const on=$('e-a').checked;$('e-st').style.display=on?'none':'';$('e-et').style.display=on?'none':''};
+  $('e-a').onchange=syncA;syncA();
+  const secW=(btn,wrap,has)=>{const w=$(wrap);w.style.display=has?'':'none';if(has)$(btn).classList.add('on');$(btn).onclick=()=>{const open=w.style.display==='none';w.style.display=open?'':'none';$(btn).classList.toggle('on',open)}};
+  secW('c-loc','w-loc',!!x.location);secW('c-url','w-url',!!x.url);secW('c-note','w-note',!!x.note);
   $('e-ok').onclick=async()=>{
-    const title=$('e-t').value.trim(),s=$('e-s').value;if(!title||!s)return;
-    const ad=$('e-a').checked;let st,en;
-    if(ad){st=new Date(s+'T00:00');en=new Date(($('e-e').value||s)+'T23:59')}
-    else{st=new Date(s);en=$('e-e').value?new Date($('e-e').value):null}
+    const title=$('e-t').value.trim(),sd=$('e-sd').value;if(!title||!sd)return;
+    const ad=$('e-a').checked,ed=$('e-ed').value||sd;
+    const st=new Date(sd+'T'+(ad?'00:00':($('e-st').value||'09:00')));
+    const en=ad?new Date(ed+'T23:59'):($('e-et').value?new Date(ed+'T'+$('e-et').value):null);
     const r=$('e-r').value;
-    const v={title,start_at:st.toISOString(),end_at:en&&en>=st?en.toISOString():null,all_day:ad,location:$('e-l').value.trim()||null,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:r===''?null:+r,remind_at:r===''?null:new Date(+st-r*6e4).toISOString()};
+    const v={title,start_at:st.toISOString(),end_at:en&&en>=st?en.toISOString():null,all_day:ad,location:$('e-l').value.trim()||null,url:$('e-u').value.trim()||null,repeat_kind:$('e-rp').value,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:r===''?null:+r,remind_at:r===''?null:new Date(+st-r*6e4).toISOString()};
     if(id){const{error}=await sb.from('events').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('events').insert(v).select().single();if(error)return alert(error.message);events.push(data);cs=new Date(st)}
     dlg.close();render();
