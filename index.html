@@ -54,14 +54,25 @@ textarea{width:100%;padding:10px;font:inherit;border:1px solid var(--ln);border-
 .di{display:flex;align-items:center;gap:12px;width:100%;border:0;border-radius:12px;background:none;color:var(--ink);padding:12px;text-align:left}.di.on{background:color-mix(in srgb,var(--ac) 22%,transparent)}.di .nm{flex:1}.di i{font-style:normal;color:var(--mut);font-size:14px}.ic2{width:26px;text-align:center}
 .dr hr{border:0;border-top:1px solid var(--ln);margin:8px 0}.df{margin-top:12px}.df button{width:100%}
 .row input[type=text]{flex:1;min-width:0;width:auto}.row .em{flex:none;width:56px;text-align:center}.row input[type=color]{flex:none}.row .sec[data-a=cdel]{flex:none}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v5)</p></main><dialog id="dlg"></dialog>
+main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(92vw,400px);display:flex;gap:4px;padding:6px;background:var(--card);border:1px solid var(--ln);border-radius:30px;z-index:10;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.tabs button{flex:1;display:flex;justify-content:center;border:0;border-radius:24px;background:none;color:var(--mut);padding:10px}.tabs button.on{background:color-mix(in srgb,var(--ac) 24%,transparent);color:var(--ink)}
+.cm{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.cw,.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.cw{font-size:13px;color:var(--mut);margin-bottom:4px}
+.cd{aspect-ratio:1;padding:0;border:0;border-radius:50%;background:none;color:var(--ink);position:relative;font-size:15px}.cd.on{background:var(--ac);color:var(--on)}.cd.td:not(.on){box-shadow:inset 0 0 0 1.5px var(--ac)}
+.cd i{position:absolute;bottom:5px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--ac)}.cd.on i{background:var(--on)}
+.ideas{columns:2;column-gap:12px}.idea{break-inside:avoid;margin-bottom:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--ln);border-top:4px solid var(--ic);background:color-mix(in srgb,var(--ic) 14%,var(--card))}.idea b{display:block;overflow-wrap:anywhere}.idea p{margin:4px 0 0;font-size:14px;color:var(--mut);white-space:pre-wrap;overflow-wrap:anywhere}
+.dots{display:flex;gap:5px;margin-top:6px}.dots u{width:10px;height:10px;border-radius:50%;background:var(--ln)}.dots u.on{background:var(--hc,var(--ac))}
+.go{align-self:center;font-size:20px;line-height:1;text-decoration:none;color:var(--ac);padding:8px 12px;border:1px solid var(--ln);border-radius:10px}
+.tabs button{padding:10px 6px}
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v7)</p></main><dialog id="dlg"></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 const showErr=m=>document.getElementById('app').insertAdjacentHTML('beforeend','<p style="padding:16px">⚠ '+String(m).replace(/</g,'&lt;')+'</p>');
 addEventListener('error',e=>showErr(e.message));addEventListener('unhandledrejection',e=>showErr(e.reason&&e.reason.message||e.reason));
 const SB_URL='https://gogkijhkxbdinddmooli.supabase.co';
 const SB_KEY='sb_publishable_T3jL6eAMlJ72rRk3lOq0tA_dePoGFIs';
-const sb=supabase.createClient(SB_URL,SB_KEY);
+const sb=supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true}});
 const T={
 zh:{login:'登入',signup:'註冊',email:'電子郵件',pw:'密碼（6 字元以上）',out:'登出',lang:'語言',name:'你的名字（顯示為「名字’s Daily」）',color:'介面顏色',hi:'已登入',next:'待辦與行程功能會在下一版加入。',errLogin:'無法登入，請確認電子郵件和密碼。',errSign:'無法註冊：',okSign:'註冊完成。如果收到確認信，請先點信中連結再登入。',saved:'已儲存',todo:'待辦',settings:'設定',all:'全部',addTask:'新增待辦',sub:'子項',edit:'編輯',del:'刪除',empty:'還沒有待辦，按上方按鈕新增。',title:'標題',imp:'重要度',impH:'高',impM:'中',impL:'低',due:'截止時間',cat:'類別',prog:'進度',save:'儲存',cancel:'取消',confirmDel:'確定要刪除嗎？子項目也會一起刪除。',catMgr:'類別管理',newCat:'新增類別',done:'完成'},
 ja:{login:'ログイン',signup:'新規登録',email:'メールアドレス',pw:'パスワード（6文字以上）',out:'ログアウト',lang:'言語',name:'あなたの名前（「名前’s Daily」と表示）',color:'テーマカラー',hi:'ログイン中',next:'ToDoと予定は次のバージョンで追加します。',errLogin:'ログインできません。メールとパスワードを確認してください。',errSign:'登録できません：',okSign:'登録しました。確認メールが届いた場合は、リンクを開いてからログインしてください。',saved:'保存しました',todo:'ToDo',settings:'設定',all:'すべて',addTask:'ToDoを追加',sub:'子',edit:'編集',del:'削除',empty:'ToDoはまだありません。上のボタンから追加してください。',title:'タイトル',imp:'重要度',impH:'高',impM:'中',impL:'低',due:'期限',cat:'カテゴリ',prog:'進捗',save:'保存',cancel:'キャンセル',confirmDel:'削除しますか？子項目も一緒に削除されます。',catMgr:'カテゴリ管理',newCat:'カテゴリを追加',done:'完了'},
@@ -69,6 +80,12 @@ en:{login:'Log in',signup:'Sign up',email:'Email',pw:'Password (6+ characters)',
 Object.assign(T.zh,{today:'今天',tomorrow:'明天',completed:'已完成',overdue:'已逾期',postpone:'延期',inbox:'收件匣',ph:'想做什麼？',impN0:'無優先度',newList:'新增清單',listName:'清單名稱',emoji:'圖示（表情符號）',menu:'選單',chk:'完成',lists:'清單',doneEmpty:'還沒有完成的待辦。',note:'備註',back:'返回'});
 Object.assign(T.ja,{today:'今日',tomorrow:'明日',completed:'完了',overdue:'遅延',postpone:'延期する',inbox:'受信トレイ',ph:'何をしたいですか？',impN0:'優先度なし',newList:'リストを追加',listName:'リスト名',emoji:'アイコン（絵文字）',menu:'メニュー',chk:'完了',lists:'リスト',doneEmpty:'完了したToDoはありません。',note:'メモ',back:'戻る'});
 Object.assign(T.en,{today:'Today',tomorrow:'Tomorrow',completed:'Completed',overdue:'Overdue',postpone:'Postpone',inbox:'Inbox',ph:'What do you want to do?',impN0:'No priority',newList:'Add list',listName:'List name',emoji:'Icon (emoji)',menu:'Menu',chk:'Done',lists:'Lists',doneEmpty:'Nothing completed yet.',note:'Note',back:'Back'});
+Object.assign(T.zh,{calendar:'行事曆',brainstorm:'Brain Storm',tdo:'待辦',events:'行程',soon:'行程功能下一步加入（時間、地點、Google 地圖、提醒）。',noDue:'這一天沒有待辦。',newIdea:'新想法',ideaTitle:'標題',ideaBody:'寫下你的想法…',ideaEmpty:'還沒有想法，按右下角的 ＋ 記下第一個。',ideaSql:'Brain Storm 的資料表還沒建立，請先在 Supabase 執行 SQL。'});
+Object.assign(T.ja,{calendar:'カレンダー',brainstorm:'ブレスト',tdo:'ToDo',events:'予定',soon:'予定機能は次のステップで追加します（時間・場所・Googleマップ・通知）。',noDue:'この日のToDoはありません。',newIdea:'新しいアイデア',ideaTitle:'タイトル',ideaBody:'アイデアを書く…',ideaEmpty:'アイデアはまだありません。右下の＋で最初の1つを追加。',ideaSql:'ブレストのテーブルが未作成です。先にSupabaseでSQLを実行してください。'});
+Object.assign(T.en,{calendar:'Calendar',brainstorm:'Brain storm',tdo:'To-do',events:'Events',soon:'Events (time, place, Google Maps, reminders) come in the next step.',noDue:'No tasks on this day.',newIdea:'New idea',ideaTitle:'Title',ideaBody:'Write your idea…',ideaEmpty:'No ideas yet. Tap ＋ to add the first one.',ideaSql:'The Brain storm table is missing. Run the SQL in Supabase first.'});
+Object.assign(T.zh,{habits:'習慣',newHabit:'新習慣',habitName:'習慣名稱',appLink:'App 連結（選填）',linkHint:'點 ↗ 會跳到該 App。例如 shortcuts://run-shortcut?name=捷徑名稱 可開啟任何 App。',metric:'Apple 健康數據（之後連動）',goal:'目標值',open:'開啟',habitEmpty:'還沒有習慣，按右下角的 ＋ 新增第一個。',habitSql:'習慣的資料表還沒補齊，請先在 Supabase 執行 SQL。',m_none:'不連動',m_steps:'步數',m_sleep:'睡眠（小時）',m_exercise:'運動（分鐘）',m_water:'飲水（毫升）',m_mindful:'正念（分鐘）'});
+Object.assign(T.ja,{habits:'習慣',newHabit:'新しい習慣',habitName:'習慣の名前',appLink:'アプリのリンク（任意）',linkHint:'↗でそのアプリに移動します。例: shortcuts://run-shortcut?name=ショートカット名 で任意のアプリを開けます。',metric:'Appleヘルスケア（後で連携）',goal:'目標値',open:'開く',habitEmpty:'習慣がありません。右下の＋で最初の1つを追加。',habitSql:'習慣のテーブルが未整備です。先にSupabaseでSQLを実行してください。',m_none:'連携しない',m_steps:'歩数',m_sleep:'睡眠（時間）',m_exercise:'運動（分）',m_water:'水分（ml）',m_mindful:'マインドフルネス（分）'});
+Object.assign(T.en,{habits:'Habits',newHabit:'New habit',habitName:'Habit name',appLink:'App link (optional)',linkHint:'Tap ↗ to jump to that app. e.g. shortcuts://run-shortcut?name=ShortcutName can open any app.',metric:'Apple Health data (linked later)',goal:'Goal',open:'Open',habitEmpty:'No habits yet. Tap ＋ to add the first one.',habitSql:'The habits tables are incomplete. Run the SQL in Supabase first.',m_none:'Not linked',m_steps:'Steps',m_sleep:'Sleep (hours)',m_exercise:'Exercise (min)',m_water:'Water (ml)',m_mindful:'Mindful (min)'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#6C8EBF',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -102,7 +119,7 @@ function render(){
     appView();
   }
 }
-let tasks=[],cats=[],view='all',dr=false,ovOpen=true;
+let tasks=[],cats=[],view='all',dr=false,ovOpen=true,tab='todo',ideas=[],ideaErr=null,habits=[],hlogs=[],habitErr=null,cm=new Date(),cs=new Date(),ch=null,lt=null;
 const PC=['#8A96A0','#3B82F6','#F5A524','#E5484D'];
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
 const T0=d=>d?+new Date(d):1e18;
@@ -115,9 +132,10 @@ const tmrP=x=>{if(!x.due_at)return false;const d=new Date(x.due_at),a=nextDay(ne
 const fmt=d=>new Date(d).toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang],{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
 const toL=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
 async function loadData(){
-  const a=await sb.from('tasks').select('*'),b=await sb.from('categories').select('*').eq('kind','task').order('sort_order');
+  const since=new Date();since.setDate(since.getDate()-90);
+  const a=await sb.from('tasks').select('*'),b=await sb.from('categories').select('*').eq('kind','task').order('sort_order'),c=await sb.from('ideas').select('*'),h=await sb.from('habits').select('*').order('created_at'),l=await sb.from('habit_logs').select('*').gte('log_date',ymd(since));
   if(a.error||b.error){alert((a.error||b.error).message);return}
-  tasks=a.data;cats=b.data;
+  tasks=a.data;cats=b.data;ideaErr=c.error;ideas=c.error?[]:c.data;habitErr=h.error||l.error;habits=habitErr?[]:h.data;hlogs=habitErr?[]:l.data;
 }
 const vname=()=>({all:t('all'),today:t('today'),tomorrow:t('tomorrow'),done:t('completed')}[view]||(catOf(view)?esc((catOf(view).icon||'')+' '+catOf(view).name):t('all')));
 function row(x,sub){
@@ -151,9 +169,87 @@ ${cats.map(c=>it(c.id,c.icon||'📁',esc(c.name),n.filter(x=>x.category_id===c.i
 const setHTML=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
 <div class="card"><b>${t('lists')}</b>${cats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#6C8EBF'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="nl">＋ ${t('newList')}</button></div></div>
 <p class="meta">${esc(session.user.email)}</p><div class="top"><button class="sec" data-a="lo">${t('out')}</button></div>`;
+const LOC={zh:'zh-TW',ja:'ja-JP',en:'en-US'},WK={zh:'日一二三四五六',ja:'日月火水木金土',en:'SMTWTFS'};
+const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/>',todo:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l3 3 5-6"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',idea:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'};
+const tabbar=()=>`<nav class="tabs">${[['habit','habits'],['todo','tdo'],['cal','calendar'],['idea','brainstorm'],['set','settings']].map(([k,n])=>`<button data-a="tab" data-v="${k}" class="${tab===k?'on':''}" aria-label="${t(n)}"${tab===k?' aria-current="page"':''}><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></button>`).join('')}</nav>`;
+function calHTML(){
+  const y=cm.getFullYear(),m=cm.getMonth(),first=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate();
+  const dk=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate(),by={};
+  tasks.forEach(x=>{if(!x.done&&x.due_at){const k=dk(new Date(x.due_at));(by[k]=by[k]||[]).push(x)}});
+  let cells='<span></span>'.repeat(first);
+  for(let d=1;d<=n;d++){const k=dk(new Date(y,m,d));cells+=`<button class="cd${dk(cs)===k?' on':''}${dk(new Date())===k?' td':''}" data-a="cday" data-v="${y}-${m}-${d}">${d}${by[k]?'<i></i>':''}</button>`}
+  const list=(by[dk(cs)]||[]).sort(cmp);
+  return `<div class="hd"><h1>${t('calendar')}</h1><span></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
+<div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div></div>
+<div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${list.length?list.map(x=>row(x)).join(''):`<p class="meta">${t('noDue')}</p>`}</div>
+<div class="card"><b>${t('events')}</b><p class="meta">${t('soon')}</p></div>`;
+}
+function ideaHTML(){
+  const list=[...ideas].sort((a,b)=>a.created_at<b.created_at?1:-1);
+  return `<div class="hd"><h1>${t('brainstorm')}</h1><span></span></div>`+(ideaErr?`<div class="card"><p class="meta">${t('ideaSql')}</p></div>`:list.length?`<div class="ideas">${list.map(i=>`<div class="idea" style="--ic:${esc(i.color||'#6C8EBF')}" data-a="idea" data-id="${i.id}"><b>${esc(i.title||'')}</b><p>${esc((i.body||'').slice(0,140))}</p></div>`).join('')}</div>`:`<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`)+(ideaErr?'':`<button class="fab" data-a="nidea" aria-label="${t('newIdea')}">＋</button>`);
+}
 function appView(){
-  if(view==='set'){$('app').innerHTML=`<div class="hd"><h1>${t('settings')}</h1><button class="sec ic" data-a="nav" data-v="all" aria-label="${t('back')}">←</button></div>`+setHTML();bind();return}
-  $('app').innerHTML=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><h1>${vname()}</h1><span></span></div>`+listHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`);
+  let body;
+  if(tab==='set')body=`<div class="hd"><h1>${t('settings')}</h1><span></span></div>`+setHTML();
+  else if(tab==='habit')body=habitHTML();
+  else if(tab==='cal')body=calHTML();
+  else if(tab==='idea')body=ideaHTML();
+  else body=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><h1>${vname()}</h1><span></span></div>`+listHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`);
+  $('app').innerHTML=body+tabbar();
+  if(tab==='set')bind();
+}
+const pad=n=>String(n).padStart(2,'0'),ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const safeLink=u=>/^(?!javascript:|data:|vbscript:)[a-z][a-z0-9+.-]*:/i.test((u||'').trim())?u.trim():'';
+const METRICS=['none','steps','sleep','exercise','water','mindful'];
+function habitHTML(){
+  const today=ymd(new Date()),has=(h,d)=>hlogs.some(l=>l.habit_id===h.id&&l.log_date===d),done=h=>has(h,today);
+  const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return ymd(d)});
+  const streak=h=>{let n=0,d=new Date();if(!done(h))d.setDate(d.getDate()-1);while(has(h,ymd(d))){n++;d.setDate(d.getDate()-1)}return n};
+  const rows=habits.map(h=>{const lk=safeLink(h.link),m=h.metric&&h.metric!=='none';
+    return `<div class="task" style="--hc:${esc(h.color||'#6C8EBF')}"><input type="checkbox" class="pc" style="--pc:${esc(h.color||'#6C8EBF')}" data-a="hchk" data-id="${h.id}"${done(h)?' checked':''} aria-label="${t('chk')}">
+<div class="tt" data-a="hedit" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b><div class="meta rw"><span>🔥 ${streak(h)}</span>${m?`<span>🔗 ${t('m_'+h.metric)}${h.goal?' ≥ '+esc(String(h.goal)):''}</span>`:''}</div><div class="dots">${days.map(d=>`<u class="${has(h,d)?'on':''}"></u>`).join('')}</div></div>
+${lk?`<a class="go" href="${esc(lk)}" aria-label="${t('open')}">↗</a>`:''}</div>`}).join('');
+  const n=habits.filter(done).length;
+  return `<div class="hd"><h1>${t('habits')}</h1><span class="meta">${n}/${habits.length}</span></div>`+(habitErr?`<div class="card"><p class="meta">${t('habitSql')}</p></div>`:habits.length?`<div class="card">${rows}</div>`:`<div class="card"><p class="meta">${t('habitEmpty')}</p></div>`)+(habitErr?'':`<button class="fab" data-a="nhabit" aria-label="${t('newHabit')}">＋</button>`);
+}
+function openHabit(id){
+  const dlg=$('dlg'),x=id?habits.find(h=>h.id===id):{color:'#6C8EBF',metric:'none'};
+  dlg.innerHTML=`<textarea id="h-n" rows="1" maxlength="40" placeholder="${t('habitName')}" aria-label="${t('habitName')}">${esc(x.name||'')}</textarea>
+<div class="tbar"><input id="h-i" type="text" maxlength="8" placeholder="😀" value="${esc(x.icon||'')}" aria-label="${t('emoji')}"><input id="h-c" type="color" value="${esc(x.color||'#6C8EBF')}" aria-label="${t('color')}"></div>
+<label for="h-l">${t('appLink')}</label><input id="h-l" type="text" placeholder="shortcuts://run-shortcut?name=…" value="${esc(x.link||'')}"><p class="meta">${t('linkHint')}</p>
+<label for="h-m">${t('metric')}</label><div class="tbar"><select id="h-m">${METRICS.map(m=>`<option value="${m}"${x.metric===m?' selected':''}>${t('m_'+m)}</option>`).join('')}</select><input id="h-g" type="number" min="0" step="any" placeholder="${t('goal')}" value="${x.goal==null?'':esc(String(x.goal))}" aria-label="${t('goal')}"></div>
+<div class="tbar">${id?`<button class="sec" id="h-d">${t('del')}</button>`:''}<button class="pri snd" id="h-s" aria-label="${t('save')}">↑</button></div>`;
+  $('h-s').onclick=async()=>{
+    const name=$('h-n').value.trim();if(!name)return;
+    const v={name,icon:$('h-i').value.trim()||null,color:$('h-c').value,link:$('h-l').value.trim()||null,metric:$('h-m').value,goal:$('h-g').value===''?null:+$('h-g').value};
+    if(id){const{error}=await sb.from('habits').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
+    else{const{data,error}=await sb.from('habits').insert(v).select().single();if(error)return alert(error.message);habits.push(data)}
+    dlg.close();render();
+  };
+  if($('h-d'))$('h-d').onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('habits').delete().eq('id',id);if(error)return alert(error.message);habits=habits.filter(h=>h.id!==id);hlogs=hlogs.filter(l=>l.habit_id!==id);dlg.close();render()};
+  dlg.showModal();$('h-n').focus();
+}
+async function hToggle(id,on){
+  const today=ymd(new Date());
+  if(on){const{data,error}=await sb.from('habit_logs').insert({habit_id:id,log_date:today}).select().single();if(error){alert(error.message);return render()}hlogs.push(data)}
+  else{const{error}=await sb.from('habit_logs').delete().eq('habit_id',id).eq('log_date',today);if(error){alert(error.message);return render()}hlogs=hlogs.filter(l=>!(l.habit_id===id&&l.log_date===today))}
+  render();
+}
+function openIdea(id){
+  const dlg=$('dlg'),x=id?ideas.find(i=>i.id===id):{color:'#6C8EBF'};
+  dlg.innerHTML=`<textarea id="i-t" rows="1" maxlength="100" placeholder="${t('ideaTitle')}" aria-label="${t('ideaTitle')}">${esc(x.title||'')}</textarea><textarea id="i-b" rows="8" placeholder="${t('ideaBody')}" aria-label="${t('ideaBody')}">${esc(x.body||'')}</textarea><div class="tbar"><input id="i-c" type="color" value="${esc(x.color||'#6C8EBF')}" aria-label="${t('color')}">${id?`<button class="sec" id="i-d">${t('del')}</button>`:''}<button class="pri snd" id="i-s" aria-label="${t('save')}">↑</button></div>`;
+  $('i-s').onclick=async()=>{
+    const v={title:$('i-t').value.trim(),body:$('i-b').value.trim(),color:$('i-c').value};if(!v.title&&!v.body)return;
+    if(id){const{error}=await sb.from('ideas').update({...v,updated_at:new Date().toISOString()}).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
+    else{const{data,error}=await sb.from('ideas').insert(v).select().single();if(error)return alert(error.message);ideas.push(data)}
+    dlg.close();render();
+  };
+  if($('i-d'))$('i-d').onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('ideas').delete().eq('id',id);if(error)return alert(error.message);ideas=ideas.filter(i=>i.id!==id);dlg.close();render()};
+  dlg.showModal();$('i-t').focus();
+}
+function live(){
+  if(ch)return;
+  ch=sb.channel('sync').on('postgres_changes',{event:'*',schema:'public'},()=>{clearTimeout(lt);lt=setTimeout(async()=>{if(session&&!$('dlg').open){await loadData();if(tab!=='set')render()}},500)}).subscribe();
 }
 function openSheet(id,pid){
   const par=pid?tasks.find(y=>y.id===pid):null,dlg=$('dlg');
@@ -200,8 +296,16 @@ $('dlg').addEventListener('click',e=>{if(e.target.id==='dlg')e.target.close()});
 $('app').addEventListener('click',async e=>{
   const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,id=b.dataset.id;
   if(a==='dr'){dr=!dr;render()}
-  else if(a==='nav'){view=b.dataset.v;dr=false;render()}
-  else if(a==='set'){view='set';dr=false;render()}
+  else if(a==='nav'){view=b.dataset.v;tab='todo';dr=false;render()}
+  else if(a==='set'){tab='set';dr=false;render()}
+  else if(a==='tab'){tab=b.dataset.v;dr=false;render()}
+  else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);render()}
+  else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
+  else if(a==='nidea')openIdea()
+  else if(a==='hchk')await hToggle(id,b.checked)
+  else if(a==='hedit')openHabit(id)
+  else if(a==='nhabit')openHabit()
+  else if(a==='idea')openIdea(id)
   else if(a==='add')openSheet()
   else if(a==='edit')openSheet(id)
   else if(a==='nl'){dr=false;render();openList()}
@@ -216,13 +320,13 @@ $('app').addEventListener('change',async e=>{
   const patch=d.cn?{name:el.value.trim()||'—'}:d.cc?{color:el.value}:{icon:el.value.trim()||null};
   const{error}=await sb.from('categories').update(patch).eq('id',id);if(error)return alert(error.message);Object.assign(catOf(id),patch);
 });
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(render)});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(()=>{if(tab!=='set')render()})});
 async function loadSettings(){
   const{data}=await sb.from('user_settings').select('language,theme_color,display_name').maybeSingle();
   if(data){lang=data.language||lang;color=data.theme_color||color;uname=data.display_name||'';localStorage.lang=lang;localStorage.color=color;localStorage.dname=uname}
   else await save();
 }
-sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s){await loadSettings();await loadData()}else{uname='';localStorage.removeItem('dname')}}catch(e){}render()},0)});
+sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s){await loadSettings();await loadData();live()}else{uname='';localStorage.removeItem('dname');if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];tab='todo';view='all'}}catch(e){}render()},0)});
 setTimeout(()=>{if(!rendered)render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
