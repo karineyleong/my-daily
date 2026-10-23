@@ -65,7 +65,8 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .dots{display:flex;gap:5px;margin-top:6px}.dots u{width:10px;height:10px;border-radius:50%;background:var(--ln)}.dots u.on{background:var(--hc,var(--ac))}
 .go{align-self:center;font-size:20px;line-height:1;text-decoration:none;color:var(--ac);padding:8px 12px;border:1px solid var(--ln);border-radius:10px}
 .tabs button{padding:10px 6px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v7)</p></main><dialog id="dlg"></dialog>
+.bar2{width:4px;border-radius:2px;background:var(--hc);flex:none}.task.ev .tt{min-width:0}
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v9)</p></main><dialog id="dlg"></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 const showErr=m=>document.getElementById('app').insertAdjacentHTML('beforeend','<p style="padding:16px">⚠ '+String(m).replace(/</g,'&lt;')+'</p>');
@@ -86,6 +87,10 @@ Object.assign(T.en,{calendar:'Calendar',brainstorm:'Brain storm',tdo:'To-do',eve
 Object.assign(T.zh,{habits:'習慣',newHabit:'新習慣',habitName:'習慣名稱',appLink:'App 連結（選填）',linkHint:'點 ↗ 會跳到該 App。例如 shortcuts://run-shortcut?name=捷徑名稱 可開啟任何 App。',metric:'Apple 健康數據（之後連動）',goal:'目標值',open:'開啟',habitEmpty:'還沒有習慣，按右下角的 ＋ 新增第一個。',habitSql:'習慣的資料表還沒補齊，請先在 Supabase 執行 SQL。',m_none:'不連動',m_steps:'步數',m_sleep:'睡眠（小時）',m_exercise:'運動（分鐘）',m_water:'飲水（毫升）',m_mindful:'正念（分鐘）'});
 Object.assign(T.ja,{habits:'習慣',newHabit:'新しい習慣',habitName:'習慣の名前',appLink:'アプリのリンク（任意）',linkHint:'↗でそのアプリに移動します。例: shortcuts://run-shortcut?name=ショートカット名 で任意のアプリを開けます。',metric:'Appleヘルスケア（後で連携）',goal:'目標値',open:'開く',habitEmpty:'習慣がありません。右下の＋で最初の1つを追加。',habitSql:'習慣のテーブルが未整備です。先にSupabaseでSQLを実行してください。',m_none:'連携しない',m_steps:'歩数',m_sleep:'睡眠（時間）',m_exercise:'運動（分）',m_water:'水分（ml）',m_mindful:'マインドフルネス（分）'});
 Object.assign(T.en,{habits:'Habits',newHabit:'New habit',habitName:'Habit name',appLink:'App link (optional)',linkHint:'Tap ↗ to jump to that app. e.g. shortcuts://run-shortcut?name=ShortcutName can open any app.',metric:'Apple Health data (linked later)',goal:'Goal',open:'Open',habitEmpty:'No habits yet. Tap ＋ to add the first one.',habitSql:'The habits tables are incomplete. Run the SQL in Supabase first.',m_none:'Not linked',m_steps:'Steps',m_sleep:'Sleep (hours)',m_exercise:'Exercise (min)',m_water:'Water (ml)',m_mindful:'Mindful (min)'});
+Object.assign(T.zh,{evTitle:'行程標題',start:'開始',end:'結束',place:'地點',placeHint:'地址或店名（可在 Google 地圖開啟）',remind:'提醒',r_none:'不提醒',r_0:'準時',r_10:'10 分鐘前',r_30:'30 分鐘前',r_60:'1 小時前',r_1440:'1 天前',openMap:'在 Google 地圖開啟',evCats:'行程類別',newEvCat:'新增行程類別',noItems:'這一天沒有行程或待辦。',evSql:'行程的資料表還沒補齊，請先在 Supabase 執行 SQL。'});
+Object.assign(T.ja,{evTitle:'予定のタイトル',start:'開始',end:'終了',place:'場所',placeHint:'住所や店名（Googleマップで開けます）',remind:'通知',r_none:'通知なし',r_0:'時刻ちょうど',r_10:'10分前',r_30:'30分前',r_60:'1時間前',r_1440:'1日前',openMap:'Googleマップで開く',evCats:'予定のカテゴリ',newEvCat:'予定カテゴリを追加',noItems:'この日の予定とToDoはありません。',evSql:'予定のテーブルが未整備です。先にSupabaseでSQLを実行してください。'});
+Object.assign(T.en,{evTitle:'Event title',start:'Start',end:'End',place:'Place',placeHint:'Address or venue (opens in Google Maps)',remind:'Reminder',r_none:'No reminder',r_0:'At start',r_10:'10 min before',r_30:'30 min before',r_60:'1 hour before',r_1440:'1 day before',openMap:'Open in Google Maps',evCats:'Event categories',newEvCat:'Add event category',noItems:'No events or tasks on this day.',evSql:'The events tables are incomplete. Run the SQL in Supabase first.'});
+Object.assign(T.zh,{noCat:'（無類別）'});Object.assign(T.ja,{noCat:'（カテゴリなし）'});Object.assign(T.en,{noCat:'(none)'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#6C8EBF',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -119,7 +124,7 @@ function render(){
     appView();
   }
 }
-let tasks=[],cats=[],view='all',dr=false,ovOpen=true,tab='todo',ideas=[],ideaErr=null,habits=[],hlogs=[],habitErr=null,cm=new Date(),cs=new Date(),ch=null,lt=null;
+let tasks=[],cats=[],view='all',dr=false,ovOpen=true,tab='todo',ideas=[],ideaErr=null,habits=[],hlogs=[],habitErr=null,events=[],ecats=[],evErr=null,cm=new Date(),cs=new Date(),ch=null,lt=null;
 const PC=['#8A96A0','#3B82F6','#F5A524','#E5484D'];
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
 const T0=d=>d?+new Date(d):1e18;
@@ -133,9 +138,9 @@ const fmt=d=>new Date(d).toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang]
 const toL=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
 async function loadData(){
   const since=new Date();since.setDate(since.getDate()-90);
-  const a=await sb.from('tasks').select('*'),b=await sb.from('categories').select('*').eq('kind','task').order('sort_order'),c=await sb.from('ideas').select('*'),h=await sb.from('habits').select('*').order('created_at'),l=await sb.from('habit_logs').select('*').gte('log_date',ymd(since));
+  const a=await sb.from('tasks').select('*'),b=await sb.from('categories').select('*').eq('kind','task').order('sort_order'),c=await sb.from('ideas').select('*'),h=await sb.from('habits').select('*').order('created_at'),l=await sb.from('habit_logs').select('*').gte('log_date',ymd(since)),ev=await sb.from('events').select('*').order('start_at'),ec=await sb.from('categories').select('*').eq('kind','event').order('sort_order');
   if(a.error||b.error){alert((a.error||b.error).message);return}
-  tasks=a.data;cats=b.data;ideaErr=c.error;ideas=c.error?[]:c.data;habitErr=h.error||l.error;habits=habitErr?[]:h.data;hlogs=habitErr?[]:l.data;
+  tasks=a.data;cats=b.data;ideaErr=c.error;ideas=c.error?[]:c.data;habitErr=h.error||l.error;habits=habitErr?[]:h.data;hlogs=habitErr?[]:l.data;evErr=ev.error||ec.error;events=evErr?[]:ev.data;ecats=ec.error?[]:ec.data;
 }
 const vname=()=>({all:t('all'),today:t('today'),tomorrow:t('tomorrow'),done:t('completed')}[view]||(catOf(view)?esc((catOf(view).icon||'')+' '+catOf(view).name):t('all')));
 function row(x,sub){
@@ -166,28 +171,57 @@ ${it('all','🗂',t('all'),n.length)}${it('today','📅',t('today'),n.filter(tod
 ${cats.map(c=>it(c.id,c.icon||'📁',esc(c.name),n.filter(x=>x.category_id===c.id).length)).join('')}<hr>${it('done','✅',t('completed'))}
 <div class="df"><button class="sec" data-a="nl">＋ ${t('newList')}</button></div></aside>`;
 }
-const setHTML=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
+const setHTML0=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
 <div class="card"><b>${t('lists')}</b>${cats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#6C8EBF'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="nl">＋ ${t('newList')}</button></div></div>
 <p class="meta">${esc(session.user.email)}</p><div class="top"><button class="sec" data-a="lo">${t('out')}</button></div>`;
 const LOC={zh:'zh-TW',ja:'ja-JP',en:'en-US'},WK={zh:'日一二三四五六',ja:'日月火水木金土',en:'SMTWTFS'};
 const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/>',todo:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l3 3 5-6"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',idea:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'};
 const tabbar=()=>`<nav class="tabs">${[['habit','habits'],['todo','tdo'],['cal','calendar'],['idea','brainstorm'],['set','settings']].map(([k,n])=>`<button data-a="tab" data-v="${k}" class="${tab===k?'on':''}" aria-label="${t(n)}"${tab===k?' aria-current="page"':''}><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></button>`).join('')}</nav>`;
+const REM=[['','r_none'],['0','r_0'],['10','r_10'],['30','r_30'],['60','r_60'],['1440','r_1440']];
+const anyCat=id=>cats.find(c=>c.id===id)||ecats.find(c=>c.id===id);
+const hm=d=>new Date(d).toLocaleTimeString(LOC[lang],{hour:'2-digit',minute:'2-digit'});
+function evRow(e){
+  const c=ecats.find(x=>x.id===e.category_id),map=e.location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}`:'';
+  return `<div class="task ev" style="--hc:${esc(c&&c.color||'#6C8EBF')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}"><b>${esc(e.title||'')}</b><div class="meta rw"><span>${hm(e.start_at)}${e.end_at?' – '+hm(e.end_at):''}</span><span>${c?esc((c.icon||'')+' '+c.name):''}</span></div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}</div>`;
+}
 function calHTML(){
   const y=cm.getFullYear(),m=cm.getMonth(),first=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate();
-  const dk=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate(),by={};
-  tasks.forEach(x=>{if(!x.done&&x.due_at){const k=dk(new Date(x.due_at));(by[k]=by[k]||[]).push(x)}});
+  const dk=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate(),by={},mark=(d,x)=>{const k=dk(d);(by[k]=by[k]||[]).push(x)};
+  tasks.forEach(x=>{if(!x.done&&x.due_at)mark(new Date(x.due_at),x)});
+  events.forEach(e=>{const en=new Date(e.end_at||e.start_at);for(let d=sod(e.start_at),i=0;d<=en&&i<42;d.setDate(d.getDate()+1),i++)mark(new Date(d),e)});
   let cells='<span></span>'.repeat(first);
   for(let d=1;d<=n;d++){const k=dk(new Date(y,m,d));cells+=`<button class="cd${dk(cs)===k?' on':''}${dk(new Date())===k?' td':''}" data-a="cday" data-v="${y}-${m}-${d}">${d}${by[k]?'<i></i>':''}</button>`}
-  const list=(by[dk(cs)]||[]).sort(cmp);
+  const items=by[dk(cs)]||[],evs=items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks=items.filter(x=>!x.start_at).sort(cmp);
   return `<div class="hd"><h1>${t('calendar')}</h1><span></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
 <div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div></div>
-<div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${list.length?list.map(x=>row(x)).join(''):`<p class="meta">${t('noDue')}</p>`}</div>
-<div class="card"><b>${t('events')}</b><p class="meta">${t('soon')}</p></div>`;
+<div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${evErr?`<p class="meta">${t('evSql')}</p>`:''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
 }
+function openEvent(id){
+  const dlg=$('dlg'),b=new Date(cs);b.setHours(9,0,0,0);
+  const x=id?events.find(e=>e.id===id):{start_at:b.toISOString(),end_at:new Date(+b+36e5).toISOString(),category_id:ecats[0]?ecats[0].id:null,remind_min:null};
+  dlg.innerHTML=`<textarea id="e-t" rows="1" maxlength="100" placeholder="${t('evTitle')}" aria-label="${t('evTitle')}">${esc(x.title||'')}</textarea>
+<label for="e-s">${t('start')}</label><input id="e-s" type="datetime-local" value="${toL(x.start_at)}"><label for="e-e">${t('end')}</label><input id="e-e" type="datetime-local" value="${x.end_at?toL(x.end_at):''}">
+<label for="e-l">${t('place')}</label><input id="e-l" type="text" maxlength="120" placeholder="${t('placeHint')}" value="${esc(x.location||'')}">
+<div class="tbar"><select id="e-c" aria-label="${t('cat')}"><option value="">${t('noCat')}</option>${ecats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc((c.icon||'')+' '+c.name)}</option>`).join('')}</select><select id="e-r" aria-label="${t('remind')}">${REM.map(([v,k])=>`<option value="${v}"${String(x.remind_min==null?'':x.remind_min)===v?' selected':''}>🔔 ${t(k)}</option>`).join('')}</select></div>
+<textarea id="e-n" rows="2" placeholder="${t('note')}" aria-label="${t('note')}">${esc(x.note||'')}</textarea>
+<div class="tbar">${id?`<button class="sec" id="e-d">${t('del')}</button>`:''}<button class="pri snd" id="e-ok" aria-label="${t('save')}">↑</button></div>`;
+  $('e-ok').onclick=async()=>{
+    const title=$('e-t').value.trim(),s=$('e-s').value;if(!title||!s)return;
+    const st=new Date(s),en=$('e-e').value?new Date($('e-e').value):null,r=$('e-r').value;
+    const v={title,start_at:st.toISOString(),end_at:en&&en>=st?en.toISOString():null,location:$('e-l').value.trim()||null,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:r===''?null:+r,remind_at:r===''?null:new Date(+st-r*6e4).toISOString()};
+    if(id){const{error}=await sb.from('events').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
+    else{const{data,error}=await sb.from('events').insert(v).select().single();if(error)return alert(error.message);events.push(data);cs=new Date(st)}
+    dlg.close();render();
+  };
+  if($('e-d'))$('e-d').onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('events').delete().eq('id',id);if(error)return alert(error.message);events=events.filter(e=>e.id!==id);dlg.close();render()};
+  dlg.showModal();$('e-t').focus();
+}
+const evCatCard=()=>`<div class="card"><b>${t('evCats')}</b>${ecats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#6C8EBF'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="nle">＋ ${t('newEvCat')}</button></div></div>`;
 function ideaHTML(){
   const list=[...ideas].sort((a,b)=>a.created_at<b.created_at?1:-1);
   return `<div class="hd"><h1>${t('brainstorm')}</h1><span></span></div>`+(ideaErr?`<div class="card"><p class="meta">${t('ideaSql')}</p></div>`:list.length?`<div class="ideas">${list.map(i=>`<div class="idea" style="--ic:${esc(i.color||'#6C8EBF')}" data-a="idea" data-id="${i.id}"><b>${esc(i.title||'')}</b><p>${esc((i.body||'').slice(0,140))}</p></div>`).join('')}</div>`:`<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`)+(ideaErr?'':`<button class="fab" data-a="nidea" aria-label="${t('newIdea')}">＋</button>`);
 }
+const setHTML=()=>{const m='<p class="meta">'+esc(session.user.email)+'</p>';return setHTML0().replace(m,evCatCard()+m)};
 function appView(){
   let body;
   if(tab==='set')body=`<div class="hd"><h1>${t('settings')}</h1><span></span></div>`+setHTML();
@@ -274,11 +308,11 @@ ${id?`<div class="row">${x.parent_id?'':`<button class="sec" id="f-sub">＋ ${t(
   if($('f-sub'))$('f-sub').onclick=()=>{dlg.close();openSheet(null,id)};
   dlg.showModal();$('f-t').focus();
 }
-function openList(){
+function openList(kind){kind=kind||'task';
   const dlg=$('dlg');
   dlg.innerHTML=`<label for="l-n">${t('listName')}</label><input id="l-n" type="text" maxlength="20"><label for="l-e">${t('emoji')}</label><input id="l-e" type="text" maxlength="8" placeholder="😀"><label for="l-c">${t('color')}</label><input id="l-c" type="color" value="#6C8EBF"><div class="row"><button class="sec" id="l-x">${t('cancel')}</button><button class="pri" id="l-s">${t('save')}</button></div>`;
   $('l-x').onclick=()=>dlg.close();
-  $('l-s').onclick=async()=>{const n=$('l-n').value.trim();if(!n)return;const{data,error}=await sb.from('categories').insert({kind:'task',name:n,icon:$('l-e').value.trim()||null,color:$('l-c').value,sort_order:cats.length}).select().single();if(error)return alert(error.message);cats.push(data);dlg.close();render()};
+  $('l-s').onclick=async()=>{const n=$('l-n').value.trim();if(!n)return;const{data,error}=await sb.from('categories').insert({kind,name:n,icon:$('l-e').value.trim()||null,color:$('l-c').value,sort_order:cats.length}).select().single();if(error)return alert(error.message);(kind==='task'?cats:ecats).push(data);dlg.close();render()};
   dlg.showModal();$('l-n').focus();
 }
 async function setDone(id,v){
@@ -305,6 +339,9 @@ $('app').addEventListener('click',async e=>{
   else if(a==='hchk')await hToggle(id,b.checked)
   else if(a==='hedit')openHabit(id)
   else if(a==='nhabit')openHabit()
+  else if(a==='nev')openEvent()
+  else if(a==='eedit')openEvent(id)
+  else if(a==='nle')openList('event')
   else if(a==='idea')openIdea(id)
   else if(a==='add')openSheet()
   else if(a==='edit')openSheet(id)
@@ -312,13 +349,13 @@ $('app').addEventListener('click',async e=>{
   else if(a==='ovt'){ovOpen=!ovOpen;render()}
   else if(a==='pst')await postpone()
   else if(a==='chk')await setDone(id,b.checked)
-  else if(a==='cdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('categories').delete().eq('id',id);if(error)alert(error.message);else{cats=cats.filter(c=>c.id!==id);tasks.forEach(x=>{if(x.category_id===id)x.category_id=null});if(view===id)view='all';render()}}}
+  else if(a==='cdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('categories').delete().eq('id',id);if(error)alert(error.message);else{cats=cats.filter(c=>c.id!==id);ecats=ecats.filter(c=>c.id!==id);tasks.forEach(x=>{if(x.category_id===id)x.category_id=null});events.forEach(x=>{if(x.category_id===id)x.category_id=null});if(view===id)view='all';render()}}}
   else if(a==='lo')sb.auth.signOut();
 });
 $('app').addEventListener('change',async e=>{
   const el=e.target,d=el.dataset,id=d.cn||d.cc||d.ci;if(!id)return;
   const patch=d.cn?{name:el.value.trim()||'—'}:d.cc?{color:el.value}:{icon:el.value.trim()||null};
-  const{error}=await sb.from('categories').update(patch).eq('id',id);if(error)return alert(error.message);Object.assign(catOf(id),patch);
+  const{error}=await sb.from('categories').update(patch).eq('id',id);if(error)return alert(error.message);Object.assign(anyCat(id),patch);
 });
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(()=>{if(tab!=='set')render()})});
 async function loadSettings(){
@@ -326,7 +363,7 @@ async function loadSettings(){
   if(data){lang=data.language||lang;color=data.theme_color||color;uname=data.display_name||'';localStorage.lang=lang;localStorage.color=color;localStorage.dname=uname}
   else await save();
 }
-sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s){await loadSettings();await loadData();live()}else{uname='';localStorage.removeItem('dname');if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];tab='todo';view='all'}}catch(e){}render()},0)});
+sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s){await loadSettings();await loadData();live()}else{uname='';localStorage.removeItem('dname');if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];events=[];ecats=[];tab='todo';view='all'}}catch(e){}render()},0)});
 setTimeout(()=>{if(!rendered)render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
