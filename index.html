@@ -61,8 +61,20 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(92vw,400px);display:flex;gap:4px;padding:6px;background:var(--card);border:1px solid var(--ln);border-radius:30px;z-index:10;box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .tabs button{flex:1;display:flex;justify-content:center;border:0;border-radius:24px;background:none;color:var(--mut);padding:10px}.tabs button.on{background:color-mix(in srgb,var(--ac) 24%,transparent);color:var(--ink)}
 .cm{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.cw,.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.cw{font-size:13px;color:var(--mut);margin-bottom:4px}
-.cd{aspect-ratio:1;padding:0;border:0;border-radius:50%;background:none;color:var(--ink);position:relative;font-size:15px}.cd.on{background:var(--ac);color:var(--on)}.cd.td:not(.on){box-shadow:inset 0 0 0 1.5px var(--ac)}
+.cw,.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cd .dn{align-self:flex-start;min-width:20px;text-align:center;line-height:20px;border-radius:50%;font-size:13px}
+.cd.td .dn{background:var(--ac);color:var(--on);font-weight:700}
+.cd.dim{opacity:.38}
+.cg .cd:nth-child(7n+6) .dn{color:#4A7FB5}
+.cg .cd:nth-child(7n) .dn{color:#D0483E}
+.cg .cd.td .dn{color:var(--on)}
+.chp{display:block;font-size:9.5px;line-height:1.6;padding:0 4px;border-radius:4px;background:var(--c,#8A2A21);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chp.mid{border-radius:0}
+.chp.st{border-radius:4px 0 0 4px}
+.chp.en{border-radius:0 4px 4px 0}
+.chp.tk{background:color-mix(in srgb,var(--ink) 55%,transparent)}
+.more{font-size:9px;color:var(--mut);padding-left:4px}.cw{font-size:13px;color:var(--mut);margin-bottom:4px}
+.cd{position:relative;background:none;border:0;border-radius:8px;padding:3px;font-size:14px;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:2px;min-height:70px;text-align:left}.cd.on{background:color-mix(in srgb,var(--ac) 14%,transparent)}.cd.td:not(.on){box-shadow:inset 0 0 0 1.5px var(--ac)}
 .cd i{position:absolute;bottom:5px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--ac)}.cd.on i{background:var(--on)}
 .ideas{columns:2;column-gap:12px}.idea{break-inside:avoid;margin-bottom:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--ln);border-top:4px solid var(--ic);background:color-mix(in srgb,var(--ic) 14%,var(--card))}.idea b{display:block;overflow-wrap:anywhere}.idea p{margin:4px 0 0;font-size:14px;color:var(--mut);white-space:pre-wrap;overflow-wrap:anywhere}
 .dots{display:flex;gap:5px;margin-top:6px}.dots u{width:10px;height:10px;border-radius:50%;background:var(--ln)}.dots u.on{background:var(--hc,var(--ac))}
@@ -103,6 +115,7 @@ Object.assign(T.zh,{bgImg:'背景圖片',bgHint:'上傳你的插圖當作 App �
 Object.assign(T.ja,{bgImg:'背景画像',bgHint:'イラストをアプリの背景にできます（自動で縮小されます）。',bgPick:'画像を選ぶ',bgDel:'背景を削除',bgErr:'この画像を読み込めません。',exportImg:'今月の予定を画像で書き出す',share:'共有',shareHint:'そのまま共有するか、画像を長押しして保存できます。'});
 Object.assign(T.en,{bgImg:'Background image',bgHint:'Upload your illustration as the app background (resized automatically).',bgPick:'Choose image',bgDel:'Remove background',bgErr:'Could not read this image.',exportImg:"Export this month's events as image",share:'Share',shareHint:'Share it directly, or long-press the image to save.'});
 Object.assign(T.zh,{ctoday:'今日',arc:'封存',arcSec:'已封存',unarc:'取消封存'});Object.assign(T.ja,{ctoday:'今日',arc:'アーカイブ',arcSec:'アーカイブ済み',unarc:'アーカイブ解除'});Object.assign(T.en,{ctoday:'Today',arc:'Archive',arcSec:'Archived',unarc:'Restore'});
+Object.assign(T.zh,{allDay:'全日',r_120:'2 小時前'});Object.assign(T.ja,{allDay:'終日',r_120:'2時間前'});Object.assign(T.en,{allDay:'All day',r_120:'2 hours before'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#8A2A21',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -187,23 +200,33 @@ ${cats.map(c=>it(c.id,c.icon||'📁',esc(c.name),n.filter(x=>x.category_id===c.i
 const setHTML0=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
 <div class="card"><b>${t('lists')}</b>${cats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="nl">＋ ${t('newList')}</button></div></div>
 <p class="meta">${esc(session.user.email)}</p><div class="top"><button class="sec" data-a="lo">${t('out')}</button></div>`;
-const LOC={zh:'zh-TW',ja:'ja-JP',en:'en-US'},WK={zh:'日一二三四五六',ja:'日月火水木金土',en:'SMTWTFS'};
+const LOC={zh:'zh-TW',ja:'ja-JP',en:'en-US'},WK={zh:'一二三四五六日',ja:'月火水木金土日',en:'MTWTFSS'};
 const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/>',todo:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l3 3 5-6"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',idea:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'};
 const tabbar=()=>`<nav class="tabs">${[['habit','habits'],['todo','tdo'],['cal','calendar'],['idea','brainstorm'],['set','settings']].map(([k,n])=>`<button data-a="tab" data-v="${k}" class="${tab===k?'on':''}" aria-label="${t(n)}"${tab===k?' aria-current="page"':''}><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></button>`).join('')}</nav>`;
-const REM=[['','r_none'],['0','r_0'],['10','r_10'],['30','r_30'],['60','r_60'],['1440','r_1440']];
+const REM=[['','r_none'],['0','r_0'],['10','r_10'],['30','r_30'],['60','r_60'],['120','r_120'],['1440','r_1440']];
 const anyCat=id=>cats.find(c=>c.id===id)||ecats.find(c=>c.id===id);
 const hm=d=>new Date(d).toLocaleTimeString(LOC[lang],{hour:'2-digit',minute:'2-digit'});
 function evRow(e){
   const c=ecats.find(x=>x.id===e.category_id),map=e.location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}`:'';
-  return `<div class="task ev" style="--hc:${esc(c&&c.color||'#8FA382')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}"><b>${esc(e.title||'')}</b><div class="meta rw"><span>${hm(e.start_at)}${e.end_at?' – '+hm(e.end_at):''}</span><span>${c?esc((c.icon||'')+' '+c.name):''}</span></div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}</div>`;
+  return `<div class="task ev" style="--hc:${esc(c&&c.color||'#8FA382')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}"><b>${esc(e.title||'')}</b><div class="meta rw"><span>${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}</span><span>${c?esc((c.icon||'')+' '+c.name):''}</span></div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}</div>`;
 }
 function calHTML(){
-  const y=cm.getFullYear(),m=cm.getMonth(),first=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate();
+  const y=cm.getFullYear(),m=cm.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),pn=new Date(y,m,0).getDate();
   const dk=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate(),by={},mark=(d,x)=>{const k=dk(d);(by[k]=by[k]||[]).push(x)};
   tasks.forEach(x=>{if(!x.done&&x.due_at)mark(new Date(x.due_at),x)});
   events.forEach(e=>{const en=new Date(e.end_at||e.start_at);for(let d=sod(e.start_at),i=0;d<=en&&i<42;d.setDate(d.getDate()+1),i++)mark(new Date(d),e)});
-  let cells='<span></span>'.repeat(first);
-  for(let d=1;d<=n;d++){const k=dk(new Date(y,m,d));cells+=`<button class="cd${dk(cs)===k?' on':''}${dk(new Date())===k?' td':''}" data-a="cday" data-v="${y}-${m}-${d}">${d}${by[k]?'<i></i>':''}</button>`}
+  const chip=(x,dt)=>{
+    if(x.start_at){const c=ecats.find(z=>z.id===x.category_id),s0=sod(x.start_at),e2=sod(x.end_at||x.start_at),cls=s0<dt&&dt<e2?' mid':s0<dt?' en':e2>dt?' st':'';
+      return `<span class="chp${cls}" style="--c:${esc(c&&c.color||'#8A2A21')}">${esc(x.title||'')}</span>`}
+    return `<span class="chp tk">${esc(x.title||'')}</span>`};
+  const cell=(yy,mm,d,dim)=>{
+    const dt=new Date(yy,mm,d),k=dk(dt),its=(by[k]||[]).slice().sort((a,b)=>(a.start_at?0:1)-(b.start_at?0:1)||String(a.start_at||a.due_at||'').localeCompare(String(b.start_at||b.due_at||'')));
+    const ch=its.slice(0,3).map(x=>chip(x,dt)).join('')+(its.length>3?`<span class="more">+${its.length-3}</span>`:'');
+    return `<button class="cd${dim?' dim':''}${dk(cs)===k?' on':''}${dk(new Date())===k?' td':''}" data-a="cday" data-v="${yy}-${mm}-${d}"><span class="dn">${d}</span>${ch}</button>`};
+  let cells='';
+  for(let i=first-1;i>=0;i--)cells+=cell(y,m-1,pn-i,true);
+  for(let d=1;d<=n;d++)cells+=cell(y,m,d,false);
+  const trail=(7-(first+n)%7)%7;for(let d=1;d<=trail;d++)cells+=cell(y,m+1,d,true);
   const items=by[dk(cs)]||[],evs=items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks=items.filter(x=>!x.start_at).sort(cmp);
   return `<div class="hd"><h1>${t('calendar')}</h1><span></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
 <div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div><div class="row"><button class="sec" data-a="ctd">${t('ctoday')}</button><button class="sec" data-a="exp">${t('exportImg')}</button></div></div>
@@ -211,17 +234,22 @@ function calHTML(){
 }
 function openEvent(id){
   const dlg=$('dlg'),b=new Date(cs);b.setHours(9,0,0,0);
-  const x=id?events.find(e=>e.id===id):{start_at:b.toISOString(),end_at:new Date(+b+36e5).toISOString(),category_id:ecats[0]?ecats[0].id:null,remind_min:null};
+  const x=id?events.find(e=>e.id===id):{start_at:b.toISOString(),end_at:new Date(+b+36e5).toISOString(),category_id:ecats[0]?ecats[0].id:null,remind_min:null,all_day:false};
   dlg.innerHTML=`<textarea id="e-t" rows="1" maxlength="100" placeholder="${t('evTitle')}" aria-label="${t('evTitle')}">${esc(x.title||'')}</textarea>
-<label for="e-s">${t('start')}</label><input id="e-s" type="datetime-local" value="${toL(x.start_at)}"><label for="e-e">${t('end')}</label><input id="e-e" type="datetime-local" value="${x.end_at?toL(x.end_at):''}">
+<div class="row" style="align-items:center;gap:8px"><input type="checkbox" id="e-a" style="width:auto;margin:0"${x.all_day?' checked':''}><label for="e-a" style="margin:0">${t('allDay')}</label></div>
+<label for="e-s">${t('start')}</label><input id="e-s" type="${x.all_day?'date':'datetime-local'}" value="${x.all_day?toL(x.start_at).slice(0,10):toL(x.start_at)}"><label for="e-e">${t('end')}</label><input id="e-e" type="${x.all_day?'date':'datetime-local'}" value="${x.end_at?(x.all_day?toL(x.end_at).slice(0,10):toL(x.end_at)):''}">
 <label for="e-l">${t('place')}</label><input id="e-l" type="text" maxlength="120" placeholder="${t('placeHint')}" value="${esc(x.location||'')}">
 <div class="tbar"><select id="e-c" aria-label="${t('cat')}"><option value="">${t('noCat')}</option>${ecats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc((c.icon||'')+' '+c.name)}</option>`).join('')}</select><select id="e-r" aria-label="${t('remind')}">${REM.map(([v,k])=>`<option value="${v}"${String(x.remind_min==null?'':x.remind_min)===v?' selected':''}>🔔 ${t(k)}</option>`).join('')}</select></div>
 <textarea id="e-n" rows="2" placeholder="${t('note')}" aria-label="${t('note')}">${esc(x.note||'')}</textarea>
 <div class="tbar">${id?`<button class="sec" id="e-d">${t('del')}</button>`:''}<button class="pri snd" id="e-ok" aria-label="${t('save')}">↑</button></div>`;
+  $('e-a').onchange=e=>{const on=e.target.checked;[['e-s','T09:00'],['e-e','T10:00']].forEach(([id,hh])=>{const el=$(id);el.type=on?'date':'datetime-local';if(el.value)el.value=on?el.value.slice(0,10):el.value+hh})};
   $('e-ok').onclick=async()=>{
     const title=$('e-t').value.trim(),s=$('e-s').value;if(!title||!s)return;
-    const st=new Date(s),en=$('e-e').value?new Date($('e-e').value):null,r=$('e-r').value;
-    const v={title,start_at:st.toISOString(),end_at:en&&en>=st?en.toISOString():null,location:$('e-l').value.trim()||null,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:r===''?null:+r,remind_at:r===''?null:new Date(+st-r*6e4).toISOString()};
+    const ad=$('e-a').checked;let st,en;
+    if(ad){st=new Date(s+'T00:00');en=new Date(($('e-e').value||s)+'T23:59')}
+    else{st=new Date(s);en=$('e-e').value?new Date($('e-e').value):null}
+    const r=$('e-r').value;
+    const v={title,start_at:st.toISOString(),end_at:en&&en>=st?en.toISOString():null,all_day:ad,location:$('e-l').value.trim()||null,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:r===''?null:+r,remind_at:r===''?null:new Date(+st-r*6e4).toISOString()};
     if(id){const{error}=await sb.from('events').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('events').insert(v).select().single();if(error)return alert(error.message);events.push(data);cs=new Date(st)}
     dlg.close();render();
@@ -349,7 +377,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='nav'){view=b.dataset.v;tab='todo';dr=false;render()}
   else if(a==='set'){tab='set';dr=false;render()}
   else if(a==='tab'){tab=b.dataset.v;dr=false;render()}
-  else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);render()}
+  else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);render()}
   else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
   else if(a==='ctd'){cm=new Date();cs=new Date();render()}
   else if(a==='hunarc'){const{error}=await sb.from('habits').update({archived:false}).eq('id',id);if(error)alert(error.message);else{const hx=habits.find(h=>h.id===id);if(hx)hx.archived=false;render()}}
@@ -419,7 +447,7 @@ function exportImg(){
   g.font=`400 36px ${F}`;g.fillText(new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'}),P,126);
   if(!list.length){g.fillStyle='#66727D';g.font=`400 36px ${F}`;g.fillText(t('noItems'),P,H0+40)}
   list.forEach((e,i)=>{
-    const yy=H0+i*RH,cc=catOf(e.category_id);
+    const yy=H0+i*RH,cc=ecats.find(z=>z.id===e.category_id);
     g.fillStyle=cc&&cc.color||color;g.fillRect(P,yy-20,10,RH-34);
     g.fillStyle='#1F2A33';g.font=`700 40px ${F}`;g.fillText(cut(e.title,W-P*2-40),P+36,yy);
     g.fillStyle='#66727D';g.font=`400 32px ${F}`;
