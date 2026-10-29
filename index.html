@@ -126,8 +126,9 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .fchips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
 .fchip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 ::selection{background:rgba(217,164,65,.45)}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v10)</p></main><dialog id="dlg"></dialog>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v11)</p></main><dialog id="dlg"></dialog>
+<script src="supabase.js"></script>
+<script src="offline.js"></script>
 <script>
 const showErr=m=>document.getElementById('app').insertAdjacentHTML('beforeend','<p style="padding:16px">⚠ '+String(m).replace(/</g,'&lt;')+'</p>');
 addEventListener('error',e=>showErr(e.message));addEventListener('unhandledrejection',e=>showErr(e.reason&&e.reason.message||e.reason));
