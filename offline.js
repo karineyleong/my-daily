@@ -120,8 +120,8 @@ function applyPatches(){
   const _av=appView;appView=function(){_av();const app=$('app'),ap=app.querySelector('.appt'),b=badge();
     if(ap&&b)ap.insertAdjacentHTML('beforeend',`<small style="font-size:12px;color:var(--mut)"> ${b}</small>`);
     if(toastMsg)app.insertAdjacentHTML('beforeend',`<div class="toast">${esc(toastMsg)}</div>`);
-    if(tab==='set'){const top=app.querySelector('.top');if(top&&top.previousElementSibling)top.previousElementSibling.insertAdjacentHTML('beforebegin',syncCard()+bgCard()+gkCard()+notifCard())}};
-  const _c=calHTML;calHTML=function(){return _c().replace(gkCard(),'')};
+    if(tab==='set'){const top=app.querySelector('.top');if(top&&top.previousElementSibling)top.previousElementSibling.insertAdjacentHTML('beforebegin',syncCard()+bgCard()+notifCard())}};
+  LS.removeItem('gk');
   const _i=ideaHTML;ideaHTML=function(){const h=_i();return ideaErr?h:h.replace('</div>','</div>'+planBar())};
   const _r=render;render=function(){clearTimeout(pT);pT=setTimeout(persist,150);return _r.apply(this,arguments)};
   const _ld=loadData;loadData=async function(){
@@ -144,6 +144,54 @@ function applyPatches(){
   addEventListener('pagehide',persist);
   document.addEventListener('visibilitychange',()=>{if(document.hidden)persist();else syncNow()});
   setInterval(()=>{if(navigator.onLine&&Q.length)syncNow()},30000);
-  setInterval(checkReminders,30000);checkReminders();
+  setInterval(checkReminders,30000);checkReminders();extra();
+}
+function extra(){
+  T.zh.todoT='待辦清單';T.ja.todoT='ToDoリスト';T.en.todoT='To-do list';
+  T.zh.brainstorm='計劃表';T.ja.brainstorm='計画表';T.en.brainstorm='Plans';
+  const st=document.createElement('style');
+  st.textContent='.cg .cd.hol .dn{color:#D0483E}.cg .cd.td.hol .dn{color:var(--on)}.chp.hol{background:#D0483E}.cm b{cursor:pointer;text-decoration:underline dotted}';
+  document.head.appendChild(st);
+  /* keyboard-aware bottom sheet */
+  const vv=window.visualViewport,dl=$('dlg');let moved=false;
+  const fit=()=>{if(!vv||!dl.open)return;const kb=Math.max(0,innerHeight-vv.height-vv.offsetTop);
+    if(kb>60){moved=true;dl.style.marginBottom=kb+'px';dl.style.maxHeight=Math.round(vv.height*.92)+'px'}
+    else if(moved){moved=false;dl.style.marginBottom='';dl.style.maxHeight='60dvh'}};
+  if(vv){vv.addEventListener('resize',fit);vv.addEventListener('scroll',fit)}
+  dl.addEventListener('focusin',e=>setTimeout(()=>{fit();try{e.target.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}},350));
+  dl.addEventListener('close',()=>{moved=false;dl.style.marginBottom=''});
+  /* Japanese public holidays */
+  const HN=['元日|元旦|New Year’s Day','成人の日|成人日|Coming of Age Day','建国記念の日|建國紀念日|Foundation Day','天皇誕生日|天皇誕辰|Emperor’s Birthday','春分の日|春分|Vernal Equinox','昭和の日|昭和之日|Showa Day','憲法記念日|憲法紀念日|Constitution Day','みどりの日|綠之日|Greenery Day','こどもの日|兒童節|Children’s Day','海の日|海之日|Marine Day','山の日|山之日|Mountain Day','敬老の日|敬老日|Respect for the Aged Day','秋分の日|秋分|Autumnal Equinox','スポーツの日|體育日|Sports Day','文化の日|文化日|Culture Day','勤労感謝の日|勤勞感謝日|Labor Thanksgiving Day','振替休日|補假|Substitute Holiday','国民の休日|國民假日|Citizens’ Holiday'];
+  const HC={};
+  const jpHol=y=>{if(HC[y])return HC[y];const h={},k=(m,d,i)=>{h[m+'-'+d]=i},nm=(m,n)=>1+((8-new Date(y,m-1,1).getDay())%7)+7*(n-1),q=y-1980,fl=Math.floor;
+    k(1,1,0);if(y>=2000)k(1,nm(1,2),1);if(y>=1967)k(2,11,2);if(y>=2020)k(2,23,3);k(3,fl(20.8431+.242194*q-fl(q/4)),4);if(y>=2007)k(4,29,5);k(5,3,6);if(y>=2007)k(5,4,7);k(5,5,8);
+    if(y>=2003)k(7,y==2020?23:y==2021?22:nm(7,3),9);if(y>=2016)k(8,y==2020?10:y==2021?8:11,10);if(y>=2003)k(9,nm(9,3),11);k(9,fl(23.2488+.242194*q-fl(q/4)),12);
+    if(y>=2020){if(y==2020)k(7,24,13);else if(y==2021)k(7,23,13);else k(10,nm(10,2),13)}k(11,3,14);k(11,23,15);
+    Object.keys(h).forEach(key=>{const[m,d]=key.split('-').map(Number);if(new Date(y,m-1,d).getDay()===0){const t=new Date(y,m-1,d+1);while(h[(t.getMonth()+1)+'-'+t.getDate()])t.setDate(t.getDate()+1);h[(t.getMonth()+1)+'-'+t.getDate()]=16}});
+    for(let m=1;m<=12;m++)for(let d=1;d<=31;d++){const dt=new Date(y,m-1,d);if(dt.getMonth()!==m-1||h[m+'-'+d]!=null||dt.getDay()===0)continue;const p=new Date(y,m-1,d-1),n=new Date(y,m-1,d+1);if(h[(p.getMonth()+1)+'-'+p.getDate()]!=null&&p.getFullYear()===y&&h[(n.getMonth()+1)+'-'+n.getDate()]!=null&&n.getFullYear()===y)h[m+'-'+d]=17}
+    return HC[y]=h};
+  const hname=dt=>{const i=jpHol(dt.getFullYear())[(dt.getMonth()+1)+'-'+dt.getDate()];return i==null?'':HN[i].split('|')[{ja:0,zh:1,en:2}[lang]]};
+  /* year/month wheel picker (native iOS wheel) */
+  const pickYM=()=>{const y=cm.getFullYear(),ys=[];for(let i=y-30;i<=y+30;i++)ys.push(i);
+    dl.innerHTML=`<div class="tbar"><select id="py">${ys.map(v=>`<option value="${v}"${v===y?' selected':''}>${lang==='en'?v:v+'年'}</option>`).join('')}</select><select id="pm">${[...Array(12)].map((_,i)=>`<option value="${i}"${i===cm.getMonth()?' selected':''}>${new Date(2000,i,1).toLocaleDateString(LOC[lang],{month:'long'})}</option>`).join('')}</select></div><div class="tbar"><button class="pri" id="pk">✓</button></div>`;
+    const ap=()=>{cm=new Date(+$('py').value,+$('pm').value,1);render()};$('py').onchange=ap;$('pm').onchange=ap;$('pk').onclick=()=>dl.close();dl.showModal()};
+  /* side drawers for calendar (event categories) and habits */
+  let sdo=false,lastTab=null;
+  const dHead=t0=>`<div class="ov op" data-a="sd"></div><aside class="dr op"><div class="dh"><b>${t0}</b><button class="sec ic" data-a="sd" aria-label="✕">✕</button></div>`;
+  const habDr=()=>dHead(t('habits'))+habits.filter(h=>!h.archived).map(h=>`<button class="di" data-a="hview" data-id="${h.id}"><span class="ic2">${esc(h.icon||'•')}</span><span class="nm">${esc(h.name)}</span></button>`).join('')+`<hr><button class="di" data-a="nhabit"><span class="ic2">＋</span><span class="nm">${t('newHabit')}</span></button>`+(habits.some(h=>h.archived)?`<hr><b>${t('arcSec')}</b>`+habits.filter(h=>h.archived).map(h=>`<div class="task"><div class="tt"><b>${esc((h.icon||'')+' '+h.name)}</b></div><button class="sec" data-a="hunarc" data-id="${h.id}">${t('unarc')}</button></div>`).join(''):'')+'</aside>';
+  const _av2=appView;appView=function(){
+    if(tab!==lastTab){sdo=false;lastTab=tab}if(hview)sdo=false;
+    _av2();const app=$('app'),hd=app.querySelector('.hd');
+    if(tab==='todo'&&view==='all'){const h=app.querySelector('.hd h1');if(h)h.textContent=t('todoT')}
+    if((tab==='cal'||(tab==='habit'&&!hview))&&hd)hd.insertAdjacentHTML('afterbegin','<button class="sec ic" data-a="sd" aria-label="☰">☰</button>');
+    if(tab==='cal'){
+      const ev=app.querySelector('[data-a="nle"]'),evc=ev&&ev.closest('.card');if(evc)evc.remove();
+      const b=app.querySelector('.cm b');if(b)b.dataset.a='cpick';
+      app.querySelectorAll('.cd[data-v]').forEach(c=>{const m=c.dataset.v.match(/^(\d+)-(-?\d+)-(\d+)$/);if(!m)return;const n=hname(new Date(+m[1],+m[2],+m[3]));if(!n)return;c.classList.add('hol');const dn=c.querySelector('.dn');if(dn)dn.insertAdjacentHTML('afterend',`<span class="chp hol">${esc(n)}</span>`)});
+      const hn=hname(cs),cards=app.querySelectorAll('.card');if(hn&&cards[1]){const bb=cards[1].querySelector('b');if(bb)bb.insertAdjacentText('beforeend',' 🎌 '+hn)}
+      if(sdo&&evc)app.insertAdjacentHTML('beforeend',dHead(t('evCats'))+evc.outerHTML+'</aside>')}
+    if(tab==='habit'&&!hview&&sdo)app.insertAdjacentHTML('beforeend',habDr())};
+  document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="sd"],[data-a="cpick"]');if(!b)return;
+    if(b.dataset.a==='sd'){sdo=!sdo;render()}else pickYM()},true);
 }
 })();
