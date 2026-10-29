@@ -6,7 +6,7 @@ const uuid=()=>crypto.randomUUID?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xx
 const isNet=e=>!!e&&(e.status===0||/fetch|network|load failed|timeout|offline/i.test(e.message||''));
 const isAuth=e=>!!e&&(e.status===401||/jwt/i.test(e.message||''));
 const tmo=(p,ms)=>Promise.race([p,new Promise(r=>setTimeout(()=>r({data:null,error:{message:'timeout',status:0}}),ms))]);
-let Q=jp('md_q',[]),realFrom,authGet,flushing=false,loaded=false,pT,patched=false;
+let pcats=[],Q=jp('md_q',[]),realFrom,authGet,flushing=false,loaded=false,pT,patched=false;
 const uid=()=>{try{return session&&session.user&&session.user.id}catch(_){return null}};
 const pseudo=()=>{try{return !!(session&&session.offline)}catch(_){return false}};
 const offSess=()=>{const s=jp('md_sess',null);return s&&s.user?{user:s.user,offline:true}:null};
@@ -64,9 +64,9 @@ async function flush(){
   }finally{flushing=false;dispatchEvent(new Event('md-q'))}}
 
 /* ---------- local cache of all data ---------- */
-function persist(){if(!loaded||!uid()||pseudo()&&false)return;sv('md_cache',{u:uid(),tasks,cats,ideas,maps,habits,hlogs,events,ecats,curMap})}
+function persist(){if(!loaded||!uid()||pseudo()&&false)return;sv('md_cache',{u:uid(),tasks,cats,ideas,maps,habits,hlogs,events,ecats,pcats,curMap})}
 function loadCache(){const c=jp('md_cache',null);
-  if(c&&c.u===uid()){tasks=c.tasks||[];cats=c.cats||[];ideas=c.ideas||[];maps=c.maps||[];habits=c.habits||[];hlogs=c.hlogs||[];events=c.events||[];ecats=c.ecats||[];if(c.curMap&&!curMap)curMap=c.curMap;ideaErr=null;habitErr=null;evErr=null}
+  if(c&&c.u===uid()){tasks=c.tasks||[];cats=c.cats||[];ideas=c.ideas||[];maps=c.maps||[];habits=c.habits||[];hlogs=c.hlogs||[];events=c.events||[];ecats=c.ecats||[];pcats=c.pcats||[];if(c.curMap&&!curMap)curMap=c.curMap;ideaErr=null;habitErr=null;evErr=null}
   loaded=true}
 
 /* ---------- client wrapper: patches the client returned by createClient ---------- */
@@ -130,6 +130,7 @@ function applyPatches(){
     let failed=false;const oa=window.alert;window.alert=m=>{failed=true;if(!isNet({message:String(m)}))oa(m)};
     try{await _ld()}finally{window.alert=oa}
     if(failed){loadCache();return}
+    {const pr=await sb.from('categories').select('*').eq('kind','plan').order('sort_order');if(!pr.error)pcats=pr.data}
     loaded=true;persist()};
   const _ls=loadSettings;loadSettings=function(){return navigator.onLine&&!pseudo()?_ls():Promise.resolve()};
   const _lb=loadBg;loadBg=async function(){if(!navigator.onLine||pseudo()){bgPath=LS.md_bgp||'';bgUrl=LS.md_bgd||'';theme();return}await _lb();cacheBg()};
@@ -193,5 +194,71 @@ function extra(){
     if(tab==='habit'&&!hview&&sdo)app.insertAdjacentHTML('beforeend',habDr())};
   document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="sd"],[data-a="cpick"]');if(!b)return;
     if(b.dataset.a==='sd'){sdo=!sdo;render()}else pickYM()},true);
+  /* ---- plan list (計劃表) + manual task order ---- */
+  const L2={plDates:['日程','日程','Dates'],plStatus:['狀態（例如 已申請、已寄出）','ステータス（例：申込済、送付済）','Status (e.g. applied, sent)'],plNewCat:['分類','分類','Category'],plManage:['管理','管理','Manage'],plInProg:['進行中的計劃','進行中の計画','Active plans'],plEmpty:['還沒有計劃，按「＋ 計劃」新增。','計画はまだありません。「＋ 計画」で追加。','No plans yet. Tap “＋ Plan”.']};
+  Object.keys(L2).forEach(k=>['zh','ja','en'].forEach((l,i)=>{T[l][k]=L2[k][i]}));
+  let planOpen=false,planCat='all';
+  const openDl=()=>{if(!dl.open)dl.showModal()};
+  const fd=d=>d?new Date(d+'T00:00').toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric',weekday:'short'}):'';
+  const planListHTML=()=>{
+    const arr=maps.slice().sort((a,b)=>((a.sort_order==null?1e9:a.sort_order)-(b.sort_order==null?1e9:b.sort_order))||(a.created_at<b.created_at?-1:1)).filter(m=>planCat==='all'||m.category_id===planCat);
+    const row=m=>{const c=pcats.find(x=>x.id===m.category_id),dt=m.start_date?fd(m.start_date)+(m.end_date&&m.end_date!==m.start_date?' ～ '+fd(m.end_date):''):'';
+      return `<div class="trow" data-a="popen" data-id="${m.id}"><span class="dot" style="background:${esc(c&&c.color||'#8FA382')}"></span><div style="flex:1;min-width:0"><b>${esc(m.name||'')}</b>${dt?`<div class="meta">${t('plDates')}：${dt}</div>`:''}${m.status?`<div class="meta">${esc(m.status)}</div>`:''}</div><button class="sec ic" data-a="pedit" data-id="${m.id}" aria-label="✎">✎</button></div>`};
+    const chips=`<div class="pchips"><button class="pchip${planCat==='all'?' on':''}" data-a="pcat" data-id="all">${t('all')}</button>${pcats.map(c=>`<button class="pchip${planCat===c.id?' on':''}" data-a="pcat" data-id="${c.id}"><span class="dot" style="background:${esc(c.color||'#8FA382')};display:inline-block;margin-right:6px"></span>${esc((c.icon||'')+c.name)}</button>`).join('')}<button class="pchip" data-a="pcnew">＋ ${t('plNewCat')}</button><button class="pchip" data-a="pcmgr">${t('plManage')}</button></div>`;
+    return `<div class="hd"><h1>${t('brainstorm')}</h1><span></span></div><div class="ghd"><b>${t('plInProg')}</b><button class="pchip" data-a="pnew">＋ ${t('plan')}</button></div><div class="card">${arr.length?arr.map(row).join(''):`<p class="meta">${t('plEmpty')}</p>`}</div>${chips}`};
+  const _ih=ideaHTML;ideaHTML=function(){
+    if(ideaErr)return _ih();
+    if(!planOpen)return planListHTML();
+    const m=maps.find(x=>x.id===curMap);
+    return _ih().replace(/<div class="hd"><h1>[\s\S]*?<\/h1><span><\/span><\/div>/,`<div class="hd"><button class="sec ic" data-a="pback" aria-label="‹">‹</button><h1>${esc(m?m.name:'')}</h1><span></span></div>`).replace(/<div class="pchips">[\s\S]*?<\/div>/,'')};
+  function editPlan(id){const m=maps.find(x=>x.id===id);if(!m)return;
+    dl.innerHTML=`<textarea id="pe-n" rows="1" maxlength="60" style="font-size:20px;font-weight:700" aria-label="${t('planName')}">${esc(m.name||'')}</textarea>
+<div class="frow"><span>🏷 ${t('cat')}</span><select id="pe-c"><option value="">${t('noCat')}</option>${pcats.map(c=>`<option value="${c.id}"${m.category_id===c.id?' selected':''}>${esc((c.icon||'')+' '+c.name)}</option>`).join('')}</select></div>
+<div class="frow"><span>${t('start')}</span><input type="date" id="pe-s" value="${m.start_date||''}" style="width:auto;margin:0"></div>
+<div class="frow"><span>${t('end')}</span><input type="date" id="pe-e" value="${m.end_date||''}" style="width:auto;margin:0"></div>
+<label for="pe-t">${t('plStatus')}</label><input id="pe-t" type="text" maxlength="40" value="${esc(m.status||'')}">
+<div class="tbar"><button class="sec" id="pe-d">${t('del')}</button><button class="pri snd" id="pe-ok" aria-label="${t('save')}">↑</button></div>`;
+    $('pe-ok').onclick=async()=>{const v={name:$('pe-n').value.trim()||m.name,category_id:$('pe-c').value||null,start_date:$('pe-s').value||null,end_date:$('pe-e').value||null,status:$('pe-t').value.trim()||null};
+      const{error}=await sb.from('idea_maps').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(m,v);dl.close();render()};
+    $('pe-d').onclick=async()=>{if(!confirm(t('confirmDel')))return;
+      let r=await sb.from('ideas').delete().eq('map_id',id);if(r.error)return alert(r.error.message);
+      r=await sb.from('idea_maps').delete().eq('id',id);if(r.error)return alert(r.error.message);
+      ideas=ideas.filter(i=>i.map_id!==id);maps=maps.filter(x=>x.id!==id);if(curMap===id)curMap=maps[0]?maps[0].id:null;planOpen=false;dl.close();render()};
+    openDl()}
+  function newPcat(){dl.innerHTML=`<label for="pn-n">${t('listName')}</label><input id="pn-n" type="text" maxlength="20"><label for="pn-e">${t('emoji')}</label><input id="pn-e" type="text" maxlength="8" placeholder="😀"><label for="pn-c">${t('color')}</label><input id="pn-c" type="color" value="#8FA382"><div class="row"><button class="sec" id="pn-x">${t('cancel')}</button><button class="pri" id="pn-s">${t('save')}</button></div>`;
+    $('pn-x').onclick=()=>dl.close();
+    $('pn-s').onclick=async()=>{const n=$('pn-n').value.trim();if(!n)return;const{data,error}=await sb.from('categories').insert({kind:'plan',name:n,icon:$('pn-e').value.trim()||null,color:$('pn-c').value,sort_order:pcats.length}).select().single();if(error)return alert(error.message);pcats.push(data);dl.close();render()};
+    openDl()}
+  function pcMgr(){dl.innerHTML=pcats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-pi="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-pn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-pc="${c.id}" aria-label="${t('color')}"><button class="sec" data-pd="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')+`<div class="row"><button class="sec" id="pc-add">＋ ${t('plNewCat')}</button><button class="pri" id="pc-ok">✓</button></div>`;
+    dl.querySelectorAll('[data-pi],[data-pn],[data-pc]').forEach(el=>el.onchange=async()=>{const id=el.dataset.pi||el.dataset.pn||el.dataset.pc,patch=el.dataset.pi?{icon:el.value.trim()||null}:el.dataset.pn?{name:el.value.trim()||'—'}:{color:el.value};
+      const{error}=await sb.from('categories').update(patch).eq('id',id);if(error)return alert(error.message);Object.assign(pcats.find(c=>c.id===id),patch);render()});
+    dl.querySelectorAll('[data-pd]').forEach(b=>b.onclick=async()=>{if(!confirm(t('confirmDel')))return;const id=b.dataset.pd;const{error}=await sb.from('categories').delete().eq('id',id);if(error)return alert(error.message);pcats=pcats.filter(c=>c.id!==id);maps.forEach(m=>{if(m.category_id===id)m.category_id=null});if(planCat===id)planCat='all';pcMgr();render()});
+    $('pc-add').onclick=newPcat;$('pc-ok').onclick=()=>dl.close();openDl()}
+  document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="popen"],[data-a="pback"],[data-a="pedit"],[data-a="pcat"],[data-a="pcnew"],[data-a="pcmgr"],[data-a="pnew"]');if(!b)return;
+    const a=b.dataset.a,id=b.dataset.id;
+    if(a==='popen'){curMap=id;planOpen=true;render()}
+    else if(a==='pback'){planOpen=false;render()}
+    else if(a==='pedit')editPlan(id);
+    else if(a==='pcat'){planCat=id;render()}
+    else if(a==='pcnew')newPcat();
+    else if(a==='pcmgr')pcMgr();
+    else openMap()},true);
+  /* manual task order (⬆⬇ in the edit sheet) */
+  async function moveTask(id,dir){const x=tasks.find(z=>z.id===id);if(!x)return;
+    const el=document.querySelector(`#app .tt[data-id="${id}"]`),card=el&&el.closest('.card');if(!card)return;
+    const list=[...new Set([...card.querySelectorAll('.tt[data-a="edit"]')].map(e=>e.dataset.id))].filter(i=>{const z=tasks.find(q=>q.id===i);return z&&(z.parent_id||null)===(x.parent_id||null)});
+    const ix=list.indexOf(id),jx=ix+dir;if(ix<0||jx<0||jx>=list.length)return;
+    [list[ix],list[jx]]=[list[jx],list[ix]];
+    for(let k=0;k<list.length;k++){const z=tasks.find(q=>q.id===list[k]),so=(k+1)*10;if(z.sort_order===so)continue;const{error}=await sb.from('tasks').update({sort_order:so}).eq('id',z.id);if(error)return alert(error.message);z.sort_order=so}
+    dl.close();render()}
+  const _os=openSheet;openSheet=function(id,pid){_os(id,pid);if(!id)return;const d=dl.querySelector('#f-del');if(!d)return;
+    d.parentElement.insertAdjacentHTML('afterbegin','<button class="sec" id="f-up" aria-label="⬆">⬆</button><button class="sec" id="f-dn" aria-label="⬇">⬇</button>');
+    $('f-up').onclick=()=>moveTask(id,-1);$('f-dn').onclick=()=>moveTask(id,1)};
+  const sOf=el=>{const i=(el.querySelector('.tt[data-id]')||{dataset:{}}).dataset.id,z=tasks.find(q=>q.id===i);return z&&z.sort_order!=null?z.sort_order:1e9};
+  const _av3=appView;appView=function(){_av3();if(tab!=='todo'||!tasks.some(z=>z.sort_order!=null))return;
+    $('app').querySelectorAll('.card').forEach(card=>{const ks=[...card.children].filter(c=>c.classList.contains('task'));if(ks.length<2)return;
+      const gs=[];ks.forEach(k=>{if(k.classList.contains('sub')&&gs.length)gs[gs.length-1].push(k);else gs.push([k])});
+      gs.forEach(g=>{const h=g[0],s=g.slice(1).sort((a,b)=>sOf(a)-sOf(b));g.length=0;g.push(h,...s)});
+      gs.sort((a,b)=>sOf(a[0])-sOf(b[0]));card.append(...gs.flat())})};
 }
 })();
