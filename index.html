@@ -19,7 +19,7 @@ main{max-width:420px;margin:0 auto;padding:28px 20px}
 h1{display:inline-block;font-family:var(--fd);font-weight:600;font-size:28px;margin:8px 0 24px;letter-spacing:.08em;border-bottom:5px solid var(--ac2)}
 .card{background:var(--card);border:1px solid var(--ln);border-top:4px solid var(--ac);border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 2px 12px rgba(138,42,33,.07)}
 label{display:block;font-size:14px;color:var(--mut);margin:12px 0 4px}
-input[type=email],input[type=password],input[type=text],input[type=datetime-local],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink)}
+input[type=email],input[type=password],input[type=text],input[type=number],input[type=datetime-local],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink)}
 input[type=color]{width:56px;height:40px;border:1px solid var(--ln);border-radius:10px;background:none;padding:2px}
 button{font:inherit;padding:12px 16px;border-radius:10px;border:1px solid var(--ac);cursor:pointer}
 .pri{background:var(--ac);color:var(--on)}.sec{background:none;color:var(--ink);border-color:var(--ln)}
@@ -97,6 +97,9 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}.dcol select{width:100%;margin:0 0 6px}.dcol .card{padding:10px}.dcol .task b{font-size:14px}
 .appt{font-family:var(--fd);text-align:center;font-size:19px;letter-spacing:.06em;padding:10px 0 2px;color:var(--ac)}
 .toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ac);color:var(--on);padding:10px 20px;border-radius:99px;z-index:60;box-shadow:0 6px 20px rgba(60,30,20,.3);font-size:14px}
+.remb{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(92vw,400px);background:var(--ac);color:var(--on);border-radius:14px;padding:12px 16px;z-index:80;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.3);font-size:15px}
+.remb button{background:none;border:0;color:var(--on);font-size:18px;padding:2px 8px;cursor:pointer;flex:none}
+.fcard{text-align:center;padding:38px 18px}.fcard .fw{font-size:28px;font-weight:700;overflow-wrap:anywhere}.fcard .fm{font-size:21px;font-weight:600;margin-top:12px;overflow-wrap:anywhere}.fcard .fe{margin-top:8px}
 .pchip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 .trow{display:flex;gap:8px;align-items:center;padding:9px 8px;border-bottom:1px solid var(--ln);cursor:pointer}.trow:last-child{border-bottom:0}.dot{width:10px;height:10px;border-radius:99px;flex:none}
 .mmwrap{position:relative;overflow:hidden;border:1px solid var(--ln);border-radius:16px;background:var(--card);height:calc(100dvh - 200px);min-height:360px}.mmvt{position:absolute;top:8px;right:8px;z-index:3;display:flex;gap:6px}.calrow button{flex:0 0 88px}.expsel{flex:1;width:auto;margin:0}
@@ -126,9 +129,9 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .fchips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
 .fchip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 ::selection{background:rgba(217,164,65,.45)}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v11)</p></main><dialog id="dlg"></dialog>
-<script src="supabase.js"></script>
-<script src="offline.js"></script>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v10)</p></main><dialog id="dlg"></dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="course-it.js"></script>
 <script>
 const showErr=m=>document.getElementById('app').insertAdjacentHTML('beforeend','<p style="padding:16px">⚠ '+String(m).replace(/</g,'&lt;')+'</p>');
 addEventListener('error',e=>showErr(e.message));addEventListener('unhandledrejection',e=>showErr(e.reason&&e.reason.message||e.reason));
@@ -165,6 +168,12 @@ Object.assign(T.zh,{plan:'計劃',planName:'計劃名稱',toTodo:'加入待辦',
 Object.assign(T.zh,{mapV:'地圖',listV:'列表',mmChild:'加子節點',mmDel:'刪除這個節點和它下面所有分支？'});Object.assign(T.zh,{expSched:'匯出行程'});Object.assign(T.ja,{expSched:'予定を書き出す'});Object.assign(T.en,{expSched:'Export schedule'});Object.assign(T.ja,{mapV:'マップ',listV:'リスト',mmChild:'子ノード追加',mmDel:'このノードと配下すべてを削除しますか？'});Object.assign(T.en,{mapV:'Map',listV:'List',mmChild:'Add sub-node',mmDel:'Delete this node and everything under it?'});
 Object.assign(T.zh,{gt_check:'完成就得',gt_amt:'達到數量',unit:'單位',td:'目標日數',tdF:'永遠',tdC:'自訂',pwater:'飲水',pex:'做運動',prd:'讀書',cup:'杯',presets:'預設',linkHint:'點 ↗ 會直接開啟手機上的 App。填 App 連結（如 drops://、spotify://）；沒有連結的 App，先在 iOS「捷徑」建一個開啟 App 的捷徑，再填 shortcuts://run-shortcut?name=捷徑名稱。'});Object.assign(T.ja,{gt_check:'完了すればOK',gt_amt:'量を達成',unit:'単位',td:'目標日数',tdF:'永遠',tdC:'カスタム',pwater:'水を飲む',pex:'運動する',prd:'読書',cup:'杯',presets:'プリセット',linkHint:'↗でスマホのアプリを直接開きます。アプリのリンク（例：drops://、spotify://）を入力。リンクがないアプリは、iOS「ショートカット」でアプリを開くショートカットを作り、shortcuts://run-shortcut?name=名前 を入力。'});Object.assign(T.en,{gt_check:'Just complete it',gt_amt:'Reach an amount',unit:'Unit',td:'Target days',tdF:'Forever',tdC:'Custom',pwater:'Drink water',pex:'Exercise',prd:'Reading',cup:'cups',presets:'Presets',linkHint:'Tap ↗ to open the app on your phone. Enter an app link (e.g. drops://, spotify://). For apps without one, make an iOS Shortcut that opens it, then use shortcuts://run-shortcut?name=ShortcutName.'});Object.assign(T.ja,{iconL:'アイコン',freq:'曜日',startd:'開始日',restToday:'今日はお休み / 未開始'});Object.assign(T.en,{iconL:'Icon',freq:'Days',startd:'Start date',restToday:'Resting today / not started'});
 Object.assign(T.zh,{slot:'時段',slot_any:'隨時',slot_am:'早上',slot_pm:'下午',slot_night:'晚上',streak:'目前連續',stats:'統計',st_m:'本月打卡',st_t:'累計打卡',st_r:'本月達成率',st_s:'目前連續',st_ma:'本月總量',st_ta:'累計總量',times:'次',days:'日',chart:'每日紀錄'});Object.assign(T.ja,{slot:'時間帯',slot_any:'いつでも',slot_am:'朝',slot_pm:'午後',slot_night:'夜',streak:'現在の連続',stats:'統計',st_m:'今月のチェックイン',st_t:'累計チェックイン',st_r:'今月の達成率',st_s:'現在の連続',st_ma:'今月の合計',st_ta:'総累計',times:'回',days:'日',chart:'毎日の記録'});Object.assign(T.en,{slot:'Time of day',slot_any:'Anytime',slot_am:'Morning',slot_pm:'Afternoon',slot_night:'Night',streak:'Current streak',stats:'Stats',st_m:'Check-ins this month',st_t:'Total check-ins',st_r:'Completion this month',st_s:'Current streak',st_ma:'This month total',st_ta:'All-time total',times:'times',days:'d',chart:'Daily record'});
+Object.assign(T.zh,{study:'語言學習',studySql:'語言學習的資料表還沒建立，請先在 Supabase 執行 sql-language-study.sql。',newLang:'新增語言',langName:'語言名稱',langLevel:'目標級別（如 B1，可留空）',studyEmpty:'還沒有學習中的語言，按下方按鈕新增第一個。',sToday:'今日學習',sWeek:'本週學習',sWords:'生詞總數',sDue:'今日待複習',logTime:'記錄',min:'分鐘',vHome:'概覽',vWords:'生詞本',vReview:'閃卡複習',word:'生詞／短句',meaning:'意思',example:'例句／備註',addWord:'新增生詞',flip:'翻卡睇答案',know:'識 ✓',dontKnow:'唔識 ✗',noDue:'今日冇到期嘅卡 🎉',reviewAll:'複習全部',reviewDue:'開始複習到期卡',revDone:'複習完成 ✓',nextRev:'下次複習',wordsEmpty:'生詞本還沒有生詞，按上方 ＋ 新增第一個。',notifT:'行程提醒通知',notifHint:'提醒時間到時會彈出通知，用返手機本身的預設通知聲；手機靜音或勿擾模式時，通知會跟住靜音。權限被拒時，App 內仍會顯示橫額提醒。',notifBtn:'允許通知',notifOk:'通知已允許 ✓',notifNo:'通知未開啟（被拒絕或此裝置不支援）。請到系統設定開啟，或把 App 加到主畫面後再試。'});
+Object.assign(T.ja,{study:'語学学習',studySql:'語学学習のテーブルが未作成です。先にSupabaseで sql-language-study.sql を実行してください。',newLang:'言語を追加',langName:'言語名',langLevel:'目標レベル（例：B1、任意）',studyEmpty:'学習中の言語がありません。下のボタンから追加してください。',sToday:'今日の学習',sWeek:'今週の学習',sWords:'単語の総数',sDue:'今日の復習',logTime:'記録',min:'分',vHome:'概要',vWords:'単語帳',vReview:'フラッシュカード',word:'単語／フレーズ',meaning:'意味',example:'例文／メモ',addWord:'単語を追加',flip:'カードをめくる',know:'分かる ✓',dontKnow:'分からない ✗',noDue:'今日の復習カードはありません 🎉',reviewAll:'すべて復習',reviewDue:'期限のカードを復習',revDone:'復習完了 ✓',nextRev:'次回',wordsEmpty:'単語帳はまだ空です。上の＋で最初の単語を追加。',notifT:'予定のリマインダー通知',notifHint:'リマインダー時刻に通知が届きます。音はスマホ標準の通知音で、サイレント時は通知も無音になります。拒否された場合はアプリ内バナーでお知らせします。',notifBtn:'通知を許可',notifOk:'通知は許可済み ✓',notifNo:'通知がオフです（拒否／未対応）。システム設定でオンにするか、ホーム画面に追加してからお試しください。'});
+Object.assign(T.en,{study:'Language Study',studySql:'The Language Study tables are missing. Run sql-language-study.sql in Supabase first.',newLang:'Add language',langName:'Language name',langLevel:'Target level (e.g. B1, optional)',studyEmpty:'No languages yet. Add your first one below.',sToday:'Studied today',sWeek:'This week',sWords:'Total words',sDue:'Due today',logTime:'Log',min:'min',vHome:'Overview',vWords:'Word book',vReview:'Flashcards',word:'Word / phrase',meaning:'Meaning',example:'Example / note',addWord:'Add word',flip:'Flip card',know:'Know ✓',dontKnow:"Don't know ✗",noDue:'No cards due today 🎉',reviewAll:'Review all',reviewDue:'Review due cards',revDone:'Review done ✓',nextRev:'Next',wordsEmpty:'No words yet. Tap ＋ above to add the first one.',notifT:'Event reminder notifications',notifHint:"When a reminder is due you get a notification with your phone's own default sound; if the phone is muted or in Do Not Disturb, the notification stays silent too. If permission is denied, an in-app banner still appears.",notifBtn:'Allow notifications',notifOk:'Notifications allowed ✓',notifNo:'Notifications are off (denied or unsupported). Enable them in system settings, or add the app to your Home Screen and try again.'});
+Object.assign(T.zh,{course:'課程',grammarL:'文法（Strutture）',packL:'主題單詞',addW:'＋ 加入',addedW:'已加入 ✓',addAll:'全部加入',cilsExam:'這級 CILS 考什麼',progW:'已加入生詞本',courseMissing:'課程資料檔（course-it.js）未載入，請確認已上載到同一位置。'});
+Object.assign(T.ja,{course:'コース',grammarL:'文法（Strutture）',packL:'テーマ単語',addW:'＋ 追加',addedW:'追加済み ✓',addAll:'すべて追加',cilsExam:'このレベルのCILS試験',progW:'単語帳に追加済み',courseMissing:'コースデータ（course-it.js）が読み込めませんでした。同じ場所にアップロードされているか確認してください。'});
+Object.assign(T.en,{course:'Course',grammarL:'Grammar (Strutture)',packL:'Word packs',addW:'+ Add',addedW:'Added ✓',addAll:'Add all',cilsExam:'What CILS tests at this level',progW:'in your word book',courseMissing:'Course data file (course-it.js) not loaded — please check it was uploaded next to index.html.'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#8A2A21',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -200,6 +209,8 @@ function render(){
   }
 }
 let tasks=[],cats=[],view='all',dr=false,ovOpen=true,tab='todo',ideas=[],ideaErr=null,iview='map',maps=[],curMap=null,toastMsg='',dual=false,dA='today',dB='tomorrow',habits=[],hlogs=[],habitErr=null,events=[],ecats=[],evErr=null,cm=new Date(),cs=new Date(),ch=null,lt=null,hview=null,hmon=new Date();
+let langs=[],words=[],ssess=[],langErr=null,curLang=localStorage.curlang||null,studyView='home',revQ=null,revI=0,revFlip=false;
+let courseLvl=localStorage.clvl||'A1',expG=new Set();const TTS=('speechSynthesis' in window);
 let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
@@ -224,6 +235,11 @@ async function loadData(){
     if(!maps.length&&ideas.length){const{data}=await sb.from('idea_maps').insert({name:t('brainstorm')}).select().single();if(data){maps=[data];curMap=data.id}}
     if(curMap&&ideas.some(i=>!i.map_id)){await sb.from('ideas').update({map_id:curMap}).is('map_id',null);ideas.forEach(i=>{if(!i.map_id)i.map_id=curMap})}
   }habitErr=h.error||l.error;habits=habitErr?[]:h.data;hlogs=habitErr?[]:l.data;evErr=ev.error||ec.error;events=evErr?[]:ev.data;ecats=ec.error?[]:ec.data;
+  const sl=await sb.from('study_languages').select('*').order('created_at'),swd=await sb.from('study_words').select('*').order('created_at'),ssn=await sb.from('study_sessions').select('*');
+  langErr=sl.error;langs=langErr?[]:sl.data;words=swd.error?[]:swd.data;ssess=ssn.error?[]:ssn.data;
+  if(!langErr&&!langs.length&&!localStorage.itAuto){try{const r=await sb.from('study_languages').insert({name:'Italiano',level:'B1'}).select().single();if(!r.error&&r.data){langs=[r.data];localStorage.itAuto='1'}}catch(e){}}
+  if(curLang&&!langs.some(l=>l.id===curLang))curLang=null;
+  if(!curLang){const fl=langs.find(l=>!l.archived);if(fl)curLang=fl.id}
 }
 const vname=()=>({all:t('all'),today:t('today'),tomorrow:t('tomorrow'),inbox:t('inbox'),done:t('completed')}[view]||(catOf(view)?esc((catOf(view).icon||'')+' '+catOf(view).name):t('all')));
 function row(x,sub){
@@ -265,8 +281,8 @@ const setHTML0=()=>`<div class="card"><label for="nm">${t('name')}</label><input
 ${listsCard()}
 <p class="meta">${esc(session.user.email)}</p><div class="top"><button class="sec" data-a="lo">${t('out')}</button></div>`;
 const LOC={zh:'zh-TW',ja:'ja-JP',en:'en-US'},WK={zh:'一二三四五六日',ja:'月火水木金土日',en:'MTWTFSS'};
-const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/>',todo:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l3 3 5-6"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',idea:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'};
-const tabbar=()=>`<nav class="tabs">${[['habit','habits'],['todo','todoT'],['cal','calendar'],['idea','brainstorm'],['set','settings']].map(([k,n])=>`<button data-a="tab" data-v="${k}" class="${tab===k?'on':''}" aria-label="${t(n)}"${tab===k?' aria-current="page"':''}><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></button>`).join('')}</nav>`;
+const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/>',todo:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l3 3 5-6"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',idea:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',study:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'};
+const tabbar=()=>`<nav class="tabs">${[['habit','habits'],['todo','todoT'],['cal','calendar'],['idea','brainstorm'],['study','study'],['set','settings']].map(([k,n])=>`<button data-a="tab" data-v="${k}" class="${tab===k?'on':''}" aria-label="${t(n)}"${tab===k?' aria-current="page"':''}><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></button>`).join('')}</nav>`;
 const REM=[['','r_none'],['0','r_0'],['10','r_10'],['30','r_30'],['60','r_60'],['120','r_120'],['1440','r_1440']];
 const RPT=[['none','rp_none'],['daily','rp_d'],['weekly','rp_w'],['monthly','rp_m'],['yearly','rp_y']];
 const anyCat=id=>cats.find(c=>c.id===id)||ecats.find(c=>c.id===id);
@@ -340,6 +356,7 @@ function openEvent(id){
     const st=new Date(sd+'T'+(ad?'00:00':($('e-st').value||'09:00')));
     const en=ad?new Date(ed+'T23:59'):($('e-et').value?new Date(ed+'T'+$('e-et').value):null);
     const r=$('e-r').value;
+    if(r!==''&&'Notification'in window&&Notification.permission==='default'){try{Notification.requestPermission()}catch(_){}}
     const v={title,start_at:st.toISOString(),end_at:en&&en>=st?en.toISOString():null,all_day:ad,location:$('e-l').value.trim()||null,url:$('e-u').value.trim()||null,repeat_kind:$('e-rp').value,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:r===''?null:+r,remind_at:r===''?null:new Date(+st-r*6e4).toISOString(),place_phone:(window._place&&window._place.phone)||null,place_hours:(window._place&&window._place.hours)||null};
     if(id){const{error}=await sb.from('events').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('events').insert(v).select().single();if(error)return alert(error.message);events.push(data);cs=new Date(st)}
@@ -386,13 +403,15 @@ function ideaHTML(){
   else{const flat=[];const walk=(n,d)=>{flat.push([n.i,d]);n.kids.forEach(k=>walk(k,d+1))};mmTree().forEach(n=>walk(n,0));main=`<div style="display:flex;justify-content:flex-end;margin-bottom:8px">${tog}</div>`+(flat.length?`<div class="card">${flat.map(([i,d])=>`<div class="trow" style="padding-left:${8+d*20}px" data-a="node" data-id="${i.id}"><span class="dot" style="background:${esc(i.color||'#D9A441')}"></span><b>${esc(i.title||'')}</b><span class="meta">${i.body?esc(i.body.slice(0,34)):''}</span></div>`).join('')}</div>`:`<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`)}
   return `<div class="hd"><h1>${t('brainstorm')}</h1><span></span></div>`+main+(ideaErr?'':`<button class="fab" data-a="nidea" aria-label="${t('newIdea')}">＋</button>`);
 }
-const setHTML=()=>{const m='<p class="meta">'+esc(session.user.email)+'</p>';return setHTML0().replace(m,m).replace(listsCard(),'')};
+const notifCard=()=>{const sup='Notification'in window,st=sup?Notification.permission:'na';return `<div class="card"><b>🔔 ${t('notifT')}</b><p class="meta">${t('notifHint')}</p>${st==='granted'?`<p class="meta">${t('notifOk')}</p>`:st==='denied'||!sup?`<p class="meta">${t('notifNo')}</p>`:`<div class="row"><button class="pri" data-a="nreq">${t('notifBtn')}</button></div>`}</div>`};
+const setHTML=()=>setHTML0().replace(listsCard(),'')+notifCard();
 function appView(){
   let body;
   if(tab==='set')body=`<div class="hd"><h1>${t('settings')}</h1><span></span></div>`+setHTML();
   else if(tab==='habit')body=hview?habitDetail(hview):habitHTML();
   else if(tab==='cal')body=calHTML();
   else if(tab==='idea')body=ideaHTML();
+  else if(tab==='study')body=studyHTML();
   else body=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><h1>${vname()}</h1><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1">${t('sv')}</button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2">${t('dv')}</button></span></div>`+listHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`);
   $('app').innerHTML=`<div class="appt">${appTitle()}</div>`+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
   if(tab==='set')bind();
@@ -626,6 +645,28 @@ $('app').addEventListener('click',async e=>{
   else if(a==='pst')await postpone()
   else if(a==='chk')await setDone(id,b.checked)
   else if(a==='cdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('categories').delete().eq('id',id);if(error)alert(error.message);else{cats=cats.filter(c=>c.id!==id);ecats=ecats.filter(c=>c.id!==id);tasks.forEach(x=>{if(x.category_id===id)x.category_id=null});events.forEach(x=>{if(x.category_id===id)x.category_id=null});if(view===id)view='all';render()}}}
+  else if(a==='ctab'){courseLvl=b.dataset.v;localStorage.clvl=b.dataset.v;render()}
+  else if(a==='gtog'){const k=b.dataset.v;expG.has(k)?expG.delete(k):expG.add(k);render()}
+  else if(a==='tts'){speakIt(b.dataset.v)}
+  else if(a==='cadd'){const pr=b.dataset.v.split(':');await addCourseWords([COURSE_IT[courseLvl].packs[+pr[0]].w[+pr[1]]]);render()}
+  else if(a==='caddall'){await addCourseWords(COURSE_IT[courseLvl].packs[+b.dataset.v].w);render()}
+  else if(a==='nreq'){if('Notification'in window&&Notification.permission==='default'){try{await Notification.requestPermission()}catch(_){}}render()}
+  else if(a==='slang'){curLang=id;localStorage.curlang=id;studyView='home';revQ=null;render()}
+  else if(a==='nlang')openLang()
+  else if(a==='ledit')openLang(id)
+  else if(a==='larc'){const L=langs.find(l=>l.id===id);if(L){const{error}=await sb.from('study_languages').update({archived:true}).eq('id',id);if(error)alert(error.message);else{L.archived=true;revQ=null;if(curLang===id){const f=langs.find(l=>!l.archived);curLang=f?f.id:null}render()}}}
+  else if(a==='lunarc'){const L=langs.find(l=>l.id===id);if(L){const{error}=await sb.from('study_languages').update({archived:false}).eq('id',id);if(error)alert(error.message);else{L.archived=false;if(!curLang)curLang=id;render()}}}
+  else if(a==='ldel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('study_languages').delete().eq('id',id);if(error)alert(error.message);else{langs=langs.filter(l=>l.id!==id);words=words.filter(w=>w.language_id!==id);ssess=ssess.filter(s=>s.language_id!==id);if(curLang===id)curLang=null;render()}}}
+  else if(a==='sview'){studyView=b.dataset.v;if(studyView!=='review')revQ=null;render()}
+  else if(a==='logq')await logStudy(+b.dataset.v)
+  else if(a==='logm'){const v=parseInt(($('lg-min')||{}).value,10);if(v>0)await logStudy(v)}
+  else if(a==='nword')openWord()
+  else if(a==='wdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('study_words').delete().eq('id',id);if(error)alert(error.message);else{words=words.filter(w=>w.id!==id);render()}}}
+  else if(a==='rvgo')initReview(false)
+  else if(a==='rvall')initReview(true)
+  else if(a==='rvflip'){revFlip=true;render()}
+  else if(a==='rvknow')await gradeWord(true)
+  else if(a==='rvdont')await gradeWord(false)
   else if(a==='lo')sb.auth.signOut();
 });
 $('app').addEventListener('change',async e=>{
@@ -697,7 +738,156 @@ function exportImg(kind){
     dlg.showModal();
   });
 }
-sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s){await loadSettings();await loadBg();await loadData();live()}else{uname='';localStorage.removeItem('dname');bgPath='';bgUrl='';theme();if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];events=[];ecats=[];tab='todo';view='all'}}catch(e){}render()},0)});
+function studyHTML(){
+  const head=`<div class="hd"><h1>${t('study')}</h1><span></span></div>`;
+  if(langErr)return head+`<div class="card"><p class="meta">${t('studySql')}</p></div>`;
+  const act=langs.filter(l=>!l.archived),arc=langs.filter(l=>l.archived);
+  const arcSec=arc.length?`<div class="card"><b>${t('arcSec')}</b>${arc.map(l=>`<div class="task"><div class="tt"><b>${esc(l.name)}</b></div><button class="sec" data-a="lunarc" data-id="${l.id}">${t('unarc')}</button></div>`).join('')}</div>`:'';
+  if(!act.length)return head+`<div class="card"><p class="meta">${t('studyEmpty')}</p><div class="row"><button class="pri" data-a="nlang">＋ ${t('newLang')}</button></div></div>`+arcSec;
+  const L=langs.find(l=>l.id===curLang)||act[0];curLang=L.id;
+  const chips=`<div class="chips">${act.map(l=>`<button class="chip${l.id===curLang?' on':''}" data-a="slang" data-id="${l.id}">${esc(l.name)}${l.level?' · '+esc(l.level):''}</button>`).join('')}<button class="chip" data-a="nlang">＋ ${t('newLang')}</button></div>`;
+  const segItems=[['home','vHome'],['words','vWords'],['review','vReview']];if(isItLang(L))segItems.push(['course','course']);
+  const seg=`<div class="pchips">${segItems.map(([v,k])=>`<button class="pchip${studyView===v?' on':''}" data-a="sview" data-v="${v}">${t(k)}</button>`).join('')}</div>`;
+  const lw=words.filter(w=>w.language_id===L.id),ls=ssess.filter(s=>s.language_id===L.id),today=ymd(new Date());
+  let main='';
+  if(studyView==='words'){
+    main=`<div class="card"><div class="hd"><b>${t('vWords')} · ${lw.length}</b><button class="pri" data-a="nword">＋ ${t('addWord')}</button></div>${lw.length?lw.map(w=>`<div class="task"><div class="tt"><b>${esc(w.word||'')}</b>${TTS?` <button class="lnk" data-a="tts" data-v="${esc(w.word||'')}" aria-label="play">🔊</button>`:''}${w.meaning?`<div class="meta">${esc(w.meaning)}</div>`:''}${w.example?`<div class="meta">${esc(w.example)}</div>`:''}<div class="meta">${t('nextRev')}：${esc(w.next_review||'')}</div></div><button class="sec" data-a="wdel" data-id="${w.id}" aria-label="${t('del')}">✕</button></div>`).join(''):`<p class="meta">${t('wordsEmpty')}</p>`}</div>`;
+  }else if(studyView==='review'){
+    const due=lw.filter(w=>(w.next_review||'')<=today);
+    if(revQ===null)main=`<div class="card"><p>${t('sDue')}：<b>${due.length}</b></p>${due.length?'':`<p class="meta">${t('noDue')}</p>`}<div class="row"><button class="pri" data-a="rvgo">${t('reviewDue')}</button><button class="sec" data-a="rvall">${t('reviewAll')}</button></div></div>`;
+    else if(revI>=revQ.length)main=`<div class="card"><p><b>${t('revDone')}</b></p><div class="row"><button class="sec" data-a="sview" data-v="home">${t('vHome')}</button><button class="sec" data-a="rvall">${t('reviewAll')}</button></div></div>`;
+    else{const w=words.find(x=>x.id===revQ[revI]);
+      if(!w)main=`<div class="card"><p><b>${t('revDone')}</b></p></div>`;
+      else main=`<p class="meta">${revI+1} / ${revQ.length}</p><div class="card fcard"><div class="fw">${esc(w.word||'')}</div>${TTS?`<div><button class="lnk" data-a="tts" data-v="${esc(w.word||'')}" style="font-size:22px" aria-label="play">🔊</button></div>`:''}${revFlip?`<div class="fm">${esc(w.meaning||'')}</div>${w.example?`<div class="meta fe">${esc(w.example)}</div>`:''}`:''}</div>${revFlip?`<div class="row"><button class="sec" data-a="rvdont">${t('dontKnow')}</button><button class="pri" data-a="rvknow">${t('know')}</button></div>`:`<div class="row"><button class="pri" data-a="rvflip">${t('flip')}</button></div>`}`;
+    }
+  }else if(studyView==='course'&&isItLang(L)){
+    main=courseHTML(L);
+  }else{
+    const tMin=ls.filter(s=>s.log_date===today).reduce((a,s)=>a+(+s.minutes||0),0);
+    const mon=new Date();mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+    const wkMin=ls.filter(s=>s.log_date>=ymd(mon)).reduce((a,s)=>a+(+s.minutes||0),0);
+    const daySet=new Set(ls.filter(s=>(+s.minutes||0)>0).map(s=>s.log_date));
+    let stk=0;const sd0=new Date();if(!daySet.has(ymd(sd0)))sd0.setDate(sd0.getDate()-1);while(daySet.has(ymd(sd0))){stk++;sd0.setDate(sd0.getDate()-1)}
+    const dueN=lw.filter(w=>(w.next_review||'')<=today).length;
+    const tile=(lb,v)=>`<div class="stat"><span>${lb}</span><b>${v}</b></div>`;
+    main=`<div class="card"><b>${esc(L.name)}${L.level?' · '+esc(L.level):''}</b><div class="stats">${tile('📅 '+t('sToday'),tMin+' '+t('min'))}${tile('🗓 '+t('sWeek'),wkMin+' '+t('min'))}${tile('🔥 '+t('streak'),stk+' '+t('days'))}${tile('📖 '+t('sWords'),String(lw.length))}${tile('🃏 '+t('sDue'),String(dueN))}</div></div>
+<div class="card"><b>⏱ ${t('logTime')}</b><div class="pchips">${[10,15,25,45,60].map(m=>`<button class="pchip" data-a="logq" data-v="${m}">+${m} ${t('min')}</button>`).join('')}</div><div class="tbar"><input id="lg-min" type="number" min="1" max="600" placeholder="25" aria-label="${t('min')}"><button class="pri" data-a="logm">${t('logTime')}</button></div></div>
+<div class="card"><div class="row"><button class="sec" data-a="ledit" data-id="${L.id}">✎ ${t('edit')}</button><button class="sec" data-a="larc" data-id="${L.id}">${t('arc')}</button><button class="sec" data-a="ldel" data-id="${L.id}">${t('del')}</button></div></div>`;
+  }
+  return head+chips+seg+main+arcSec;
+}
+function openLang(id){
+  const dlg=$('dlg'),x=id?langs.find(l=>l.id===id):null;
+  dlg.innerHTML=`<label for="sl-n">${t('langName')}</label><input id="sl-n" type="text" maxlength="30" placeholder="Italiano" value="${esc(x?x.name:'')}"><label for="sl-l">${t('langLevel')}</label><input id="sl-l" type="text" maxlength="10" placeholder="B1" value="${esc(x&&x.level||'')}">
+<div class="row"><button class="sec" id="sl-x">${t('cancel')}</button><button class="pri" id="sl-s">${t('save')}</button></div>`;
+  $('sl-x').onclick=()=>dlg.close();
+  $('sl-s').onclick=async()=>{
+    const name=$('sl-n').value.trim();if(!name)return;const level=$('sl-l').value.trim()||null;
+    if(id){const{error}=await sb.from('study_languages').update({name,level}).eq('id',id);if(error)return alert(error.message);Object.assign(x,{name,level})}
+    else{const{data,error}=await sb.from('study_languages').insert({name,level}).select().single();if(error)return alert(error.message);langs.push(data);curLang=data.id;localStorage.curlang=data.id}
+    dlg.close();render();
+  };
+  dlg.showModal();$('sl-n').focus();
+}
+function openWord(){
+  const dlg=$('dlg');
+  dlg.innerHTML=`<label for="sw-w">${t('word')}</label><input id="sw-w" type="text" maxlength="120"><label for="sw-m">${t('meaning')}</label><input id="sw-m" type="text" maxlength="200"><label for="sw-e">${t('example')}</label><textarea id="sw-e" rows="3"></textarea><div class="row"><button class="sec" id="sw-x">${t('cancel')}</button><button class="pri" id="sw-s">${t('save')}</button></div>`;
+  $('sw-x').onclick=()=>dlg.close();
+  $('sw-s').onclick=async()=>{
+    const w=$('sw-w').value.trim();if(!w)return;
+    const v={language_id:curLang,word:w,meaning:$('sw-m').value.trim()||null,example:$('sw-e').value.trim()||null,stage:0,next_review:ymd(new Date())};
+    const{data,error}=await sb.from('study_words').insert(v).select().single();if(error)return alert(error.message);words.push(data);dlg.close();render();
+  };
+  dlg.showModal();$('sw-w').focus();
+}
+async function logStudy(mins){
+  if(!curLang||!mins||mins<1)return;
+  const v={language_id:curLang,minutes:mins,log_date:ymd(new Date())};
+  const{data,error}=await sb.from('study_sessions').insert(v).select().single();if(error)return alert(error.message);
+  ssess.push(data);say('✓ +'+mins+' '+t('min'));
+}
+function initReview(all){
+  const today=ymd(new Date());
+  const q=words.filter(w=>w.language_id===curLang&&(all||(w.next_review||'')<=today)).map(w=>w.id);
+  for(let i=q.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)),tmp=q[i];q[i]=q[j];q[j]=tmp}
+  revQ=q;revI=0;revFlip=false;render();
+}
+const LAD=[1,3,7,14,30];
+async function gradeWord(know){
+  const w=words.find(x=>x.id===revQ[revI]);
+  if(!w){revI++;revFlip=false;return render()}
+  const st=know?Math.min((w.stage||0)+1,4):0,nr=new Date();nr.setDate(nr.getDate()+LAD[st]);
+  const v={stage:st,next_review:ymd(nr)};
+  const{error}=await sb.from('study_words').update(v).eq('id',w.id);if(error)return alert(error.message);
+  Object.assign(w,v);revI++;revFlip=false;render();
+}
+const isItLang=L=>/ital|意大利|義大利|イタリア/i.test((L&&L.name)||'');
+function speakIt(txt){if(!TTS||!txt)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang='it-IT';u.rate=.92;speechSynthesis.speak(u)}catch(e){}}
+async function addCourseWords(list){
+  const have=new Set(words.filter(w=>w.language_id===curLang).map(w=>(w.word||'').trim().toLowerCase()));
+  const rows=list.filter(wd=>!have.has(wd[0].trim().toLowerCase())).map(wd=>({language_id:curLang,word:wd[0],meaning:wd[2],example:wd[3]+'（'+wd[4]+'）',stage:0,next_review:ymd(new Date()),source:'builtin'}));
+  if(!rows.length)return say(t('addedW'));
+  const{data,error}=await sb.from('study_words').insert(rows).select();if(error)return alert(error.message);
+  if(data&&data.length)words.push(...data);say('✓ +'+rows.length);
+}
+function courseHTML(L){
+  if(typeof COURSE_IT==='undefined'||!COURSE_IT||!COURSE_IT[courseLvl])return `<div class="card"><p class="meta">${t('courseMissing')}</p></div>`;
+  const lv=COURSE_IT[courseLvl];
+  const have=new Set(words.filter(w=>w.language_id===L.id).map(w=>(w.word||'').trim().toLowerCase()));
+  const allW=[];lv.packs.forEach(p=>p.w.forEach(w=>allW.push(w)));
+  const addedN=allW.filter(w=>have.has(w[0].trim().toLowerCase())).length;
+  const chips=`<div class="chips">${['A1','A2','B1','B2'].map(x=>`<button class="chip${courseLvl===x?' on':''}" data-a="ctab" data-v="${x}">${x}</button>`).join('')}</div>`;
+  const exam=`<div class="card"><b>🏆 ${t('cilsExam')} · CILS ${courseLvl}</b><p class="meta" style="white-space:pre-wrap">${esc(lv.exam)}</p><p class="meta">${t('progW')}：${addedN} / ${allW.length}</p><div class="bar"><i style="width:${allW.length?Math.round(addedN/allW.length*100):0}%"></i></div></div>`;
+  const gram=`<div class="ghd"><b>${t('grammarL')}</b><span class="meta">${lv.grammar.length}</span></div><div class="card">${lv.grammar.map((g,i)=>{const k=courseLvl+'-'+i,open=expG.has(k);return `<div class="task"><div class="tt" data-a="gtog" data-v="${k}" style="cursor:pointer"><b>${open?'▾':'▸'} ${esc(g.t)}</b>${open?`<div class="meta" style="white-space:pre-wrap">${esc(g.d)}</div>${g.ex.map(e=>`<div class="meta">🇮🇹 ${esc(e[0])}<br>　${esc(e[1])}</div>`).join('')}`:''}</div></div>`}).join('')}</div>`;
+  const packs=lv.packs.map((p,pi)=>`<div class="ghd"><b>${esc(p.n)}</b><button class="sec" data-a="caddall" data-v="${pi}">${t('addAll')}</button></div><div class="card">${p.w.map((wd,wi)=>{const has=have.has(wd[0].trim().toLowerCase());return `<div class="task"><div class="tt"><b>${esc(wd[0])}</b> <span class="meta">${esc(wd[1])} · ${esc(wd[2])}</span>${TTS?` <button class="lnk" data-a="tts" data-v="${esc(wd[0])}" aria-label="play">🔊</button>`:''}<div class="meta">${esc(wd[3])}${TTS?` <button class="lnk" data-a="tts" data-v="${esc(wd[3])}" aria-label="play">🔊</button>`:''}</div><div class="meta">${esc(wd[4])}</div></div>${has?`<span class="meta">${t('addedW')}</span>`:`<button class="sec" data-a="cadd" data-v="${pi}:${wi}">${t('addW')}</button>`}</div>`}).join('')}</div>`).join('');
+  return chips+exam+gram+`<div class="ghd"><b>${t('packL')}</b><span class="meta">${allW.length}</span></div>`+packs;
+}
+let firedRem={};try{firedRem=JSON.parse(localStorage.firedRem||'{}')}catch(e){}
+function occStarts(e,from,to){
+  const st=+new Date(e.start_at),kind=e.repeat_kind||'none';
+  if(kind==='none')return st>=from&&st<=to?[st]:[];
+  const step=d=>{const n=new Date(d);if(kind==='daily')n.setDate(n.getDate()+1);else if(kind==='weekly')n.setDate(n.getDate()+7);else if(kind==='monthly')n.setMonth(n.getMonth()+1);else if(kind==='yearly')n.setFullYear(n.getFullYear()+1);return n};
+  let cur=new Date(st),g=0;const out=[];
+  while(+cur<from&&g++<3000)cur=step(cur);
+  g=0;while(+cur<=to&&g++<500){if(+cur>=from)out.push(+cur);cur=step(cur)}
+  return out;
+}
+async function fireNotif(title,body,tag){
+  if(!('Notification'in window)||Notification.permission!=='granted')return false;
+  try{if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.ready;if(reg){await reg.showNotification(title,{body,tag,icon:'icon-192.png'});return true}}}catch(e){}
+  try{new Notification(title,{body,tag,icon:'icon-192.png'});return true}catch(e){return false}
+}
+function remBanner(e,os){
+  const old=document.querySelector('.remb');if(old)old.remove();
+  const d=document.createElement('div');d.className='remb';
+  const s=document.createElement('span');s.textContent='🔔 '+fmt(os)+' '+(e.title||'');
+  const b=document.createElement('button');b.textContent='✕';b.setAttribute('aria-label','close');b.onclick=()=>d.remove();
+  d.appendChild(s);d.appendChild(b);document.body.appendChild(d);
+  setTimeout(()=>{if(d.parentNode)d.remove()},20000);
+}
+function checkReminders(){
+  if(!session||!events.length)return;
+  const now=Date.now(),WIN=30*6e4;let dirty=false;
+  events.forEach(e=>{
+    if(e.remind_min==null)return;
+    const rm=e.remind_min*6e4;
+    occStarts(e,now-WIN+rm,now+rm).forEach(os=>{
+      const rt=os-rm;if(rt>now||now-rt>WIN)return;
+      const key=e.id+'|'+rt;
+      if(firedRem[key])return;
+      firedRem[key]=1;dirty=true;
+      fireNotif('🔔 '+(e.title||''),fmt(os)+(e.location?' 📍'+e.location:''),'rem-'+key);
+      remBanner(e,os);
+    });
+  });
+  const cut=now-7*864e5;
+  for(const k in firedRem){if(+k.split('|')[1]<cut){delete firedRem[k];dirty=true}}
+  if(dirty)localStorage.firedRem=JSON.stringify(firedRem);
+}
+let remTimer=null;
+function startRem(){checkReminders();if(!remTimer)remTimer=setInterval(checkReminders,30000)}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()});
+sb.auth.onAuthStateChange((_e,s)=>{session=s;setTimeout(async()=>{try{if(s){await loadSettings();await loadBg();await loadData();live();startRem()}else{uname='';localStorage.removeItem('dname');bgPath='';bgUrl='';theme();if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];events=[];ecats=[];tab='todo';view='all'}}catch(e){}render()},0)});
 setTimeout(()=>{if(!rendered)render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
