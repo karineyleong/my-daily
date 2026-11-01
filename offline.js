@@ -44,6 +44,7 @@ async function readQ(sp){
   return{data:out,error:null}}
 async function writeQ(sp){
   const w={...sp,f:sp.f.slice()};
+  if(sp.t==='habits'&&window._hr&&(w.o==='insert'||w.o==='update')&&!Array.isArray(w.p)){w.p={...w.p,...window._hr};if(w.o==='update'){const f=w.f.find(z=>z[0]==='eq'&&z[1]==='id'),hx=f&&habits.find(z=>z.id===f[2]);if(hx)Object.assign(hx,window._hr)}}
   if(w.o==='insert'){const add=r=>({...r,id:r.id||uuid()});w.p=Array.isArray(w.p)?w.p.map(add):add(w.p)}
   if(navigator.onLine&&!Q.length&&!pseudo()){const r=await tmo(build(w),8000);if(!isNet(r.error))return r}
   const{sel,one,...rest}=w;Q.push({...rest,u:uid()});sv('md_q',Q);setTimeout(()=>dispatchEvent(new Event('md-q')),0);
@@ -108,6 +109,8 @@ function checkReminders(){
     const s=new Date(e.start_at);if((!e.repeat_kind||e.repeat_kind==='none')&&ymd(s)!==ds)return;
     const st=new Date(td.getFullYear(),td.getMonth(),td.getDate(),s.getHours(),s.getMinutes()),at=+st-e.remind_min*6e4,k=e.id+'|'+ds;
     if(now>=at&&now<at+10*6e4&&!fired[k]){fired[k]=1;showN(e.title||'',hm(st)+(e.location?' 📍'+e.location:''),k)}});
+  habits.forEach(h=>{if(h.archived||!h.remind_time||!hSched(h,td)||hAmtOf(h,ds)>=(h.goal||1))return;const[hh,mm]=h.remind_time.split(':').map(Number),n=Math.floor((now-new Date(td.getFullYear(),td.getMonth(),td.getDate(),hh,mm))/6e4),ev=+h.remind_every||0;
+    if(n<0||n>(ev?720:10))return;const k=h.id+'|h'+(ev?Math.floor(n/ev):0)+'|'+ds;if(!fired[k]){fired[k]=1;showN((h.icon||'')+' '+h.name,h.goal?hAmtOf(h,ds)+'/'+h.goal+(h.unit?' '+h.unit:''):'',k)}});
   const keep={};Object.keys(fired).forEach(k=>{if(k.endsWith('|'+ds))keep[k]=1});sv('md_fired',keep)}
 function cacheBg(){if(!bgUrl||!bgPath){LS.removeItem('md_bgd');LS.removeItem('md_bgp');return}if(LS.md_bgp===bgPath&&LS.md_bgd)return;
   fetch(bgUrl).then(r=>r.blob()).then(b=>{const fr=new FileReader();fr.onload=()=>{try{LS.md_bgd=fr.result;LS.md_bgp=bgPath}catch(_){}};fr.readAsDataURL(b)}).catch(()=>{})}
@@ -120,7 +123,7 @@ function applyPatches(){
   const _av=appView;appView=function(){_av();const app=$('app'),ap=app.querySelector('.appt'),b=badge();
     if(ap&&b)ap.insertAdjacentHTML('beforeend',`<small style="font-size:12px;color:var(--mut)"> ${b}</small>`);
     if(toastMsg)app.insertAdjacentHTML('beforeend',`<div class="toast">${esc(toastMsg)}</div>`);
-    if(tab==='set'){const top=app.querySelector('.top');if(top&&top.previousElementSibling)top.previousElementSibling.insertAdjacentHTML('beforebegin',syncCard()+bgCard()+notifCard())}};
+    if(tab==='set'){const top=app.querySelector('.top');if(top&&top.previousElementSibling)top.previousElementSibling.insertAdjacentHTML('beforebegin',notifCard())}};
   LS.removeItem('gk');
   const _i=ideaHTML;ideaHTML=function(){const h=_i();return ideaErr?h:h.replace('</div>','</div>'+planBar())};
   const _r=render;render=function(){clearTimeout(pT);pT=setTimeout(persist,150);return _r.apply(this,arguments)};
@@ -133,7 +136,7 @@ function applyPatches(){
     {const pr=await sb.from('categories').select('*').eq('kind','plan').order('sort_order');if(!pr.error)pcats=pr.data}
     loaded=true;persist()};
   const _ls=loadSettings;loadSettings=function(){return navigator.onLine&&!pseudo()?_ls():Promise.resolve()};
-  const _lb=loadBg;loadBg=async function(){if(!navigator.onLine||pseudo()){bgPath=LS.md_bgp||'';bgUrl=LS.md_bgd||'';theme();return}await _lb();cacheBg()};
+  loadBg=async function(){bgPath='';bgUrl='';LS.removeItem('md_bgd');LS.removeItem('md_bgp');theme()};
   const _sbp=setBgPath;setBgPath=async function(p){await _sbp(p);cacheBg()};
   const _ub=upBg;upBg=function(f){if(!navigator.onLine){alert(t('needNet'));return}return _ub(f)};
   document.addEventListener('click',async e=>{const b=e.target.closest&&e.target.closest('[data-a="sync"],[data-a="notif"]');if(!b)return;
@@ -151,7 +154,7 @@ function extra(){
   T.zh.todoT='待辦清單';T.ja.todoT='ToDoリスト';T.en.todoT='To-do list';
   T.zh.brainstorm='計劃表';T.ja.brainstorm='計画表';T.en.brainstorm='Plans';
   const st=document.createElement('style');
-  st.textContent='.cg .cd.hol .dn{color:#D0483E}.cg .cd.td.hol .dn{color:var(--on)}.chp.hol{background:#D0483E}.cm b{cursor:pointer;text-decoration:underline dotted}';
+  st.textContent='.cg .cd.hol .dn{color:#D0483E}.cg .cd.td.hol .dn{color:var(--on)}.chp.hol{background:#D0483E}.cm b{cursor:pointer;text-decoration:underline dotted}.dr .card{border:0;border-top:0;background:none;box-shadow:none;padding:4px 0;margin:0}.dr .card>b:first-child{display:none}';
   document.head.appendChild(st);
   /* keyboard-aware bottom sheet */
   const vv=window.visualViewport,dl=$('dlg');let moved=false;
@@ -184,14 +187,15 @@ function extra(){
     if(tab!==lastTab){sdo=false;lastTab=tab}if(hview)sdo=false;
     _av2();const app=$('app'),hd=app.querySelector('.hd');
     if(tab==='todo'&&view==='all'){const h=app.querySelector('.hd h1');if(h)h.textContent=t('todoT')}
-    if((tab==='cal'||(tab==='habit'&&!hview))&&hd)hd.insertAdjacentHTML('afterbegin','<button class="sec ic" data-a="sd" aria-label="☰">☰</button>');
+    if((tab==='cal'||(tab==='habit'&&!hview)||(tab==='idea'&&!planOpen&&!ideaErr))&&hd)hd.insertAdjacentHTML('afterbegin','<button class="sec ic" data-a="sd" aria-label="☰">☰</button>');
     if(tab==='cal'){
       const ev=app.querySelector('[data-a="nle"]'),evc=ev&&ev.closest('.card');if(evc)evc.remove();
       const b=app.querySelector('.cm b');if(b)b.dataset.a='cpick';
       app.querySelectorAll('.cd[data-v]').forEach(c=>{const m=c.dataset.v.match(/^(\d+)-(-?\d+)-(\d+)$/);if(!m)return;const n=hname(new Date(+m[1],+m[2],+m[3]));if(!n)return;c.classList.add('hol');const dn=c.querySelector('.dn');if(dn)dn.insertAdjacentHTML('afterend',`<span class="chp hol">${esc(n)}</span>`)});
       const hn=hname(cs),cards=app.querySelectorAll('.card');if(hn&&cards[1]){const bb=cards[1].querySelector('b');if(bb)bb.insertAdjacentText('beforeend',' 🎌 '+hn)}
       if(sdo&&evc)app.insertAdjacentHTML('beforeend',dHead(t('evCats'))+evc.outerHTML+'</aside>')}
-    if(tab==='habit'&&!hview&&sdo)app.insertAdjacentHTML('beforeend',habDr())};
+    if(tab==='habit'&&!hview&&sdo)app.insertAdjacentHTML('beforeend',habDr());
+    if(tab==='idea'&&!planOpen&&!ideaErr&&sdo)app.insertAdjacentHTML('beforeend',planDr())};
   document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-a="sd"],[data-a="cpick"]');if(!b)return;
     if(b.dataset.a==='sd'){sdo=!sdo;render()}else pickYM()},true);
   /* ---- plan list (計劃表) + manual task order ---- */
@@ -204,7 +208,7 @@ function extra(){
     const arr=maps.slice().sort((a,b)=>((a.sort_order==null?1e9:a.sort_order)-(b.sort_order==null?1e9:b.sort_order))||(a.created_at<b.created_at?-1:1)).filter(m=>planCat==='all'||m.category_id===planCat);
     const row=m=>{const c=pcats.find(x=>x.id===m.category_id),dt=m.start_date?fd(m.start_date)+(m.end_date&&m.end_date!==m.start_date?' ～ '+fd(m.end_date):''):'';
       return `<div class="trow" data-a="popen" data-id="${m.id}"><span class="dot" style="background:${esc(c&&c.color||'#8FA382')}"></span><div style="flex:1;min-width:0"><b>${esc(m.name||'')}</b>${dt?`<div class="meta">${t('plDates')}：${dt}</div>`:''}${m.status?`<div class="meta">${esc(m.status)}</div>`:''}</div><button class="sec ic" data-a="pedit" data-id="${m.id}" aria-label="✎">✎</button></div>`};
-    const chips=`<div class="pchips"><button class="pchip${planCat==='all'?' on':''}" data-a="pcat" data-id="all">${t('all')}</button>${pcats.map(c=>`<button class="pchip${planCat===c.id?' on':''}" data-a="pcat" data-id="${c.id}"><span class="dot" style="background:${esc(c.color||'#8FA382')};display:inline-block;margin-right:6px"></span>${esc((c.icon||'')+c.name)}</button>`).join('')}<button class="pchip" data-a="pcnew">＋ ${t('plNewCat')}</button><button class="pchip" data-a="pcmgr">${t('plManage')}</button></div>`;
+    const chips=`<div class="pchips"><button class="pchip${planCat==='all'?' on':''}" data-a="pcat" data-id="all">${t('all')}</button>${pcats.map(c=>`<button class="pchip${planCat===c.id?' on':''}" data-a="pcat" data-id="${c.id}"><span class="dot" style="background:${esc(c.color||'#8FA382')};display:inline-block;margin-right:6px"></span>${esc((c.icon||'')+c.name)}</button>`).join('')}</div>`;
     return `<div class="hd"><h1>${t('brainstorm')}</h1><span></span></div><div class="ghd"><b>${t('plInProg')}</b><button class="pchip" data-a="pnew">＋ ${t('plan')}</button></div><div class="card">${arr.length?arr.map(row).join(''):`<p class="meta">${t('plEmpty')}</p>`}</div>${chips}`};
   const _ih=ideaHTML;ideaHTML=function(){
     if(ideaErr)return _ih();
@@ -239,7 +243,7 @@ function extra(){
     if(a==='popen'){curMap=id;planOpen=true;render()}
     else if(a==='pback'){planOpen=false;render()}
     else if(a==='pedit')editPlan(id);
-    else if(a==='pcat'){planCat=id;render()}
+    else if(a==='pcat'){planCat=id;sdo=false;render()}
     else if(a==='pcnew')newPcat();
     else if(a==='pcmgr')pcMgr();
     else openMap()},true);
@@ -260,5 +264,39 @@ function extra(){
       const gs=[];ks.forEach(k=>{if(k.classList.contains('sub')&&gs.length)gs[gs.length-1].push(k);else gs.push([k])});
       gs.forEach(g=>{const h=g[0],s=g.slice(1).sort((a,b)=>sOf(a)-sOf(b));g.length=0;g.push(h,...s)});
       gs.sort((a,b)=>sOf(a[0])-sOf(b[0]));card.append(...gs.flat())})};
+  /* ---- habits: month calendar, tap/swipe, day edit, reminders; drawers ---- */
+  const L3={hrOnce:['只提醒一次','1回のみ','Once'],hrE30:['未完成時每 30 分鐘','未完了なら30分ごと','Every 30 min until done'],hrE60:['未完成時每 1 小時','未完了なら1時間ごと','Every hour until done'],hrE120:['未完成時每 2 小時','未完了なら2時間ごと','Every 2 hours until done'],hrT:['提醒時間','通知時刻','Reminder time'],hrF:['提醒頻率','通知の頻度','Frequency']};
+  Object.keys(L3).forEach(k=>['zh','ja','en'].forEach((l,i)=>{T[l][k]=L3[k][i]}));
+  let hcm=new Date();
+  const habMonth=()=>{const act=habits.filter(h=>!h.archived),y=hcm.getFullYear(),m=hcm.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),ts=ymd(new Date());
+    let cells='<div class="hc"></div>'.repeat(first);
+    for(let d=1;d<=n;d++){const dt=new Date(y,m,d),ds=ymd(dt),sc=act.filter(h=>hSched(h,dt)),pct=sc.length?sc.reduce((s,h)=>s+Math.min(1,hAmtOf(h,ds)/(h.goal||1)),0)/sc.length:0,isT=ds===ts;
+      cells+=`<div class="hc">${pct>=1?`<span class="hd2 full${isT?' tdy':''}" style="background:var(--ac)">${d}</span>`:`<span class="hd2${isT?' tdy':''}">${ringPct(pct,'#8A2A21')}<b>${d}</b></span>`}</div>`}
+    return `<div class="card"><div class="cm"><button class="sec ic" data-a="hcmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="hcmo" data-v="1" aria-label="›">›</button></div><div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="hcg">${cells}</div></div>`};
+  const planDr=()=>dHead(t('brainstorm'))+`<button class="di${planCat==='all'?' on':''}" data-a="pcat" data-id="all"><span class="ic2">🗂</span><span class="nm">${t('all')}</span></button>`+pcats.map(c=>`<button class="di${planCat===c.id?' on':''}" data-a="pcat" data-id="${c.id}"><span class="ic2">${esc(c.icon||'●')}</span><span class="nm">${esc(c.name)}</span></button>`).join('')+`<hr><button class="di" data-a="pcnew"><span class="ic2">＋</span><span class="nm">${t('plNewCat')}</span></button><button class="di" data-a="pcmgr"><span class="ic2">⚙</span><span class="nm">${t('plManage')}</span></button></aside>`;
+  async function setHabitDay(id,ds,a){
+    if(a<=0){const{error}=await sb.from('habit_logs').delete().eq('habit_id',id).eq('log_date',ds);if(error)return alert(error.message);hlogs=hlogs.filter(l=>!(l.habit_id===id&&l.log_date===ds))}
+    else{const{data,error}=await sb.from('habit_logs').upsert({habit_id:id,log_date:ds,amount:a},{onConflict:'habit_id,log_date'}).select().single();if(error)return alert(error.message);const i=hlogs.findIndex(l=>l.habit_id===id&&l.log_date===ds);if(i>=0)hlogs[i]=data;else hlogs.push(data)}
+    render()}
+  function editHabitDay(id,ds){const h=habits.find(x=>x.id===id);if(!h)return;const goal=h.goal||null;let a=hAmtOf(h,ds);
+    dl.innerHTML=`<b>${esc((h.icon||'')+' '+h.name)}</b><p class="meta">${fd(ds)}</p><div class="row" style="align-items:center;justify-content:center">${goal?`<button class="sec ic" id="hd-m" aria-label="−">−</button><b id="hd-v" style="min-width:96px;text-align:center;font-size:22px">${a}/${goal}</b><button class="sec ic" id="hd-p" aria-label="＋">＋</button>`:`<button class="sec" id="hd-t"></button>`}</div><div class="row"><button class="sec" id="hd-x">${t('cancel')}</button><button class="pri" id="hd-ok">✓</button></div>`;
+    const paint=()=>{if(goal)$('hd-v').textContent=a+'/'+goal;else $('hd-t').textContent=a?'✓ '+t('chk'):'○ '+t('chk')};paint();
+    if(goal){$('hd-m').onclick=()=>{a=Math.max(0,a-1);paint()};$('hd-p').onclick=()=>{a++;paint()}}else $('hd-t').onclick=()=>{a=a?0:1;paint()};
+    $('hd-x').onclick=()=>dl.close();$('hd-ok').onclick=async()=>{dl.close();await setHabitDay(id,ds,a)};openDl()}
+  const _oh=openHabit;openHabit=function(id){_oh(id);const s=$('h-s');if(!s)return;const h=id?habits.find(x=>x.id===id):{};
+    s.parentElement.insertAdjacentHTML('beforebegin',`<div class="frow"><span>🔔 ${t('hrT')}</span><input type="time" id="hr-t" value="${esc(h.remind_time||'')}" style="width:auto;margin:0"></div><div class="frow"><span>${t('hrF')}</span><select id="hr-e">${[[0,'hrOnce'],[30,'hrE30'],[60,'hrE60'],[120,'hrE120']].map(([v,k])=>`<option value="${v}"${+h.remind_every===v?' selected':''}>${t(k)}</option>`).join('')}</select></div>`)};
+  dl.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#h-s')&&$('hr-t')){window._hr={remind_time:$('hr-t').value||null,remind_every:+$('hr-e').value||0};setTimeout(()=>{window._hr=null},150)}},true);
+  const _av4=appView;appView=function(){_av4();const app=$('app');
+    if(tab==='habit'&&!hview){const ws=app.querySelector('.wstrip');if(ws)ws.outerHTML=habMonth()}
+    if(tab==='habit'&&hview){const y=hmon.getFullYear(),mo=hmon.getMonth(),first=(new Date(y,mo,1).getDay()+6)%7,now=new Date();
+      app.querySelectorAll('.hcg .hc').forEach((c,i)=>{const dt=new Date(y,mo,1-first+i);if(dt>now)return;c.dataset.a='hday';c.dataset.d=ymd(dt);c.style.cursor='pointer'})}};
+  document.addEventListener('click',e=>{
+    const k=e.target.closest&&e.target.closest('[data-a="hchk"],[data-a="hcmo"],[data-a="hday"]');if(!k)return;const a=k.dataset.a;
+    if(a==='hchk'){const h=habits.find(x=>x.id===k.dataset.id);if(!h||!(h.goal>1))return;e.preventDefault();e.stopPropagation();const c=hAmtOf(h,ymd(new Date()));hAmt(h.id,c>=h.goal?-c:1)}
+    else if(a==='hcmo'){hcm=new Date(hcm.getFullYear(),hcm.getMonth()+ +k.dataset.v,1);render()}
+    else if(hview)editHabitDay(hview,k.dataset.d)},true);
+  let tx=0,ty=0,tr=null;
+  document.addEventListener('touchstart',e=>{const r=e.target.closest&&e.target.closest('.task'),c=e.touches[0];if(tab==='habit'&&!hview&&r&&r.querySelector('[data-a="hview"]')&&c.clientX>30){tr=r;tx=c.clientX;ty=c.clientY}else tr=null},{passive:true});
+  document.addEventListener('touchend',e=>{if(!tr)return;const c=e.changedTouches[0],el=tr.querySelector('[data-a="hview"]');tr=null;if(el&&c.clientX-tx>70&&Math.abs(c.clientY-ty)<40){hview=el.dataset.id;hmon=new Date();render()}},{passive:true});
 }
 })();
