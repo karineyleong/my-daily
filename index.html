@@ -7,19 +7,17 @@
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Noto+Serif+JP:wght@600;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>My Daily</title>
 <style>
-:root{--ac:#8A2A21;--bg:#F6EDD8;--ink:#33241A;--mut:#8A755C;--card:#FFFDF4;--ln:#E2D3B4;--on:#FFF8EA;--ac2:#D9A441;--fd:'Marcellus','Noto Serif TC','Noto Serif JP',serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root{--bg:#201812;--ink:#F1E7CF;--mut:#AC9878;--card:#2B211A;--ln:#493829}}
+:root{--ac:#1E88E5;--bg:#F6F9FB;--ink:#22303C;--mut:#8494A3;--card:#FFFFFF;--ln:#E1E8EE;--on:#FFFFFF;--ac2:#64B5F6;--fd:-apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
-html,body{margin:0;background:color-mix(in srgb,var(--ac) 12%,var(--bg));color:var(--ink);font:16px/1.6 -apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif}
 main{max-width:420px;margin:0 auto;padding:28px 20px}
-h1{display:inline-block;font-family:var(--fd);font-weight:600;font-size:28px;margin:8px 0 24px;letter-spacing:.08em;border-bottom:5px solid var(--ac2)}
-.card{background:var(--card);border:1px solid var(--ln);border-top:4px solid var(--ac);border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 2px 12px rgba(138,42,33,.07)}
+h1{display:inline-block;font-family:var(--fd);font-weight:700;font-size:27px;margin:8px 0 24px;letter-spacing:.02em;border-bottom:4px solid var(--ac)}
+.card{background:var(--card);border:1px solid var(--ln);border-top:1px solid var(--ln);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 1px 8px rgba(30,60,90,.06)}
 label{display:block;font-size:14px;color:var(--mut);margin:12px 0 4px}
-input[type=email],input[type=password],input[type=text],input[type=number],input[type=datetime-local],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink)}
+input[type=email],input[type=password],input[type=text],input[type=number],input[type=datetime-local],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:#F4F7FA;color:var(--ink)}
 input[type=color]{width:56px;height:40px;border:1px solid var(--ln);border-radius:10px;background:none;padding:2px}
 button{font:inherit;padding:12px 16px;border-radius:10px;border:1px solid var(--ac);cursor:pointer}
 .pri{background:var(--ac);color:var(--on)}.sec{background:none;color:var(--ink);border-color:var(--ln)}
@@ -41,10 +39,10 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 .tag{display:inline-block;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
 .act{display:flex;gap:6px;margin-top:8px}.act button{padding:4px 10px;font-size:14px}
 input[type=checkbox]{width:22px;height:22px;accent-color:var(--ac);margin-top:2px;flex:none}
-dialog{border:1px solid var(--ln);border-top:4px solid var(--ac);border-radius:14px;background:var(--card);color:var(--ink);width:min(92vw,400px);padding:18px}
+dialog{border:1px solid var(--ln);border-top:1px solid var(--ln);border-radius:14px;background:var(--card);color:var(--ink);width:min(92vw,400px);padding:18px}
 dialog::backdrop{background:rgba(0,0,0,.5)}
-dialog{margin:auto 0 0;width:100%;max-width:none;border:0;border-top:4px solid var(--ac);border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
-textarea{width:100%;padding:10px;font:inherit;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink);resize:none;margin-top:8px}
+dialog{margin:auto 0 0;width:100%;max-width:none;border:0;border-top:1px solid var(--ln);border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+textarea{width:100%;padding:10px;font:inherit;border:1px solid var(--ln);border-radius:10px;background:#F4F7FA;color:var(--ink);resize:none;margin-top:8px}
 .tbar{display:flex;gap:8px;margin-top:10px}.tbar>*{flex:1;min-width:0}.snd{flex:none;width:48px;padding:10px;border-radius:50%;font-size:20px}
 .pc{-webkit-appearance:none;appearance:none;width:22px;height:22px;border:2px solid var(--pc);border-radius:6px;background:none;margin-top:2px;flex:none}
 .pc:checked{background:var(--pc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E") center/80% no-repeat}
@@ -68,11 +66,11 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .cg .cd:nth-child(7n+6) .dn{color:#4A7FB5}
 .cg .cd:nth-child(7n) .dn{color:#D0483E}
 .cg .cd.td .dn{color:var(--on)}
-.chp{display:block;font-size:9.5px;line-height:1.6;padding:0 4px;border-radius:4px;background:var(--c,#8A2A21);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chp{display:block;font-size:9.5px;line-height:1.6;padding:0 4px;border-radius:4px;background:color-mix(in srgb,var(--c,#1E88E5) 18%,#fff);color:#22303C;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chp.mid{border-radius:0}
 .chp.st{border-radius:4px 0 0 4px}
 .chp.en{border-radius:0 4px 4px 0}
-.chp.tk{background:color-mix(in srgb,var(--ink) 55%,transparent)}
+.chp.tk{background:#E9EFF4;color:#5B6B78}
 .more{font-size:9px;color:var(--mut);padding-left:4px}.cw{font-size:13px;color:var(--mut);margin-bottom:4px}
 .cd{position:relative;background:none;border:0;border-radius:8px;padding:3px;font-size:14px;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:2px;min-height:70px;text-align:left}.cd.on{background:color-mix(in srgb,var(--ac) 14%,transparent)}.cd.td:not(.on){box-shadow:inset 0 0 0 1.5px var(--ac)}
 .cd i{position:absolute;bottom:5px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--ac)}.cd.on i{background:var(--on)}
@@ -96,7 +94,7 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .pac-container{z-index:10000!important;border-radius:12px}
 .dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}.dcol select{width:100%;margin:0 0 6px}.dcol .card{padding:10px}.dcol .task b{font-size:14px}
 .appt{font-family:var(--fd);text-align:center;font-size:19px;letter-spacing:.06em;padding:10px 0 2px;color:var(--ac)}
-.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ac);color:var(--on);padding:10px 20px;border-radius:99px;z-index:60;box-shadow:0 6px 20px rgba(60,30,20,.3);font-size:14px}
+.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ac);color:var(--on);padding:10px 20px;border-radius:99px;z-index:60;box-shadow:0 6px 20px rgba(20,40,60,.22);font-size:14px}
 .remb{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(92vw,400px);background:var(--ac);color:var(--on);border-radius:14px;padding:12px 16px;z-index:80;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.3);font-size:15px}
 .remb button{background:none;border:0;color:var(--on);font-size:18px;padding:2px 8px;cursor:pointer;flex:none}
 .fcard{text-align:center;padding:38px 18px}.fcard .fw{font-size:28px;font-weight:700;overflow-wrap:anywhere}.fcard .fm{font-size:21px;font-weight:600;margin-top:12px;overflow-wrap:anywhere}.fcard .fe{margin-top:8px}
@@ -128,16 +126,17 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .sw:checked::after{left:24px}
 .fchips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
 .fchip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
-::selection{background:rgba(217,164,65,.45)}
+::selection{background:rgba(30,136,229,.22)}
 .swp{position:relative;overflow:hidden;border-radius:6px}
 .swp-bg{position:absolute;inset:0;background:#C0392B;display:flex;align-items:center}
 .swp-del{background:none;border:0;color:#fff;font-weight:700;font-size:15px;padding:12px 16px;cursor:pointer}
 .swp-in{position:relative;background:var(--card);transition:transform .18s ease;touch-action:pan-y}
 .swp:first-child .task{border-top:0}
-.utoast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 12px 10px 20px;border-radius:99px;z-index:70;box-shadow:0 6px 20px rgba(60,30,20,.35);font-size:14px;display:flex;align-items:center;gap:12px;white-space:nowrap}
+.utoast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 12px 10px 20px;border-radius:99px;z-index:70;box-shadow:0 6px 20px rgba(20,40,60,.28);font-size:14px;display:flex;align-items:center;gap:12px;white-space:nowrap}
 .utoast button{background:var(--ac2);color:#33241A;border:0;font-weight:700;padding:6px 14px;border-radius:99px;cursor:pointer}
 .fab2{position:fixed;right:28px;bottom:calc(152px + env(safe-area-inset-bottom,0px));width:48px;height:48px;padding:0;border-radius:50%;background:var(--card);color:var(--ac);font-size:21px;border:1px solid var(--ln);box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:5;cursor:pointer}
 .chp.st{margin-right:-8px}.chp.mid{margin:0 -8px}.chp.en{margin-left:-8px}
+.chp.st,.chp.mid,.chp.en{background:var(--c,#1E88E5);color:#fff}
 </style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v10)</p></main><dialog id="dlg"></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="course-it.js"></script>
@@ -187,7 +186,10 @@ Object.assign(T.en,{course:'Course',grammarL:'Grammar (Strutture)',packL:'Word p
 Object.assign(T.zh,{privCal:'私人',shareMgr:'共享日曆',shareSql:'共享日曆的資料表還沒建立，請先在 Supabase 執行 sql-v20.sql。',createCal:'建立共享日曆',calName:'日曆名稱',inviteCode:'邀請碼',copy:'複製',members:'成員',delCal:'刪除日曆',leave:'退出',roleOwner:'擁有者',roleEditor:'編輯者',roleViewer:'檢視者',create:'建立',joinCal:'用邀請碼加入',joinBtn:'加入',joined:'已加入共享日曆 ✓',createdCal:'共享日曆已建立 ✓',codeNotFound:'找不到這個邀請碼。',noShareYet:'還沒有共享日曆。',whichCal:'所屬日曆',deleted:'已刪除',undo:'復原',remMax:'提醒最多選 3 個',customMin:'自訂分鐘',focus:'專注計時',fStart:'開始',fPause:'暫停',fResume:'繼續',fEnd:'結束',fDone:'專注完成 🎉',roNote:'唯讀（你是檢視者）'});
 Object.assign(T.ja,{privCal:'個人用',shareMgr:'共有カレンダー',shareSql:'共有カレンダーのテーブルが未作成です。先にSupabaseで sql-v20.sql を実行してください。',createCal:'共有カレンダーを作成',calName:'カレンダー名',inviteCode:'招待コード',copy:'コピー',members:'メンバー',delCal:'カレンダーを削除',leave:'退出する',roleOwner:'オーナー',roleEditor:'編集者',roleViewer:'閲覧者',create:'作成',joinCal:'招待コードで参加',joinBtn:'参加',joined:'共有カレンダーに参加しました ✓',createdCal:'共有カレンダーを作成しました ✓',codeNotFound:'招待コードが見つかりません。',noShareYet:'共有カレンダーはまだありません。',whichCal:'カレンダー',deleted:'削除しました',undo:'元に戻す',remMax:'通知は最大3つまでです',customMin:'カスタム（分）',focus:'集中タイマー',fStart:'スタート',fPause:'一時停止',fResume:'再開',fEnd:'終了',fDone:'集中完了 🎉',roNote:'閲覧のみ（閲覧者）'});
 Object.assign(T.en,{privCal:'Private',shareMgr:'Shared calendars',shareSql:'The shared-calendar tables are missing. Run sql-v20.sql in Supabase first.',createCal:'Create shared calendar',calName:'Calendar name',inviteCode:'Invite code',copy:'Copy',members:'Members',delCal:'Delete calendar',leave:'Leave',roleOwner:'Owner',roleEditor:'Editor',roleViewer:'Viewer',create:'Create',joinCal:'Join with invite code',joinBtn:'Join',joined:'Joined the shared calendar ✓',createdCal:'Shared calendar created ✓',codeNotFound:'Invite code not found.',noShareYet:'No shared calendars yet.',whichCal:'Calendar',deleted:'Deleted',undo:'Undo',remMax:'Up to 3 reminders',customMin:'Custom (min)',focus:'Focus timer',fStart:'Start',fPause:'Pause',fResume:'Resume',fEnd:'End',fDone:'Focus session done 🎉',roNote:'Read-only (viewer)'});
-let lang=localStorage.lang||'zh',color=localStorage.color||'#8A2A21',uname=localStorage.dname||'',session=null;
+Object.assign(T.zh,{fCustom:'自訂',fAlert:'結束提醒',fSound:'音效',fSilent:'靜音',fRemain:'剩餘',fElapsed:'經過',fGoal:'目標',fLogDone:'✓ 記錄今日完成',fLogged:'已記錄今日完成',hTimer:'使用計時器',hTimerMin:'計時分鐘',hTimerSql:'計時器欄位未建立：先在 Supabase 執行 sql-v21.sql 後，此設定才會儲存。'});
+Object.assign(T.ja,{fCustom:'カスタム',fAlert:'終了時の通知',fSound:'音あり',fSilent:'サイレント',fRemain:'残り',fElapsed:'経過',fGoal:'目標',fLogDone:'✓ 今日の完了を記録',fLogged:'記録済み',hTimer:'タイマーを使う',hTimerMin:'タイマー時間（分）',hTimerSql:'タイマー列が未作成です。Supabaseで sql-v21.sql を実行すると、この設定が保存されます。'});
+Object.assign(T.en,{fCustom:'Custom',fAlert:'End alert',fSound:'Sound',fSilent:'Silent',fRemain:'Left',fElapsed:'Elapsed',fGoal:'Goal',fLogDone:'✓ Log today as done',fLogged:'Logged for today',hTimer:'Use timer',hTimerMin:'Timer (min)',hTimerSql:'Timer column not created yet: run sql-v21.sql in Supabase so this setting can be saved.'});
+let lang=localStorage.lang||'zh',color=localStorage.color||'#1E88E5',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
 const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -226,7 +228,7 @@ let langs=[],words=[],ssess=[],squiz=[],langErr=null,curLang=localStorage.curlan
 let courseLvl=localStorage.clvl||'A1',expG=new Set(),wordF=localStorage.wf||'all',quiz=null;const TTS=('speechSynthesis' in window);
 let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
-let shareCals=[],calMembers=[],shareErr=false,evV20=false;
+let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false;
 let visPriv=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;calVis=_v.c||{}}catch(e){}
 const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,c:calVis})};
 const myCal=id=>shareCals.find(c=>c.id===id),calName=id=>(myCal(id)||{}).name||'';
@@ -254,6 +256,7 @@ async function loadData(){
     if(curMap&&ideas.some(i=>!i.map_id)){await sb.from('ideas').update({map_id:curMap}).is('map_id',null);ideas.forEach(i=>{if(!i.map_id)i.map_id=curMap})}
   }habitErr=h.error||l.error;habits=habitErr?[]:h.data;hlogs=habitErr?[]:l.data;evErr=ev.error||ec.error;events=evErr?[]:ev.data;ecats=ec.error?[]:ec.data;
   try{const _pr=await sb.from('events').select('calendar_id,remind_list').limit(1);evV20=!_pr.error}catch(_){evV20=false}
+  try{const _ph=await sb.from('habits').select('timer_min').limit(1);habV21=!_ph.error}catch(_){habV21=false}
   await loadShare();
   const sl=await sb.from('study_languages').select('*').order('created_at'),swd=await sb.from('study_words').select('*').order('created_at'),ssn=await sb.from('study_sessions').select('*');
   langErr=sl.error;langs=langErr?[]:sl.data;words=swd.error?[]:swd.data;ssess=ssn.error?[]:ssn.data;
@@ -338,7 +341,7 @@ function calHTML(){
   const chip=(x,dt)=>{
     if(x.start_at){const c=ecats.find(z=>z.id===x.category_id),s0=sod(x.start_at),e2=sod(x.end_at||x.start_at),cls=s0<dt&&dt<e2?' mid':s0<dt?' en':e2>dt?' st':'';
       const showT=!cls||cls===' st'||((dt.getDay()+6)%7)===0;
-      return `<span class="chp${cls}" style="--c:${esc(c&&c.color||'#8A2A21')}">${showT?esc(x.title||''):'\u00a0'}</span>`}
+      return `<span class="chp${cls}" style="--c:${esc(c&&c.color||'#1E88E5')}">${showT?esc(x.title||''):'\u00a0'}</span>`}
     return `<span class="chp tk">${esc(x.title||'')}</span>`};
   const cell=(yy,mm,d,dim)=>{
     const dt=new Date(yy,mm,d),k=dk(dt),its=(by[k]||[]).slice().sort((a,b)=>(a.start_at?0:1)-(b.start_at?0:1)||String(a.start_at||a.due_at||'').localeCompare(String(b.start_at||b.due_at||'')));
@@ -408,30 +411,91 @@ ${c.role==='owner'?`<div class="meta">${t('inviteCode')}：<b>${esc(c.invite_cod
     await loadData();dlg.close();render();say(t('joined'));
   };
 }
-function openFocus(){
+function beepDone(actx){
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+    const ctx=actx||new AC();
+    if(ctx.state==='suspended')ctx.resume();
+    const t0=ctx.currentTime+0.02;
+    [880,880,1175].forEach((f,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.type='sine';o.frequency.value=f;
+      o.connect(g);g.connect(ctx.destination);
+      const st=t0+i*0.3;
+      g.gain.setValueAtTime(0.0001,st);
+      g.gain.exponentialRampToValueAtTime(0.22,st+0.03);
+      g.gain.exponentialRampToValueAtTime(0.0001,st+0.26);
+      o.start(st);o.stop(st+0.28);
+    });
+    if(!actx)setTimeout(()=>{try{ctx.close()}catch(_){}},1800);
+  }catch(_){}
+}
+async function fireNotifSilent(title,body,tag){
+  if(!('Notification'in window)||Notification.permission!=='granted')return false;
+  try{if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.ready;if(reg){await reg.showNotification(title,{body,tag,icon:'icon-192.png',silent:true});return true}}}catch(e){}
+  try{new Notification(title,{body,tag,icon:'icon-192.png',silent:true});return true}catch(e){return false}
+}
+function openFocus(habit){
   const dlg=$('dlg');
-  const mmss=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
-  let dur=25*60,left=dur,run=false,tick=null,endAt=0;
-  dlg.innerHTML=`<h3 style="margin:2px 0 6px">⏱ ${t('focus')}</h3>
-<div class="pchips">${[15,25,30,60].map(m=>`<button type="button" class="pchip${m===25?' on':''}" data-fm="${m}">${m} ${t('min')}</button>`).join('')}</div>
-<div style="position:relative;width:190px;height:190px;margin:4px auto">
-<svg width="190" height="190" viewBox="0 0 190 190"><circle cx="95" cy="95" r="84" fill="none" stroke="var(--ln)" stroke-width="10"/><circle id="f-ring" cx="95" cy="95" r="84" fill="none" stroke="var(--ac)" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" transform="rotate(-90 95 95)"/></svg>
-<div id="f-time" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:700;font-family:var(--fd)">${mmss(left)}</div></div>
-<div class="row"><button class="pri" id="f-go">${t('fStart')}</button><button class="sec" id="f-end">${t('fEnd')}</button></div>`;
+  const mmss=v=>Math.floor(v/60)+':'+String(v%60).padStart(2,'0');
+  let sound=localStorage.ftSound!=='0';
+  let custom=Math.min(999,Math.max(0,Math.floor(+localStorage.ftCustom)||0));
+  let dur=habit&&habit.timer_min?habit.timer_min*60:(custom?custom*60:25*60),left=dur,run=false,tick=null,endAt=0,actx=null,doneFlag=false;
+  const chkHabit=habit&&!habit.goal?habit:null;
+  const PRE=[15,25,30,60],initMin=Math.round(dur/60);
+  dlg.innerHTML=`<h3 style="margin:2px 0 6px">⏱ ${habit?esc((habit.icon?habit.icon+' ':'')+habit.name):t('focus')}</h3>
+<div class="pchips">${PRE.map(m=>`<button type="button" class="pchip" data-fm="${m}">${m} ${t('min')}</button>`).join('')}${PRE.includes(initMin)?'':`<button type="button" class="pchip" data-fm="${initMin}">${initMin} ${t('min')}</button>`}</div>
+<div class="frow"><span>✎ ${t('fCustom')}</span><span class="dt"><input id="f-cm" type="number" min="1" max="999" style="width:84px;margin:0" value="${custom||''}" aria-label="${t('fCustom')}"><button type="button" class="sec" id="f-cset" style="padding:6px 14px">OK</button></span></div>
+<div class="frow"><span>${t('fAlert')}</span><span class="seg"><button type="button" class="segbtn" id="f-snd">🔔 ${t('fSound')}</button><button type="button" class="segbtn" id="f-sil">🔕 ${t('fSilent')}</button></span></div>
+<div style="position:relative;width:200px;height:200px;margin:6px auto">
+<svg width="200" height="200" viewBox="0 0 190 190"><circle cx="95" cy="95" r="84" fill="none" stroke="var(--ln)" stroke-width="7"/><circle id="f-ring" cx="95" cy="95" r="84" fill="none" stroke="var(--ac)" stroke-width="7" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" transform="rotate(-90 95 95)"/></svg>
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div id="f-time" style="font-size:46px;font-weight:300;font-family:var(--fd);line-height:1.1">${mmss(left)}</div><div class="meta">${t('fRemain')}</div></div></div>
+<div class="rw" style="max-width:260px;margin:2px auto 4px"><span class="meta">${t('fElapsed')} <b id="f-el" style="color:var(--ink)">0:00</b></span><span class="meta">${t('fGoal')} <b id="f-tg" style="color:var(--ink)">${mmss(dur)}</b></span></div>
+<div class="pchips" style="justify-content:center"><button type="button" class="pchip" data-fadd="60">＋1 ${t('min')}</button><button type="button" class="pchip" data-fadd="300">＋5 ${t('min')}</button></div>
+<div class="row"><button class="pri" id="f-go">${t('fStart')}</button><button class="sec" id="f-end">${t('fEnd')}</button></div>
+<div class="row" id="f-logrow" style="display:none"><button class="pri" id="f-log">${t('fLogDone')}</button></div>`;
   dlg.showModal();
-  const paint=()=>{const ft=$('f-time'),fr=$('f-ring');if(ft)ft.textContent=mmss(left);if(fr)fr.setAttribute('stroke-dasharray',(dur?Math.round((1-left/dur)*100):0)+' 100')};
+  const paintChips=()=>dlg.querySelectorAll('[data-fm]').forEach(z=>z.classList.toggle('on',+z.dataset.fm*60===dur));
+  const paintSnd=()=>{const a=$('f-snd'),b=$('f-sil');if(a)a.classList.toggle('on',sound);if(b)b.classList.toggle('on',!sound)};
+  const paint=()=>{const ft=$('f-time'),fr=$('f-ring');if(ft)ft.textContent=mmss(left);if(fr)fr.setAttribute('stroke-dasharray',(dur?Math.round((1-left/dur)*100):0)+' 100');const el=$('f-el'),tg=$('f-tg');if(el)el.textContent=mmss(Math.max(0,dur-left));if(tg)tg.textContent=mmss(dur)};
   const stop=()=>{if(tick){clearInterval(tick);tick=null}run=false};
-  const upd=()=>{left=Math.max(0,Math.round((endAt-Date.now())/1000));paint();
-    if(left<=0){stop();const g=$('f-go');if(g)g.textContent=t('fStart');fireNotif('⏱ '+t('focus'),t('fDone'),'focus-done');say(t('fDone'))}};
-  dlg.querySelectorAll('[data-fm]').forEach(b=>b.onclick=()=>{stop();dur=+b.dataset.fm*60;left=dur;dlg.querySelectorAll('[data-fm]').forEach(z=>z.classList.toggle('on',z===b));const g=$('f-go');if(g)g.textContent=t('fStart');paint()});
+  const pick=m=>{stop();doneFlag=false;dur=m*60;left=dur;const g=$('f-go');if(g)g.textContent=t('fStart');const lr=$('f-logrow');if(lr)lr.style.display='none';paintChips();paint()};
+  const finish=()=>{
+    stop();doneFlag=true;const g=$('f-go');if(g)g.textContent=t('fStart');
+    const title='⏱ '+(habit?habit.name:t('focus'));
+    if(sound){beepDone(actx);fireNotif(title,t('fDone'),'focus-done')}
+    else fireNotifSilent(title,t('fDone'),'focus-done');
+    say(t('fDone'));
+    if(chkHabit){
+      const lr=$('f-logrow');
+      if(hAmtOf(chkHabit,ymd(new Date()))>0){if(lr){lr.style.display='';lr.innerHTML=`<span class="meta">✓ ${t('fLogged')}</span>`}}
+      else if(lr){lr.style.display='';const lb=$('f-log');if(lb)lb.onclick=async()=>{lb.disabled=true;await hToggle(chkHabit.id,true);lb.textContent='✓ '+t('fLogged')}}
+    }
+  };
+  const upd=()=>{left=Math.max(0,Math.round((endAt-Date.now())/1000));paint();if(left<=0)finish()};
+  dlg.querySelectorAll('[data-fm]').forEach(b=>b.onclick=()=>pick(+b.dataset.fm));
+  $('f-cset').onclick=()=>{
+    const v=Math.floor(+$('f-cm').value);
+    if(!(v>=1&&v<=999))return;
+    custom=v;localStorage.ftCustom=String(v);
+    if(![...dlg.querySelectorAll('[data-fm]')].some(z=>+z.dataset.fm===v)){
+      const b=document.createElement('button');b.type='button';b.className='pchip';b.dataset.fm=String(v);b.textContent=v+' '+t('min');b.onclick=()=>pick(v);
+      dlg.querySelector('.pchips').appendChild(b);
+    }
+    pick(v);
+  };
+  $('f-snd').onclick=()=>{sound=true;localStorage.ftSound='1';paintSnd()};
+  $('f-sil').onclick=()=>{sound=false;localStorage.ftSound='0';paintSnd()};
+  dlg.querySelectorAll('[data-fadd]').forEach(b=>b.onclick=()=>{const add=+b.dataset.fadd;dur+=add;if(run){endAt+=add*1000;left=Math.max(0,Math.round((endAt-Date.now())/1000))}else left+=add;paint()});
   $('f-go').onclick=()=>{
     if(run){stop();left=Math.max(0,Math.round((endAt-Date.now())/1000));$('f-go').textContent=t('fResume');paint();return}
-    if(left<=0)left=dur;
+    if(left<=0||doneFlag){left=dur;doneFlag=false;const lr=$('f-logrow');if(lr)lr.style.display='none'}
+    try{const AC=window.AudioContext||window.webkitAudioContext;if(AC){if(!actx)actx=new AC();if(actx.state==='suspended')actx.resume()}}catch(_){}
     run=true;endAt=Date.now()+left*1000;tick=setInterval(upd,250);$('f-go').textContent=t('fPause');paint();
   };
-  $('f-end').onclick=()=>{stop();left=dur;const g=$('f-go');if(g)g.textContent=t('fStart');paint()};
-  dlg.onclose=()=>stop();
-  paint();
+  $('f-end').onclick=()=>{stop();doneFlag=false;left=dur;const g=$('f-go');if(g)g.textContent=t('fStart');const lr=$('f-logrow');if(lr)lr.style.display='none';paint()};
+  dlg.onclose=()=>{stop();if(actx){try{actx.close()}catch(_){}actx=null}};
+  paintChips();paintSnd();paint();
 }
 function openEvent(id){
   const dlg=$('dlg'),b=new Date(cs);b.setHours(9,0,0,0);
@@ -568,21 +632,21 @@ function habitHTML(){
   const amt=(h,d)=>hAmtOf(h,d),done=h=>amt(h,today)>=(h.goal||1);
   const streak=h=>{let n=0,d=new Date(),g=0;const ok=dt=>amt(h,ymd(dt))>=(h.goal||1);if(hSched(h,d)&&!ok(d))d.setDate(d.getDate()-1);while(g++<370){if(hSched(h,d)){if(ok(d))n++;else break}d.setDate(d.getDate()-1)}return n};
   const rowH=h=>{const a=amt(h,today);
-    return `<div class="task" style="--hc:${esc(h.color||'#8A2A21')}"><input type="checkbox" class="pc" style="--pc:${esc(h.color||'#8A2A21')}" data-a="hchk" data-id="${h.id}"${done(h)?' checked':''} aria-label="${t('chk')}">
+    return `<div class="task" style="--hc:${esc(h.color||'#1E88E5')}"><input type="checkbox" class="pc" style="--pc:${esc(h.color||'#1E88E5')}" data-a="hchk" data-id="${h.id}"${done(h)?' checked':''} aria-label="${t('chk')}">
 <div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b><div class="meta rw">${h.goal?`<span>${a}/${h.goal}${h.unit?' '+esc(h.unit):''}</span>`:''}${h.target_days?`<span>🎯 ${new Set(hlogs.filter(l=>l.habit_id===h.id).map(l=>l.log_date)).size}/${h.target_days}</span>`:''}</div></div>
-<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`};
+${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" aria-label="⏱">▶</button>`:''}<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`};
   const wdays=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d});
   const strip=act.length?`<div class="card wstrip">${wdays.map(d=>{const ds=ymd(d),sc=act.filter(h=>hSched(h,d)),cnt=sc.filter(h=>amt(h,ds)>0).length,pct=sc.length?cnt/sc.length:0,isT=ds===today;
-    return `<div class="wd"><span>${WK[lang][(d.getDay()+6)%7]}</span>${pct>=1?`<span class="hd2 full${isT?' tdy':''}" style="background:var(--ac)">${d.getDate()}</span>`:`<span class="hd2${isT?' tdy':''}">${ringPct(pct,'#8A2A21')}<b>${d.getDate()}</b></span>`}</div>`}).join('')}</div>`:'';
+    return `<div class="wd"><span>${WK[lang][(d.getDay()+6)%7]}</span>${pct>=1?`<span class="hd2 full${isT?' tdy':''}" style="background:var(--ac)">${d.getDate()}</span>`:`<span class="hd2${isT?' tdy':''}">${ringPct(pct,'#1E88E5')}<b>${d.getDate()}</b></span>`}</div>`}).join('')}</div>`:'';
   const actT=act.filter(h=>hSched(h,new Date())),rest=act.filter(h=>!hSched(h,new Date()));
-  const groups=['am','pm','night','any'].map(k=>{const gs=actT.filter(h=>(h.slot||'any')===k);return gs.length?`<div class="ghd"><b>${t('slot_'+k)}</b><span class="meta">${gs.length}</span></div><div class="card">${gs.map(rowH).join('')}</div>`:''}).join('')+(rest.length?`<div class="ghd"><b>${t('restToday')}</b><span class="meta">${rest.length}</span></div><div class="card">${rest.map(h=>`<div class="task" style="--hc:${esc(h.color||'#8A2A21')};opacity:.55"><div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b></div><div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`).join('')}</div>`:'');
+  const groups=['am','pm','night','any'].map(k=>{const gs=actT.filter(h=>(h.slot||'any')===k);return gs.length?`<div class="ghd"><b>${t('slot_'+k)}</b><span class="meta">${gs.length}</span></div><div class="card">${gs.map(rowH).join('')}</div>`:''}).join('')+(rest.length?`<div class="ghd"><b>${t('restToday')}</b><span class="meta">${rest.length}</span></div><div class="card">${rest.map(h=>`<div class="task" style="--hc:${esc(h.color||'#1E88E5')};opacity:.55"><div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b></div>${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" aria-label="⏱">▶</button>`:''}<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`).join('')}</div>`:'');
   const n=actT.filter(done).length;
-  const arcSec=arc.length?`<div class="card"><b>${t('arcSec')}</b>${arc.map(h=>`<div class="task" style="--hc:${esc(h.color||'#8A2A21')}"><div class="tt"><b>${esc((h.icon||'')+' '+h.name)}</b></div><button class="sec" data-a="hunarc" data-id="${h.id}">${t('unarc')}</button></div>`).join('')}</div>`:'';
+  const arcSec=arc.length?`<div class="card"><b>${t('arcSec')}</b>${arc.map(h=>`<div class="task" style="--hc:${esc(h.color||'#1E88E5')}"><div class="tt"><b>${esc((h.icon||'')+' '+h.name)}</b></div><button class="sec" data-a="hunarc" data-id="${h.id}">${t('unarc')}</button></div>`).join('')}</div>`:'';
   return `<div class="hd"><h1>${t('habits')}</h1><span class="meta">${n}/${actT.length}</span></div>`+(habitErr?`<div class="card"><p class="meta">${t('habitSql')}</p></div>`:act.length?strip+groups:`<div class="card"><p class="meta">${t('habitEmpty')}</p><b>${t('presets')}</b><div class="pchips">${PRESETS().map((p,i)=>`<button class="pchip" data-a="hpreset" data-v="${i}">${p.icon} ${esc(p.name)}${p.goal?' · '+p.goal+p.unit:''}</button>`).join('')}</div></div>`)+arcSec+(habitErr?'':`<button class="fab" data-a="nhabit" aria-label="${t('newHabit')}">＋</button>`);
 }
 function habitDetail(hid){
   const h=habits.find(x=>x.id===hid);if(!h){hview=null;return habitHTML()}
-  const today=ymd(new Date()),col=esc(h.color||'#8A2A21'),goal=h.goal||null;
+  const today=ymd(new Date()),col=esc(h.color||'#1E88E5'),goal=h.goal||null;
   const amtD=d=>hAmtOf(h,d),doneD=d=>amtD(d)>=(goal||1);
   const streak=()=>{let n=0,d=new Date(),g=0;if(hSched(h,d)&&!doneD(ymd(d)))d.setDate(d.getDate()-1);while(g++<370){if(hSched(h,d)){if(doneD(ymd(d)))n++;else break}d.setDate(d.getDate()-1)}return n};
   const y=hmon.getFullYear(),mo=hmon.getMonth(),first=(new Date(y,mo,1).getDay()+6)%7,n=new Date(y,mo+1,0).getDate(),pn=new Date(y,mo,0).getDate();
@@ -608,7 +672,7 @@ function habitDetail(hid){
 <div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="hcg">${cells}</div></div>
 <div class="card"><b>${t('stats')}</b><div class="stats">${tile('✅ '+t('st_m'),mDays+' '+t('times'))}${tile('🗓 '+t('st_t'),tDays+' '+t('times'))}${tile('％ '+t('st_r'),rate+' %')}${tile('🔥 '+t('st_s'),streak()+' '+t('days'))}${goal?tile('📊 '+t('st_ma'),String(mAmt)+(h.unit?' '+esc(h.unit):''))+tile('📈 '+t('st_ta'),String(tAmt)+(h.unit?' '+esc(h.unit):'')):''}${h.target_days?tile('🎯 '+t('td'),tDays+' / '+h.target_days+(tDays>=h.target_days?' 🎉':'')):''}</div></div>
 ${goal?`<div class="card"><b>${t('chart')}</b><div class="bars" style="--hc:${col}">${bars}<span class="gline" style="bottom:${Math.round(goal/maxV*100)}%"></span></div></div>`:''}
-<div class="card"><div class="row"><button class="sec" data-a="hedit" data-id="${h.id}">✎ ${t('edit')}</button><button class="sec" data-a="harc" data-id="${h.id}">${h.archived?t('unarc'):t('arc')}</button><button class="sec" data-a="hdel" data-id="${h.id}">${t('del')}</button>${safeLink(h.link)?`<a class="go" href="${esc(safeLink(h.link))}" aria-label="${t('open')}">↗</a>`:''}</div></div>`;
+<div class="card"><div class="row">${habV21&&h.timer_min?`<button class="sec" data-a="hfocus" data-id="${h.id}">▶ ⏱ ${h.timer_min} ${t('min')}</button>`:''}<button class="sec" data-a="hedit" data-id="${h.id}">✎ ${t('edit')}</button><button class="sec" data-a="harc" data-id="${h.id}">${h.archived?t('unarc'):t('arc')}</button><button class="sec" data-a="hdel" data-id="${h.id}">${t('del')}</button>${safeLink(h.link)?`<a class="go" href="${esc(safeLink(h.link))}" aria-label="${t('open')}">↗</a>`:''}</div></div>`;
 }
 async function hAmt(id,dv){
   const td=ymd(new Date()),hx=habits.find(h=>h.id===id),cur=hx?hAmtOf(hx,td):0,nv=Math.max(0,cur+dv);
@@ -617,10 +681,10 @@ async function hAmt(id,dv){
   render();
 }
 function openHabit(id){
-  const dlg=$('dlg'),x=id?habits.find(h=>h.id===id):{color:'#8A2A21',metric:'none'};
+  const dlg=$('dlg'),x=id?habits.find(h=>h.id===id):{color:'#1E88E5',metric:'none'};
   dlg.innerHTML=`${id?'':`<label>${t('presets')}</label><div class="pchips">${PRESETS().map((p,i)=>`<button type="button" class="pchip" data-pre="${i}">${p.icon} ${esc(p.name)}</button>`).join('')}</div>`}<textarea id="h-n" rows="1" maxlength="40" placeholder="${t('habitName')}" aria-label="${t('habitName')}">${esc(x.name||'')}</textarea>
 <label>${t('iconL')}</label><div class="igrid">${HICONS.map(e=>`<button type="button" class="icob${(x.icon||'')===e?' on':''}" data-ic="${e}">${e}</button>`).join('')}</div>
-<div class="tbar"><input id="h-i" type="text" maxlength="8" placeholder="😀" value="${esc(x.icon||'')}" aria-label="${t('emoji')}"><input id="h-c" type="color" value="${esc(x.color||'#8A2A21')}" aria-label="${t('color')}"></div>
+<div class="tbar"><input id="h-i" type="text" maxlength="8" placeholder="😀" value="${esc(x.icon||'')}" aria-label="${t('emoji')}"><input id="h-c" type="color" value="${esc(x.color||'#1E88E5')}" aria-label="${t('color')}"></div>
 
 <div class="frow"><span>${t('goal')}</span><span class="seg"><button type="button" id="g-chk" class="segbtn">${t('gt_check')}</button><button type="button" id="g-amt" class="segbtn">${t('gt_amt')}</button></span></div>
 <div class="frow" id="g-row"><span>${t('goal')} · ${t('unit')}</span><span class="dt"><input id="h-g" type="number" min="0" step="any" style="width:90px;margin:0" value="${x.goal==null?'':esc(String(x.goal))}" aria-label="${t('goal')}"><input id="h-u" type="text" maxlength="4" style="width:64px;margin:0" placeholder="${t('unit')}" value="${esc(x.unit||'')}" aria-label="${t('unit')}"></span></div>
@@ -628,6 +692,9 @@ function openHabit(id){
 <label>${t('freq')}</label><div class="dchips">${[1,2,3,4,5,6,7].map(d=>`<button type="button" class="dchip" data-dc="${d}">${WK[lang][d-1]}</button>`).join('')}</div>
 <div class="frow"><span>${t('startd')}</span><input type="date" id="h-sd" style="width:auto;margin:0" value="${x.start_date||ymd(new Date())}"></div>
 <div class="frow"><span>${t('slot')}</span><select id="h-sl">${['any','am','pm','night'].map(k=>`<option value="${k}"${(x.slot||'any')===k?' selected':''}>${t('slot_'+k)}</option>`).join('')}</select></div>
+<div class="frow"><span>⏱ ${t('hTimer')}</span><input type="checkbox" id="h-tm" class="sw"${x.timer_min?' checked':''} aria-label="${t('hTimer')}"></div>
+<div class="frow" id="h-tmrow"><span>${t('hTimerMin')}</span><input id="h-tmv" type="number" min="1" max="999" style="width:90px;margin:0" value="${x.timer_min||25}" aria-label="${t('hTimerMin')}"></div>
+${habV21?'':`<p class="meta">${t('hTimerSql')}</p>`}
 <div class="tbar">${id?`<button class="sec" id="h-d">${t('del')}</button><button class="sec" id="h-a">${x.archived?t('unarc'):t('arc')}</button>`:''}<button class="pri snd" id="h-s" aria-label="${t('save')}">↑</button></div>`;
   let gAmt=x.goal!=null;
   const paintG=()=>{$('g-chk').classList.toggle('on',!gAmt);$('g-amt').classList.toggle('on',gAmt);$('g-row').style.display=gAmt?'':'none'};
@@ -640,10 +707,13 @@ function openHabit(id){
   const paintD=()=>dlg.querySelectorAll('[data-dc]').forEach(b=>b.classList.toggle('on',selDays.includes(+b.dataset.dc)));
   paintD();
   dlg.querySelectorAll('[data-dc]').forEach(b=>b.onclick=()=>{const d=+b.dataset.dc;selDays=selDays.includes(d)?selDays.filter(z=>z!==d):[...selDays,d];if(!selDays.length)selDays=[d];paintD()});
+  const paintTm=()=>{const r=$('h-tmrow');if(r)r.style.display=$('h-tm').checked?'':'none'};
+  if($('h-tm')){$('h-tm').onchange=paintTm;paintTm()}
   dlg.querySelectorAll('[data-ic]').forEach(b=>b.onclick=()=>{$('h-i').value=b.dataset.ic;dlg.querySelectorAll('[data-ic]').forEach(z=>z.classList.toggle('on',z===b))});
   $('h-s').onclick=async()=>{
     const name=$('h-n').value.trim();if(!name)return;
     const v={name,icon:$('h-i').value.trim()||null,color:$('h-c').value,goal:gAmt&&$('h-g').value!==''?+$('h-g').value:null,unit:gAmt?($('h-u').value.trim()||null):null,target_days:tdSel.value==='c'?(tdInp.value?+tdInp.value:null):(tdSel.value===''?null:+tdSel.value),slot:$('h-sl').value,days:selDays.slice().sort((a,b)=>a-b).join(','),start_date:$('h-sd').value||null};
+    if(habV21)v.timer_min=$('h-tm').checked?Math.min(999,Math.max(1,Math.floor(+$('h-tmv').value)||25)):null;
     if(id){const{error}=await sb.from('habits').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('habits').insert(v).select().single();if(error)return alert(error.message);habits.push(data)}
     dlg.close();render();
@@ -839,6 +909,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='calvis'){const v=b.dataset.v;if(v==='priv')visPriv=!visPriv;else calVis[v]=!(calVis[v]!==false);saveVis();render()}
   else if(a==='share')openShare()
   else if(a==='focus')openFocus()
+  else if(a==='hfocus'){const hx=habits.find(h=>h.id===id);if(hx)openFocus(hx)}
   else if(a==='nev')openEvent()
   else if(a==='eedit')openEvent(id)
   else if(a==='nle')openList('event')
