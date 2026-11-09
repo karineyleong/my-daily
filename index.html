@@ -129,6 +129,15 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .fchips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
 .fchip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 ::selection{background:rgba(217,164,65,.45)}
+.swp{position:relative;overflow:hidden;border-radius:6px}
+.swp-bg{position:absolute;inset:0;background:#C0392B;display:flex;align-items:center}
+.swp-del{background:none;border:0;color:#fff;font-weight:700;font-size:15px;padding:12px 16px;cursor:pointer}
+.swp-in{position:relative;background:var(--card);transition:transform .18s ease;touch-action:pan-y}
+.swp:first-child .task{border-top:0}
+.utoast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 12px 10px 20px;border-radius:99px;z-index:70;box-shadow:0 6px 20px rgba(60,30,20,.35);font-size:14px;display:flex;align-items:center;gap:12px;white-space:nowrap}
+.utoast button{background:var(--ac2);color:#33241A;border:0;font-weight:700;padding:6px 14px;border-radius:99px;cursor:pointer}
+.fab2{position:fixed;right:28px;bottom:calc(152px + env(safe-area-inset-bottom,0px));width:48px;height:48px;padding:0;border-radius:50%;background:var(--card);color:var(--ac);font-size:21px;border:1px solid var(--ln);box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:5;cursor:pointer}
+.chp.st{margin-right:-8px}.chp.mid{margin:0 -8px}.chp.en{margin-left:-8px}
 </style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v10)</p></main><dialog id="dlg"></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="course-it.js"></script>
@@ -175,6 +184,9 @@ Object.assign(T.zh,{autoLoad:'已自動載入課程生詞',wAll:'全部',wManual
 Object.assign(T.zh,{course:'課程',grammarL:'文法（Strutture）',packL:'主題單詞',addW:'＋ 加入',addedW:'已加入 ✓',addAll:'全部加入',cilsExam:'這級 CILS 考什麼',progW:'已加入生詞本',courseMissing:'課程資料檔（course-it.js）未載入，請確認已上載到同一位置。'});
 Object.assign(T.ja,{course:'コース',grammarL:'文法（Strutture）',packL:'テーマ単語',addW:'＋ 追加',addedW:'追加済み ✓',addAll:'すべて追加',cilsExam:'このレベルのCILS試験',progW:'単語帳に追加済み',courseMissing:'コースデータ（course-it.js）が読み込めませんでした。同じ場所にアップロードされているか確認してください。'});
 Object.assign(T.en,{course:'Course',grammarL:'Grammar (Strutture)',packL:'Word packs',addW:'+ Add',addedW:'Added ✓',addAll:'Add all',cilsExam:'What CILS tests at this level',progW:'in your word book',courseMissing:'Course data file (course-it.js) not loaded — please check it was uploaded next to index.html.'});
+Object.assign(T.zh,{privCal:'私人',shareMgr:'共享日曆',shareSql:'共享日曆的資料表還沒建立，請先在 Supabase 執行 sql-v20.sql。',createCal:'建立共享日曆',calName:'日曆名稱',inviteCode:'邀請碼',copy:'複製',members:'成員',delCal:'刪除日曆',leave:'退出',roleOwner:'擁有者',roleEditor:'編輯者',roleViewer:'檢視者',create:'建立',joinCal:'用邀請碼加入',joinBtn:'加入',joined:'已加入共享日曆 ✓',createdCal:'共享日曆已建立 ✓',codeNotFound:'找不到這個邀請碼。',noShareYet:'還沒有共享日曆。',whichCal:'所屬日曆',deleted:'已刪除',undo:'復原',remMax:'提醒最多選 3 個',customMin:'自訂分鐘',focus:'專注計時',fStart:'開始',fPause:'暫停',fResume:'繼續',fEnd:'結束',fDone:'專注完成 🎉',roNote:'唯讀（你是檢視者）'});
+Object.assign(T.ja,{privCal:'個人用',shareMgr:'共有カレンダー',shareSql:'共有カレンダーのテーブルが未作成です。先にSupabaseで sql-v20.sql を実行してください。',createCal:'共有カレンダーを作成',calName:'カレンダー名',inviteCode:'招待コード',copy:'コピー',members:'メンバー',delCal:'カレンダーを削除',leave:'退出する',roleOwner:'オーナー',roleEditor:'編集者',roleViewer:'閲覧者',create:'作成',joinCal:'招待コードで参加',joinBtn:'参加',joined:'共有カレンダーに参加しました ✓',createdCal:'共有カレンダーを作成しました ✓',codeNotFound:'招待コードが見つかりません。',noShareYet:'共有カレンダーはまだありません。',whichCal:'カレンダー',deleted:'削除しました',undo:'元に戻す',remMax:'通知は最大3つまでです',customMin:'カスタム（分）',focus:'集中タイマー',fStart:'スタート',fPause:'一時停止',fResume:'再開',fEnd:'終了',fDone:'集中完了 🎉',roNote:'閲覧のみ（閲覧者）'});
+Object.assign(T.en,{privCal:'Private',shareMgr:'Shared calendars',shareSql:'The shared-calendar tables are missing. Run sql-v20.sql in Supabase first.',createCal:'Create shared calendar',calName:'Calendar name',inviteCode:'Invite code',copy:'Copy',members:'Members',delCal:'Delete calendar',leave:'Leave',roleOwner:'Owner',roleEditor:'Editor',roleViewer:'Viewer',create:'Create',joinCal:'Join with invite code',joinBtn:'Join',joined:'Joined the shared calendar ✓',createdCal:'Shared calendar created ✓',codeNotFound:'Invite code not found.',noShareYet:'No shared calendars yet.',whichCal:'Calendar',deleted:'Deleted',undo:'Undo',remMax:'Up to 3 reminders',customMin:'Custom (min)',focus:'Focus timer',fStart:'Start',fPause:'Pause',fResume:'Resume',fEnd:'End',fDone:'Focus session done 🎉',roNote:'Read-only (viewer)'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#8A2A21',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -214,6 +226,11 @@ let langs=[],words=[],ssess=[],squiz=[],langErr=null,curLang=localStorage.curlan
 let courseLvl=localStorage.clvl||'A1',expG=new Set(),wordF=localStorage.wf||'all',quiz=null;const TTS=('speechSynthesis' in window);
 let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
+let shareCals=[],calMembers=[],shareErr=false,evV20=false;
+let visPriv=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;calVis=_v.c||{}}catch(e){}
+const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,c:calVis})};
+const myCal=id=>shareCals.find(c=>c.id===id),calName=id=>(myCal(id)||{}).name||'';
+const evVisible=e=>e.calendar_id?(calVis[e.calendar_id]!==false&&!!myCal(e.calendar_id)):visPriv;
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
 const T0=d=>d?+new Date(d):1e18;
 const cmp=(a,b)=>(b.importance-a.importance)||(T0(a.due_at)-T0(b.due_at))||(a.created_at<b.created_at?-1:1);
@@ -236,6 +253,8 @@ async function loadData(){
     if(!maps.length&&ideas.length){const{data}=await sb.from('idea_maps').insert({name:t('brainstorm')}).select().single();if(data){maps=[data];curMap=data.id}}
     if(curMap&&ideas.some(i=>!i.map_id)){await sb.from('ideas').update({map_id:curMap}).is('map_id',null);ideas.forEach(i=>{if(!i.map_id)i.map_id=curMap})}
   }habitErr=h.error||l.error;habits=habitErr?[]:h.data;hlogs=habitErr?[]:l.data;evErr=ev.error||ec.error;events=evErr?[]:ev.data;ecats=ec.error?[]:ec.data;
+  try{const _pr=await sb.from('events').select('calendar_id,remind_list').limit(1);evV20=!_pr.error}catch(_){evV20=false}
+  await loadShare();
   const sl=await sb.from('study_languages').select('*').order('created_at'),swd=await sb.from('study_words').select('*').order('created_at'),ssn=await sb.from('study_sessions').select('*');
   langErr=sl.error;langs=langErr?[]:sl.data;words=swd.error?[]:swd.data;ssess=ssn.error?[]:ssn.data;
   const sq=await sb.from('study_quiz_results').select('*').order('created_at',{ascending:false});squiz=sq.error?[]:sq.data;
@@ -248,10 +267,10 @@ const vname=()=>({all:t('all'),today:t('today'),tomorrow:t('tomorrow'),inbox:t('
 function row(x,sub){
   const k=kids(x.id).sort((a,b)=>(+a.done-+b.done)||cmp(a,b)),c=catOf(x.category_id),od=!x.done&&isOv(x);
   const p=k.length?Math.round(k.filter(y=>y.done).length/k.length*100):(x.done?100:x.progress||0);
-  return `<div class="task${sub?' sub':''}${x.done?' done':''}"><input type="checkbox" class="pc" style="--pc:${PC[x.importance]||PC[0]}" data-a="chk" data-id="${x.id}"${x.done?' checked':''} aria-label="${t('chk')}">
+  return swpWrap('task',x.id,`<div class="task${sub?' sub':''}${x.done?' done':''}"><input type="checkbox" class="pc" style="--pc:${PC[x.importance]||PC[0]}" data-a="chk" data-id="${x.id}"${x.done?' checked':''} aria-label="${t('chk')}">
 <div class="tt" data-a="edit" data-id="${x.id}"><b>${x.icon?esc(x.icon)+' ':''}${esc(x.title)}</b>${x.note?`<div class="meta">${esc(x.note.slice(0,60))}</div>`:''}
 <div class="meta rw"><span class="${od?'od':''}">${x.due_at?fmt(x.due_at):''}</span>${sub?'':`<span>${c?esc((c.icon||'')+' '+c.name):t('inbox')}</span>`}</div>
-${(k.length||p)?`<div class="bar"><i style="width:${p}%"></i></div>`:''}</div></div>`+k.map(y=>row(y,1)).join('');
+${(k.length||p)?`<div class="bar"><i style="width:${p}%"></i></div>`:''}</div></div>`)+k.map(y=>row(y,1)).join('');
 }
 function listFor(vw){
   let items,ov=[];
@@ -292,7 +311,9 @@ const anyCat=id=>cats.find(c=>c.id===id)||ecats.find(c=>c.id===id);
 const hm=d=>new Date(d).toLocaleTimeString(LOC[lang],{hour:'2-digit',minute:'2-digit'});
 function evRow(e){
   const c=ecats.find(x=>x.id===e.category_id),map=e.location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}`:'';
-  return `<div class="task ev" style="--hc:${esc(c&&c.color||'#8FA382')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}"><b>${esc(e.title||'')}</b><div class="meta rw"><span>${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}</span><span>${c?esc((c.icon||'')+' '+c.name):''}</span>${e.repeat_kind&&e.repeat_kind!=='none'?'<span>🔁</span>':''}</div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}${e.url&&safeLink(e.url)?`<a class="go" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener" aria-label="URL">🔗</a>`:''}</div>`;
+  const _ro=e.calendar_id&&myCal(e.calendar_id)&&myCal(e.calendar_id).role==='viewer';
+  const _h=`<div class="task ev" style="--hc:${esc(c&&c.color||'#8FA382')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}"><b>${esc(e.title||'')}</b><div class="meta rw"><span>${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}</span><span>${c?esc((c.icon||'')+' '+c.name):''}</span>${e.repeat_kind&&e.repeat_kind!=='none'?'<span>🔁</span>':''}${e.calendar_id&&calName(e.calendar_id)?`<span>👥 ${esc(calName(e.calendar_id))}</span>`:''}</div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}${e.url&&safeLink(e.url)?`<a class="go" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener" aria-label="URL">🔗</a>`:''}</div>`;
+  return _ro?_h:swpWrap('event',e.id,_h);
 }
 function calHTML(){
   const y=cm.getFullYear(),m=cm.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),pn=new Date(y,m,0).getDate();
@@ -300,7 +321,7 @@ function calHTML(){
   tasks.forEach(x=>{if(!x.done&&x.due_at)mark(new Date(x.due_at),x)});
   const w0=new Date(y,m-1,1),w1=new Date(y,m+2,0);
   const shift=(d0,k,kind)=>{const d=new Date(d0);if(kind==='daily')d.setDate(d.getDate()+k);else if(kind==='weekly')d.setDate(d.getDate()+7*k);else if(kind==='monthly')d.setMonth(d.getMonth()+k);else if(kind==='yearly')d.setFullYear(d.getFullYear()+k);return d};
-  events.forEach(e=>{
+  events.filter(evVisible).forEach(e=>{
     const st0=new Date(e.start_at),dur=(e.end_at?+new Date(e.end_at):+st0)-+st0,kind=e.repeat_kind||'none';
     let k0=0;
     if(kind==='daily')k0=Math.max(0,Math.floor((w0-st0)/864e5)-1);
@@ -316,7 +337,8 @@ function calHTML(){
   });
   const chip=(x,dt)=>{
     if(x.start_at){const c=ecats.find(z=>z.id===x.category_id),s0=sod(x.start_at),e2=sod(x.end_at||x.start_at),cls=s0<dt&&dt<e2?' mid':s0<dt?' en':e2>dt?' st':'';
-      return `<span class="chp${cls}" style="--c:${esc(c&&c.color||'#8A2A21')}">${esc(x.title||'')}</span>`}
+      const showT=!cls||cls===' st'||((dt.getDay()+6)%7)===0;
+      return `<span class="chp${cls}" style="--c:${esc(c&&c.color||'#8A2A21')}">${showT?esc(x.title||''):'\u00a0'}</span>`}
     return `<span class="chp tk">${esc(x.title||'')}</span>`};
   const cell=(yy,mm,d,dim)=>{
     const dt=new Date(yy,mm,d),k=dk(dt),its=(by[k]||[]).slice().sort((a,b)=>(a.start_at?0:1)-(b.start_at?0:1)||String(a.start_at||a.due_at||'').localeCompare(String(b.start_at||b.due_at||'')));
@@ -327,9 +349,89 @@ function calHTML(){
   for(let d=1;d<=n;d++)cells+=cell(y,m,d,false);
   const trail=(7-(first+n)%7)%7;for(let d=1;d<=trail;d++)cells+=cell(y,m+1,d,true);
   const items=by[dk(cs)]||[],evs=items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks=items.filter(x=>!x.start_at).sort(cmp);
-  return `<div class="hd"><h1>${t('calendar')}</h1><span></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
+  return `<div class="hd"><h1>${t('calendar')}</h1><span></span></div>${calChipsHTML()}<div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
 <div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div><div class="row calrow"><button class="sec" data-a="ctd">${t('ctoday')}</button><select id="expsel" class="expsel" aria-label="${t('expSched')}"><option value="">${t('expSched')} ▾</option><option value="day">${t('shDay')}</option><option value="week">${t('shWeek')}</option><option value="month">${t('shMonth')}</option></select></div></div>
 <div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${evErr?`<p class="meta">${t('evSql')}</p>`:''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`+evCatCard()+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
+}
+async function loadShare(){
+  shareCals=[];calMembers=[];shareErr=false;
+  if(!session)return;
+  try{
+    const r=await sb.from('calendar_members').select('calendar_id,role,shared_calendars(id,name,owner_id,invite_code,created_at)').eq('user_id',session.user.id);
+    if(r.error){shareErr=true;return}
+    shareCals=(r.data||[]).filter(x=>x.shared_calendars).map(x=>({id:x.shared_calendars.id,name:x.shared_calendars.name,owner_id:x.shared_calendars.owner_id,invite_code:x.shared_calendars.invite_code,role:x.role}));
+    if(shareCals.length){
+      const m=await sb.from('calendar_members').select('*').in('calendar_id',shareCals.map(c=>c.id));
+      if(!m.error)calMembers=m.data||[];
+    }
+  }catch(_){shareErr=true}
+}
+function calChipsHTML(){
+  const chip=(on,label,v)=>`<button class="chip${on?' on':''}" data-a="calvis" data-v="${v}">${on?'✓ ':''}${label}</button>`;
+  return `<div class="chips" style="padding:0 0 10px">${chip(visPriv,'🔒 '+t('privCal'),'priv')}${shareCals.map(c=>chip(calVis[c.id]!==false,'👥 '+esc(c.name),c.id)).join('')}<button class="chip" data-a="share">⚙ ${t('shareMgr')}</button></div>`;
+}
+function openShare(){
+  const dlg=$('dlg');
+  if(shareErr){
+    dlg.innerHTML=`<h3 style="margin:2px 0 10px">👥 ${t('shareMgr')}</h3><p class="meta">${t('shareSql')}</p><div class="row"><button class="pri" id="sh-x">${t('cancel')}</button></div>`;
+    dlg.showModal();$('sh-x').onclick=()=>dlg.close();return;
+  }
+  const mem=cid=>calMembers.filter(m=>m.calendar_id===cid);
+  const mname=m=>esc(m.display_name||(m.user_id||'').slice(0,8));
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">👥 ${t('shareMgr')}</h3>
+${shareCals.length?shareCals.map(c=>`<div class="card" style="margin-bottom:10px"><div class="rw"><b>${esc(c.name)}</b><span class="tag" style="background:var(--ln)">${t(c.role==='owner'?'roleOwner':c.role==='editor'?'roleEditor':'roleViewer')}</span></div>
+${c.role==='owner'?`<div class="meta">${t('inviteCode')}：<b>${esc(c.invite_code||'')}</b> <button class="lnk" data-copy="${esc(c.invite_code||'')}">${t('copy')}</button></div>`:''}
+<div class="meta">${t('members')}（${mem(c.id).length}）：${mem(c.id).map(mname).join('、')||'—'}</div>
+<div class="acts">${c.role==='owner'?mem(c.id).filter(m=>m.user_id!==session.user.id).map(m=>`<button class="sec" data-rmm="${c.id}:${m.user_id}">✕ ${mname(m)}</button>`).join(''):''}${c.role==='owner'?`<button class="sec" data-dcal="${c.id}">${t('delCal')}</button>`:`<button class="sec" data-lcal="${c.id}">${t('leave')}</button>`}</div></div>`).join(''):`<p class="meta">${t('noShareYet')}</p>`}
+<label for="sh-n">${t('createCal')}</label><div class="tbar"><input id="sh-n" type="text" maxlength="30" placeholder="${t('calName')}"><button class="pri" id="sh-c">${t('create')}</button></div>
+<label for="sh-j">${t('joinCal')}</label><div class="tbar"><input id="sh-j" type="text" maxlength="12" placeholder="CODE" style="text-transform:uppercase"><button class="pri" id="sh-jb">${t('joinBtn')}</button></div>
+<div class="row"><button class="sec" id="sh-x">${t('cancel')}</button></div>`;
+  dlg.showModal();
+  $('sh-x').onclick=()=>dlg.close();
+  dlg.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>{if(navigator.clipboard)navigator.clipboard.writeText(b.dataset.copy).then(()=>say(t('copied')))});
+  dlg.querySelectorAll('[data-rmm]').forEach(b=>b.onclick=async()=>{if(!confirm(t('confirmDel')))return;const pr=b.dataset.rmm.split(':');const{error}=await sb.from('calendar_members').delete().eq('calendar_id',pr[0]).eq('user_id',pr[1]);if(error)return alert(error.message);await loadData();dlg.close();render()});
+  dlg.querySelectorAll('[data-dcal]').forEach(b=>b.onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('shared_calendars').delete().eq('id',b.dataset.dcal);if(error)return alert(error.message);await loadData();dlg.close();render()});
+  dlg.querySelectorAll('[data-lcal]').forEach(b=>b.onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('calendar_members').delete().eq('calendar_id',b.dataset.lcal).eq('user_id',session.user.id);if(error)return alert(error.message);await loadData();dlg.close();render()});
+  $('sh-c').onclick=async()=>{
+    const nm=$('sh-n').value.trim();if(!nm)return;
+    const{data,error}=await sb.from('shared_calendars').insert({name:nm}).select().single();
+    if(error)return alert(error.message);
+    const r2=await sb.from('calendar_members').insert({calendar_id:data.id,user_id:session.user.id,role:'owner',display_name:uname||session.user.email||null});
+    if(r2.error)return alert(r2.error.message);
+    await loadData();dlg.close();render();say(t('createdCal'));
+  };
+  $('sh-jb').onclick=async()=>{
+    const code=$('sh-j').value.trim();if(!code)return;
+    const{data,error}=await sb.rpc('join_shared_calendar',{p_code:code,p_name:uname||session.user.email||''});
+    if(error)return alert(error.message);
+    if(data&&data.error)return alert(t('codeNotFound'));
+    await loadData();dlg.close();render();say(t('joined'));
+  };
+}
+function openFocus(){
+  const dlg=$('dlg');
+  const mmss=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  let dur=25*60,left=dur,run=false,tick=null,endAt=0;
+  dlg.innerHTML=`<h3 style="margin:2px 0 6px">⏱ ${t('focus')}</h3>
+<div class="pchips">${[15,25,30,60].map(m=>`<button type="button" class="pchip${m===25?' on':''}" data-fm="${m}">${m} ${t('min')}</button>`).join('')}</div>
+<div style="position:relative;width:190px;height:190px;margin:4px auto">
+<svg width="190" height="190" viewBox="0 0 190 190"><circle cx="95" cy="95" r="84" fill="none" stroke="var(--ln)" stroke-width="10"/><circle id="f-ring" cx="95" cy="95" r="84" fill="none" stroke="var(--ac)" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" transform="rotate(-90 95 95)"/></svg>
+<div id="f-time" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:700;font-family:var(--fd)">${mmss(left)}</div></div>
+<div class="row"><button class="pri" id="f-go">${t('fStart')}</button><button class="sec" id="f-end">${t('fEnd')}</button></div>`;
+  dlg.showModal();
+  const paint=()=>{const ft=$('f-time'),fr=$('f-ring');if(ft)ft.textContent=mmss(left);if(fr)fr.setAttribute('stroke-dasharray',(dur?Math.round((1-left/dur)*100):0)+' 100')};
+  const stop=()=>{if(tick){clearInterval(tick);tick=null}run=false};
+  const upd=()=>{left=Math.max(0,Math.round((endAt-Date.now())/1000));paint();
+    if(left<=0){stop();const g=$('f-go');if(g)g.textContent=t('fStart');fireNotif('⏱ '+t('focus'),t('fDone'),'focus-done');say(t('fDone'))}};
+  dlg.querySelectorAll('[data-fm]').forEach(b=>b.onclick=()=>{stop();dur=+b.dataset.fm*60;left=dur;dlg.querySelectorAll('[data-fm]').forEach(z=>z.classList.toggle('on',z===b));const g=$('f-go');if(g)g.textContent=t('fStart');paint()});
+  $('f-go').onclick=()=>{
+    if(run){stop();left=Math.max(0,Math.round((endAt-Date.now())/1000));$('f-go').textContent=t('fResume');paint();return}
+    if(left<=0)left=dur;
+    run=true;endAt=Date.now()+left*1000;tick=setInterval(upd,250);$('f-go').textContent=t('fPause');paint();
+  };
+  $('f-end').onclick=()=>{stop();left=dur;const g=$('f-go');if(g)g.textContent=t('fStart');paint()};
+  dlg.onclose=()=>stop();
+  paint();
 }
 function openEvent(id){
   const dlg=$('dlg'),b=new Date(cs);b.setHours(9,0,0,0);
@@ -337,10 +439,11 @@ function openEvent(id){
   const L0=toL(x.start_at),L1=x.end_at?toL(x.end_at):L0;
   dlg.innerHTML=`<textarea id="e-t" rows="1" maxlength="100" style="font-size:20px;font-weight:700" placeholder="${t('evTitle')}" aria-label="${t('evTitle')}">${esc(x.title||'')}</textarea>
 <div class="frow"><span>🏷 ${t('cat')}</span><select id="e-c" aria-label="${t('cat')}"><option value="">${t('noCat')}</option>${ecats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc((c.icon||'')+' '+c.name)}</option>`).join('')}</select></div>
+${shareErr?'':`<div class="frow"><span>👥 ${t('whichCal')}</span><select id="e-cal" aria-label="${t('whichCal')}"><option value="">🔒 ${t('privCal')}</option>${shareCals.filter(c=>c.role==='owner'||c.role==='editor').map(c=>`<option value="${c.id}"${x.calendar_id===c.id?' selected':''}>👥 ${esc(c.name)}</option>`).join('')}${x.calendar_id&&!shareCals.some(c=>c.id===x.calendar_id&&(c.role==='owner'||c.role==='editor'))?`<option value="${x.calendar_id}" selected>👥 ${esc(calName(x.calendar_id))}</option>`:''}</select></div>`}
 <div class="frow"><span>${t('allDay')}</span><input type="checkbox" id="e-a" class="sw"${x.all_day?' checked':''} aria-label="${t('allDay')}"></div>
 <div class="frow"><span>${t('start')}</span><span class="dt"><input type="date" id="e-sd" value="${L0.slice(0,10)}" aria-label="${t('start')}"><input type="time" id="e-st" value="${L0.slice(11,16)}"></span></div>
 <div class="frow"><span>${t('end')}</span><span class="dt"><input type="date" id="e-ed" value="${L1.slice(0,10)}" aria-label="${t('end')}"><input type="time" id="e-et" value="${L1.slice(11,16)}"></span></div>
-<div class="frow"><span>🔔 ${t('remind')}</span><select id="e-r" aria-label="${t('remind')}">${REM.map(([v,k])=>`<option value="${v}"${String(x.remind_min==null?'':x.remind_min)===v?' selected':''}>${t(k)}</option>`).join('')}</select></div>
+<div class="frow"><span>🔔 ${t('remind')}</span><span class="dt"><input id="e-rc" type="number" min="1" max="9999" style="width:84px;margin:0" placeholder="${t('customMin')}"><button type="button" class="sec" id="e-radd" style="padding:6px 12px">＋</button></span></div><div class="pchips" id="e-rems" style="margin-top:2px"></div>
 <div class="frow"><span>🔁 ${t('rpt')}</span><select id="e-rp" aria-label="${t('rpt')}">${RPT.map(([v,k])=>`<option value="${v}"${(x.repeat_kind||'none')===v?' selected':''}>${t(k)}</option>`).join('')}</select></div>
 <div class="fchips"><button type="button" class="sec fchip" id="c-loc">📍 ${t('place')}</button><button type="button" class="sec fchip" id="c-url">🔗 URL</button><button type="button" class="sec fchip" id="c-note">📝 ${t('note')}</button></div>
 <div id="w-loc"><label for="e-l">${t('place')}</label><input id="e-l" type="text" maxlength="120" placeholder="${t('placeHint')}" value="${esc(x.location||'')}"></div>
@@ -353,19 +456,43 @@ function openEvent(id){
   $('e-a').onchange=syncA;syncA();
   const secW=(btn,wrap,has)=>{const w=$(wrap);w.style.display=has?'':'none';if(has)$(btn).classList.add('on');$(btn).onclick=()=>{const open=w.style.display==='none';w.style.display=open?'':'none';$(btn).classList.toggle('on',open)}};
   secW('c-loc','w-loc',!!x.location);secW('c-url','w-url',!!x.url);secW('c-note','w-note',!!x.note);
+  let remList=(Array.isArray(x.remind_list)&&x.remind_list.length?[...new Set(x.remind_list)]:x.remind_min!=null?[x.remind_min]:[]).slice(0,3);
+  const maxRem=evV20?3:1;
+  const paintRem=()=>{
+    const w=$('e-rems');if(!w)return;
+    const pre=REM.filter(([v])=>v!=='');
+    w.innerHTML=pre.map(([v,k])=>`<button type="button" class="pchip${remList.includes(+v)?' on':''}" data-rem="${v}">${t(k)}</button>`).join('')+remList.filter(v=>!pre.some(([rv])=>+rv===v)).map(v=>`<button type="button" class="pchip on" data-rem="${v}">${v}${t('min')}</button>`).join('');
+    w.querySelectorAll('[data-rem]').forEach(b=>b.onclick=()=>{const v=+b.dataset.rem;
+      if(remList.includes(v))remList=remList.filter(z=>z!==v);
+      else if(remList.length>=maxRem){if(maxRem===1)remList=[v];else{say(t('remMax'));return}}
+      else remList.push(v);
+      paintRem()});
+  };
+  paintRem();
+  if($('e-radd'))$('e-radd').onclick=()=>{const v=parseInt($('e-rc').value,10);if(!(v>0&&v<10000))return;
+    if(!remList.includes(v)){if(remList.length>=maxRem){if(maxRem===1)remList=[v];else{say(t('remMax'));return}}else remList.push(v)}
+    $('e-rc').value='';paintRem()};
   $('e-ok').onclick=async()=>{
     const title=$('e-t').value.trim(),sd=$('e-sd').value;if(!title||!sd)return;
     const ad=$('e-a').checked,ed=$('e-ed').value||sd;
     const st=new Date(sd+'T'+(ad?'00:00':($('e-st').value||'09:00')));
     const en=ad?new Date(ed+'T23:59'):($('e-et').value?new Date(ed+'T'+$('e-et').value):null);
-    const r=$('e-r').value;
-    if(r!==''&&'Notification'in window&&Notification.permission==='default'){try{Notification.requestPermission()}catch(_){}}
-    const v={title,start_at:st.toISOString(),end_at:en&&en>=st?en.toISOString():null,all_day:ad,location:$('e-l').value.trim()||null,url:$('e-u').value.trim()||null,repeat_kind:$('e-rp').value,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:r===''?null:+r,remind_at:r===''?null:new Date(+st-r*6e4).toISOString(),place_phone:(window._place&&window._place.phone)||null,place_hours:(window._place&&window._place.hours)||null};
+    const rl=[...remList].sort((a,b)=>a-b),rMin=rl.length?rl[0]:null;
+    if(rl.length&&'Notification'in window&&Notification.permission==='default'){try{Notification.requestPermission()}catch(_){}}
+    const v={title,start_at:st.toISOString(),end_at:en&&en>=st?en.toISOString():null,all_day:ad,location:$('e-l').value.trim()||null,url:$('e-u').value.trim()||null,repeat_kind:$('e-rp').value,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:rMin,remind_at:rMin==null?null:new Date(+st-rMin*6e4).toISOString(),place_phone:(window._place&&window._place.phone)||null,place_hours:(window._place&&window._place.hours)||null};
+    if(evV20){v.remind_list=rl.length?rl:null;if(!shareErr)v.calendar_id=$('e-cal')?($('e-cal').value||null):(x.calendar_id||null)}
     if(id){const{error}=await sb.from('events').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('events').insert(v).select().single();if(error)return alert(error.message);events.push(data);cs=new Date(st)}
     dlg.close();render();
   };
   if($('e-d'))$('e-d').onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('events').delete().eq('id',id);if(error)return alert(error.message);events=events.filter(e=>e.id!==id);dlg.close();render()};
+  const _myC=x.calendar_id?myCal(x.calendar_id):null;
+  if(_myC&&_myC.role==='viewer'){
+    dlg.querySelectorAll('input,select,textarea,button').forEach(el=>{el.disabled=true});
+    const _ok=$('e-ok');if(_ok)_ok.style.display='none';
+    const _dd=$('e-d');if(_dd)_dd.style.display='none';
+    dlg.insertAdjacentHTML('afterbegin','<p class="meta">🔒 '+t('roNote')+'</p>');
+  }
   dlg.showModal();$('e-t').focus();
 }
 function loadGk(cb){if(window.google&&google.maps&&google.maps.places)return cb();if(window._gkL)return;window._gkL=true;const sc=document.createElement('script');sc.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(localStorage.gk||'')+'&libraries=places';sc.onload=()=>cb();document.head.appendChild(sc)}
@@ -414,7 +541,7 @@ function appView(){
   else if(tab==='cal')body=calHTML();
   else if(tab==='idea')body=ideaHTML();
   else if(tab==='study')body=studyHTML();
-  else body=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><h1>${vname()}</h1><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1">${t('sv')}</button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2">${t('dv')}</button></span></div>`+listHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`);
+  else body=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><h1>${vname()}</h1><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1">${t('sv')}</button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2">${t('dv')}</button></span></div>`+listHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`;
   $('app').innerHTML=`<div class="appt">${appTitle()}</div>`+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
   if(tab==='set')bind();
 }
@@ -603,6 +730,85 @@ dlg.addEventListener('pointermove',e=>{if(!drag)return;e.preventDefault();const 
 const end=()=>{if(!drag)return;drag=null;dlg.classList.remove('dlg-drag')};
 dlg.addEventListener('pointerup',end);dlg.addEventListener('pointercancel',end);
 })();
+const swpWrap=(kind,id,inner)=>`<div class="swp" data-kind="${kind}" data-id="${id}"><div class="swp-bg"><button class="swp-del" data-a="swdel" data-kind="${kind}" data-id="${id}" tabindex="-1">🗑 ${t('del')}</button></div><div class="swp-in">${inner}</div></div>`;
+let _swCur=null,_swSup=false,_undoEl=null,_undoTimer=null;
+function swCloseAll(ex){document.querySelectorAll('.swp.open').forEach(w=>{if(w!==ex){w.classList.remove('open');const i=w.querySelector('.swp-in');if(i)i.style.transform=''}});if(_swCur&&_swCur!==ex)_swCur=null}
+function hideUndo(){if(_undoTimer){clearTimeout(_undoTimer);_undoTimer=null}if(_undoEl){_undoEl.remove();_undoEl=null}}
+function showUndo(kind,snaps){
+  hideUndo();
+  const d=document.createElement('div');d.className='utoast';
+  const sp=document.createElement('span');sp.textContent=t('deleted');
+  const b=document.createElement('button');b.textContent=t('undo');
+  b.onclick=async()=>{hideUndo();await undoDelete(kind,snaps)};
+  d.appendChild(sp);d.appendChild(b);document.body.appendChild(d);_undoEl=d;
+  _undoTimer=setTimeout(hideUndo,5000);
+}
+async function swDelete(kind,id){
+  swCloseAll();
+  if(kind==='task'){
+    const root=tasks.find(x=>x.id===id);if(!root)return;
+    const snaps=[];const col=x=>{snaps.push(x);kids(x.id).forEach(col)};col(root);
+    const{error}=await sb.from('tasks').delete().eq('id',id);if(error)return alert(error.message);
+    const ids=snaps.map(z=>z.id);tasks=tasks.filter(x=>!ids.includes(x.id));render();showUndo('task',snaps);
+  }else{
+    const ev=events.find(x=>x.id===id);if(!ev)return;
+    const{error}=await sb.from('events').delete().eq('id',id);if(error)return alert(error.message);
+    events=events.filter(x=>x.id!==id);render();showUndo('event',[ev]);
+  }
+}
+async function undoDelete(kind,snaps){
+  if(kind==='task'){
+    const byId={};snaps.forEach(z=>byId[z.id]=z);
+    const depth=x=>{let d=0;while(x.parent_id&&byId[x.parent_id]){d++;x=byId[x.parent_id]}return d};
+    for(const sn of[...snaps].sort((a,b)=>depth(a)-depth(b))){
+      const{data,error}=await sb.from('tasks').insert(sn).select().single();
+      if(error)return alert(error.message);
+      tasks.push(data||sn);
+    }
+  }else{
+    const sn={...snaps[0],user_id:session.user.id};
+    const{data,error}=await sb.from('events').insert(sn).select().single();
+    if(error)return alert(error.message);
+    events.push(data||sn);
+  }
+  render();
+}
+(function(){
+  const app=$('app');let st=null;
+  app.addEventListener('click',e=>{if(_swSup){_swSup=false;e.stopPropagation();e.preventDefault()}},true);
+  app.addEventListener('pointerdown',e=>{
+    const inn=e.target.closest&&e.target.closest('.swp-in');
+    if(_swCur&&(!inn||inn.parentElement!==_swCur))swCloseAll();
+    if(!inn)return;
+    const was=inn.parentElement.classList.contains('open');
+    st={inn,x0:e.clientX,y0:e.clientY,dx:was?96:0,base:was?96:0,lock:false,was};
+  },{passive:true});
+  app.addEventListener('pointermove',e=>{
+    if(!st)return;
+    const dx=e.clientX-st.x0,dy=e.clientY-st.y0;
+    if(!st.lock){
+      if(Math.abs(dx)>10&&Math.abs(dx)>Math.abs(dy)*1.2){st.lock=true;swCloseAll(st.inn.parentElement)}
+      else if(Math.abs(dy)>10){st=null;return}
+      else return;
+    }
+    st.dx=Math.max(0,Math.min(96,st.base+dx));
+    st.inn.style.transition='none';st.inn.style.transform='translateX('+st.dx+'px)';
+    if(e.cancelable)e.preventDefault();
+  },{passive:false});
+  const up=()=>{
+    if(!st)return;const q=st;st=null;
+    q.inn.style.transition='';
+    if(!q.lock){
+      if(q.was){q.inn.style.transform='';q.inn.parentElement.classList.remove('open');if(_swCur===q.inn.parentElement)_swCur=null;_swSup=true;setTimeout(()=>{_swSup=false},400)}
+      return;
+    }
+    _swSup=true;setTimeout(()=>{_swSup=false},400);
+    if(q.dx>52){q.inn.style.transform='translateX(96px)';q.inn.parentElement.classList.add('open');_swCur=q.inn.parentElement}
+    else{q.inn.style.transform='';q.inn.parentElement.classList.remove('open');if(_swCur===q.inn.parentElement)_swCur=null}
+  };
+  app.addEventListener('pointerup',up);
+  app.addEventListener('pointercancel',()=>{if(st){st.inn.style.transition='';st.inn.style.transform='';st=null}});
+})();
 $('app').addEventListener('click',async e=>{
   const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,id=b.dataset.id;
   if(a==='dr'){dr=!dr;render()}
@@ -629,6 +835,10 @@ $('app').addEventListener('click',async e=>{
   else if(a==='hdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('habits').delete().eq('id',id);if(error)alert(error.message);else{habits=habits.filter(h=>h.id!==id);hlogs=hlogs.filter(l=>l.habit_id!==id);hview=null;render()}}}
   else if(a==='hedit')openHabit(id)
   else if(a==='nhabit')openHabit()
+  else if(a==='swdel')await swDelete(b.dataset.kind,id)
+  else if(a==='calvis'){const v=b.dataset.v;if(v==='priv')visPriv=!visPriv;else calVis[v]=!(calVis[v]!==false);saveVis();render()}
+  else if(a==='share')openShare()
+  else if(a==='focus')openFocus()
   else if(a==='nev')openEvent()
   else if(a==='eedit')openEvent(id)
   else if(a==='nle')openList('event')
@@ -935,15 +1145,17 @@ function checkReminders(){
   if(!session||!events.length)return;
   const now=Date.now(),WIN=30*6e4;let dirty=false;
   events.forEach(e=>{
-    if(e.remind_min==null)return;
-    const rm=e.remind_min*6e4;
-    occStarts(e,now-WIN+rm,now+rm).forEach(os=>{
-      const rt=os-rm;if(rt>now||now-rt>WIN)return;
-      const key=e.id+'|'+rt;
-      if(firedRem[key])return;
-      firedRem[key]=1;dirty=true;
-      fireNotif('🔔 '+(e.title||''),fmt(os)+(e.location?' 📍'+e.location:''),'rem-'+key);
-      remBanner(e,os);
+    const rlist=(evV20&&Array.isArray(e.remind_list)&&e.remind_list.length)?e.remind_list:(e.remind_min!=null?[e.remind_min]:[]);
+    rlist.forEach(rmin=>{
+      const rm=rmin*6e4;
+      occStarts(e,now-WIN+rm,now+rm).forEach(os=>{
+        const rt=os-rm;if(rt>now||now-rt>WIN)return;
+        const key=e.id+'|'+rt;
+        if(firedRem[key])return;
+        firedRem[key]=1;dirty=true;
+        fireNotif('🔔 '+(e.title||''),fmt(os)+(e.location?' 📍'+e.location:''),'rem-'+key);
+        remBanner(e,os);
+      });
     });
   });
   const cut=now-7*864e5;
