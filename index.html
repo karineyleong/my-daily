@@ -163,6 +163,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .hswp-in{position:relative;background:var(--card);transition:transform .18s ease;touch-action:pan-y}
 .hswp:first-child .task{border-top:0}
 .ptag{display:inline-block;font-size:11px;padding:0 8px;border-radius:9px;background:color-mix(in srgb,var(--ac) 16%,#fff);color:var(--ac);font-weight:700}
+.dsec{font-size:12px;color:var(--mut);font-weight:700;margin:14px 2px 4px}
 .pbar{height:8px;border-radius:4px;background:var(--ln);overflow:hidden;margin-top:8px}.pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2))}
 .modsw{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
 .finstat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
@@ -176,7 +177,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v23)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v23.1)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -351,6 +352,7 @@ let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
 let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false;
 let hlists=[],plans=[],pfin=[],planErr=false,planV23=false,habList=false,hlistView='all',planView=null,finCur=null;
+let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
 let visPriv=true,visShared=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;visShared=_v.s!==false;calVis=_v.c||{}}catch(e){}
 const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,c:calVis})};
 const myCal=id=>shareCals.find(c=>c.id===id),calName=id=>(myCal(id)||{}).name||'';
@@ -372,7 +374,37 @@ function hydrate(){
   evV20=!!c.evV20;habV21=!!c.habV21;curMap=c.curMap||curMap;if(c.curLang)curLang=c.curLang;hlists=c.hlists||[];plans=c.plans||[];pfin=c.pfin||[];planV23=!!c.planV23;habList=!!c.habList;planErr=false;
   ideaErr=null;habitErr=null;evErr=null;langErr=null;shareErr=false;return true}catch(e){return false}
 }
-async function loadData(){
+async function dedupCats(){
+  // v23.1: merge duplicate category rows (same kind + name_key, or kind + name when no key).
+  // Keep the earliest-created row; re-point habits/tasks/events references; delete the rest.
+  const tag=(arr,nm)=>arr.map(c=>({c,arr,nm}));
+  const all=[...tag(cats),...tag(ecats),...tag(hlists)];
+  const groups={};
+  all.forEach(x=>{const c=x.c,k=(c.kind||'task')+'|'+(c.name_key||('n:'+(c.name||'')));(groups[k]=groups[k]||[]).push(x)});
+  for(const k in groups){
+    const g=groups[k];if(g.length<2)continue;
+    g.sort((a,b)=>String(a.c.created_at||'').localeCompare(String(b.c.created_at||'')));
+    const keep=g[0].c;
+    for(const dup of g.slice(1)){
+      const did=dup.c.id;if(did===keep.id)continue;
+      try{await sb.from('habits').update({list_id:keep.id}).eq('list_id',did)}catch(_){}
+      try{await sb.from('tasks').update({category_id:keep.id}).eq('category_id',did)}catch(_){}
+      try{await sb.from('events').update({category_id:keep.id}).eq('category_id',did)}catch(_){}
+      habits.forEach(h=>{if(h.list_id===did)h.list_id=keep.id});
+      tasks.forEach(x=>{if(x.category_id===did)x.category_id=keep.id});
+      events.forEach(x=>{if(x.category_id===did)x.category_id=keep.id});
+      try{await sb.from('categories').delete().eq('id',did)}catch(_){}
+      const ix=dup.arr.findIndex(c=>c.id===did);if(ix>=0)dup.arr.splice(ix,1);
+    }
+  }
+}
+function loadData(){
+  if(_loadP)return _loadP;
+  const p=loadDataImpl();_loadP=p;
+  const cl=()=>{if(_loadP===p)_loadP=null};p.then(cl,cl);
+  return p;
+}
+async function loadDataImpl(){
   if(OFFLINE){hydrate();return}
   try{
   const since=new Date();since.setDate(since.getDate()-90);
@@ -390,19 +422,22 @@ async function loadData(){
   try{const _ph=await sb.from('habits').select('timer_min').limit(1);habV21=!_ph.error}catch(_){habV21=false}
   // ===== v23: habit lists / plans / finance (graceful if sql-v23.sql not run yet) =====
   try{const hl=await sb.from('categories').select('*').eq('kind','habit').order('sort_order');hlists=hl.error?[]:hl.data}catch(_){hlists=[]}
+  if(!dedupDone){dedupDone=true;try{await dedupCats()}catch(_){}}
   try{
-    const seed=async(kind,defs,flag)=>{
-      if(localStorage[flag])return;
-      for(const d of defs){
-        let r=await sb.from('categories').insert({kind,name:d.n,name_key:d.k,icon:d.i,color:d.c,sort_order:defs.indexOf(d)}).select().single();
-        if(r.error)r=await sb.from('categories').insert({kind,name:d.n,icon:d.i,color:d.c,sort_order:defs.indexOf(d)}).select().single();
+    // v23.1: idempotent seeding — decide from a live DB query (never localStorage, never memory arrays alone)
+    const seed=async(kind,defs)=>{
+      const chk=await sb.from('categories').select('id').eq('kind',kind).limit(1);
+      if(chk.error||(chk.data&&chk.data.length))return;
+      for(let i=0;i<defs.length;i++){
+        const d=defs[i];
+        let r=await sb.from('categories').insert({kind,name:d.n,name_key:d.k,icon:d.i,color:d.c,sort_order:i}).select().single();
+        if(r.error)r=await sb.from('categories').insert({kind,name:d.n,icon:d.i,color:d.c,sort_order:i}).select().single();
         if(r.error)return;
         (kind==='habit'?hlists:cats).push(r.data);
       }
-      localStorage[flag]='1';
     };
-    if(!cats.length)await seed('task',[{n:'家庭',k:'lk_family',i:'🏠',c:'#8FA382'},{n:'工作',k:'lk_work',i:'💼',c:'#4A7FB5'}],'mdSeedTask23');
-    if(!hlists.length)await seed('habit',[{n:'興趣',k:'lk_interest',i:'🎨',c:'#D9A441'},{n:'學習',k:'lk_study',i:'📚',c:'#4A7FB5'},{n:'生活',k:'lk_life',i:'🌱',c:'#8FA382'}],'mdSeedHabit23');
+    await seed('task',[{n:'家庭',k:'lk_family',i:'🏠',c:'#8FA382'},{n:'工作',k:'lk_work',i:'💼',c:'#4A7FB5'}]);
+    await seed('habit',[{n:'興趣',k:'lk_interest',i:'🎨',c:'#D9A441'},{n:'學習',k:'lk_study',i:'📚',c:'#4A7FB5'},{n:'生活',k:'lk_life',i:'🌱',c:'#8FA382'}]);
   }catch(_){}
   try{const _pp=await sb.from('tasks').select('plan_id').limit(1);const _pe=await sb.from('events').select('plan_id').limit(1);planV23=!_pp.error&&!_pe.error}catch(_){planV23=false}
   try{const _pl2=await sb.from('habits').select('list_id').limit(1);habList=!_pl2.error}catch(_){habList=false}
@@ -452,22 +487,55 @@ function listHTML(){
   return `<div class="dual"><div class="dcol"><select data-dsel="A" aria-label="A">${opts(dA)}</select>${listFor(dA)}</div><div class="dcol"><select data-dsel="B" aria-label="B">${opts(dB)}</select>${listFor(dB)}</div></div>`;
 }
 function drawer(){
+  // v23.1: one drawer per page — only controls relevant to that page. List management lives
+  // ONLY here, in the ✎ edit mode of the todo/habit drawers (nav rows ARE the lists).
   const it=(a,v,ic,nm,cnt,on)=>`<button class="di${on?' on':''}" data-a="${a}" data-v="${v}"><span class="ic2">${ic}</span><span class="nm">${nm}</span><i>${cnt||''}</i></button>`;
+  const head=`<div class="ov${dr?' op':''}" data-a="dr"></div><aside class="dr${dr?' op':''}" aria-label="${t('menu')}"><div class="dh"><b>${appTitle()}</b>${(tab==='todo'||tab==='habit')?`<button class="sec ic" data-a="dredit" aria-label="${t('edit')}">${drEdit?'✓':'✎'}</button>`:''}</div>`;
+  const editRows=(arr,kind)=>arr.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(catName(c))}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')+`<div class="row"><button class="sec" data-a="${kind==='habit'?'nlh':'nl'}">＋ ${t('addOnly')}</button></div>`;
   if(tab==='habit'){
     const act=habits.filter(h=>!h.archived);
-    return `<div class="ov${dr?' op':''}" data-a="dr"></div><aside class="dr${dr?' op':''}" aria-label="${t('menu')}"><div class="dh"><b>${appTitle()}</b><button class="sec ic" data-a="set" aria-label="${t('settings')}">⚙</button></div>
-${it('hnav','all','🗂',t('all'),act.length,hlistView==='all')}${hlists.map(c=>it('hnav',c.id,c.icon||'📁',esc(catName(c)),act.filter(h=>h.list_id===c.id).length,hlistView===c.id)).join('')}
-${listsCard('habit')}</aside>`;
+    return head+(drEdit?editRows(hlists,'habit'):`${it('hnav','all','🗂',t('all'),act.length,hlistView==='all')}${hlists.map(c=>it('hnav',c.id,c.icon||'📁',esc(catName(c)),act.filter(h=>h.list_id===c.id).length,hlistView===c.id)).join('')}`)+'</aside>';
+  }
+  if(tab==='cal'){
+    const chip=(on,label,v)=>`<button class="di${on?' on':''}" data-a="calvis" data-v="${v}"><span class="ic2">${on?'✓':'○'}</span><span class="nm">${label}</span></button>`;
+    return head+chip(visPriv,'🔒 '+t('privCal'),'priv')+chip(visShared,'👥 '+t('shareCal'),'shared')
+      +shareCals.map(c=>chip(calVis[c.id]!==false,'👥 '+esc(c.name),c.id)).join('')
+      +`<button class="di" data-a="share"><span class="ic2">⚙</span><span class="nm">${t('shareMgr')}</span></button></aside>`;
+  }
+  if(tab==='plan'){
+    const stOf=p=>{const pr=planProg(p);return pr.ts.length&&pr.dn===pr.ts.length?'done':pr.st===t('pOver')?'over':'doing'};
+    const cnt=f=>plans.filter(f).length;
+    const types=[...new Set(plans.map(p=>p.type).filter(Boolean))];
+    return head
+      +it('pflt','all','🗂',t('all'),plans.length,planFlt==='all')
+      +it('pflt','doing','▶',t('pDoing'),cnt(p=>stOf(p)==='doing'),planFlt==='doing')
+      +it('pflt','over','⚠',t('pOver'),cnt(p=>stOf(p)==='over'),planFlt==='over')
+      +it('pflt','done','✅',t('pDone'),cnt(p=>stOf(p)==='done'),planFlt==='done')
+      +types.map(ty=>it('pflt','type:'+ty,'🏷',esc(ty),cnt(p=>p.type===ty),planFlt==='type:'+ty)).join('')
+      +`<button class="di" data-a="tab" data-v="fin"><span class="ic2">📊</span><span class="nm">${t('finance')}</span></button></aside>`;
+  }
+  if(tab==='fin'){
+    const curs=[...new Set(pfin.map(f=>f.currency||'JPY'))];
+    const cur=finCur&&curs.includes(finCur)?finCur:curs[0];
+    const withFin=plans.filter(p=>pfin.some(f=>f.plan_id===p.id));
+    return head
+      +(curs.length?`<div class="dsec">${t('pCur')}</div>`+curs.map(c=>it('fincur',c,'💱',c,pfin.filter(f=>(f.currency||'JPY')===c).length,c===cur)).join(''):'')
+      +`<div class="dsec">${t('pByPlan')}</div>`+it('fplan','all','🗂',t('all'),pfin.length,finPlan==='all')
+      +withFin.map(p=>it('fplan',p.id,'🗂',esc(p.title),pfin.filter(f=>f.plan_id===p.id).length,finPlan===p.id)).join('')+'</aside>';
+  }
+  if(tab==='study'){
+    const act=langs.filter(l=>!l.archived);
+    return head+act.map(l=>`<button class="di${l.id===curLang?' on':''}" data-a="slang" data-id="${l.id}"><span class="ic2">🌐</span><span class="nm">${esc(l.name)}${l.level?' · '+esc(l.level):''}</span></button>`).join('')
+      +`<button class="di" data-a="nlang"><span class="ic2">＋</span><span class="nm">${t('newLang')}</span></button></aside>`;
+  }
+  if(tab==='set'){
+    return head+`<p class="meta" style="padding:4px 2px">${session?esc(session.user.email):''}</p><button class="di" data-a="lo"><span class="ic2">🚪</span><span class="nm">${t('out')}</span></button></aside>`;
   }
   const n=pool(),it2=(v,ic,nm,cnt)=>it('nav',v,ic,nm,cnt,view===v);
-  return `<div class="ov${dr?' op':''}" data-a="dr"></div><aside class="dr${dr?' op':''}" aria-label="${t('menu')}"><div class="dh"><b>${appTitle()}</b><button class="sec ic" data-a="set" aria-label="${t('settings')}">⚙</button></div>
-${it2('all','🗂',t('all'),n.length)}${it2('today','📅',t('today'),n.filter(todayP).length)}${it2('tomorrow','🌅',t('tomorrow'),n.filter(tmrP).length)}${it2('inbox','📥',t('inbox'),n.filter(x=>!x.category_id).length)}
-${cats.map(c=>it2(c.id,c.icon||'📁',esc(catName(c)),n.filter(x=>x.category_id===c.id).length)).join('')}${it2('done','✅',t('completed'))}
-${listsCard()}</aside>`;
+  return head+(drEdit?editRows(cats,'task'):`${it2('all','🗂',t('all'),n.length)}${it2('today','📅',t('today'),n.filter(todayP).length)}${it2('tomorrow','🌅',t('tomorrow'),n.filter(tmrP).length)}${it2('inbox','📥',t('inbox'),n.filter(x=>!x.category_id).length)}
+${cats.map(c=>it2(c.id,c.icon||'📁',esc(catName(c)),n.filter(x=>x.category_id===c.id).length)).join('')}${it2('done','✅',t('completed'))}`)+'</aside>';
 }
-const listsCard=(kind)=>{const arr=kind==='habit'?hlists:cats;return `<div class="card"><b>${t('lists')}</b>${arr.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(catName(c))}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="${kind==='habit'?'nlh':'nl'}">＋ ${t('addOnly')}</button></div></div>`};
 const setHTML0=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
-${listsCard()}
 <p class="meta">${esc(session.user.email)}</p><div class="top"><button class="sec" data-a="lo">${t('out')}</button></div>`;
 const LOC={zh:'zh-TW',ja:'ja-JP',en:'en-US'},WK={zh:'一二三四五六日',ja:'月火水木金土日',en:'MTWTFSS'};
 const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/>',todo:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l3 3 5-6"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',idea:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',study:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>',plan:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9.5 4a2.5 2.5 0 0 1 5 0M9 11h6M9 15h4"/>',fin:'<path d="M12 3v9h9"/><path d="M20.5 15.5A9 9 0 1 1 12 3a9 9 0 0 1 8.5 12.5z"/><path d="M15.5 3.6A8 8 0 0 1 20.4 9H15.5z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'};
@@ -518,7 +586,7 @@ function calHTML(){
   for(let d=1;d<=n;d++)cells+=cell(y,m,d,false);
   const trail=(7-(first+n)%7)%7;for(let d=1;d<=trail;d++)cells+=cell(y,m+1,d,true);
   const items=by[dk(cs)]||[],evs=items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks=items.filter(x=>!x.start_at).sort(cmp);
-  return drawer()+`<div class="caltop"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${visPriv?'✓ ':''}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${visShared?'✓ ':''}👥 ${t('shareCal')}</button><span class="sp"></span><button class="chip" data-a="share" aria-label="${t('shareMgr')}">⚙</button></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
+  return drawer()+`<div class="caltop"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${visPriv?'✓ ':''}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${visShared?'✓ ':''}👥 ${t('shareCal')}</button><span class="sp"></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
 <div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div><div class="row calrow"><button class="sec mini" data-a="ctd">${t('ctoday')}</button><select id="expsel" class="expsel mini" aria-label="${t('expSched')}"><option value="">${t('expSched')} ▾</option><option value="day">${t('shDay')}</option><option value="week">${t('shWeek')}</option><option value="month">${t('shMonth')}</option></select></div></div>
 <div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${evErr?`<p class="meta">${t('evSql')}</p>`:''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`+evCatCard()+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
 }
@@ -534,10 +602,6 @@ async function loadShare(){
       if(!m.error)calMembers=m.data||[];
     }
   }catch(_){shareErr=true}
-}
-function calChipsHTML(){
-  const chip=(on,label,v)=>`<button class="chip${on?' on':''}" data-a="calvis" data-v="${v}">${on?'✓ ':''}${label}</button>`;
-  return `<div class="chips" style="padding:0 0 10px">${chip(visPriv,'🔒 '+t('privCal'),'priv')}${shareCals.map(c=>chip(calVis[c.id]!==false,'👥 '+esc(c.name),c.id)).join('')}<button class="chip" data-a="share">⚙ ${t('shareMgr')}</button></div>`;
 }
 function openShare(){
   const dlg=$('dlg');
@@ -852,13 +916,15 @@ async function delPlan(id){
 function planHTML(){
   if(planErr)return drawer()+`<div class="card"><p class="meta">${t('planSql')}</p></div>`;
   if(planView&&planOf(planView))return planDetailHTML(planOf(planView));
-  const list=[...plans].sort((a,b)=>String(a.start_at||'9999').localeCompare(String(b.start_at||'9999'))||String(a.created_at).localeCompare(String(b.created_at)));
+  const list0=[...plans].sort((a,b)=>String(a.start_at||'9999').localeCompare(String(b.start_at||'9999'))||String(a.created_at).localeCompare(String(b.created_at)));
+  const stOf=p=>{const pr=planProg(p);return pr.ts.length&&pr.dn===pr.ts.length?'done':pr.st===t('pOver')?'over':'doing'};
+  const list=planFlt==='all'?list0:planFlt.startsWith('type:')?list0.filter(p=>p.type===planFlt.slice(5)):list0.filter(p=>stOf(p)===planFlt);
   const row=p=>{const pr=planProg(p);return `<div class="task"><div class="tt" data-a="pview" data-id="${p.id}"><b>${esc(p.title)}</b>
 <div class="meta rw"><span>${pPeriod(p)||''}</span><span>${pr.st}${pr.ts.length?` · ${pr.dn}/${pr.ts.length}`:''}</span></div>
 ${p.type||p.tag?`<div class="meta">${p.type?`<span class="tag" style="background:var(--ln)">${esc(p.type)}</span>`:''}${p.tag?`<span class="tag" style="background:var(--ln)">#${esc(p.tag)}</span>`:''}</div>`:''}
 ${p.people!=null?`<div class="meta">👥 ${p.people}</div>`:''}
 ${pr.ts.length?`<div class="pbar"><i style="width:${pr.pct}%"></i></div>`:''}</div></div>`};
-  return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><button class="pri" data-a="nplan">＋ ${t('planNew')}</button></div>`
+  return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div>`
   +(list.length?`<div class="card">${list.map(row).join('')}</div>`:`<div class="card"><p class="meta">${t('planEmpty')}</p></div>`)
   +`<button class="fab" data-a="nplan" aria-label="${t('planNew')}">＋</button>`;
 }
@@ -880,12 +946,12 @@ function finHTML(){
   const curs=[...new Set(pfin.map(f=>f.currency||'JPY'))];
   if(!curs.length)return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div><div class="card"><p class="meta">${t('planEmpty')}</p></div>`;
   const cur=finCur&&curs.includes(finCur)?finCur:curs[0];
-  const es=pfin.filter(f=>(f.currency||'JPY')===cur);
+  const es0=pfin.filter(f=>(f.currency||'JPY')===cur);
+  const es=finPlan==='all'?es0:es0.filter(f=>f.plan_id===finPlan);
   const ti=es.filter(f=>f.kind==='in').reduce((a,f)=>a+(+f.amount||0),0),to=es.filter(f=>f.kind!=='in').reduce((a,f)=>a+(+f.amount||0),0);
   const byPlan=es.map(f=>({...f,_k:(planOf(f.plan_id)||{}).title||'—'}));
-  const perPlan=plans.map(p=>{const pe=es.filter(f=>f.plan_id===p.id);if(!pe.length)return '';const pi=pe.filter(f=>f.kind==='in').reduce((a,f)=>a+(+f.amount||0),0),po=pe.filter(f=>f.kind!=='in').reduce((a,f)=>a+(+f.amount||0),0);return `<div class="task"><div class="tt" data-a="pview" data-id="${p.id}"><b>${esc(p.title)}</b><div class="meta">${t('pIn')} ${pi.toLocaleString()} · ${t('pOut')} ${po.toLocaleString()}</div></div><b>${(pi-po).toLocaleString()}</b></div>`}).join('');
+  const perPlan=(finPlan==='all'?plans:plans.filter(p=>p.id===finPlan)).map(p=>{const pe=es.filter(f=>f.plan_id===p.id);if(!pe.length)return '';const pi=pe.filter(f=>f.kind==='in').reduce((a,f)=>a+(+f.amount||0),0),po=pe.filter(f=>f.kind!=='in').reduce((a,f)=>a+(+f.amount||0),0);return `<div class="task"><div class="tt" data-a="pview" data-id="${p.id}"><b>${esc(p.title)}</b><div class="meta">${t('pIn')} ${pi.toLocaleString()} · ${t('pOut')} ${po.toLocaleString()}</div></div><b>${(pi-po).toLocaleString()}</b></div>`}).join('');
   return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div>
-<div class="chips">${curs.map(c=>`<button class="chip${c===cur?' on':''}" data-a="fincur" data-v="${c}">${c}</button>`).join('')}</div>
 <div class="card"><b>${t('finance')} · ${cur}</b><div class="finstat"><div class="stat"><span>${t('pIn')}</span><b style="color:#43A047">${ti.toLocaleString()}</b></div><div class="stat"><span>${t('pOut')}</span><b style="color:#E5484D">${to.toLocaleString()}</b></div><div class="stat"><span>${t('pBal')}</span><b>${(ti-to).toLocaleString()}</b></div></div></div>
 ${perPlan?`<div class="card"><b>${t('pByPlan')}</b>${perPlan}</div>`:''}
 ${finPie(byPlan,t('pOut')+' · '+t('pByPlan'),'out')}
@@ -948,7 +1014,7 @@ function openPlan(id){
 }
 
 const notifCard=()=>{const sup='Notification'in window,st=sup?Notification.permission:'na';return `<div class="card"><b>🔔 ${t('notifT')}</b><p class="meta">${t('notifHint')}</p>${st==='granted'?`<p class="meta">${t('notifOk')}</p>`:st==='denied'||!sup?`<p class="meta">${t('notifNo')}</p>`:`<div class="row"><button class="pri" data-a="nreq">${t('notifBtn')}</button></div>`}</div>`};
-const setHTML=()=>setHTML0().replace(listsCard(),'')+notifCard();
+const setHTML=()=>setHTML0()+notifCard();
 function pageTitle(){
   if(tab==='todo')return vname();
   if(tab==='habit'){if(hview){const hx=habits.find(x=>x.id===hview);if(hx)return esc((hx.icon||'')+' '+hx.name)}return esc(t('habits'))}
@@ -1298,11 +1364,14 @@ async function undoDelete(kind,snaps){
 $('app').addEventListener('click',async e=>{
   const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,id=b.dataset.id;
   if(a==='dr'){dr=!dr;render()}
+  else if(a==='dredit'){drEdit=!drEdit;render()}
+  else if(a==='pflt'){planFlt=b.dataset.v;planView=null;dr=false;render()}
+  else if(a==='fplan'){finPlan=b.dataset.v;dr=false;render()}
   else if(a==='nav'){view=b.dataset.v;tab='todo';dr=false;render()}
   else if(a==='hnav'){hlistView=b.dataset.v;dr=false;render()}
   else if(a==='nlh'){dr=false;render();openList('habit')}
-  else if(a==='set'){tab='set';dr=false;render()}
-  else if(a==='tab'){tab=b.dataset.v;dr=false;render()}
+  else if(a==='set'){tab='set';dr=false;drEdit=false;render()}
+  else if(a==='tab'){tab=b.dataset.v;dr=false;drEdit=false;render()}
   else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);render()}
   else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
   else if(a==='ctd'){cm=new Date();cs=new Date();render()}
@@ -1333,7 +1402,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='pedit')openPlan(id)
   else if(a==='pdel'){if(confirm(t('confirmDel'))){await delPlan(id);planView=null;render()}}
   else if(a==='ptask')await setDone(id,b.checked)
-  else if(a==='fincur'){finCur=b.dataset.v;render()}
+  else if(a==='fincur'){finCur=b.dataset.v;dr=false;render()}
   else if(a==='hfocus'){const hx=habits.find(h=>h.id===id);if(hx)openFocus(hx)}
   else if(a==='nev')openEvent()
   else if(a==='eedit')openEvent(id)
@@ -1365,7 +1434,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='cadd'){const pr=b.dataset.v.split(':');await addCourseWords([COURSE_IT[courseLvl].packs[+pr[0]].w[+pr[1]]],courseLvl,COURSE_IT[courseLvl].packs[+pr[0]].n);render()}
   else if(a==='caddall'){await addCourseWords(COURSE_IT[courseLvl].packs[+b.dataset.v].w,courseLvl,COURSE_IT[courseLvl].packs[+b.dataset.v].n);render()}
   else if(a==='nreq'){if('Notification'in window&&Notification.permission==='default'){try{await Notification.requestPermission()}catch(_){}}render()}
-  else if(a==='slang'){curLang=id;localStorage.curlang=id;studyView='home';revQ=null;quiz=null;render()}
+  else if(a==='slang'){curLang=id;localStorage.curlang=id;studyView='home';revQ=null;quiz=null;dr=false;render()}
   else if(a==='nlang')openLang()
   else if(a==='ledit')openLang(id)
   else if(a==='larc'){const L=langs.find(l=>l.id===id);if(L){const{error}=await sb.from('study_languages').update({archived:true}).eq('id',id);if(error)alert(error.message);else{L.archived=true;revQ=null;if(curLang===id){const f=langs.find(l=>!l.archived);curLang=f?f.id:null}render()}}}
@@ -1455,13 +1524,12 @@ function exportImg(kind){
   });
 }
 function studyHTML(){
-  const head='';
+  const head=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div>`;
   if(langErr)return head+`<div class="card"><p class="meta">${t('studySql')}</p></div>`;
   const act=langs.filter(l=>!l.archived),arc=langs.filter(l=>l.archived);
   const arcSec=arc.length?`<div class="card"><b>${t('arcSec')}</b>${arc.map(l=>`<div class="task"><div class="tt"><b>${esc(l.name)}</b></div><button class="sec" data-a="lunarc" data-id="${l.id}">${t('unarc')}</button></div>`).join('')}</div>`:'';
   if(!act.length)return head+`<div class="card"><p class="meta">${t('studyEmpty')}</p><div class="row"><button class="pri" data-a="nlang">＋ ${t('newLang')}</button></div></div>`+arcSec;
   const L=langs.find(l=>l.id===curLang)||act[0];curLang=L.id;
-  const chips=`<div class="chips">${act.map(l=>`<button class="chip${l.id===curLang?' on':''}" data-a="slang" data-id="${l.id}">${esc(l.name)}${l.level?' · '+esc(l.level):''}</button>`).join('')}<button class="chip" data-a="nlang">＋ ${t('newLang')}</button></div>`;
   const segItems=[['home','vHome'],['words','vWords'],['review','vReview']];if(isItLang(L))segItems.push(['course','course']);
   const seg=`<div class="pchips">${segItems.map(([v,k])=>`<button class="pchip${studyView===v?' on':''}" data-a="sview" data-v="${v}">${t(k)}</button>`).join('')}</div>`;
   const lw=words.filter(w=>w.language_id===L.id),ls=ssess.filter(s=>s.language_id===L.id),today=ymd(new Date());
@@ -1494,7 +1562,7 @@ function studyHTML(){
 <div class="card"><b>⏱ ${t('logTime')}</b><div class="pchips">${[10,15,25,45,60].map(m=>`<button class="pchip" data-a="logq" data-v="${m}">+${m} ${t('min')}</button>`).join('')}</div><div class="tbar"><input id="lg-min" type="number" min="1" max="600" placeholder="25" aria-label="${t('min')}"><button class="pri" data-a="logm">${t('logTime')}</button></div></div>
 <div class="card"><div class="row"><button class="sec" data-a="ledit" data-id="${L.id}">✎ ${t('edit')}</button><button class="sec" data-a="larc" data-id="${L.id}">${t('arc')}</button><button class="sec" data-a="ldel" data-id="${L.id}">${t('del')}</button></div></div>`;
   }
-  return head+chips+seg+main+arcSec;
+  return head+seg+main+arcSec;
 }
 function openLang(id){
   const dlg=$('dlg'),x=id?langs.find(l=>l.id===id):null;
