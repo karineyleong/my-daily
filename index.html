@@ -177,7 +177,9 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v23.1)</p></main><dialog id="dlg"></dialog>
+.ftiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 16px}.ftile{border-radius:14px;padding:12px 14px;color:#fff}.ftile span{display:block;font-size:13px;opacity:.92}.ftile b{font-size:20px}
+dialog{max-height:85dvh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}dialog label{margin-top:12px}.frow{padding:12px 0}
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v24)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -308,6 +310,9 @@ Object.assign(T.en,{fCustom:'Custom',fAlert:'End alert',fSound:'Sound',fSilent:'
 Object.assign(T.zh,{offMsg:'📴 離線中 — 顯示本機資料',addOnly:'新增'});
 Object.assign(T.ja,{offMsg:'📴 オフライン — 本機のデータを表示中',addOnly:'追加'});
 Object.assign(T.en,{offMsg:'📴 Offline — showing local data',addOnly:'Add'});
+Object.assign(T.zh,{coCal:'公司',fM:'月',fY:'年',fP:'期間',fItem:'項目別',fTotal:'合計',fAvg:'1日平均',fPer:'當期收支',fAcc:'累計收支',fYear:'年',pCustom:'自訂欄位',pCLabel:'欄位名稱',pCValue:'內容',pAddC:'新增欄位'});
+Object.assign(T.ja,{coCal:'会社',fM:'月',fY:'年',fP:'期間',fItem:'項目別',fTotal:'合計',fAvg:'1日平均',fPer:'当期収支',fAcc:'累計収支',fYear:'年',pCustom:'カスタム項目',pCLabel:'項目名',pCValue:'内容',pAddC:'項目を追加'});
+Object.assign(T.en,{coCal:'Work',fM:'Month',fY:'Year',fP:'Period',fItem:'By item',fTotal:'Total',fAvg:'Daily avg',fPer:'Net (period)',fAcc:'Net (total)',fYear:'',pCustom:'Custom fields',pCLabel:'Field name',pCValue:'Value',pAddC:'Add field'});
 Object.assign(T.zh,{lk_interest:'興趣',lk_study:'學習',lk_life:'生活',lk_family:'家庭',lk_work:'工作',plans:'計劃',finance:'收支',planNew:'新增計劃',planSql:'計劃／收支的資料表還沒建立，請先在 Supabase 執行 sql-v23.sql。',planEmpty:'還沒有進行中的計劃，按「＋新增」建立第一個。',pType:'類型',pTag:'標籤',pTasks:'任務',pLoc:'地點',pTime:'時間',pPeople:'人數',pFunds:'資金',pModules:'版塊',pPeriod:'期間',pProg:'進度',pNotStarted:'未開始',pDone:'已完成',pDoing:'進行中',pOver:'已逾期',pIn:'收入',pOut:'支出',pBal:'結餘',pContent:'內容',pCur:'貨幣',pAmt:'金額',pDate:'日期',pAddTask:'加任務',pAddFin:'加一筆',pByPlan:'按計劃',pMonth:'按月推移',pShare:'佔比',fUnit:'單位',uH:'時',uM:'分',uS:'秒',hList:'分類',shareCal:'共享',allCals:'全部'});
 Object.assign(T.ja,{lk_interest:'趣味',lk_study:'学習',lk_life:'生活',lk_family:'家庭',lk_work:'仕事',plans:'プラン',finance:'収支',planNew:'プランを追加',planSql:'プラン／収支のテーブルが未作成です。先にSupabaseで sql-v23.sql を実行してください。',planEmpty:'進行中のプランはありません。「＋追加」で最初の1つを作成。',pType:'タイプ',pTag:'タグ',pTasks:'タスク',pLoc:'場所',pTime:'時間',pPeople:'人数',pFunds:'資金',pModules:'モジュール',pPeriod:'期間',pProg:'進捗',pNotStarted:'未開始',pDone:'完了',pDoing:'進行中',pOver:'期限切れ',pIn:'収入',pOut:'支出',pBal:'残高',pContent:'内容',pCur:'通貨',pAmt:'金額',pDate:'日付',pAddTask:'タスク追加',pAddFin:'1件追加',pByPlan:'プラン別',pMonth:'月別推移',pShare:'割合',fUnit:'単位',uH:'時間',uM:'分',uS:'秒',hList:'カテゴリ',shareCal:'共有',allCals:'すべて'});
 Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_family:'Family',lk_work:'Work',plans:'Plans',finance:'Finance',planNew:'New plan',planSql:'The Plans / Finance tables are missing. Run sql-v23.sql in Supabase first.',planEmpty:'No plans yet. Tap + New to create the first one.',pType:'Type',pTag:'Tag',pTasks:'Tasks',pLoc:'Location',pTime:'Time',pPeople:'People',pFunds:'Funds',pModules:'Sections',pPeriod:'Period',pProg:'Progress',pNotStarted:'Not started',pDone:'Done',pDoing:'In progress',pOver:'Overdue',pIn:'Income',pOut:'Expense',pBal:'Balance',pContent:'Item',pCur:'Currency',pAmt:'Amount',pDate:'Date',pAddTask:'Add task',pAddFin:'Add entry',pByPlan:'By plan',pMonth:'By month',pShare:'Share',fUnit:'Unit',uH:'hr',uM:'min',uS:'sec',hList:'List',shareCal:'Shared',allCals:'All'});
@@ -352,11 +357,11 @@ let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
 let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false;
 let hlists=[],plans=[],pfin=[],planErr=false,planV23=false,habList=false,hlistView='all',planView=null,finCur=null;
-let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
-let visPriv=true,visShared=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;visShared=_v.s!==false;calVis=_v.c||{}}catch(e){}
-const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,c:calVis})};
+let drEdit=false,planFlt='doing',finPlan='all',dedupDone=false,_loadP=null;
+let visPriv=true,visShared=true,visCo=true,evScope=false,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;visShared=_v.s!==false;visCo=_v.o!==false;calVis=_v.c||{}}catch(e){}
+const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,o:visCo,c:calVis})};
 const myCal=id=>shareCals.find(c=>c.id===id),calName=id=>(myCal(id)||{}).name||'';
-const evVisible=e=>e.calendar_id?(visShared&&calVis[e.calendar_id]!==false&&!!myCal(e.calendar_id)):visPriv;
+const evVisible=e=>e.calendar_id?(visShared&&calVis[e.calendar_id]!==false&&!!myCal(e.calendar_id)):(e.scope==='company'?visCo:visPriv);
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
 const T0=d=>d?+new Date(d):1e18;
 const cmp=(a,b)=>(b.importance-a.importance)||(T0(a.due_at)-T0(b.due_at))||(a.created_at<b.created_at?-1:1);
@@ -441,6 +446,7 @@ async function loadDataImpl(){
   }catch(_){}
   try{const _pp=await sb.from('tasks').select('plan_id').limit(1);const _pe=await sb.from('events').select('plan_id').limit(1);planV23=!_pp.error&&!_pe.error}catch(_){planV23=false}
   try{const _pl2=await sb.from('habits').select('list_id').limit(1);habList=!_pl2.error}catch(_){habList=false}
+  try{const _sc=await sb.from('events').select('scope').limit(1);evScope=!_sc.error}catch(_){evScope=false}
   try{
     const pl=await sb.from('plans').select('*').order('created_at');
     planErr=!!pl.error;plans=pl.error?[]:pl.data;
@@ -490,17 +496,16 @@ function drawer(){
   // v23.1: one drawer per page — only controls relevant to that page. List management lives
   // ONLY here, in the ✎ edit mode of the todo/habit drawers (nav rows ARE the lists).
   const it=(a,v,ic,nm,cnt,on)=>`<button class="di${on?' on':''}" data-a="${a}" data-v="${v}"><span class="ic2">${ic}</span><span class="nm">${nm}</span><i>${cnt||''}</i></button>`;
-  const head=`<div class="ov${dr?' op':''}" data-a="dr"></div><aside class="dr${dr?' op':''}" aria-label="${t('menu')}"><div class="dh"><b>${appTitle()}</b>${(tab==='todo'||tab==='habit')?`<button class="sec ic" data-a="dredit" aria-label="${t('edit')}">${drEdit?'✓':'✎'}</button>`:''}</div>`;
-  const editRows=(arr,kind)=>arr.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(catName(c))}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')+`<div class="row"><button class="sec" data-a="${kind==='habit'?'nlh':'nl'}">＋ ${t('addOnly')}</button></div>`;
+  const head=`<div class="ov${dr?' op':''}" data-a="dr"></div><aside class="dr${dr?' op':''}" aria-label="${t('menu')}"><div class="dh"><b>${appTitle()}</b>${(tab==='todo'||tab==='habit'||tab==='cal')?`<button class="sec ic" data-a="dredit" aria-label="${t('edit')}">${drEdit?'✓':'✎'}</button>`:''}</div>`;
+  const editRows=(arr,kind)=>arr.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(catName(c))}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')+`<div class="row"><button class="sec" data-a="${kind==='habit'?'nlh':kind==='event'?'nle':'nl'}">＋ ${t('addOnly')}</button></div>`;
   if(tab==='habit'){
     const act=habits.filter(h=>!h.archived);
     return head+(drEdit?editRows(hlists,'habit'):`${it('hnav','all','🗂',t('all'),act.length,hlistView==='all')}${hlists.map(c=>it('hnav',c.id,c.icon||'📁',esc(catName(c)),act.filter(h=>h.list_id===c.id).length,hlistView===c.id)).join('')}`)+'</aside>';
   }
   if(tab==='cal'){
     const chip=(on,label,v)=>`<button class="di${on?' on':''}" data-a="calvis" data-v="${v}"><span class="ic2">${on?'✓':'○'}</span><span class="nm">${label}</span></button>`;
-    return head+chip(visPriv,'🔒 '+t('privCal'),'priv')+chip(visShared,'👥 '+t('shareCal'),'shared')
-      +shareCals.map(c=>chip(calVis[c.id]!==false,'👥 '+esc(c.name),c.id)).join('')
-      +`<button class="di" data-a="share"><span class="ic2">⚙</span><span class="nm">${t('shareMgr')}</span></button></aside>`;
+    return head+(drEdit?editRows(ecats,'event'):shareCals.map(c=>chip(calVis[c.id]!==false,'👥 '+esc(c.name),c.id)).join('')
+      +`<button class="di" data-a="share"><span class="ic2">⚙</span><span class="nm">${t('shareMgr')}</span></button>`)+'</aside>';
   }
   if(tab==='plan'){
     const stOf=p=>{const pr=planProg(p);return pr.ts.length&&pr.dn===pr.ts.length?'done':pr.st===t('pOver')?'over':'doing'};
@@ -549,7 +554,7 @@ const hm=d=>new Date(d).toLocaleTimeString(LOC[lang],{hour:'2-digit',minute:'2-d
 function evRow(e){
   const c=ecats.find(x=>x.id===e.category_id),map=e.location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}`:'';
   const _ro=e.calendar_id&&myCal(e.calendar_id)&&myCal(e.calendar_id).role==='viewer';
-  const _h=`<div class="task ev" style="--hc:${esc(c&&c.color||'#8FA382')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}"><b>${esc(e.title||'')}</b><div class="meta rw"><span>${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}</span><span>${c?esc((c.icon||'')+' '+c.name):''}</span>${e.repeat_kind&&e.repeat_kind!=='none'?'<span>🔁</span>':''}${e.calendar_id&&calName(e.calendar_id)?`<span>👥 ${esc(calName(e.calendar_id))}</span>`:''}${e.plan_id&&planOf(e.plan_id)?`<span class="ptag">🗂 ${t('plan')}</span>`:''}</div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}${e.url&&safeLink(e.url)?`<a class="go" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener" aria-label="URL">🔗</a>`:''}</div>`;
+  const _h=`<div class="task ev" style="--hc:${esc(c&&c.color||'#8FA382')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}"><b>${esc(e.title||'')}</b><div class="meta rw"><span>${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}</span><span>${c?esc((c.icon||'')+' '+c.name):''}</span>${e.repeat_kind&&e.repeat_kind!=='none'?'<span>🔁</span>':''}${e.calendar_id&&calName(e.calendar_id)?`<span>👥 ${esc(calName(e.calendar_id))}</span>`:''}${!e.calendar_id&&e.scope==='company'?`<span>🏢 ${t('coCal')}</span>`:''}${e.plan_id&&planOf(e.plan_id)?`<span class="ptag">🗂 ${t('plan')}</span>`:''}</div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}${e.url&&safeLink(e.url)?`<a class="go" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener" aria-label="URL">🔗</a>`:''}</div>`;
   return _ro?_h:swpWrap('event',e.id,_h);
 }
 function calHTML(){
@@ -586,9 +591,9 @@ function calHTML(){
   for(let d=1;d<=n;d++)cells+=cell(y,m,d,false);
   const trail=(7-(first+n)%7)%7;for(let d=1;d<=trail;d++)cells+=cell(y,m+1,d,true);
   const items=by[dk(cs)]||[],evs=items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks=items.filter(x=>!x.start_at).sort(cmp);
-  return drawer()+`<div class="caltop"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${visPriv?'✓ ':''}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${visShared?'✓ ':''}👥 ${t('shareCal')}</button><span class="sp"></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
+  return drawer()+`<div class="caltop"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${visPriv?'✓ ':''}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${visShared?'✓ ':''}👥 ${t('shareCal')}</button>${evScope?`<button class="chip${visCo?' on':''}" data-a="calvis" data-v="co">${visCo?'✓ ':''}🏢 ${t('coCal')}</button>`:''}<span class="sp"></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
 <div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div><div class="row calrow"><button class="sec mini" data-a="ctd">${t('ctoday')}</button><select id="expsel" class="expsel mini" aria-label="${t('expSched')}"><option value="">${t('expSched')} ▾</option><option value="day">${t('shDay')}</option><option value="week">${t('shWeek')}</option><option value="month">${t('shMonth')}</option></select></div></div>
-<div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${evErr?`<p class="meta">${t('evSql')}</p>`:''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`+evCatCard()+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
+<div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${evErr?`<p class="meta">${t('evSql')}</p>`:''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
 }
 async function loadShare(){
   shareCals=[];calMembers=[];shareErr=false;
@@ -767,7 +772,7 @@ function openEvent(id){
   const L0=toL(x.start_at),L1=x.end_at?toL(x.end_at):L0;
   dlg.innerHTML=`<textarea id="e-t" rows="1" maxlength="100" style="font-size:20px;font-weight:700" placeholder="${t('evTitle')}" aria-label="${t('evTitle')}">${esc(x.title||'')}</textarea>
 <div class="frow"><span>🏷 ${t('cat')}</span><select id="e-c" aria-label="${t('cat')}"><option value="">${t('noCat')}</option>${ecats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc((c.icon||'')+' '+c.name)}</option>`).join('')}</select></div>
-${shareErr?'':`<div class="frow"><span>👥 ${t('whichCal')}</span><select id="e-cal" aria-label="${t('whichCal')}"><option value="">🔒 ${t('privCal')}</option>${shareCals.filter(c=>c.role==='owner'||c.role==='editor').map(c=>`<option value="${c.id}"${x.calendar_id===c.id?' selected':''}>👥 ${esc(c.name)}</option>`).join('')}${x.calendar_id&&!shareCals.some(c=>c.id===x.calendar_id&&(c.role==='owner'||c.role==='editor'))?`<option value="${x.calendar_id}" selected>👥 ${esc(calName(x.calendar_id))}</option>`:''}</select></div>`}
+${shareErr?'':`<div class="frow"><span>👥 ${t('whichCal')}</span><select id="e-cal" aria-label="${t('whichCal')}"><option value="">🔒 ${t('privCal')}</option>${evScope?`<option value="co"${x.scope==='company'&&!x.calendar_id?' selected':''}>🏢 ${t('coCal')}</option>`:''}${shareCals.filter(c=>c.role==='owner'||c.role==='editor').map(c=>`<option value="${c.id}"${x.calendar_id===c.id?' selected':''}>👥 ${esc(c.name)}</option>`).join('')}${x.calendar_id&&!shareCals.some(c=>c.id===x.calendar_id&&(c.role==='owner'||c.role==='editor'))?`<option value="${x.calendar_id}" selected>👥 ${esc(calName(x.calendar_id))}</option>`:''}</select></div>`}
 <div class="frow"><span>${t('allDay')}</span><input type="checkbox" id="e-a" class="sw"${x.all_day?' checked':''} aria-label="${t('allDay')}"></div>
 <div class="frow"><span>${t('start')}</span><span class="dt"><input type="date" id="e-sd" value="${L0.slice(0,10)}" aria-label="${t('start')}"><input type="time" id="e-st" value="${L0.slice(11,16)}"></span></div>
 <div class="frow"><span>${t('end')}</span><span class="dt"><input type="date" id="e-ed" value="${L1.slice(0,10)}" aria-label="${t('end')}"><input type="time" id="e-et" value="${L1.slice(11,16)}"></span></div>
@@ -808,7 +813,7 @@ ${shareErr?'':`<div class="frow"><span>👥 ${t('whichCal')}</span><select id="e
     const rl=[...remList].sort((a,b)=>a-b),rMin=rl.length?rl[0]:null;
     if(rl.length&&'Notification'in window&&Notification.permission==='default'){try{Notification.requestPermission()}catch(_){}}
     const v={title,start_at:st.toISOString(),end_at:en&&en>=st?en.toISOString():null,all_day:ad,location:$('e-l').value.trim()||null,url:$('e-u').value.trim()||null,repeat_kind:$('e-rp').value,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:rMin,remind_at:rMin==null?null:new Date(+st-rMin*6e4).toISOString(),place_phone:(window._place&&window._place.phone)||null,place_hours:(window._place&&window._place.hours)||null};
-    if(evV20){v.remind_list=rl.length?rl:null;if(!shareErr)v.calendar_id=$('e-cal')?($('e-cal').value||null):(x.calendar_id||null)}
+    if(evV20){v.remind_list=rl.length?rl:null;if(!shareErr){const cv=$('e-cal')?$('e-cal').value:(x.scope==='company'&&!x.calendar_id?'co':(x.calendar_id||''));v.calendar_id=(cv&&cv!=='co')?cv:null;if(evScope)v.scope=cv==='co'?'company':null}}
     if(id){const{error}=await sb.from('events').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('events').insert(v).select().single();if(error)return alert(error.message);events.push(data);cs=new Date(st)}
     dlg.close();render();
@@ -826,41 +831,6 @@ ${shareErr?'':`<div class="frow"><span>👥 ${t('whichCal')}</span><select id="e
 function loadGk(cb){if(window.google&&google.maps&&google.maps.places)return cb();if(window._gkL)return;window._gkL=true;const sc=document.createElement('script');sc.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(localStorage.gk||'')+'&libraries=places';sc.onload=()=>cb();document.head.appendChild(sc)}
 function dayItems(d){const out=[];events.forEach(e=>{if(occursOn(e,d))out.push({t:+new Date(e.start_at),s:(e.all_day?'':hm(e.start_at)+' ')+(e.title||'')+(e.location?' 📍'+e.location:'')+(e.place_phone?' 📞'+e.place_phone:'')})});tasks.forEach(x=>{if(x.due_at&&!x.done&&+sod(x.due_at)===+sod(d))out.push({t:+new Date(x.due_at),s:'・'+(x.icon?x.icon+' ':'')+x.title})});return out.sort((a,b)=>a.t-b.t).map(o=>o.s)}
 function occursOn(e,d){const st=sod(e.start_at),en=sod(e.end_at||e.start_at),dd=sod(d),kind=e.repeat_kind||'none';if(kind==='none')return dd>=st&&dd<=en;if(dd<st)return false;const dur=Math.round((en-st)/864e5);let cur=new Date(st),g=0;const step=c=>{const n=new Date(c);if(kind==='daily')n.setDate(n.getDate()+1);else if(kind==='weekly')n.setDate(n.getDate()+7);else if(kind==='monthly')n.setMonth(n.getMonth()+1);else if(kind==='yearly')n.setFullYear(n.getFullYear()+1);return n};while(cur<=dd&&g++<900){if(dd>=cur&&dd<=new Date(+cur+dur*864e5))return true;cur=step(cur)}return false}
-const evCatCard=()=>`<div class="card"><b>${t('evCats')}</b>${ecats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="nle">＋ ${t('newEvCat')}</button></div></div>`;
-const MMW=148,MMH=46,MGAP=16,MLEVEL=178;
-function mmTree(){const byP=new Map();mapIdeas().forEach(i=>{const k=i.parent_id||'';if(!byP.has(k))byP.set(k,[]);byP.get(k).push(i)});const srt=a=>a.sort(srtIdeas);const build=i=>({i,kids:srt(byP.get(i.id)||[]).map(build)});return srt(byP.get('')||[]).map(build)}
-function mmLayout(){const roots=mmTree(),R=roots.filter((_,x)=>x%2===0),L=roots.filter((_,x)=>x%2===1);const meas=n=>{n.u=n.kids.length?n.kids.reduce((a,k)=>a+meas(k),0):1;return n.u};roots.forEach(meas);const nodes=[],edges=[];const place=(n,x,yT,dir,p)=>{const hgt=n.u*(MMH+MGAP)-MGAP;n.cx=x;n.cy=yT+hgt/2;const _ov=mmPos[n.i.id];if(_ov){n.cx=_ov.x;n.cy=_ov.y}nodes.push(n);edges.push([p,n,dir]);let cy=yT;n.kids.forEach(k=>{place(k,x+dir*MLEVEL,cy,dir,n);cy+=k.u*(MMH+MGAP)})};const totR=R.reduce((a,n)=>a+n.u,0),totL=L.reduce((a,n)=>a+n.u,0),tot=Math.max(totR,totL,1);const H=tot*(MMH+MGAP)+56,cyC=H/2;const dep=n=>1+(n.kids.length?Math.max(...n.kids.map(dep)):0);const mR=R.reduce((a,n)=>Math.max(a,dep(n)),0),mL=L.reduce((a,n)=>Math.max(a,dep(n)),0);const rootX=24+mL*MLEVEL+MMW/2;let y=cyC-(totR*(MMH+MGAP)-MGAP)/2;R.forEach(n=>{place(n,rootX+MLEVEL,y,1,null);y+=n.u*(MMH+MGAP)});y=cyC-(totL*(MMH+MGAP)-MGAP)/2;L.forEach(n=>{place(n,rootX-MLEVEL,y,-1,null);y+=n.u*(MMH+MGAP)});const W=rootX+mR*MLEVEL+MMW/2+24;return{nodes,edges,W,H,rootX,cyC}}
-function mmHTML(){
-  if(!mapIdeas().length)return `<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`;
-  const{nodes,edges,W,H,rootX,cyC}=mmLayout();
-  const paths=edges.map(([p,n,dir])=>{const x1=p?p.cx+dir*MMW/2:rootX,y1=p?p.cy:cyC,x2=n.cx-dir*MMW/2,y2=n.cy,mx=(x1+x2)/2;return `<path d="M${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}" stroke="${esc(n.i.color||'#D9A441')}" stroke-width="2.5" fill="none" opacity=".5"/>`}).join('');
-  const center=`<button class="mmroot" style="left:${rootX}px;top:${cyC}px" data-a="nidea">${t('brainstorm')}</button>`;
-  const ns=nodes.map(n=>`<button class="mmnode${n.i.parent_id?'':' mmL1'}" style="left:${n.cx}px;top:${n.cy}px;--ic:${esc(n.i.color||'#D9A441')}" data-a="node" data-id="${n.i.id}">${esc(n.i.title||'')}</button>`).join('');
-  return `<div class="mmwrap" id="mmw"><span class="mmvt"><button class="segbtn on" data-a="iview" data-v="map">${t('mapV')}</button><button class="segbtn" data-a="iview" data-v="list">${t('listV')}</button></span><div class="mm" style="width:${W}px;height:${H}px"><svg width="${W}" height="${H}">${paths}</svg>${center}${ns}</div></div>`;
-}
-function openNode(id){
-  const x=ideas.find(i=>i.id===id);if(!x)return;const dlg=$('dlg');
-  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${esc(x.title||'')}</h3>${x.body?`<p class="meta" style="white-space:pre-wrap">${esc(x.body)}</p>`:''}<div class="acts"><button class="sec" id="n-e">${t('edit')}</button><button class="sec" id="n-c">＋ ${t('mmChild')}</button><button class="sec" id="n-col">🎨 ${t('color')}</button><button class="sec" id="n-u">⬆ ${t('mvUp')}</button><button class="sec" id="n-dn">⬇ ${t('mvDn')}</button><button class="sec" id="n-t">✓ ${t('toTodo')}</button><button class="sec" id="n-d">${t('del')}</button></div><div class="acts"><button class="pri" id="n-x">${t('cancel')}</button></div>`;
-  if(!dlg.open)dlg.showModal();
-  $('n-x').onclick=()=>dlg.close();
-  $('n-e').onclick=()=>openIdea(id);
-  $('n-u').onclick=()=>moveNode(id,-1);
-  $('n-dn').onclick=()=>moveNode(id,1);
-  $('n-t').onclick=async()=>{const{data,error}=await sb.from('tasks').insert({title:x.title||(x.body||'').slice(0,40),note:x.body||null}).select().single();if(error)return alert(error.message);tasks.push(data);dlg.close();say(t('addedTodo'))};
-  $('n-c').onclick=()=>openIdea(null,id);
-  $('n-col').onclick=async()=>{const cs=['#8A2A21','#D9A441','#8FA382','#4A7FB5','#B5654D','#6B7F5E','#7A6AAE','#C2849A'];const nx=cs[(cs.indexOf(x.color||'#D9A441')+1)%cs.length];const{error}=await sb.from('ideas').update({color:nx}).eq('id',id);if(error)return alert(error.message);x.color=nx;dlg.close();render()};
-  $('n-d').onclick=async()=>{if(!confirm(t('mmDel')))return;const ids=[];const col=iid=>{ids.push(iid);ideas.filter(z=>z.parent_id===iid).forEach(z=>col(z.id))};col(id);const{error}=await sb.from('ideas').delete().in('id',ids);if(error)return alert(error.message);for(let k=ideas.length-1;k>=0;k--)if(ids.includes(ideas[k].id))ideas.splice(k,1);dlg.close();render()};
-}
-function ideaHTML(){
-  const list=[...mapIdeas()].sort((a,b)=>a.created_at<b.created_at?1:-1);
-  const tog=`<span class="seg"><button class="segbtn${iview==='map'?' on':''}" data-a="iview" data-v="map">${t('mapV')}</button><button class="segbtn${iview==='list'?' on':''}" data-a="iview" data-v="list">${t('listV')}</button></span>`;
-  let main;
-  if(ideaErr)main=`<div class="card"><p class="meta">${t('ideaSql')}</p></div>`;
-  else if(iview==='map')main=mmHTML();
-  else{const flat=[];const walk=(n,d)=>{flat.push([n.i,d]);n.kids.forEach(k=>walk(k,d+1))};mmTree().forEach(n=>walk(n,0));main=`<div style="display:flex;justify-content:flex-end;margin-bottom:8px">${tog}</div>`+(flat.length?`<div class="card">${flat.map(([i,d])=>`<div class="trow" style="padding-left:${8+d*20}px" data-a="node" data-id="${i.id}"><span class="dot" style="background:${esc(i.color||'#D9A441')}"></span><b>${esc(i.title||'')}</b><span class="meta">${i.body?esc(i.body.slice(0,34)):''}</span></div>`).join('')}</div>`:`<div class="card"><p class="meta">${t('ideaEmpty')}</p></div>`)}
-  return main+(ideaErr?'':`<button class="fab" data-a="nidea" aria-label="${t('newIdea')}">＋</button>`);
-}
-
 // ================= v23: Plans + Finance =================
 const PIE_COLORS=['#1E88E5','#E5484D','#F5A524','#43A047','#7A6AAE','#4A7FB5','#C2849A','#8FA382'];
 const finOf=pid=>pfin.filter(f=>f.plan_id===pid);
@@ -921,8 +891,6 @@ function planHTML(){
   const list=planFlt==='all'?list0:planFlt.startsWith('type:')?list0.filter(p=>p.type===planFlt.slice(5)):list0.filter(p=>stOf(p)===planFlt);
   const row=p=>{const pr=planProg(p);return `<div class="task"><div class="tt" data-a="pview" data-id="${p.id}"><b>${esc(p.title)}</b>
 <div class="meta rw"><span>${pPeriod(p)||''}</span><span>${pr.st}${pr.ts.length?` · ${pr.dn}/${pr.ts.length}`:''}</span></div>
-${p.type||p.tag?`<div class="meta">${p.type?`<span class="tag" style="background:var(--ln)">${esc(p.type)}</span>`:''}${p.tag?`<span class="tag" style="background:var(--ln)">#${esc(p.tag)}</span>`:''}</div>`:''}
-${p.people!=null?`<div class="meta">👥 ${p.people}</div>`:''}
 ${pr.ts.length?`<div class="pbar"><i style="width:${pr.pct}%"></i></div>`:''}</div></div>`};
   return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div>`
   +(list.length?`<div class="card">${list.map(row).join('')}</div>`:`<div class="card"><p class="meta">${t('planEmpty')}</p></div>`)
@@ -934,52 +902,85 @@ function planDetailHTML(p){
   const info=[M.type&&p.type?`<div class="meta">${t('pType')}：${esc(p.type)}${p.tag?' · #'+esc(p.tag):''}</div>`:'',
     M.time&&pPeriod(p)?`<div class="meta">🗓 ${pPeriod(p)}</div>`:'',
     M.loc&&p.location?`<div class="meta">📍 ${esc(p.location)}</div>`:'',
-    M.people&&p.people!=null?`<div class="meta">👥 ${p.people}</div>`:''].join('');
+    M.people&&p.people!=null?`<div class="meta">👥 ${p.people}</div>`:'',
+    M.custom&&Array.isArray(M.cf)?M.cf.map(a=>`<div class="meta">${esc(a.k)}：${esc(a.v)}</div>`).join(''):''].join('');
   return drawer()+`<div class="hd"><span><button class="sec ic" data-a="pback" aria-label="‹">‹</button> <button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button></span><span class="meta">${pr.st}${pr.ts.length?` · ${pr.dn}/${pr.ts.length} · ${pr.pct}%`:''}</span></div>
 <div class="card"><b style="font-size:19px">${esc(p.title)}</b>${info}${pr.ts.length?`<div class="pbar"><i style="width:${pr.pct}%"></i></div>`:''}</div>
 ${M.tasks?`<div class="card"><b>${t('pTasks')}</b>${ts.length?ts.map(x=>`<div class="task"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="ptask" data-id="${x.id}"${x.done?' checked':''}><div class="tt"><b>${esc(x.title)}</b>${x.due_at?`<div class="meta">${fmt(x.due_at)}</div>`:''}</div></div>`).join(''):`<p class="meta">—</p>`}</div>`:''}
 ${M.funds?`<div class="card"><b>${t('pFunds')}</b>${fes.length?fes.map(f=>`<div class="task"><span class="tag" style="background:${f.kind==='in'?'#E3F2E6':'#FDE8E8'}">${f.kind==='in'?t('pIn'):t('pOut')}</span><div class="tt"><b>${esc(f.content||'')}</b><div class="meta">${esc(f.entry_date||'')}</div></div><b>${(+f.amount||0).toLocaleString()} ${esc(f.currency||'JPY')}</b></div>`).join(''):`<p class="meta">—</p>`}</div>${curs.map(c=>finPie(fes.filter(f=>(f.currency||'JPY')===c).map(f=>({...f,_k:f.content||'—'})),t('pOut')+' · '+c,'out')).join('')}`:''}
 <div class="card"><div class="row"><button class="sec" data-a="pedit" data-id="${p.id}">✎ ${t('edit')}</button><button class="sec" data-a="pdel" data-id="${p.id}">${t('del')}</button></div></div>`;
 }
+$('app').addEventListener('change',e=>{const i=e.target.id;if(i==='fp0'){finP0=e.target.value;render()}else if(i==='fp1'){finP1=e.target.value;render()}});
+let finMode='m',finRef=new Date(),finP0='',finP1='',finKind='out',finSub='plan';
+const fD=f=>new Date((f.entry_date||'1970-01-01')+'T00:00');
+const fSum=(es,k)=>es.filter(f=>k==='in'?f.kind==='in':f.kind!=='in').reduce((x,f)=>x+(+f.amount||0),0);
+function finRange(){
+  const r=finRef;let a,b,lb='';
+  if(finMode==='y'){a=new Date(r.getFullYear(),0,1);b=new Date(r.getFullYear()+1,0,1);lb=r.getFullYear()+t('fYear')}
+  else if(finMode==='p'){a=finP0?new Date(finP0+'T00:00'):new Date(r.getFullYear(),r.getMonth(),1);b=finP1?new Date(+new Date(finP1+'T00:00')+864e5):new Date(a.getFullYear(),a.getMonth()+1,1)}
+  else{a=new Date(r.getFullYear(),r.getMonth(),1);b=new Date(r.getFullYear(),r.getMonth()+1,1);lb=a.toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}
+  return{a,b,lb};
+}
+function finTrend(es0,a,b){
+  const days=Math.max(1,Math.round((b-a)/864e5)),mon=finMode==='y'||days>62,bk=[];
+  if(mon){const c=new Date(a.getFullYear(),a.getMonth(),1);while(c<b&&bk.length<240){bk.push({s:new Date(c),e:new Date(c.getFullYear(),c.getMonth()+1,1),l:String(c.getMonth()+1)});c.setMonth(c.getMonth()+1)}}
+  else for(let d=new Date(a);d<b;d.setDate(d.getDate()+1))bk.push({s:new Date(d),e:new Date(+d+864e5),l:String(d.getDate())});
+  if(!bk.length)return '';
+  let run=es0.filter(f=>fD(f)<a).reduce((x,f)=>x+(f.kind==='in'?1:-1)*(+f.amount||0),0);
+  const ins=[],outs=[],cum=[];
+  bk.forEach(k=>{const es=es0.filter(f=>{const d=fD(f);return d>=k.s&&d<k.e&&d>=a&&d<b}),i=fSum(es,'in'),o=fSum(es,'out');ins.push(i);outs.push(o);run+=i-o;cum.push(run)});
+  const W=320,H=150,P=6,n=bk.length,bw=(W-2*P)/n,mx=Math.max(1,...ins,...outs),cmn=Math.min(0,...cum),cr=(Math.max(0,...cum)-cmn)||1;
+  const bars=bk.map((_,i)=>{const x=P+i*bw,hi=ins[i]/mx*(H-16),ho=outs[i]/mx*(H-16);return `<rect x="${(x+bw*.1).toFixed(1)}" y="${(H-hi).toFixed(1)}" width="${(bw*.4).toFixed(1)}" height="${hi.toFixed(1)}" fill="#43A047"/><rect x="${(x+bw*.5).toFixed(1)}" y="${(H-ho).toFixed(1)}" width="${(bw*.4).toFixed(1)}" height="${ho.toFixed(1)}" fill="#E5484D"/>`}).join('');
+  const pts=cum.map((v,i)=>`${(P+i*bw+bw/2).toFixed(1)},${(H-(v-cmn)/cr*(H-16)).toFixed(1)}`).join(' ');
+  const xl=[...new Set([0,Math.floor((n-1)/2),n-1])].map(i=>`<text x="${(P+i*bw+bw/2).toFixed(1)}" y="${H+13}" font-size="9" text-anchor="middle" fill="currentColor" opacity=".6">${bk[i].l}</text>`).join('');
+  return `<svg viewBox="0 0 ${W} ${H+18}" width="100%" role="img" aria-label="${t('pMonth')}">${bars}<polyline points="${pts}" fill="none" stroke="#F2A93B" stroke-width="2"/>${xl}</svg>`;
+}
 function finHTML(){
   if(planErr)return drawer()+`<div class="card"><p class="meta">${t('planSql')}</p></div>`;
-  const curs=[...new Set(pfin.map(f=>f.currency||'JPY'))];
-  if(!curs.length)return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div><div class="card"><p class="meta">${t('planEmpty')}</p></div>`;
-  const cur=finCur&&curs.includes(finCur)?finCur:curs[0];
-  const es0=pfin.filter(f=>(f.currency||'JPY')===cur);
-  const es=finPlan==='all'?es0:es0.filter(f=>f.plan_id===finPlan);
-  const ti=es.filter(f=>f.kind==='in').reduce((a,f)=>a+(+f.amount||0),0),to=es.filter(f=>f.kind!=='in').reduce((a,f)=>a+(+f.amount||0),0);
-  const byPlan=es.map(f=>({...f,_k:(planOf(f.plan_id)||{}).title||'—'}));
-  const perPlan=(finPlan==='all'?plans:plans.filter(p=>p.id===finPlan)).map(p=>{const pe=es.filter(f=>f.plan_id===p.id);if(!pe.length)return '';const pi=pe.filter(f=>f.kind==='in').reduce((a,f)=>a+(+f.amount||0),0),po=pe.filter(f=>f.kind!=='in').reduce((a,f)=>a+(+f.amount||0),0);return `<div class="task"><div class="tt" data-a="pview" data-id="${p.id}"><b>${esc(p.title)}</b><div class="meta">${t('pIn')} ${pi.toLocaleString()} · ${t('pOut')} ${po.toLocaleString()}</div></div><b>${(pi-po).toLocaleString()}</b></div>`}).join('');
-  return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div>
-<div class="card"><b>${t('finance')} · ${cur}</b><div class="finstat"><div class="stat"><span>${t('pIn')}</span><b style="color:#43A047">${ti.toLocaleString()}</b></div><div class="stat"><span>${t('pOut')}</span><b style="color:#E5484D">${to.toLocaleString()}</b></div><div class="stat"><span>${t('pBal')}</span><b>${(ti-to).toLocaleString()}</b></div></div></div>
-${perPlan?`<div class="card"><b>${t('pByPlan')}</b>${perPlan}</div>`:''}
-${finPie(byPlan,t('pOut')+' · '+t('pByPlan'),'out')}
-${finPie(byPlan,t('pIn')+' · '+t('pByPlan'),'in')}
-${finBars(es)}`;
+  const curs=[...new Set(pfin.map(f=>f.currency||'JPY'))],cur=finCur&&curs.includes(finCur)?finCur:(curs[0]||'JPY');
+  const{a,b,lb}=finRange(),es0=pfin.filter(f=>(f.currency||'JPY')===cur&&(finPlan==='all'||f.plan_id===finPlan));
+  const es=es0.filter(f=>{const d=fD(f);return d>=a&&d<b}),ti=fSum(es,'in'),to=fSum(es,'out');
+  const days=Math.max(1,Math.round((b-a)/864e5)),acc=es0.filter(f=>fD(f)<b).reduce((x,f)=>x+(f.kind==='in'?1:-1)*(+f.amount||0),0);
+  const sg=(m,k)=>`<button class="segbtn${finMode===m?' on':''}" data-a="fmode" data-v="${m}">${t(k)}</button>`;
+  const sb2=(cur2,act,v,k)=>`<button class="segbtn${cur2===v?' on':''}" data-a="${act}" data-v="${v}">${t(k)}</button>`;
+  const head=`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="seg">${sg('m','fM')}${sg('y','fY')}${sg('p','fP')}</span></div>`;
+  const nav=finMode==='p'?`<div class="frow"><input type="date" id="fp0" value="${finP0||ymd(a)}" style="width:auto;margin:0" aria-label="${t('start')}"><span>–</span><input type="date" id="fp1" value="${finP1||ymd(new Date(+b-864e5))}" style="width:auto;margin:0" aria-label="${t('end')}"></div>`:`<div class="cm"><button class="sec ic" data-a="fnav" data-v="-1" aria-label="‹">‹</button><b>${lb}</b><button class="sec ic" data-a="fnav" data-v="1" aria-label="›">›</button></div>`;
+  const sub=`<div class="frow"><span class="seg">${sb2(finKind,'fkind','out','pOut')}${sb2(finKind,'fkind','in','pIn')}</span><span class="seg">${sb2(finSub,'fsub','plan','pByPlan')}${sb2(finSub,'fsub','item','fItem')}</span></div>`;
+  const keyed=es.map(f=>({...f,_k:finSub==='plan'?((planOf(f.plan_id)||{}).title||'—'):(f.content||'—')}));
+  const tile=(c,l,v)=>`<div class="ftile" style="background:${c}"><span>${l}</span><b>${v.toLocaleString()}</b></div>`;
+  const tot=finKind==='in'?ti:to;
+  return drawer()+head+`<div class="card">${nav}${sub}${es.length?`<p class="meta" style="margin:8px 0 0"><b>${t('fTotal')}: ${tot.toLocaleString()} ${cur}</b>${finKind==='out'?`　${t('fAvg')}: ${Math.round(to/days).toLocaleString()}`:''}</p>`:`<p class="meta">${t('planEmpty')}</p>`}</div>`
+    +(es.length?finPie(keyed,(finKind==='in'?t('pIn'):t('pOut'))+' · '+cur,finKind):'')
+    +`<div class="card"><b>${t('pMonth')}</b>${finTrend(es0,a,b)}<p class="meta">🟩 ${t('pIn')}　🟥 ${t('pOut')}　🟧 ${t('fAcc')}</p></div>`
+    +`<div class="ftiles">${tile('#5CB874',t('pIn'),ti)}${tile('#E0605A',t('pOut'),to)}${tile('#5B8DEF',t('fPer'),ti-to)}${tile('#F2A93B',t('fAcc'),acc)}</div>`;
 }
+
 function openPlan(id){
   const dlg=$('dlg'),x=id?plans.find(p=>p.id===id):null;
-  const M=Object.assign({type:1,tasks:1,loc:1,time:1,people:0,funds:1},x&&x.modules?x.modules:{});
+  const M=Object.assign({type:1,tasks:1,loc:1,time:1,people:0,funds:1,custom:0},x&&x.modules?x.modules:{});
   let pTasks=id?tasks.filter(z=>z.plan_id===id).map(z=>({...z})):[];
   let pFin=id?finOf(id).map(f=>({...f})):[];
-  const modDefs=[['type','pType'],['tasks','pTasks'],['loc','pLoc'],['time','pTime'],['people','pPeople'],['funds','pFunds']];
+  let pCF=(x&&x.modules&&Array.isArray(x.modules.cf))?x.modules.cf.map(a=>({...a})):[];
+  const modDefs=[['type','pType'],['tasks','pTasks'],['loc','pLoc'],['time','pTime'],['people','pPeople'],['funds','pFunds'],['custom','pCustom']];
   dlg.innerHTML=`<label>${t('pModules')}</label><div class="modsw">${modDefs.map(([k,lk])=>`<button type="button" class="pchip${M[k]?' on':''}" data-mod="${k}">${t(lk)}</button>`).join('')}</div>
 <textarea id="p-t" rows="1" maxlength="60" placeholder="${t('title')}" aria-label="${t('title')}">${esc(x?x.title:'')}</textarea>
-<div id="w-type"><div class="tbar"><input id="p-type" type="text" maxlength="20" placeholder="${t('pType')}" value="${esc(x&&x.type||'')}"><input id="p-tag" type="text" maxlength="20" placeholder="${t('pTag')}" value="${esc(x&&x.tag||'')}"></div></div>
+<div id="w-type"><div class="tbar"><input id="p-type" type="text" list="p-types" maxlength="20" placeholder="${t('pType')}" value="${esc(x&&x.type||'')}"><input id="p-tag" type="text" maxlength="20" placeholder="${t('pTag')}" value="${esc(x&&x.tag||'')}"></div><datalist id="p-types">${[...new Set(plans.map(q=>q.type).filter(Boolean))].map(v=>`<option value="${esc(v)}">`).join('')}</datalist></div>
 <div id="w-loc"><label>${t('pLoc')}</label><input id="p-loc" type="text" maxlength="120" value="${esc(x&&x.location||'')}"></div>
 <div id="w-time"><div class="frow"><span>${t('start')}</span><input type="datetime-local" id="p-s" style="width:auto;margin:0" value="${x&&x.start_at?toL(x.start_at):''}"></div><div class="frow"><span>${t('end')}</span><input type="datetime-local" id="p-e" style="width:auto;margin:0" value="${x&&x.end_at?toL(x.end_at):''}"></div></div>
 <div id="w-people"><div class="frow"><span>${t('pPeople')}</span><input type="number" id="p-ppl" min="1" max="9999" style="width:90px;margin:0" value="${x&&x.people!=null?x.people:''}"></div></div>
 <div id="w-tasks"><label>${t('pTasks')}</label><div id="p-tasks"></div><div class="tbar"><input id="p-nt" type="text" maxlength="100" placeholder="${t('title')}"><input id="p-ntd" type="datetime-local"></div><div class="row"><button type="button" class="sec" id="p-at">＋ ${t('pAddTask')}</button></div></div>
+<div id="w-custom"><label>${t('pCustom')}</label><div id="p-cf"></div><div class="tbar"><input id="p-cl" type="text" maxlength="20" placeholder="${t('pCLabel')}"><input id="p-cv" type="text" maxlength="60" placeholder="${t('pCValue')}"></div><div class="row"><button type="button" class="sec" id="p-ac">＋ ${t('pAddC')}</button></div></div>
 <div id="w-funds"><label>${t('pFunds')}</label><div id="p-fins"></div><div class="tbar"><select id="p-fk" style="flex:0 1 32%"><option value="out">${t('pOut')}</option><option value="in">${t('pIn')}</option></select><input id="p-fc" type="text" maxlength="40" placeholder="${t('pContent')}"><input id="p-fa" type="number" min="0" step="any" style="flex:0 1 30%" placeholder="${t('pAmt')}"></div><div class="tbar"><select id="p-fcur">${['JPY','CNY','HKD','USD','EUR','TWD','MOP'].map(c=>`<option${c==='JPY'?' selected':''}>${c}</option>`).join('')}</select><input id="p-fd" type="date" value="${ymd(new Date())}"></div><div class="row"><button type="button" class="sec" id="p-af">＋ ${t('pAddFin')}</button></div></div>
 <div class="tbar">${id?`<button class="sec" id="p-del">${t('del')}</button>`:''}<button class="pri snd" id="p-sv" aria-label="${t('save')}">↑</button></div>`;
-  const paintMods=()=>{const map={type:'w-type',loc:'w-loc',time:'w-time',people:'w-people',tasks:'w-tasks',funds:'w-funds'};for(const k in map){const el=$(map[k]);if(el)el.style.display=M[k]?'':'none'}dlg.querySelectorAll('[data-mod]').forEach(b=>b.classList.toggle('on',!!M[b.dataset.mod]))};
+  const paintMods=()=>{const map={type:'w-type',loc:'w-loc',time:'w-time',people:'w-people',tasks:'w-tasks',funds:'w-funds',custom:'w-custom'};for(const k in map){const el=$(map[k]);if(el)el.style.display=M[k]?'':'none'}dlg.querySelectorAll('[data-mod]').forEach(b=>b.classList.toggle('on',!!M[b.dataset.mod]))};
   dlg.querySelectorAll('[data-mod]').forEach(b=>b.onclick=()=>{M[b.dataset.mod]=M[b.dataset.mod]?0:1;paintMods()});
   const paintTasks=()=>{const w=$('p-tasks');if(!w)return;w.innerHTML=pTasks.length?pTasks.map(z=>`<div class="task"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-pt="${z.id}"${z.done?' checked':''}><div class="tt"><b>${esc(z.title)}</b>${z.due_at?`<div class="meta">${fmt(z.due_at)}</div>`:''}</div><button type="button" class="sec" data-ptdel="${z.id}" aria-label="${t('del')}">✕</button></div>`).join(''):`<p class="meta">—</p>`;
     w.querySelectorAll('[data-pt]').forEach(cb=>cb.onchange=async()=>{const z=pTasks.find(q=>q.id===cb.dataset.pt);if(!z)return;z.done=cb.checked;if(id){const{error}=await sb.from('tasks').update({done:z.done,progress:z.done?100:0}).eq('id',z.id);if(error)return alert(error.message);const rt=tasks.find(q=>q.id===z.id);if(rt){rt.done=z.done;rt.progress=z.done?100:0}}});
     w.querySelectorAll('[data-ptdel]').forEach(b=>b.onclick=async()=>{const zid=b.dataset.ptdel;if(id){const{error}=await sb.from('tasks').delete().eq('id',zid);if(error)return alert(error.message);tasks=tasks.filter(q=>q.id!==zid)}pTasks=pTasks.filter(q=>q.id!==zid);paintTasks()});};
   const paintFins=()=>{const w=$('p-fins');if(!w)return;w.innerHTML=pFin.length?pFin.map(f=>`<div class="task"><span class="tag" style="background:${f.kind==='in'?'#E3F2E6':'#FDE8E8'}">${f.kind==='in'?t('pIn'):t('pOut')}</span><div class="tt"><b>${esc(f.content||'')}</b><div class="meta">${esc(f.entry_date||'')}</div></div><b>${(+f.amount||0).toLocaleString()} ${esc(f.currency||'JPY')}</b><button type="button" class="sec" data-pfdel="${f.id}" aria-label="${t('del')}">✕</button></div>`).join(''):`<p class="meta">—</p>`;
     w.querySelectorAll('[data-pfdel]').forEach(b=>b.onclick=async()=>{const fid=b.dataset.pfdel;if(id){const{error}=await sb.from('plan_finance').delete().eq('id',fid);if(error)return alert(error.message);pfin=pfin.filter(q=>q.id!==fid)}pFin=pFin.filter(q=>q.id!==fid);paintFins()});};
+  const paintCF=()=>{const w=$('p-cf');if(!w)return;w.innerHTML=pCF.length?pCF.map((a,i)=>`<div class="task"><div class="tt"><b>${esc(a.k)}</b><div class="meta">${esc(a.v)}</div></div><button type="button" class="sec" data-cfdel="${i}" aria-label="${t('del')}">✕</button></div>`).join(''):`<p class="meta">—</p>`;w.querySelectorAll('[data-cfdel]').forEach(b=>b.onclick=()=>{pCF.splice(+b.dataset.cfdel,1);paintCF()})};
+  $('p-ac').onclick=()=>{const k=$('p-cl').value.trim();if(!k)return;pCF.push({k,v:$('p-cv').value.trim()});$('p-cl').value='';$('p-cv').value='';paintCF()};
   $('p-at').onclick=async()=>{const tt=$('p-nt').value.trim();if(!tt)return;const due=$('p-ntd').value?new Date($('p-ntd').value).toISOString():null;
     if(id){const v={title:tt,due_at:due};if(planV23)v.plan_id=id;const{data,error}=await sb.from('tasks').insert(v).select().single();if(error)return alert(error.message);tasks.push(data);pTasks.push({...data})}
     else pTasks.push({id:'tmp'+Date.now()+Math.random(),title:tt,due_at:due,done:false});
@@ -990,6 +991,7 @@ function openPlan(id){
     $('p-fc').value='';$('p-fa').value='';paintFins()};
   $('p-sv').onclick=async()=>{
     const title=$('p-t').value.trim();if(!title)return;
+    M.cf=M.custom?pCF:[];
     const v={title,modules:M,
       type:M.type?($('p-type').value.trim()||null):null,
       tag:M.type?($('p-tag').value.trim()||null):null,
@@ -1009,7 +1011,7 @@ function openPlan(id){
     dlg.close();planView=pid;render();
   };
   if($('p-del'))$('p-del').onclick=async()=>{if(!confirm(t('confirmDel')))return;await delPlan(id);dlg.close();planView=null;render()};
-  paintMods();paintTasks();paintFins();
+  paintMods();paintTasks();paintFins();paintCF();
   dlg.showModal();$('p-t').focus();
 }
 
@@ -1035,19 +1037,11 @@ function appView(){
   else if(tab==='fin')body=finHTML();
   else if(tab==='study')body=studyHTML();
   else body=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1">${t('sv')}</button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2">${t('dv')}</button></span></div>`+listHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`;
-  $('app').innerHTML=`<div class="appt">${pageTitle()}</div>`+(OFFLINE?`<div class="offbar">${t('offMsg')}</div>`:'')+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
+  $('app').innerHTML=`<div class="appt">${pageTitle()}</div>`+(OFFLINE?`<div class="offbar">${t('offMsg')}</div>`:'')+body+tabbar()+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
   if(session&&Date.now()-_cacheAt>1500){_cacheAt=Date.now();cacheData()}
   if(tab==='set')bind();
 }
-const srtIdeas=(a,b)=>((a.sort_order??1e9)-(b.sort_order??1e9))||(a.created_at<b.created_at?-1:1);
-async function moveNode(id,dir){const x=ideas.find(i=>i.id===id);if(!x)return;const sibs=ideas.filter(z=>(z.parent_id||null)===(x.parent_id||null)&&(z.map_id||null)===(x.map_id||null)).sort(srtIdeas);const ix=sibs.findIndex(z=>z.id===id),jx=ix+dir;if(jx<0||jx>=sibs.length)return;const tmp=sibs[ix];sibs[ix]=sibs[jx];sibs[jx]=tmp;sibs.forEach((z,i2)=>z.sort_order=(i2+1)*10);for(const z of sibs){const{error}=await sb.from('ideas').update({sort_order:z.sort_order}).eq('id',z.id);if(error)return alert(error.message)}$('dlg').close();render()}
-const mapIdeas=()=>maps.length?ideas.filter(i=>i.map_id===curMap):ideas;
-function fitMM(){const w=document.getElementById('mmw');if(!w)return;const m=w.querySelector('.mm');if(!m)return;const W=parseFloat(m.style.width),H=parseFloat(m.style.height);if(!W||!H)return;const aw=w.clientWidth-4,ah=w.clientHeight-4;const sc=Math.min(aw/W,ah/H,1.5);const tx=Math.max(0,(aw-W*sc)/2),ty=Math.max(0,(ah-H*sc)/2);m.style.transform='translate('+tx+'px,'+ty+'px) scale('+sc+')';m.style.transformOrigin='0 0'}
-let dragSt=null;
-function bindDrag(){document.querySelectorAll('.mmnode').forEach(el=>{el.addEventListener('pointerdown',e=>{dragSt={el,x0:e.clientX,y0:e.clientY,moved:false,id:el.dataset.id};try{el.setPointerCapture(e.pointerId)}catch(_){}});el.addEventListener('pointermove',e=>{if(!dragSt||dragSt.el!==el)return;const dx=e.clientX-dragSt.x0,dy=e.clientY-dragSt.y0;if(Math.abs(dx)+Math.abs(dy)>6)dragSt.moved=true;if(dragSt.moved){const mm=el.parentElement.style.transform.match(/scale\(([\d.]+)\)/);const sc=mm?+mm[1]:1;el.style.left=(parseFloat(el.style.left)+dx/sc)+'px';el.style.top=(parseFloat(el.style.top)+dy/sc)+'px';dragSt.x0=e.clientX;dragSt.y0=e.clientY}});el.addEventListener('pointerup',()=>{if(!dragSt)return;if(dragSt.moved){mmPos[dragSt.id]={x:parseFloat(el.style.left),y:parseFloat(el.style.top)};localStorage.mmpos=JSON.stringify(mmPos);window._mmDragAt=Date.now();render()}dragSt=null})})}
 function say(m){toastMsg=m;render();setTimeout(()=>{if(toastMsg===m){toastMsg='';render()}},2400)}
-function openMap(){const dlg=$('dlg');dlg.innerHTML=`<label for="mp-n">${t('planName')}</label><input id="mp-n" type="text" maxlength="30" placeholder="${t('planName')}"><div class="acts"><button class="sec" id="mp-x">${t('cancel')}</button><button class="pri" id="mp-s">${t('save')}</button></div>`;if(!dlg.open)dlg.showModal();$('mp-x').onclick=()=>dlg.close();$('mp-s').onclick=async()=>{const nm=$('mp-n').value.trim();if(!nm)return;const{data,error}=await sb.from('idea_maps').insert({name:nm}).select().single();if(error)return alert(error.message);maps.push(data);curMap=data.id;dlg.close();render()}}
-async function planToTodo(){const rows=mapIdeas().filter(i=>(i.title||'').trim());if(!rows.length)return;if(!confirm(t('planTodoQ')))return;const vs=rows.map(i=>({title:i.title,note:i.body||null}));const{data,error}=await sb.from('tasks').insert(vs).select();if(error)return alert(error.message);tasks.push(...data);say(t('addedTodo')+' ×'+data.length)}
 const pad=n=>String(n).padStart(2,'0'),ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 const safeLink=u=>/^(?!javascript:|data:|vbscript:)[a-z][a-z0-9+.-]*:/i.test((u||'').trim())?u.trim():'';
 const hAmtOf=(h,d)=>{const l=hlogs.find(l=>l.habit_id===h.id&&l.log_date===d);return l?(+l.amount||1):0};
@@ -1173,18 +1167,6 @@ async function hToggle(id,on){
   if(on){const{data,error}=await sb.from('habit_logs').insert({habit_id:id,log_date:today}).select().single();if(error){alert(error.message);return render()}hlogs.push(data)}
   else{const{error}=await sb.from('habit_logs').delete().eq('habit_id',id).eq('log_date',today);if(error){alert(error.message);return render()}hlogs=hlogs.filter(l=>!(l.habit_id===id&&l.log_date===today))}
   render();
-}
-function openIdea(id,parentId){
-  const dlg=$('dlg'),x=id?ideas.find(i=>i.id===id):{color:'#D9A441'};
-  dlg.innerHTML=`<textarea id="i-t" rows="1" maxlength="100" placeholder="${t('ideaTitle')}" aria-label="${t('ideaTitle')}">${esc(x.title||'')}</textarea><textarea id="i-b" rows="8" placeholder="${t('ideaBody')}" aria-label="${t('ideaBody')}">${esc(x.body||'')}</textarea><div class="tbar"><input id="i-c" type="color" value="${esc(x.color||'#D9A441')}" aria-label="${t('color')}">${id?`<button class="sec" id="i-d">${t('del')}</button>`:''}<button class="pri snd" id="i-s" aria-label="${t('save')}">↑</button></div>`;
-  $('i-s').onclick=async()=>{
-    const v={title:$('i-t').value.trim(),body:$('i-b').value.trim(),color:$('i-c').value};if(!v.title&&!v.body)return;
-    if(id){const{error}=await sb.from('ideas').update({...v,updated_at:new Date().toISOString()}).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
-    else{const{data,error}=await sb.from('ideas').insert({...v,parent_id:parentId||null,map_id:maps.length?curMap:null}).select().single();if(error)return alert(error.message);ideas.push(data)}
-    dlg.close();render();
-  };
-  if($('i-d'))$('i-d').onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('ideas').delete().eq('id',id);if(error)return alert(error.message);ideas=ideas.filter(i=>i.id!==id);dlg.close();render()};
-  dlg.showModal();$('i-t').focus();
 }
 function live(){
   if(ch)return;
@@ -1376,7 +1358,6 @@ $('app').addEventListener('click',async e=>{
   else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
   else if(a==='ctd'){cm=new Date();cs=new Date();render()}
   else if(a==='hunarc'){const{error}=await sb.from('habits').update({archived:false}).eq('id',id);if(error)alert(error.message);else{const hx=habits.find(h=>h.id===id);if(hx)hx.archived=false;render()}}
-  else if(a==='nidea')openIdea()
   else if(a==='exp')exportImg('month')
   else if(a==='bgdel'){if(bgPath)sb.storage.from('illustrations').remove([bgPath]);await setBgPath('')}
   else if(a==='shr')exportImg(b.dataset.v);
@@ -1393,7 +1374,16 @@ $('app').addEventListener('click',async e=>{
   else if(a==='hedit')openHabit(id)
   else if(a==='nhabit')openHabit()
   else if(a==='swdel')await swDelete(b.dataset.kind,id)
-  else if(a==='calvis'){const v=b.dataset.v;if(v==='priv'){if(visPriv&&!visShared){render();return}visPriv=!visPriv}else if(v==='shared'){if(visShared&&!visPriv){render();return}visShared=!visShared}else calVis[v]=!(calVis[v]!==false);saveVis();render()}
+  else if(a==='fmode'){if(b.dataset.v==='p'&&finMode!=='p'){const r=finRange();finP0=ymd(r.a);finP1=ymd(new Date(+r.b-864e5))}finMode=b.dataset.v;render()}
+  else if(a==='fnav'){const v=+b.dataset.v;finRef=finMode==='y'?new Date(finRef.getFullYear()+v,finRef.getMonth(),1):new Date(finRef.getFullYear(),finRef.getMonth()+v,1);render()}
+  else if(a==='fkind'){finKind=b.dataset.v;render()}
+  else if(a==='fsub'){finSub=b.dataset.v;render()}
+  else if(a==='calvis'){const v=b.dataset.v,n=(visPriv?1:0)+(visShared?1:0)+(evScope&&visCo?1:0);
+    if(v==='priv'){if(visPriv&&n<=1){render();return}visPriv=!visPriv}
+    else if(v==='shared'){if(visShared&&n<=1){render();return}visShared=!visShared}
+    else if(v==='co'){if(visCo&&n<=1){render();return}visCo=!visCo}
+    else calVis[v]=!(calVis[v]!==false);
+    saveVis();render()}
   else if(a==='share')openShare()
   else if(a==='focus')openFocus()
   else if(a==='nplan')openPlan()
@@ -1407,14 +1397,6 @@ $('app').addEventListener('click',async e=>{
   else if(a==='nev')openEvent()
   else if(a==='eedit')openEvent(id)
   else if(a==='nle')openList('event')
-  else if(a==='idea')openIdea(id)
-  else if(a==='iview'){iview=b.dataset.v;render()}
-  else if(a==='map'){curMap=id;render()}
-  else if(a==='nmap')openMap()
-  else if(a==='p2t')planToTodo();
-  else if(a==='cpy'){const lines=[];const walk=(n,d)=>{lines.push('  '.repeat(d)+'- '+(n.i.title||''));if(n.i.body)lines.push('  '.repeat(d)+'  '+n.i.body);n.kids.forEach(k=>walk(k,d+1))};mmTree().forEach(n=>walk(n,0));const tx=((maps.find(mm=>mm.id===curMap)||{}).name||t('brainstorm'))+'\n'+lines.join('\n');if(navigator.clipboard)navigator.clipboard.writeText(tx).then(()=>say(t('copied')))}
-  else if(a==='mmrst'){mapIdeas().forEach(i=>delete mmPos[i.id]);localStorage.mmpos=JSON.stringify(mmPos);render()}
-  else if(a==='node'){if(Date.now()-(window._mmDragAt||0)>250)openNode(id)}
   else if(a==='add')openSheet()
   else if(a==='edit')openSheet(id)
   else if(a==='nl'){dr=false;render();openList()}
