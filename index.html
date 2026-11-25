@@ -153,6 +153,10 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .shop .tbar input{padding:9px;font-size:14px}
 .shop .tbar button{padding:9px 12px}
 .shop .chips{padding-bottom:6px}
+/* ===== v27: dropdown list pickers on the shopping page ===== */
+.selrow{display:flex;gap:6px;align-items:center;margin-bottom:6px;min-width:0}
+.selrow select{flex:1;min-width:0;width:auto;padding:9px;font-size:14px}
+.selrow .ic{flex:none}
 .dhd{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:4px;flex-wrap:wrap}
 .dhd b{font-size:13.5px;text-align:center;line-height:1.35;flex:1 1 100%;order:-1;white-space:nowrap}
 .dhd .ic{padding:4px 10px;font-size:16px;flex:none}
@@ -195,7 +199,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v26)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v27)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -332,9 +336,9 @@ Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_f
 Object.assign(T.zh,{compCal:'公司',listsPage:'購買清單',liAdd:'新增項目',liEmpty:'還沒有項目，在下方新增第一個。',evScope:'類別'});
 Object.assign(T.ja,{compCal:'会社',listsPage:'買い物リスト',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',evScope:'区分'});
 Object.assign(T.en,{compCal:'Company',listsPage:'Shopping list',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',evScope:'Scope'});
-Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v25.sql。',history:'歷史清單',nameReq:'名稱不可空白'});
-Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v25.sql を実行してください。',history:'過去のリスト',nameReq:'名前を入力してください'});
-Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v25.sql in Supabase first.',history:'History',nameReq:'Name cannot be empty'});
+Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v27.sql。',history:'歷史清單',nameReq:'名稱不可空白'});
+Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v27.sql を実行してください。',history:'過去のリスト',nameReq:'名前を入力してください'});
+Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v27.sql in Supabase first.',history:'History',nameReq:'Name cannot be empty'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#1E88E5',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -376,7 +380,7 @@ let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
 let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false,evV24=false;
 let hlists=[],plans=[],pfin=[],planErr=false,planV23=false,habList=false,hlistView='all',planView=null,finCur=null;
-let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null;
+let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null,shopDay=null,dayNameV27=false;
 let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
 let visPriv=true,visShared=true,visComp=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;visShared=_v.s!==false;visComp=_v.co!==false;calVis=_v.c||{}}catch(e){}
 const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,co:visComp,c:calVis})};
@@ -392,12 +396,12 @@ const todayP=x=>x.due_at&&new Date(x.due_at)<nextDay(new Date());
 const tmrP=x=>{if(!x.due_at)return false;const d=new Date(x.due_at),a=nextDay(new Date());return d>=a&&d<nextDay(a)};
 const fmt=d=>new Date(d).toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang],{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
 const toL=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
-function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24})}catch(e){}}
+function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24,dayNameV27})}catch(e){}}
 function hydrate(){
   try{const c=JSON.parse(localStorage.mdcache||'null');if(!c)return false;
   tasks=c.tasks||[];cats=c.cats||[];ideas=c.ideas||[];maps=c.maps||[];habits=c.habits||[];hlogs=c.hlogs||[];events=c.events||[];ecats=c.ecats||[];langs=c.langs||[];words=c.words||[];ssess=c.ssess||[];squiz=c.squiz||[];shareCals=c.shareCals||[];calMembers=c.calMembers||[];
   evV20=!!c.evV20;habV21=!!c.habV21;curMap=c.curMap||curMap;if(c.curLang)curLang=c.curLang;hlists=c.hlists||[];plans=c.plans||[];pfin=c.pfin||[];planV23=!!c.planV23;habList=!!c.habList;planErr=false;
-  slists=c.slists||[];litems=c.litems||[];dlists=c.dlists||[];ditems=c.ditems||[];shopV25=!!c.shopV25;evV24=!!c.evV24;
+  slists=c.slists||[];litems=c.litems||[];dlists=c.dlists||[];ditems=c.ditems||[];shopV25=!!c.shopV25;evV24=!!c.evV24;dayNameV27=!!c.dayNameV27;
   ideaErr=null;habitErr=null;evErr=null;langErr=null;shareErr=false;return true}catch(e){return false}
 }
 async function dedupCats(){
@@ -427,10 +431,11 @@ async function dedupCats(){
   }
 }
 async function dedupDays(){
-  // v25: merge duplicate day_lists rows for the same date (race on lazy create).
-  // Keep the earliest-created row; re-point its items; delete the rest.
+  // v27: merge duplicate day_lists rows for the same (date + name) — a day may
+  // legitimately hold several NAMED lists, so only same-name rows are race
+  // duplicates. Keep the earliest-created row; re-point its items; delete the rest.
   const groups={};
-  dlists.forEach(d=>{(groups[d.list_date]=groups[d.list_date]||[]).push(d)});
+  dlists.forEach(d=>{const k=d.list_date+'|'+(d.name||'');(groups[k]=groups[k]||[]).push(d)});
   for(const k in groups){
     const g=groups[k];if(g.length<2)continue;
     g.sort((a,b)=>String(a.created_at||'').localeCompare(String(b.created_at||'')));
@@ -474,6 +479,8 @@ async function loadDataImpl(){
   let _liOk=false;
   try{const li=await sb.from('list_items').select('*').order('sort_order');_liOk=!li.error;litems=li.error?[]:li.data}catch(_){litems=[]}
   try{const dl=await sb.from('day_lists').select('*').order('list_date');if(dl.error)throw 0;const di=await sb.from('day_list_items').select('*').order('sort_order');if(di.error)throw 0;dlists=dl.data;ditems=di.data;shopV25=_liOk}catch(_){shopV25=false;dlists=[];ditems=[]}
+  // ===== v27: named day lists (graceful if sql-v27.sql not run yet: no name column -> single-list behaviour) =====
+  try{const _pd=await sb.from('day_lists').select('name').limit(1);dayNameV27=!_pd.error}catch(_){dayNameV27=false}
   if(!dedupDone){dedupDone=true;try{await dedupCats()}catch(_){}try{await dedupDays()}catch(_){}}
   try{
     // v23.1: idempotent seeding — decide from a live DB query (never localStorage, never memory arrays alone)
@@ -577,11 +584,12 @@ function drawer(){
       +withFin.map(p=>it('fplan',p.id,'🗂',esc(p.title),pfin.filter(f=>f.plan_id===p.id).length,finPlan===p.id)).join('')+'</aside>';
   }
   if(tab==='lists'){
-    // v25: shopping page drawer — master to-buy lists + recent per-day lists (same arrays, no copies).
-    const days=[...dlists].sort((a,b)=>a.list_date<b.list_date?1:-1).slice(0,14);
+    // v25/v27: shopping page drawer — master to-buy lists + recent days (same arrays, no copies).
+    const byDate={};dlists.forEach(d=>{(byDate[d.list_date]=byDate[d.list_date]||[]).push(d)});
+    const days=Object.keys(byDate).sort().reverse().slice(0,14);
     return head
       +`<div class="dsec">${t('master')}</div>`+slists.map(c=>it('snav',c.id,c.icon||'🛒',esc(catName(c)),litems.filter(i=>i.list_id===c.id).length,shopList===c.id)).join('')
-      +`<div class="dsec">${t('history')}</div>`+days.map(d=>it('dgo',d.list_date,'🗓',fmtDay(d.list_date),ditems.filter(i=>i.day_list_id===d.id).length,(shopDate||ymd(new Date()))===d.list_date)).join('')
+      +`<div class="dsec">${t('history')}</div>`+days.map(ds=>it('dgo',ds,'🗓',fmtDay(ds),ditems.filter(i=>byDate[ds].some(d=>d.id===i.day_list_id)).length,(shopDate||ymd(new Date()))===ds)).join('')
       +'</aside>';
   }
   if(tab==='study'){
@@ -1083,26 +1091,40 @@ function openPlan(id){
 const fmtDay=ds=>{const p=String(ds).split('-').map(Number);return new Date(p[0],(p[1]||1)-1,p[2]||1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric',weekday:'short'})};
 // v26: compact one-line date for the narrow day-list header (date + weekday kept in full).
 const fmtDayS=ds=>{const p=String(ds).split('-').map(Number);const d=new Date(p[0],(p[1]||1)-1,p[2]||1);const wd=d.toLocaleDateString(LOC[lang],{weekday:'short'});return p[0]+'/'+pad(p[1]||1)+'/'+pad(p[2]||1)+(lang==='en'?' ('+wd+')':'（'+wd+'）')};
-const dayOf=ds=>dlists.find(d=>d.list_date===ds);
+const daysOf=ds=>dlists.filter(d=>d.list_date===ds).sort((a,b)=>String(a.created_at||'').localeCompare(String(b.created_at||'')));
+// v27: display name of a day list. Legacy rows (created before v27) carry no
+// name yet and fall back to the generic title; degraded mode (no name column)
+// always shows the generic title.
+const dayName=d=>d?(dayNameV27?(d.name||t('listsPage')):t('listsPage')):'';
+// The day list a date currently targets: the dropdown pick when it belongs to
+// that date, otherwise the earliest list of the day.
+const curDayList=ds=>{const g=daysOf(ds);if(!g.length)return null;return g.find(d=>d.id===shopDay)||g[0]};
 const dayItemsOf=dl=>dl?ditems.filter(i=>i.day_list_id===dl.id).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.created_at<b.created_at?-1:1)):[];
 let _dayP=null;
-function ensureTodayList(){
-  const td=ymd(new Date()),ex=dayOf(td);
+function ensureDayList(ds){
+  const ex=curDayList(ds);
   if(ex)return Promise.resolve(ex);
   if(_dayP)return _dayP;
-  const p=(async()=>{const{data,error}=await sb.from('day_lists').insert({list_date:td}).select().single();if(error){alert(error.message);return null}dlists.push(data);return data})();
+  // First pick of the day auto-creates a list named after the master list the
+  // item came from (renameable later). Without the v27 name column the insert
+  // omits it — the app then behaves exactly like the single-list v25/v26 one.
+  const cur=slists.find(c=>c.id===shopList);
+  const v={list_date:ds};if(dayNameV27)v.name=cur?catName(cur):t('listsPage');
+  const p=(async()=>{const{data,error}=await sb.from('day_lists').insert(v).select().single();if(error){alert(error.message);return null}dlists.push(data);shopDay=data.id;return data})();
   _dayP=p;const cl=()=>{if(_dayP===p)_dayP=null};p.then(cl,cl);
   return p;
 }
 async function toggleShopItem(it){
-  // Core rule: selecting NEVER deletes the master item; unselecting only removes today's copy.
-  const dl=dayOf(ymd(new Date()));
+  // Core rule: selecting NEVER deletes the master item; unselecting only removes the day copy.
+  // v27: the copy lands in the day list currently picked in the right column.
+  const td=ymd(new Date());
+  const dl=curDayList(td);
   const ex=dl?ditems.find(x=>x.day_list_id===dl.id&&x.src_id===it.id):null;
   if(ex){
     const{error}=await sb.from('day_list_items').delete().eq('id',ex.id);if(error)return alert(error.message);
     ditems=ditems.filter(x=>x.id!==ex.id);
   }else{
-    const day=await ensureTodayList();if(!day)return;
+    const day=await ensureDayList(td);if(!day)return;
     const v={day_list_id:day.id,title:it.title,src_id:it.id,sort_order:ditems.filter(x=>x.day_list_id===day.id).length};
     const{data,error}=await sb.from('day_list_items').insert(v).select().single();if(error)return alert(error.message);
     ditems.push(data);
@@ -1110,8 +1132,8 @@ async function toggleShopItem(it){
   render();
 }
 function shopShareText(ds){
-  const its=dayItemsOf(dayOf(ds));
-  return '🛒 '+t('listsPage')+'\n'+fmtDay(ds)+(its.length?'\n'+its.map(i=>(i.done?'☑ ':'☐ ')+i.title).join('\n'):'');
+  const dl=curDayList(ds),its=dayItemsOf(dl);
+  return '🛒 '+t('listsPage')+'\n'+fmtDay(ds)+(dayNameV27&&dl?'\n'+dayName(dl):'')+(its.length?'\n'+its.map(i=>(i.done?'☑ ':'☐ ')+i.title).join('\n'):'');
 }
 async function shareDayList(){
   const tx=shopShareText(shopDate||ymd(new Date()));
@@ -1128,23 +1150,45 @@ function shopHTML(){
   if(shopList&&!slists.some(c=>c.id===shopList))shopList=null;
   if(!shopList&&slists.length)shopList=slists[0].id;
   const cur=slists.find(c=>c.id===shopList);
-  const selIds=new Set(dayItemsOf(dayOf(td)).map(i=>i.src_id));
+  const dl=curDayList(vd);
+  if(dl&&shopDay!==dl.id)shopDay=dl.id;
+  const selIds=new Set(dayItemsOf(curDayList(td)).map(i=>i.src_id));
   const mIts=cur?litems.filter(i=>i.list_id===cur.id).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.created_at<b.created_at?-1:1)):[];
+  // v27: master lists are picked from a dropdown — only the picked list's items show.
   const left=`<div class="card"><div class="dsec" style="margin-top:0">${t('master')}</div>`
-    +`<div class="chips">${slists.map(c=>`<button class="chip${c.id===shopList?' on':''}" data-a="snav" data-v="${c.id}">${esc(c.icon||'🛒')} ${esc(catName(c))}</button>`).join('')}<button class="chip" data-a="sladd" aria-label="${t('newList')}">＋</button></div>`
+    +(slists.length?`<div class="selrow"><select data-shopsel="master" aria-label="${t('master')}">${slists.map(c=>`<option value="${c.id}"${c.id===shopList?' selected':''}>${esc(c.icon||'🛒')} ${esc(catName(c))}</option>`).join('')}</select><button class="sec ic" data-a="sladd" aria-label="${t('newList')}">＋</button></div>`
+      :`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sladd">＋ ${t('newList')}</button></div>`)
     +(cur?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sledit" data-id="${cur.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="sldel" data-id="${cur.id}">${t('del')}</button></div>`
       +(mIts.length?mIts.map(i=>swpWrap('litem',i.id,`<div class="task"><input type="checkbox" class="pc" style="--pc:#43A047" data-a="stog" data-id="${i.id}"${selIds.has(i.id)?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="stog" data-id="${i.id}"><b>${esc(i.title)}</b></div><button class="sec mini" data-a="siedit" data-id="${i.id}" aria-label="${t('edit')}">✎</button></div>`)).join(''):`<p class="meta">${t('liEmpty')}</p>`)
       +`<div class="tbar"><input id="si-n" type="text" maxlength="120" placeholder="${t('slPh')}"><button class="pri" data-a="siadd" data-id="${cur.id}" aria-label="${t('liAdd')}">＋</button></div>`
     :`<p class="meta">${t('slNone')}</p>`)
     +`</div>`;
-  const dIts=dayItemsOf(dayOf(vd)),dn=dIts.filter(i=>i.done).length;
+  const dgs=daysOf(vd),dIts=dayItemsOf(dl),dn=dIts.filter(i=>i.done).length;
+  // v27: a day may hold several NAMED lists — picked from a dropdown like the left column.
+  // Day items have NO edit button (removed by request); tick + swipe-remove only.
+  const daySel=dayNameV27?`<div class="selrow"><select data-shopsel="day" aria-label="${t('todayList')}"${dgs.length?'':' disabled'}>${dgs.map(d=>`<option value="${d.id}"${dl&&d.id===dl.id?' selected':''}>${esc(dayName(d))}</option>`).join('')}</select><button class="sec ic" data-a="dladd" aria-label="${t('newList')}">＋</button></div>`
+    +(dl?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="dledit" data-id="${dl.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="dldel" data-id="${dl.id}">${t('del')}</button></div>`:''):'';
   const right=`<div class="card"><div class="dsec" style="margin-top:0">${t('todayList')}</div>`
     +`<div class="dhd"><button class="sec ic" data-a="dday" data-v="-1" aria-label="‹">‹</button><b>${fmtDayS(vd)}</b><button class="sec ic" data-a="dday" data-v="1" aria-label="›"${vd>=td?' disabled style="opacity:.3"':''}>›</button></div>`
     +(vd!==td?`<button class="lnk" data-a="dtoday">${t('backToday')}</button>`:'')
-    +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt"><b>${esc(i.title)}</b></div><button class="sec mini" data-a="diedit" data-id="${i.id}" aria-label="${t('edit')}">✎</button></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
+    +daySel
+    +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt"><b>${esc(i.title)}</b></div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
     +(dIts.length?`<div class="row"><button class="pri" data-a="dshare">📤 ${t('shareBtn')}</button></div>`:'')
     +`</div>`;
   return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div><div class="shop"><div>${left}</div><div>${right}</div></div>`;
+}
+// v27: today's shopping lists as a section on the To Do page — a second VIEW of
+// the same dlists/ditems arrays, never a copy into tasks. Ticking a box here
+// flips the very day_list_items row the shopping page renders (data-a="dtog").
+function todoShopHTML(){
+  if(!shopV25)return '';
+  const td=ymd(new Date()),gs=daysOf(td);
+  if(!gs.length)return '';
+  return `<div class="card"><div class="dsec" style="margin-top:0">🛒 ${t('todayList')}</div>`
+    +gs.map(dl=>{const its=dayItemsOf(dl),dn=its.filter(i=>i.done).length;
+      return `<div class="meta" style="margin:8px 0 2px"><b>${esc(dayName(dl))}</b> · ${dn}/${its.length}</div>`
+      +(its.length?its.map(i=>`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt"><b>${esc(i.title)}</b></div></div>`).join(''):`<p class="meta">${t('dayEmpty')}</p>`)}).join('')
+    +`</div>`;
 }
 function openSlist(id){
   const dlg=$('dlg'),x=id?slists.find(c=>c.id===id):null;
@@ -1156,18 +1200,39 @@ function openSlist(id){
     dlg.close();render()};
   dlg.showModal();$('cl-n').focus();
 }
-// v26: edit a shopping item's text. Master edits write list_items only; day edits
-// write day_list_items only — the two sides keep v25 copy semantics and never
-// rewrite each other. Empty names are rejected.
+// v26: edit a shopping item's text — writes list_items only.
+// v27: day-list copies are intentionally NOT editable (the day column's edit
+// button was removed by request), so this only ever serves master items.
 function openItemEdit(kind,id){
-  const it=kind==='litem'?litems.find(x=>x.id===id):ditems.find(x=>x.id===id);if(!it)return;
+  if(kind!=='litem')return;
+  const it=litems.find(x=>x.id===id);if(!it)return;
   const dlg=$('dlg');
   dlg.innerHTML=`<label for="ie-n">${t('title')}</label><input id="ie-n" type="text" maxlength="120" value="${esc(it.title||'')}"><div class="row"><button class="sec" id="ie-x">${t('cancel')}</button><button class="pri" id="ie-s">${t('save')}</button></div>`;
   $('ie-x').onclick=()=>dlg.close();
   $('ie-s').onclick=async()=>{const n=$('ie-n').value.trim();if(!n)return alert(t('nameReq'));
-    const{error}=await sb.from(kind==='litem'?'list_items':'day_list_items').update({title:n}).eq('id',id);if(error)return alert(error.message);
+    const{error}=await sb.from('list_items').update({title:n}).eq('id',id);if(error)return alert(error.message);
     it.title=n;dlg.close();render()};
   dlg.showModal();const inp=$('ie-n');inp.focus();try{inp.select()}catch(_){}
+}
+// v27: create/rename one of a day's named shopping lists.
+function openDayList(id){
+  const dlg=$('dlg'),x=id?dlists.find(d=>d.id===id):null;
+  dlg.innerHTML=`<label for="dl-n">${t('listName')}</label><input id="dl-n" type="text" maxlength="20" value="${esc(x?dayName(x):'')}"><div class="row"><button class="sec" id="dl-x">${t('cancel')}</button><button class="pri" id="dl-s">${t('save')}</button></div>`;
+  $('dl-x').onclick=()=>dlg.close();
+  $('dl-s').onclick=async()=>{const n=$('dl-n').value.trim();if(!n)return alert(t('nameReq'));
+    if(id){const{error}=await sb.from('day_lists').update({name:n}).eq('id',id);if(error)return alert(error.message);x.name=n}
+    else{const vd=shopDate||ymd(new Date());const{data,error}=await sb.from('day_lists').insert({list_date:vd,name:n}).select().single();if(error)return alert(error.message);dlists.push(data);shopDay=data.id}
+    dlg.close();render()};
+  dlg.showModal();$('dl-n').focus();
+}
+async function delDayList(id){
+  const d=dlists.find(z=>z.id===id);if(!d)return;
+  const its=ditems.filter(i=>i.day_list_id===id);
+  try{await sb.from('day_list_items').delete().eq('day_list_id',id)}catch(_){}
+  const{error}=await sb.from('day_lists').delete().eq('id',id);if(error)return alert(error.message);
+  dlists=dlists.filter(z=>z.id!==id);ditems=ditems.filter(i=>i.day_list_id!==id);
+  if(shopDay===id)shopDay=null;
+  render();showUndo('dlist',{d,its});
 }
 async function delSlist(id){
   const c=slists.find(z=>z.id===id);if(!c)return;
@@ -1202,7 +1267,7 @@ function appView(){
   else if(tab==='plan')body=planHTML();
   else if(tab==='fin')body=finHTML();
   else if(tab==='study')body=studyHTML();
-  else body=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1">${t('sv')}</button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2">${t('dv')}</button></span></div>`+listHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`;
+  else body=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1">${t('sv')}</button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2">${t('dv')}</button></span></div>`+listHTML()+todoShopHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`;
   $('app').innerHTML=`<div class="appt">${pageTitle()}</div>`+(OFFLINE?`<div class="offbar">${t('offMsg')}</div>`:'')+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
   if(session&&Date.now()-_cacheAt>1500){_cacheAt=Date.now();cacheData()}
   if(tab==='set')bind();
@@ -1471,6 +1536,13 @@ async function undoDelete(kind,snaps){
     for(const it of snaps.its){const r=await sb.from('list_items').insert({...it,user_id:session.user.id}).select().single();if(!r.error&&r.data)litems.push(r.data)}
     render();return;
   }
+  if(kind==='dlist'){
+    const{data,error}=await sb.from('day_lists').insert(snaps.d).select().single();
+    if(error)return alert(error.message);
+    dlists.push(data||snaps.d);
+    for(const it of snaps.its){const r=await sb.from('day_list_items').insert({...it,user_id:session.user.id}).select().single();if(!r.error&&r.data)ditems.push(r.data)}
+    render();return;
+  }
   if(kind==='task'){
     const byId={};snaps.forEach(z=>byId[z.id]=z);
     const depth=x=>{let d=0;while(x.parent_id&&byId[x.parent_id]){d++;x=byId[x.parent_id]}return d};
@@ -1596,14 +1668,16 @@ $('app').addEventListener('click',async e=>{
     else if(v==='comp'){if(visComp&&ons()<=1){render();return}visComp=!visComp}
     else calVis[v]=!(calVis[v]!==false);saveVis();render()}
   else if(a==='snav'){shopList=b.dataset.v;dr=false;render()}
-  else if(a==='dgo'){shopDate=b.dataset.v;dr=false;render()}
+  else if(a==='dgo'){shopDate=b.dataset.v;shopDay=null;dr=false;render()}
   else if(a==='sladd')openSlist()
   else if(a==='sledit')openSlist(id)
   else if(a==='sldel')await delSlist(id)
   else if(a==='siadd'){const inp=$('si-n'),tx=inp?inp.value.trim():'';if(tx){const v={list_id:id,title:tx,sort_order:litems.filter(i=>i.list_id===id).length};const{data,error}=await sb.from('list_items').insert(v).select().single();if(error)alert(error.message);else{litems.push(data);render()}}}
   else if(a==='stog'){const it=litems.find(x=>x.id===id);if(it)await toggleShopItem(it)}
   else if(a==='siedit')openItemEdit('litem',id);
-  else if(a==='diedit')openItemEdit('ditem',id);
+  else if(a==='dladd')openDayList();
+  else if(a==='dledit')openDayList(id);
+  else if(a==='dldel')await delDayList(id);
   else if(a==='dtog'){const it=ditems.find(x=>x.id===id);if(it){const{error}=await sb.from('day_list_items').update({done:b.checked}).eq('id',id);if(error)alert(error.message);else{it.done=b.checked;render()}}}
   else if(a==='dday'){const p=(shopDate||ymd(new Date())).split('-').map(Number);const s=ymd(new Date(p[0],p[1]-1,p[2]+ +b.dataset.v));if(s<=ymd(new Date()))shopDate=s;render()}
   else if(a==='dtoday'){shopDate=null;render()}
@@ -1678,7 +1752,7 @@ $('app').addEventListener('change',async e=>{
   if(error)return alert(error.message);Object.assign(anyCat(id),patch);
 });
 $('app').addEventListener('change',e=>{if(e.target.id==='bgf')upBg(e.target.files[0])});
-document.addEventListener('change',e=>{if(e.target.id==='expsel'){const v=e.target.value;e.target.value='';if(v)exportImg(v);return}if(e.target.dataset&&e.target.dataset.dsel){if(e.target.dataset.dsel==='A')dA=e.target.value;else dB=e.target.value;render()}});
+document.addEventListener('change',e=>{if(e.target.id==='expsel'){const v=e.target.value;e.target.value='';if(v)exportImg(v);return}if(e.target.dataset&&e.target.dataset.shopsel){if(e.target.dataset.shopsel==='master')shopList=e.target.value||null;else shopDay=e.target.value||null;render();return}if(e.target.dataset&&e.target.dataset.dsel){if(e.target.dataset.dsel==='A')dA=e.target.value;else dB=e.target.value;render()}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(()=>{if(tab!=='set')render()})});
 async function loadSettings(){
   if(OFFLINE)return;
@@ -1951,7 +2025,7 @@ function checkReminders(){
 let remTimer=null;
 function startRem(){checkReminders();if(!remTimer)remTimer=setInterval(checkReminders,30000)}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()});
-sb.auth.onAuthStateChange((_e,s)=>{session=s;try{if(s)localStorage.mdsess=JSON.stringify({user:{id:s.user.id,email:s.user.email}});else localStorage.removeItem('mdsess')}catch(e){}setTimeout(async()=>{try{if(s){await loadSettings();await loadBg();await loadData();if(!OFFLINE&&_sbReal)live();startRem()}else{uname='';localStorage.removeItem('dname');bgPath='';bgUrl='';theme();if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];events=[];ecats=[];slists=[];litems=[];dlists=[];ditems=[];shopList=null;shopDate=null;tab='todo';view='all'}}catch(e){}render()},0)});
+sb.auth.onAuthStateChange((_e,s)=>{session=s;try{if(s)localStorage.mdsess=JSON.stringify({user:{id:s.user.id,email:s.user.email}});else localStorage.removeItem('mdsess')}catch(e){}setTimeout(async()=>{try{if(s){await loadSettings();await loadBg();await loadData();if(!OFFLINE&&_sbReal)live();startRem()}else{uname='';localStorage.removeItem('dname');bgPath='';bgUrl='';theme();if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];events=[];ecats=[];slists=[];litems=[];dlists=[];ditems=[];shopList=null;shopDate=null;shopDay=null;tab='todo';view='all'}}catch(e){}render()},0)});
 setTimeout(()=>{if(!rendered)render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
