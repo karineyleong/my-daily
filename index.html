@@ -141,6 +141,18 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .offbar{text-align:center;font-size:12px;color:var(--mut);padding:2px 0 6px}
 .lpchips .pchip{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 
+/* ===== v25: shopping page (two columns, left slightly wider) ===== */
+.shop{display:grid;grid-template-columns:1.12fr .88fr;gap:8px;align-items:start}
+.shop .card{padding:10px;margin-bottom:0}
+.shop .task{padding:9px 0;gap:6px}
+.shop .tt b{font-size:14px}
+.shop .tbar input{padding:9px;font-size:14px}
+.shop .tbar button{padding:9px 12px}
+.shop .chips{padding-bottom:6px}
+.dhd{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:4px}
+.dhd b{font-size:13.5px;text-align:center;line-height:1.35}
+.dhd .ic{padding:4px 10px;font-size:16px;flex:none}
+
 /* ===== v23 ===== */
 .card{margin-bottom:18px}
 .ghd{margin:18px 2px 10px}
@@ -177,7 +189,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v24)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v25)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -311,9 +323,12 @@ Object.assign(T.en,{offMsg:'📴 Offline — showing local data',addOnly:'Add'})
 Object.assign(T.zh,{lk_interest:'興趣',lk_study:'學習',lk_life:'生活',lk_family:'家庭',lk_work:'工作',plans:'計劃',finance:'收支',planNew:'新增計劃',planSql:'計劃／收支的資料表還沒建立，請先在 Supabase 執行 sql-v23.sql。',planEmpty:'還沒有進行中的計劃，按「＋新增」建立第一個。',pType:'類型',pTag:'標籤',pTasks:'任務',pLoc:'地點',pTime:'時間',pPeople:'人數',pFunds:'資金',pModules:'版塊',pPeriod:'期間',pProg:'進度',pNotStarted:'未開始',pDone:'已完成',pDoing:'進行中',pOver:'已逾期',pIn:'收入',pOut:'支出',pBal:'結餘',pContent:'內容',pCur:'貨幣',pAmt:'金額',pDate:'日期',pAddTask:'加任務',pAddFin:'加一筆',pByPlan:'按計劃',pMonth:'按月推移',pShare:'佔比',fUnit:'單位',uH:'時',uM:'分',uS:'秒',hList:'分類',shareCal:'共享',allCals:'全部'});
 Object.assign(T.ja,{lk_interest:'趣味',lk_study:'学習',lk_life:'生活',lk_family:'家庭',lk_work:'仕事',plans:'プラン',finance:'収支',planNew:'プランを追加',planSql:'プラン／収支のテーブルが未作成です。先にSupabaseで sql-v23.sql を実行してください。',planEmpty:'進行中のプランはありません。「＋追加」で最初の1つを作成。',pType:'タイプ',pTag:'タグ',pTasks:'タスク',pLoc:'場所',pTime:'時間',pPeople:'人数',pFunds:'資金',pModules:'モジュール',pPeriod:'期間',pProg:'進捗',pNotStarted:'未開始',pDone:'完了',pDoing:'進行中',pOver:'期限切れ',pIn:'収入',pOut:'支出',pBal:'残高',pContent:'内容',pCur:'通貨',pAmt:'金額',pDate:'日付',pAddTask:'タスク追加',pAddFin:'1件追加',pByPlan:'プラン別',pMonth:'月別推移',pShare:'割合',fUnit:'単位',uH:'時間',uM:'分',uS:'秒',hList:'カテゴリ',shareCal:'共有',allCals:'すべて'});
 Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_family:'Family',lk_work:'Work',plans:'Plans',finance:'Finance',planNew:'New plan',planSql:'The Plans / Finance tables are missing. Run sql-v23.sql in Supabase first.',planEmpty:'No plans yet. Tap + New to create the first one.',pType:'Type',pTag:'Tag',pTasks:'Tasks',pLoc:'Location',pTime:'Time',pPeople:'People',pFunds:'Funds',pModules:'Sections',pPeriod:'Period',pProg:'Progress',pNotStarted:'Not started',pDone:'Done',pDoing:'In progress',pOver:'Overdue',pIn:'Income',pOut:'Expense',pBal:'Balance',pContent:'Item',pCur:'Currency',pAmt:'Amount',pDate:'Date',pAddTask:'Add task',pAddFin:'Add entry',pByPlan:'By plan',pMonth:'By month',pShare:'Share',fUnit:'Unit',uH:'hr',uM:'min',uS:'sec',hList:'List',shareCal:'Shared',allCals:'All'});
-Object.assign(T.zh,{compCal:'公司',listsPage:'清單',customLists:'自訂清單',taskLists:'待辦清單',habitLists:'習慣分類',liAdd:'新增項目',liEmpty:'還沒有項目，在下方新增第一個。',liItemPh:'項目內容…',clEmpty:'還沒有自訂清單，按右下角 ＋ 建立第一個。',evScope:'類別',listSql:'自訂清單的資料表還沒建立，請先在 Supabase 執行 sql-v24.sql。'});
-Object.assign(T.ja,{compCal:'会社',listsPage:'リスト',customLists:'カスタムリスト',taskLists:'ToDoリスト',habitLists:'習慣カテゴリ',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',liItemPh:'項目…',clEmpty:'カスタムリストはまだありません。右下の＋で作成。',evScope:'区分',listSql:'カスタムリストのテーブルが未作成です。先にSupabaseで sql-v24.sql を実行してください。'});
-Object.assign(T.en,{compCal:'Company',listsPage:'Lists',customLists:'Custom lists',taskLists:'To-do lists',habitLists:'Habit lists',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',liItemPh:'Item…',clEmpty:'No custom lists yet. Tap ＋ to create the first one.',evScope:'Scope',listSql:'The custom-list tables are missing. Run sql-v24.sql in Supabase first.'});
+Object.assign(T.zh,{compCal:'公司',listsPage:'購買清單',liAdd:'新增項目',liEmpty:'還沒有項目，在下方新增第一個。',evScope:'類別'});
+Object.assign(T.ja,{compCal:'会社',listsPage:'買い物リスト',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',evScope:'区分'});
+Object.assign(T.en,{compCal:'Company',listsPage:'Shopping list',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',evScope:'Scope'});
+Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v25.sql。',history:'歷史清單'});
+Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v25.sql を実行してください。',history:'過去のリスト'});
+Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v25.sql in Supabase first.',history:'History'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#1E88E5',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -355,7 +370,7 @@ let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
 let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false,evV24=false;
 let hlists=[],plans=[],pfin=[],planErr=false,planV23=false,habList=false,hlistView='all',planView=null,finCur=null;
-let clists=[],litems=[],listV24=false,clistView=null;
+let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null;
 let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
 let visPriv=true,visShared=true,visComp=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;visShared=_v.s!==false;visComp=_v.co!==false;calVis=_v.c||{}}catch(e){}
 const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,co:visComp,c:calVis})};
@@ -371,19 +386,19 @@ const todayP=x=>x.due_at&&new Date(x.due_at)<nextDay(new Date());
 const tmrP=x=>{if(!x.due_at)return false;const d=new Date(x.due_at),a=nextDay(new Date());return d>=a&&d<nextDay(a)};
 const fmt=d=>new Date(d).toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang],{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
 const toL=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
-function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,clists,litems,listV24,evV24})}catch(e){}}
+function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24})}catch(e){}}
 function hydrate(){
   try{const c=JSON.parse(localStorage.mdcache||'null');if(!c)return false;
   tasks=c.tasks||[];cats=c.cats||[];ideas=c.ideas||[];maps=c.maps||[];habits=c.habits||[];hlogs=c.hlogs||[];events=c.events||[];ecats=c.ecats||[];langs=c.langs||[];words=c.words||[];ssess=c.ssess||[];squiz=c.squiz||[];shareCals=c.shareCals||[];calMembers=c.calMembers||[];
   evV20=!!c.evV20;habV21=!!c.habV21;curMap=c.curMap||curMap;if(c.curLang)curLang=c.curLang;hlists=c.hlists||[];plans=c.plans||[];pfin=c.pfin||[];planV23=!!c.planV23;habList=!!c.habList;planErr=false;
-  clists=c.clists||[];litems=c.litems||[];listV24=!!c.listV24;evV24=!!c.evV24;
+  slists=c.slists||[];litems=c.litems||[];dlists=c.dlists||[];ditems=c.ditems||[];shopV25=!!c.shopV25;evV24=!!c.evV24;
   ideaErr=null;habitErr=null;evErr=null;langErr=null;shareErr=false;return true}catch(e){return false}
 }
 async function dedupCats(){
   // v23.1: merge duplicate category rows (same kind + name_key, or kind + name when no key).
   // Keep the earliest-created row; re-point habits/tasks/events references; delete the rest.
   const tag=(arr,nm)=>arr.map(c=>({c,arr,nm}));
-  const all=[...tag(cats),...tag(ecats),...tag(hlists),...tag(clists)];
+  const all=[...tag(cats),...tag(ecats),...tag(hlists),...tag(slists)];
   const groups={};
   all.forEach(x=>{const c=x.c,k=(c.kind||'task')+'|'+(c.name_key||('n:'+(c.name||'')));(groups[k]=groups[k]||[]).push(x)});
   for(const k in groups){
@@ -402,6 +417,24 @@ async function dedupCats(){
       events.forEach(x=>{if(x.category_id===did)x.category_id=keep.id});
       try{await sb.from('categories').delete().eq('id',did)}catch(_){}
       const ix=dup.arr.findIndex(c=>c.id===did);if(ix>=0)dup.arr.splice(ix,1);
+    }
+  }
+}
+async function dedupDays(){
+  // v25: merge duplicate day_lists rows for the same date (race on lazy create).
+  // Keep the earliest-created row; re-point its items; delete the rest.
+  const groups={};
+  dlists.forEach(d=>{(groups[d.list_date]=groups[d.list_date]||[]).push(d)});
+  for(const k in groups){
+    const g=groups[k];if(g.length<2)continue;
+    g.sort((a,b)=>String(a.created_at||'').localeCompare(String(b.created_at||'')));
+    const keep=g[0];
+    for(const dup of g.slice(1)){
+      if(dup.id===keep.id)continue;
+      try{await sb.from('day_list_items').update({day_list_id:keep.id}).eq('day_list_id',dup.id)}catch(_){}
+      ditems.forEach(i=>{if(i.day_list_id===dup.id)i.day_list_id=keep.id});
+      try{await sb.from('day_lists').delete().eq('id',dup.id)}catch(_){}
+      dlists=dlists.filter(d=>d.id!==dup.id);
     }
   }
 }
@@ -430,10 +463,12 @@ async function loadDataImpl(){
   try{const _ph=await sb.from('habits').select('timer_min').limit(1);habV21=!_ph.error}catch(_){habV21=false}
   // ===== v23: habit lists / plans / finance (graceful if sql-v23.sql not run yet) =====
   try{const hl=await sb.from('categories').select('*').eq('kind','habit').order('sort_order');hlists=hl.error?[]:hl.data}catch(_){hlists=[]}
-  // ===== v24: custom lists + items (graceful if sql-v24.sql not run yet) =====
-  try{const cl=await sb.from('categories').select('*').eq('kind','custom').order('sort_order');clists=cl.error?[]:cl.data}catch(_){clists=[]}
-  try{const li=await sb.from('list_items').select('*').order('sort_order');listV24=!li.error;litems=li.error?[]:li.data}catch(_){listV24=false;litems=[]}
-  if(!dedupDone){dedupDone=true;try{await dedupCats()}catch(_){}}
+  // ===== v25: shopping lists (kind='shop') + per-day shopping lists (graceful if sql-v25.sql not run yet) =====
+  try{const cl=await sb.from('categories').select('*').eq('kind','shop').order('sort_order');slists=cl.error?[]:cl.data}catch(_){slists=[]}
+  let _liOk=false;
+  try{const li=await sb.from('list_items').select('*').order('sort_order');_liOk=!li.error;litems=li.error?[]:li.data}catch(_){litems=[]}
+  try{const dl=await sb.from('day_lists').select('*').order('list_date');if(dl.error)throw 0;const di=await sb.from('day_list_items').select('*').order('sort_order');if(di.error)throw 0;dlists=dl.data;ditems=di.data;shopV25=_liOk}catch(_){shopV25=false;dlists=[];ditems=[]}
+  if(!dedupDone){dedupDone=true;try{await dedupCats()}catch(_){}try{await dedupDays()}catch(_){}}
   try{
     // v23.1: idempotent seeding — decide from a live DB query (never localStorage, never memory arrays alone)
     const seed=async(kind,defs)=>{
@@ -536,12 +571,11 @@ function drawer(){
       +withFin.map(p=>it('fplan',p.id,'🗂',esc(p.title),pfin.filter(f=>f.plan_id===p.id).length,finPlan===p.id)).join('')+'</aside>';
   }
   if(tab==='lists'){
-    // v24: the Lists page reads the SAME cats/hlists/clists arrays as every drawer — no copies.
-    const n=pool();
+    // v25: shopping page drawer — master to-buy lists + recent per-day lists (same arrays, no copies).
+    const days=[...dlists].sort((a,b)=>a.list_date<b.list_date?1:-1).slice(0,14);
     return head
-      +`<div class="dsec">${t('taskLists')}</div>`+cats.map(c=>it('lgo','todo:'+c.id,c.icon||'📁',esc(catName(c)),n.filter(x=>x.category_id===c.id).length,false)).join('')
-      +`<div class="dsec">${t('habitLists')}</div>`+hlists.map(c=>it('lgo','habit:'+c.id,c.icon||'📁',esc(catName(c)),habits.filter(h=>h.list_id===c.id&&!h.archived).length,false)).join('')
-      +`<div class="dsec">${t('customLists')}</div>`+clists.map(c=>`<button class="di${clistView===c.id?' on':''}" data-a="lopen" data-id="${c.id}"><span class="ic2">${c.icon||'🗂'}</span><span class="nm">${esc(catName(c))}</span><i>${litems.filter(i=>i.list_id===c.id).length||''}</i></button>`).join('')
+      +`<div class="dsec">${t('master')}</div>`+slists.map(c=>it('snav',c.id,c.icon||'🛒',esc(catName(c)),litems.filter(i=>i.list_id===c.id).length,shopList===c.id)).join('')
+      +`<div class="dsec">${t('history')}</div>`+days.map(d=>it('dgo',d.list_date,'🗓',fmtDay(d.list_date),ditems.filter(i=>i.day_list_id===d.id).length,(shopDate||ymd(new Date()))===d.list_date)).join('')
       +'</aside>';
   }
   if(tab==='study'){
@@ -563,7 +597,7 @@ const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 
 const tabbar=()=>`<nav class="tabs">${[['habit','habits'],['todo','todoT'],['cal','calendar'],['lists','listsPage'],['plan','plans'],['fin','finance'],['study','study'],['set','settings']].map(([k,n])=>`<button data-a="tab" data-v="${k}" class="${tab===k?'on':''}" aria-label="${t(n)}"${tab===k?' aria-current="page"':''}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></button>`).join('')}</nav>`;
 const REM=[['','r_none'],['0','r_0'],['10','r_10'],['30','r_30'],['60','r_60'],['120','r_120'],['1440','r_1440']];
 const RPT=[['none','rp_none'],['daily','rp_d'],['weekly','rp_w'],['monthly','rp_m'],['yearly','rp_y']];
-const anyCat=id=>cats.find(c=>c.id===id)||ecats.find(c=>c.id===id)||hlists.find(c=>c.id===id)||clists.find(c=>c.id===id);
+const anyCat=id=>cats.find(c=>c.id===id)||ecats.find(c=>c.id===id)||hlists.find(c=>c.id===id)||slists.find(c=>c.id===id);
 const catName=c=>c?(c.name_key&&T[lang]&&T[lang][c.name_key]?t(c.name_key):c.name):'';
 const planOf=id=>plans.find(p=>p.id===id);
 const hm=d=>new Date(d).toLocaleTimeString(LOC[lang],{hour:'2-digit',minute:'2-digit'});
@@ -1036,46 +1070,92 @@ function openPlan(id){
   dlg.showModal();$('p-t').focus();
 }
 
-// ================= v24: Lists page (single source: cats / hlists / clists) =================
-function listsHTML(){
-  if(clistView){const c=clists.find(z=>z.id===clistView);if(c)return clistDetailHTML(c);clistView=null}
-  const n=pool();
-  const trow=c=>{const its=tasks.filter(x=>x.category_id===c.id&&!x.parent_id),dn=its.filter(x=>x.done).length;return `<div class="task"><div class="tt" data-a="lgo" data-v="todo:${c.id}"><b>${esc((c.icon||'📁')+' '+catName(c))}</b><div class="meta">${dn}/${its.length}</div>${its.length?`<div class="bar"><i style="width:${Math.round(dn/its.length*100)}%"></i></div>`:''}</div><span class="meta">›</span></div>`};
-  const hrow=c=>{const hs=habits.filter(h=>h.list_id===c.id&&!h.archived);return `<div class="task"><div class="tt" data-a="lgo" data-v="habit:${c.id}"><b>${esc((c.icon||'📁')+' '+catName(c))}</b><div class="meta">${hs.length}</div></div><span class="meta">›</span></div>`};
-  const crow=c=>{const its=litems.filter(i=>i.list_id===c.id),dn=its.filter(i=>i.done).length;return `<div class="task"><div class="tt" data-a="lopen" data-id="${c.id}"><b>${esc((c.icon||'🗂')+' '+catName(c))}</b><div class="meta">${dn}/${its.length}</div>${its.length?`<div class="bar"><i style="width:${Math.round(dn/its.length*100)}%"></i></div>`:''}</div><span class="meta">›</span></div>`};
-  return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div>`
-  +`<div class="ghd"><b>${t('taskLists')}</b><span class="meta">${cats.length}</span></div>`+(cats.length?`<div class="card">${cats.map(trow).join('')}</div>`:`<div class="card"><p class="meta">—</p></div>`)
-  +`<div class="ghd"><b>${t('habitLists')}</b><span class="meta">${hlists.length}</span></div>`+(hlists.length?`<div class="card">${hlists.map(hrow).join('')}</div>`:`<div class="card"><p class="meta">—</p></div>`)
-  +`<div class="ghd"><b>${t('customLists')}</b><span class="meta">${clists.length}</span></div>`
-  +(!listV24?`<div class="card"><p class="meta">${t('listSql')}</p></div>`:clists.length?`<div class="card">${clists.map(crow).join('')}</div>`:`<div class="card"><p class="meta">${t('clEmpty')}</p></div>`)
-  +(listV24?`<button class="fab" data-a="cladd" aria-label="${t('newList')}">＋</button>`:'');
+// ================= v25: Shopping page (left: to-buy master lists / right: per-day shopping list) =================
+// Master items live in list_items (list_id -> categories kind='shop').
+// Day items are COPIES in day_list_items (src_id remembers the master item) —
+// the two sides never delete each other; only manual deletes remove rows.
+const fmtDay=ds=>{const p=String(ds).split('-').map(Number);return new Date(p[0],(p[1]||1)-1,p[2]||1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric',weekday:'short'})};
+const dayOf=ds=>dlists.find(d=>d.list_date===ds);
+const dayItemsOf=dl=>dl?ditems.filter(i=>i.day_list_id===dl.id).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.created_at<b.created_at?-1:1)):[];
+let _dayP=null;
+function ensureTodayList(){
+  const td=ymd(new Date()),ex=dayOf(td);
+  if(ex)return Promise.resolve(ex);
+  if(_dayP)return _dayP;
+  const p=(async()=>{const{data,error}=await sb.from('day_lists').insert({list_date:td}).select().single();if(error){alert(error.message);return null}dlists.push(data);return data})();
+  _dayP=p;const cl=()=>{if(_dayP===p)_dayP=null};p.then(cl,cl);
+  return p;
 }
-function clistDetailHTML(c){
-  const its=litems.filter(i=>i.list_id===c.id).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.created_at<b.created_at?-1:1));
-  const dn=its.filter(i=>i.done).length;
-  return drawer()+`<div class="hd"><span><button class="sec ic" data-a="lback" aria-label="‹">‹</button> <button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button></span><span class="meta">${its.length?dn+'/'+its.length:''}</span></div>
-<div class="card"><b style="font-size:19px">${esc((c.icon||'🗂')+' '+catName(c))}</b>${its.length?`<div class="pbar"><i style="width:${Math.round(dn/its.length*100)}%"></i></div>`:''}</div>
-<div class="card">${its.length?its.map(i=>swpWrap('litem',i.id,`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="litog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt"><b>${esc(i.title)}</b></div></div>`)).join(''):`<p class="meta">${t('liEmpty')}</p>`}
-<div class="tbar"><input id="li-n" type="text" maxlength="120" placeholder="${t('liItemPh')}"><button class="pri" data-a="liadd" data-id="${c.id}">＋</button></div></div>
-<div class="card"><div class="row"><button class="sec" data-a="cledit" data-id="${c.id}">✎ ${t('edit')}</button><button class="sec" data-a="cldel" data-id="${c.id}">${t('del')}</button></div></div>`;
+async function toggleShopItem(it){
+  // Core rule: selecting NEVER deletes the master item; unselecting only removes today's copy.
+  const dl=dayOf(ymd(new Date()));
+  const ex=dl?ditems.find(x=>x.day_list_id===dl.id&&x.src_id===it.id):null;
+  if(ex){
+    const{error}=await sb.from('day_list_items').delete().eq('id',ex.id);if(error)return alert(error.message);
+    ditems=ditems.filter(x=>x.id!==ex.id);
+  }else{
+    const day=await ensureTodayList();if(!day)return;
+    const v={day_list_id:day.id,title:it.title,src_id:it.id,sort_order:ditems.filter(x=>x.day_list_id===day.id).length};
+    const{data,error}=await sb.from('day_list_items').insert(v).select().single();if(error)return alert(error.message);
+    ditems.push(data);
+  }
+  render();
 }
-function openClist(id){
-  const dlg=$('dlg'),x=id?clists.find(c=>c.id===id):null;
-  dlg.innerHTML=`<label for="cl-n">${t('listName')}</label><input id="cl-n" type="text" maxlength="20" value="${esc(x?catName(x):'')}"><label for="cl-e">${t('emoji')}</label><input id="cl-e" type="text" maxlength="8" placeholder="🗂" value="${esc(x&&x.icon||'')}"><label for="cl-c">${t('color')}</label><input id="cl-c" type="color" value="${esc(x&&x.color||'#8FA382')}"><div class="row"><button class="sec" id="cl-x">${t('cancel')}</button><button class="pri" id="cl-s">${t('save')}</button></div>`;
+function shopShareText(ds){
+  const its=dayItemsOf(dayOf(ds));
+  return '🛒 '+t('listsPage')+'\n'+fmtDay(ds)+(its.length?'\n'+its.map(i=>(i.done?'☑ ':'☐ ')+i.title).join('\n'):'');
+}
+async function shareDayList(){
+  const tx=shopShareText(shopDate||ymd(new Date()));
+  if(navigator.share){try{await navigator.share({title:t('listsPage'),text:tx});return}catch(e){if(e&&e.name==='AbortError')return}}
+  if(navigator.clipboard&&navigator.clipboard.writeText){try{await navigator.clipboard.writeText(tx);say(t('copied2'));return}catch(_){}}
+  const dlg=$('dlg');
+  dlg.innerHTML=`<label for="sh-t">${t('shareBtn')}</label><textarea id="sh-t" rows="8" readonly>${esc(tx)}</textarea><div class="row"><button class="pri" id="sh-x">${t('done')}</button></div>`;
+  $('sh-x').onclick=()=>dlg.close();
+  if(!dlg.open)dlg.showModal();
+}
+function shopHTML(){
+  if(!shopV25)return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div><div class="card"><p class="meta">${t('shopSql')}</p></div>`;
+  const td=ymd(new Date()),vd=shopDate||td;
+  if(shopList&&!slists.some(c=>c.id===shopList))shopList=null;
+  if(!shopList&&slists.length)shopList=slists[0].id;
+  const cur=slists.find(c=>c.id===shopList);
+  const selIds=new Set(dayItemsOf(dayOf(td)).map(i=>i.src_id));
+  const mIts=cur?litems.filter(i=>i.list_id===cur.id).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.created_at<b.created_at?-1:1)):[];
+  const left=`<div class="card"><div class="dsec" style="margin-top:0">${t('master')}</div>`
+    +`<div class="chips">${slists.map(c=>`<button class="chip${c.id===shopList?' on':''}" data-a="snav" data-v="${c.id}">${esc(c.icon||'🛒')} ${esc(catName(c))}</button>`).join('')}<button class="chip" data-a="sladd" aria-label="${t('newList')}">＋</button></div>`
+    +(cur?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sledit" data-id="${cur.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="sldel" data-id="${cur.id}">${t('del')}</button></div>`
+      +(mIts.length?mIts.map(i=>swpWrap('litem',i.id,`<div class="task"><input type="checkbox" class="pc" style="--pc:#43A047" data-a="stog" data-id="${i.id}"${selIds.has(i.id)?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="stog" data-id="${i.id}"><b>${esc(i.title)}</b></div></div>`)).join(''):`<p class="meta">${t('liEmpty')}</p>`)
+      +`<div class="tbar"><input id="si-n" type="text" maxlength="120" placeholder="${t('slPh')}"><button class="pri" data-a="siadd" data-id="${cur.id}" aria-label="${t('liAdd')}">＋</button></div>`
+    :`<p class="meta">${t('slNone')}</p>`)
+    +`</div>`;
+  const dIts=dayItemsOf(dayOf(vd)),dn=dIts.filter(i=>i.done).length;
+  const right=`<div class="card"><div class="dsec" style="margin-top:0">${t('todayList')}</div>`
+    +`<div class="dhd"><button class="sec ic" data-a="dday" data-v="-1" aria-label="‹">‹</button><b>${fmtDay(vd)}</b><button class="sec ic" data-a="dday" data-v="1" aria-label="›"${vd>=td?' disabled style="opacity:.3"':''}>›</button></div>`
+    +(vd!==td?`<button class="lnk" data-a="dtoday">${t('backToday')}</button>`:'')
+    +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt"><b>${esc(i.title)}</b></div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
+    +(dIts.length?`<div class="row"><button class="pri" data-a="dshare">📤 ${t('shareBtn')}</button></div>`:'')
+    +`</div>`;
+  return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div><div class="shop"><div>${left}</div><div>${right}</div></div>`;
+}
+function openSlist(id){
+  const dlg=$('dlg'),x=id?slists.find(c=>c.id===id):null;
+  dlg.innerHTML=`<label for="cl-n">${t('listName')}</label><input id="cl-n" type="text" maxlength="20" value="${esc(x?catName(x):'')}"><label for="cl-e">${t('emoji')}</label><input id="cl-e" type="text" maxlength="8" placeholder="🛒" value="${esc(x&&x.icon||'')}"><label for="cl-c">${t('color')}</label><input id="cl-c" type="color" value="${esc(x&&x.color||'#43A047')}"><div class="row"><button class="sec" id="cl-x">${t('cancel')}</button><button class="pri" id="cl-s">${t('save')}</button></div>`;
   $('cl-x').onclick=()=>dlg.close();
   $('cl-s').onclick=async()=>{const n=$('cl-n').value.trim();if(!n)return;const v={name:n,icon:$('cl-e').value.trim()||null,color:$('cl-c').value};
     if(id){const{error}=await sb.from('categories').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
-    else{const{data,error}=await sb.from('categories').insert({kind:'custom',...v,sort_order:clists.length}).select().single();if(error)return alert(error.message);clists.push(data);clistView=data.id}
+    else{const{data,error}=await sb.from('categories').insert({kind:'shop',...v,sort_order:slists.length}).select().single();if(error)return alert(error.message);slists.push(data);shopList=data.id}
     dlg.close();render()};
   dlg.showModal();$('cl-n').focus();
 }
-async function delClist(id){
-  const c=clists.find(z=>z.id===id);if(!c)return;
+async function delSlist(id){
+  const c=slists.find(z=>z.id===id);if(!c)return;
   const its=litems.filter(i=>i.list_id===id);
+  try{await sb.from('list_items').delete().eq('list_id',id)}catch(_){}
   const{error}=await sb.from('categories').delete().eq('id',id);if(error)return alert(error.message);
-  clists=clists.filter(z=>z.id!==id);litems=litems.filter(i=>i.list_id!==id);
-  if(clistView===id)clistView=null;
-  render();showUndo('clist',{c,its});
+  slists=slists.filter(z=>z.id!==id);litems=litems.filter(i=>i.list_id!==id);
+  if(shopList===id)shopList=null;
+  render();showUndo('slist',{c,its});
 }
 
 const notifCard=()=>{const sup='Notification'in window,st=sup?Notification.permission:'na';return `<div class="card"><b>🔔 ${t('notifT')}</b><p class="meta">${t('notifHint')}</p>${st==='granted'?`<p class="meta">${t('notifOk')}</p>`:st==='denied'||!sup?`<p class="meta">${t('notifNo')}</p>`:`<div class="row"><button class="pri" data-a="nreq">${t('notifBtn')}</button></div>`}</div>`};
@@ -1084,7 +1164,7 @@ function pageTitle(){
   if(tab==='todo')return vname();
   if(tab==='habit'){if(hview){const hx=habits.find(x=>x.id===hview);if(hx)return esc((hx.icon||'')+' '+hx.name)}return esc(t('habits'))}
   if(tab==='cal')return esc(t('calendar'));
-  if(tab==='lists'){if(clistView){const cx=clists.find(c=>c.id===clistView);if(cx)return esc((cx.icon||'🗂')+' '+catName(cx))}return esc(t('listsPage'))}
+  if(tab==='lists')return esc(t('listsPage'));
   if(tab==='plan')return esc(t('plans'));
   if(tab==='fin')return esc(t('finance'));
   if(tab==='study')return esc(t('study'));
@@ -1097,7 +1177,7 @@ function appView(){
   if(tab==='set')body=setHTML();
   else if(tab==='habit')body=hview?habitDetail(hview):habitHTML();
   else if(tab==='cal')body=calHTML();
-  else if(tab==='lists')body=listsHTML();
+  else if(tab==='lists')body=shopHTML();
   else if(tab==='plan')body=planHTML();
   else if(tab==='fin')body=finHTML();
   else if(tab==='study')body=studyHTML();
@@ -1287,7 +1367,7 @@ function openList(kind){kind=kind||'task';
   const dlg=$('dlg');
   dlg.innerHTML=`<label for="l-n">${t('listName')}</label><input id="l-n" type="text" maxlength="20"><label for="l-e">${t('emoji')}</label><input id="l-e" type="text" maxlength="8" placeholder="😀"><label for="l-c">${t('color')}</label><input id="l-c" type="color" value="#8FA382"><div class="row"><button class="sec" id="l-x">${t('cancel')}</button><button class="pri" id="l-s">${t('save')}</button></div>`;
   $('l-x').onclick=()=>dlg.close();
-  $('l-s').onclick=async()=>{const n=$('l-n').value.trim();if(!n)return;const tgt=kind==='habit'?hlists:kind==='task'?cats:kind==='custom'?clists:ecats;const{data,error}=await sb.from('categories').insert({kind,name:n,icon:$('l-e').value.trim()||null,color:$('l-c').value,sort_order:tgt.length}).select().single();if(error)return alert(error.message);tgt.push(data);dlg.close();render()};
+  $('l-s').onclick=async()=>{const n=$('l-n').value.trim();if(!n)return;const tgt=kind==='habit'?hlists:kind==='task'?cats:kind==='shop'?slists:ecats;const{data,error}=await sb.from('categories').insert({kind,name:n,icon:$('l-e').value.trim()||null,color:$('l-c').value,sort_order:tgt.length}).select().single();if(error)return alert(error.message);tgt.push(data);dlg.close();render()};
   dlg.showModal();$('l-n').focus();
 }
 async function setDone(id,v){
@@ -1329,6 +1409,11 @@ function showUndo(kind,snaps){
 }
 async function swDelete(kind,id){
   swCloseAll();
+  if(kind==='ditem'){
+    const it=ditems.find(x=>x.id===id);if(!it)return;
+    const{error}=await sb.from('day_list_items').delete().eq('id',id);if(error)return alert(error.message);
+    ditems=ditems.filter(x=>x.id!==id);render();showUndo('ditem',[it]);return;
+  }
   if(kind==='litem'){
     const it=litems.find(x=>x.id===id);if(!it)return;
     const{error}=await sb.from('list_items').delete().eq('id',id);if(error)return alert(error.message);
@@ -1352,10 +1437,16 @@ async function undoDelete(kind,snaps){
     if(error)return alert(error.message);
     litems.push(data||sn);render();return;
   }
-  if(kind==='clist'){
+  if(kind==='ditem'){
+    const sn={...snaps[0],user_id:session.user.id};
+    const{data,error}=await sb.from('day_list_items').insert(sn).select().single();
+    if(error)return alert(error.message);
+    ditems.push(data||sn);render();return;
+  }
+  if(kind==='slist'){
     const{data,error}=await sb.from('categories').insert(snaps.c).select().single();
     if(error)return alert(error.message);
-    clists.push(data||snaps.c);
+    slists.push(data||snaps.c);
     for(const it of snaps.its){const r=await sb.from('list_items').insert({...it,user_id:session.user.id}).select().single();if(!r.error&&r.data)litems.push(r.data)}
     render();return;
   }
@@ -1456,7 +1547,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='hnav'){hlistView=b.dataset.v;dr=false;render()}
   else if(a==='nlh'){dr=false;render();openList('habit')}
   else if(a==='set'){tab='set';dr=false;drEdit=false;render()}
-  else if(a==='tab'){tab=b.dataset.v;dr=false;drEdit=false;render()}
+  else if(a==='tab'){tab=b.dataset.v;dr=false;drEdit=false;if(tab==='lists')shopDate=null;render()}
   else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);render()}
   else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
   else if(a==='ctd'){cm=new Date();cs=new Date();render()}
@@ -1483,14 +1574,17 @@ $('app').addEventListener('click',async e=>{
     else if(v==='shared'){if(visShared&&ons()<=1){render();return}visShared=!visShared}
     else if(v==='comp'){if(visComp&&ons()<=1){render();return}visComp=!visComp}
     else calVis[v]=!(calVis[v]!==false);saveVis();render()}
-  else if(a==='lgo'){const pr=b.dataset.v.split(':');if(pr[0]==='todo'){view=pr[1];tab='todo'}else{hlistView=pr[1];tab='habit'}dr=false;render()}
-  else if(a==='lopen'){clistView=id;tab='lists';dr=false;render()}
-  else if(a==='lback'){clistView=null;render()}
-  else if(a==='cladd')openClist()
-  else if(a==='cledit')openClist(id)
-  else if(a==='cldel')await delClist(id)
-  else if(a==='liadd'){const inp=$('li-n'),tx=inp?inp.value.trim():'';if(tx){const v={list_id:id,title:tx,sort_order:litems.filter(i=>i.list_id===id).length};const{data,error}=await sb.from('list_items').insert(v).select().single();if(error)alert(error.message);else{litems.push(data);render()}}}
-  else if(a==='litog'){const it=litems.find(x=>x.id===id);if(it){const{error}=await sb.from('list_items').update({done:b.checked}).eq('id',id);if(error)alert(error.message);else{it.done=b.checked;render()}}}
+  else if(a==='snav'){shopList=b.dataset.v;dr=false;render()}
+  else if(a==='dgo'){shopDate=b.dataset.v;dr=false;render()}
+  else if(a==='sladd')openSlist()
+  else if(a==='sledit')openSlist(id)
+  else if(a==='sldel')await delSlist(id)
+  else if(a==='siadd'){const inp=$('si-n'),tx=inp?inp.value.trim():'';if(tx){const v={list_id:id,title:tx,sort_order:litems.filter(i=>i.list_id===id).length};const{data,error}=await sb.from('list_items').insert(v).select().single();if(error)alert(error.message);else{litems.push(data);render()}}}
+  else if(a==='stog'){const it=litems.find(x=>x.id===id);if(it)await toggleShopItem(it)}
+  else if(a==='dtog'){const it=ditems.find(x=>x.id===id);if(it){const{error}=await sb.from('day_list_items').update({done:b.checked}).eq('id',id);if(error)alert(error.message);else{it.done=b.checked;render()}}}
+  else if(a==='dday'){const p=(shopDate||ymd(new Date())).split('-').map(Number);const s=ymd(new Date(p[0],p[1]-1,p[2]+ +b.dataset.v));if(s<=ymd(new Date()))shopDate=s;render()}
+  else if(a==='dtoday'){shopDate=null;render()}
+  else if(a==='dshare')await shareDayList()
   else if(a==='share')openShare()
   else if(a==='focus')openFocus()
   else if(a==='nplan')openPlan()
@@ -1518,7 +1612,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='ovt'){ovOpen=!ovOpen;render()}
   else if(a==='pst')await postpone()
   else if(a==='chk')await setDone(id,b.checked)
-  else if(a==='cdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('categories').delete().eq('id',id);if(error)alert(error.message);else{cats=cats.filter(c=>c.id!==id);ecats=ecats.filter(c=>c.id!==id);hlists=hlists.filter(c=>c.id!==id);clists=clists.filter(c=>c.id!==id);litems=litems.filter(i=>i.list_id!==id);if(clistView===id)clistView=null;tasks.forEach(x=>{if(x.category_id===id)x.category_id=null});events.forEach(x=>{if(x.category_id===id)x.category_id=null});habits.forEach(h=>{if(h.list_id===id)h.list_id=null});if(view===id)view='all';if(hlistView===id)hlistView='all';render()}}}
+  else if(a==='cdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('categories').delete().eq('id',id);if(error)alert(error.message);else{cats=cats.filter(c=>c.id!==id);ecats=ecats.filter(c=>c.id!==id);hlists=hlists.filter(c=>c.id!==id);slists=slists.filter(c=>c.id!==id);litems=litems.filter(i=>i.list_id!==id);if(shopList===id)shopList=null;tasks.forEach(x=>{if(x.category_id===id)x.category_id=null});events.forEach(x=>{if(x.category_id===id)x.category_id=null});habits.forEach(h=>{if(h.list_id===id)h.list_id=null});if(view===id)view='all';if(hlistView===id)hlistView='all';render()}}}
   else if(a==='ctab'){courseLvl=b.dataset.v;localStorage.clvl=b.dataset.v;render()}
   else if(a==='gtog'){const k=b.dataset.v;expG.has(k)?expG.delete(k):expG.add(k);render()}
   else if(a==='wfil'){wordF=b.dataset.v;localStorage.wf=b.dataset.v;render()}
@@ -1828,7 +1922,7 @@ function checkReminders(){
 let remTimer=null;
 function startRem(){checkReminders();if(!remTimer)remTimer=setInterval(checkReminders,30000)}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()});
-sb.auth.onAuthStateChange((_e,s)=>{session=s;try{if(s)localStorage.mdsess=JSON.stringify({user:{id:s.user.id,email:s.user.email}});else localStorage.removeItem('mdsess')}catch(e){}setTimeout(async()=>{try{if(s){await loadSettings();await loadBg();await loadData();if(!OFFLINE&&_sbReal)live();startRem()}else{uname='';localStorage.removeItem('dname');bgPath='';bgUrl='';theme();if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];events=[];ecats=[];clists=[];litems=[];clistView=null;tab='todo';view='all'}}catch(e){}render()},0)});
+sb.auth.onAuthStateChange((_e,s)=>{session=s;try{if(s)localStorage.mdsess=JSON.stringify({user:{id:s.user.id,email:s.user.email}});else localStorage.removeItem('mdsess')}catch(e){}setTimeout(async()=>{try{if(s){await loadSettings();await loadBg();await loadData();if(!OFFLINE&&_sbReal)live();startRem()}else{uname='';localStorage.removeItem('dname');bgPath='';bgUrl='';theme();if(ch){sb.removeChannel(ch);ch=null}tasks=[];cats=[];ideas=[];habits=[];hlogs=[];events=[];ecats=[];slists=[];litems=[];dlists=[];ditems=[];shopList=null;shopDate=null;tab='todo';view='all'}}catch(e){}render()},0)});
 setTimeout(()=>{if(!rendered)render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
