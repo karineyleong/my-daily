@@ -144,7 +144,7 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 /* ===== v25: shopping page (two columns, left slightly wider) ===== */
 /* v26: minmax(0,...) tracks + min-width:0 items — nowrap chip rows inside a column
    must never inflate the track minimum and push the other column off-screen. */
-.shop{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:8px;align-items:start}
+.shop{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:start}
 .shop>*{min-width:0}
 .shop .card{padding:10px;margin-bottom:0;min-width:0}
 .shop .chips{min-width:0}
@@ -161,6 +161,12 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .dhd b{font-size:13.5px;text-align:center;line-height:1.35;flex:1 1 100%;order:-1;white-space:nowrap}
 .dhd .ic{padding:4px 10px;font-size:16px;flex:none}
 .dhd .sp{flex:1}
+/* ===== v28: history rows in the shopping drawer (nav + pin + rename) ===== */
+.hrow{display:flex;align-items:center;gap:6px}
+.hrow .di{flex:1;width:auto;min-width:0}
+.hrow .ic{flex:none;padding:6px 9px;font-size:15px}
+.pinb{opacity:.35}
+.pinb.on{opacity:1;background:color-mix(in srgb,var(--ac) 22%,transparent);border-color:transparent}
 
 /* ===== v23 ===== */
 .card{margin-bottom:18px}
@@ -199,7 +205,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v27)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v28)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -336,9 +342,9 @@ Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_f
 Object.assign(T.zh,{compCal:'公司',listsPage:'購買清單',liAdd:'新增項目',liEmpty:'還沒有項目，在下方新增第一個。',evScope:'類別'});
 Object.assign(T.ja,{compCal:'会社',listsPage:'買い物リスト',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',evScope:'区分'});
 Object.assign(T.en,{compCal:'Company',listsPage:'Shopping list',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',evScope:'Scope'});
-Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v27.sql。',history:'歷史清單',nameReq:'名稱不可空白'});
-Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v27.sql を実行してください。',history:'過去のリスト',nameReq:'名前を入力してください'});
-Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v27.sql in Supabase first.',history:'History',nameReq:'Name cannot be empty'});
+Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v28.sql。',history:'歷史清單',histNone:'還沒有歷史清單。',nameReq:'名稱不可空白'});
+Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v28.sql を実行してください。',history:'過去のリスト',histNone:'過去のリストはまだありません。',nameReq:'名前を入力してください'});
+Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v28.sql in Supabase first.',history:'History',histNone:'No past lists yet.',nameReq:'Name cannot be empty'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#1E88E5',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -380,7 +386,7 @@ let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
 let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false,evV24=false;
 let hlists=[],plans=[],pfin=[],planErr=false,planV23=false,habList=false,hlistView='all',planView=null,finCur=null;
-let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null,shopDay=null,dayNameV27=false;
+let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null,shopDay=null,dayNameV27=false,dayPinV28=false;
 let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
 let visPriv=true,visShared=true,visComp=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;visShared=_v.s!==false;visComp=_v.co!==false;calVis=_v.c||{}}catch(e){}
 const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,co:visComp,c:calVis})};
@@ -396,12 +402,12 @@ const todayP=x=>x.due_at&&new Date(x.due_at)<nextDay(new Date());
 const tmrP=x=>{if(!x.due_at)return false;const d=new Date(x.due_at),a=nextDay(new Date());return d>=a&&d<nextDay(a)};
 const fmt=d=>new Date(d).toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang],{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
 const toL=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
-function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24,dayNameV27})}catch(e){}}
+function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24,dayNameV27,dayPinV28})}catch(e){}}
 function hydrate(){
   try{const c=JSON.parse(localStorage.mdcache||'null');if(!c)return false;
   tasks=c.tasks||[];cats=c.cats||[];ideas=c.ideas||[];maps=c.maps||[];habits=c.habits||[];hlogs=c.hlogs||[];events=c.events||[];ecats=c.ecats||[];langs=c.langs||[];words=c.words||[];ssess=c.ssess||[];squiz=c.squiz||[];shareCals=c.shareCals||[];calMembers=c.calMembers||[];
   evV20=!!c.evV20;habV21=!!c.habV21;curMap=c.curMap||curMap;if(c.curLang)curLang=c.curLang;hlists=c.hlists||[];plans=c.plans||[];pfin=c.pfin||[];planV23=!!c.planV23;habList=!!c.habList;planErr=false;
-  slists=c.slists||[];litems=c.litems||[];dlists=c.dlists||[];ditems=c.ditems||[];shopV25=!!c.shopV25;evV24=!!c.evV24;dayNameV27=!!c.dayNameV27;
+  slists=c.slists||[];litems=c.litems||[];dlists=c.dlists||[];ditems=c.ditems||[];shopV25=!!c.shopV25;evV24=!!c.evV24;dayNameV27=!!c.dayNameV27;dayPinV28=!!c.dayPinV28;
   ideaErr=null;habitErr=null;evErr=null;langErr=null;shareErr=false;return true}catch(e){return false}
 }
 async function dedupCats(){
@@ -481,6 +487,8 @@ async function loadDataImpl(){
   try{const dl=await sb.from('day_lists').select('*').order('list_date');if(dl.error)throw 0;const di=await sb.from('day_list_items').select('*').order('sort_order');if(di.error)throw 0;dlists=dl.data;ditems=di.data;shopV25=_liOk}catch(_){shopV25=false;dlists=[];ditems=[]}
   // ===== v27: named day lists (graceful if sql-v27.sql not run yet: no name column -> single-list behaviour) =====
   try{const _pd=await sb.from('day_lists').select('name').limit(1);dayNameV27=!_pd.error}catch(_){dayNameV27=false}
+  // ===== v28: pinnable day lists (graceful if sql-v28.sql not run yet: no pinned column -> pin buttons hidden, rename + history keep working) =====
+  try{const _pp=await sb.from('day_lists').select('pinned').limit(1);dayPinV28=!_pp.error}catch(_){dayPinV28=false}
   if(!dedupDone){dedupDone=true;try{await dedupCats()}catch(_){}try{await dedupDays()}catch(_){}}
   try{
     // v23.1: idempotent seeding — decide from a live DB query (never localStorage, never memory arrays alone)
@@ -584,12 +592,18 @@ function drawer(){
       +withFin.map(p=>it('fplan',p.id,'🗂',esc(p.title),pfin.filter(f=>f.plan_id===p.id).length,finPlan===p.id)).join('')+'</aside>';
   }
   if(tab==='lists'){
-    // v25/v27: shopping page drawer — master to-buy lists + recent days (same arrays, no copies).
-    const byDate={};dlists.forEach(d=>{(byDate[d.list_date]=byDate[d.list_date]||[]).push(d)});
-    const days=Object.keys(byDate).sort().reverse().slice(0,14);
+    // v28: shopping drawer = HISTORY ONLY — master lists are managed by the page
+    // dropdown, so they no longer repeat here. One row per day list (not grouped
+    // by date): pinned rows first, then newest date first. Rename and pin write
+    // the very day_lists row the page dropdown and the To Do section render.
+    const rows=[...dlists].sort((a,b)=>((b.pinned?1:0)-(a.pinned?1:0))||(a.list_date<b.list_date?1:a.list_date>b.list_date?-1:0)||String(b.created_at||'').localeCompare(String(a.created_at||''))).slice(0,30);
+    const hrow=d=>{const on=(shopDate||ymd(new Date()))===d.list_date&&curDayList(d.list_date)===d,cnt=ditems.filter(i=>i.day_list_id===d.id).length;
+      return `<div class="hrow"><button class="di${on?' on':''}" data-a="dgo2" data-id="${d.id}"><span class="ic2">🗓</span><span class="nm">${fmtDayS(d.list_date)} · ${esc(dayName(d))}</span><i>${cnt||''}</i></button>`
+      +(dayPinV28?`<button class="sec ic pinb${d.pinned?' on':''}" data-a="dpin" data-id="${d.id}" aria-pressed="${d.pinned?'true':'false'}" aria-label="📌">📌</button>`:'')
+      +(dayNameV27?`<button class="sec ic" data-a="dren" data-id="${d.id}" aria-label="${t('edit')}">✎</button>`:'')
+      +`</div>`};
     return head
-      +`<div class="dsec">${t('master')}</div>`+slists.map(c=>it('snav',c.id,c.icon||'🛒',esc(catName(c)),litems.filter(i=>i.list_id===c.id).length,shopList===c.id)).join('')
-      +`<div class="dsec">${t('history')}</div>`+days.map(ds=>it('dgo',ds,'🗓',fmtDay(ds),ditems.filter(i=>byDate[ds].some(d=>d.id===i.day_list_id)).length,(shopDate||ymd(new Date()))===ds)).join('')
+      +`<div class="dsec">${t('history')}</div>`+(rows.length?rows.map(hrow).join(''):`<p class="meta" style="padding:4px 2px">${t('histNone')}</p>`)
       +'</aside>';
   }
   if(tab==='study'){
@@ -1225,6 +1239,16 @@ function openDayList(id){
     dlg.close();render()};
   dlg.showModal();$('dl-n').focus();
 }
+// v28: pin/unpin a day list from the history drawer. Pinned lists stay on top
+// of the drawer (persisted in day_lists.pinned; hidden entirely when the
+// column is missing, see the dayPinV28 probe in loadData).
+async function toggleDayPin(id){
+  const d=dlists.find(z=>z.id===id);if(!d)return;
+  const np=!d.pinned;
+  const{error}=await sb.from('day_lists').update({pinned:np}).eq('id',id);
+  if(error)return alert(error.message);
+  d.pinned=np;render();
+}
 async function delDayList(id){
   const d=dlists.find(z=>z.id===id);if(!d)return;
   const its=ditems.filter(i=>i.day_list_id===id);
@@ -1537,7 +1561,10 @@ async function undoDelete(kind,snaps){
     render();return;
   }
   if(kind==='dlist'){
-    const{data,error}=await sb.from('day_lists').insert(snaps.d).select().single();
+    // Strip v28's pinned flag when the column does not exist (pre-sql-v28 DB):
+    // a snapshot restored from cache must never make the insert fail.
+    const sn0={...snaps.d};if(!dayPinV28)delete sn0.pinned;
+    const{data,error}=await sb.from('day_lists').insert(sn0).select().single();
     if(error)return alert(error.message);
     dlists.push(data||snaps.d);
     for(const it of snaps.its){const r=await sb.from('day_list_items').insert({...it,user_id:session.user.id}).select().single();if(!r.error&&r.data)ditems.push(r.data)}
@@ -1669,6 +1696,9 @@ $('app').addEventListener('click',async e=>{
     else calVis[v]=!(calVis[v]!==false);saveVis();render()}
   else if(a==='snav'){shopList=b.dataset.v;dr=false;render()}
   else if(a==='dgo'){shopDate=b.dataset.v;shopDay=null;dr=false;render()}
+  else if(a==='dgo2'){const d=dlists.find(z=>z.id===id);if(d){shopDate=d.list_date;shopDay=d.id;dr=false;render()}}
+  else if(a==='dpin')await toggleDayPin(id);
+  else if(a==='dren')openDayList(id);
   else if(a==='sladd')openSlist()
   else if(a==='sledit')openSlist(id)
   else if(a==='sldel')await delSlist(id)
