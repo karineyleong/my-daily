@@ -59,7 +59,7 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(92vw,400px);display:flex;gap:4px;padding:6px;background:var(--card);border:1px solid var(--ln);border-radius:30px;z-index:10;box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .tabs button{flex:1;display:flex;justify-content:center;border:0;border-radius:24px;background:none;color:var(--mut);padding:10px}.tabs button.on{background:color-mix(in srgb,var(--ac) 24%,transparent);color:var(--ink)}
 .cm{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.cw,.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cw,.cg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}
 .cd .dn{align-self:flex-start;min-width:20px;text-align:center;line-height:20px;border-radius:50%;font-size:13px}
 .cd.td .dn{background:var(--ac);color:var(--on);font-weight:700}
 .cd.dim{opacity:.38}
@@ -72,7 +72,7 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .chp.en{border-radius:0 4px 4px 0}
 .chp.tk{background:#E9EFF4;color:#5B6B78}
 .more{font-size:9px;color:var(--mut);padding-left:4px}.cw{font-size:13px;color:var(--mut);margin-bottom:4px}
-.cd{position:relative;background:none;border:0;border-radius:8px;padding:3px;font-size:14px;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:2px;min-height:70px;text-align:left}.cd.on{background:color-mix(in srgb,var(--ac) 14%,transparent)}.cd.td:not(.on){box-shadow:inset 0 0 0 1.5px var(--ac)}
+.cd{position:relative;background:none;border:0;border-radius:8px;padding:3px;font-size:14px;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:2px;min-height:70px;text-align:left;min-width:0;overflow:hidden}.cd.on{background:color-mix(in srgb,var(--ac) 14%,transparent)}.cd.td:not(.on){box-shadow:inset 0 0 0 1.5px var(--ac)}
 .cd i{position:absolute;bottom:5px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--ac)}.cd.on i{background:var(--on)}
 .ideas{columns:2;column-gap:12px}.idea{break-inside:avoid;margin-bottom:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--ln);border-top:4px solid var(--ic);background:color-mix(in srgb,var(--ic) 14%,var(--card))}.idea b{display:block;overflow-wrap:anywhere}.idea p{margin:4px 0 0;font-size:14px;color:var(--mut);white-space:pre-wrap;overflow-wrap:anywhere}
 .dots{display:flex;gap:5px;margin-top:6px}.dots u{width:10px;height:10px;border-radius:50%;background:var(--ln)}.dots u.on{background:var(--hc,var(--ac))}
@@ -142,16 +142,21 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .lpchips .pchip{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 
 /* ===== v25: shopping page (two columns, left slightly wider) ===== */
-.shop{display:grid;grid-template-columns:1.12fr .88fr;gap:8px;align-items:start}
-.shop .card{padding:10px;margin-bottom:0}
-.shop .task{padding:9px 0;gap:6px}
+/* v26: minmax(0,...) tracks + min-width:0 items — nowrap chip rows inside a column
+   must never inflate the track minimum and push the other column off-screen. */
+.shop{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:8px;align-items:start}
+.shop>*{min-width:0}
+.shop .card{padding:10px;margin-bottom:0;min-width:0}
+.shop .chips{min-width:0}
+.shop .task{padding:9px 0;gap:6px;min-width:0}
 .shop .tt b{font-size:14px}
 .shop .tbar input{padding:9px;font-size:14px}
 .shop .tbar button{padding:9px 12px}
 .shop .chips{padding-bottom:6px}
-.dhd{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:4px}
-.dhd b{font-size:13.5px;text-align:center;line-height:1.35}
+.dhd{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:4px;flex-wrap:wrap}
+.dhd b{font-size:13.5px;text-align:center;line-height:1.35;flex:1 1 100%;order:-1;white-space:nowrap}
 .dhd .ic{padding:4px 10px;font-size:16px;flex:none}
+.dhd .sp{flex:1}
 
 /* ===== v23 ===== */
 .card{margin-bottom:18px}
@@ -164,9 +169,10 @@ dialog{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .mini{font-size:12px!important;padding:3px 9px!important;border-radius:99px}
 .calrow .mini{flex:0 0 auto}
 select.mini{flex:0 1 auto!important;width:auto}
-.caltop{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.caltop .chip{flex:none}
-.caltop .sp{flex:1}
+.caltop{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.caltop .chip{flex:0 1 auto;min-width:0;padding:6px 10px;font-size:14px;overflow:hidden;text-overflow:ellipsis}
+.caltop .ic{flex:none}
+.caltop .sp{flex:1;min-width:0}
 .hswp{position:relative;overflow:hidden;border-radius:6px}
 .hswp-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-weight:700;font-size:15px;color:#fff;background:#B9C4CC;transition:background .12s}
 .hswp-bg .hb-l{opacity:0}.hswp-bg .hb-r{opacity:0}
@@ -189,7 +195,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v25)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v26)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -326,9 +332,9 @@ Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_f
 Object.assign(T.zh,{compCal:'公司',listsPage:'購買清單',liAdd:'新增項目',liEmpty:'還沒有項目，在下方新增第一個。',evScope:'類別'});
 Object.assign(T.ja,{compCal:'会社',listsPage:'買い物リスト',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',evScope:'区分'});
 Object.assign(T.en,{compCal:'Company',listsPage:'Shopping list',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',evScope:'Scope'});
-Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v25.sql。',history:'歷史清單'});
-Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v25.sql を実行してください。',history:'過去のリスト'});
-Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v25.sql in Supabase first.',history:'History'});
+Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v25.sql。',history:'歷史清單',nameReq:'名稱不可空白'});
+Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v25.sql を実行してください。',history:'過去のリスト',nameReq:'名前を入力してください'});
+Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v25.sql in Supabase first.',history:'History',nameReq:'Name cannot be empty'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#1E88E5',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -1075,6 +1081,8 @@ function openPlan(id){
 // Day items are COPIES in day_list_items (src_id remembers the master item) —
 // the two sides never delete each other; only manual deletes remove rows.
 const fmtDay=ds=>{const p=String(ds).split('-').map(Number);return new Date(p[0],(p[1]||1)-1,p[2]||1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric',weekday:'short'})};
+// v26: compact one-line date for the narrow day-list header (date + weekday kept in full).
+const fmtDayS=ds=>{const p=String(ds).split('-').map(Number);const d=new Date(p[0],(p[1]||1)-1,p[2]||1);const wd=d.toLocaleDateString(LOC[lang],{weekday:'short'});return p[0]+'/'+pad(p[1]||1)+'/'+pad(p[2]||1)+(lang==='en'?' ('+wd+')':'（'+wd+'）')};
 const dayOf=ds=>dlists.find(d=>d.list_date===ds);
 const dayItemsOf=dl=>dl?ditems.filter(i=>i.day_list_id===dl.id).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.created_at<b.created_at?-1:1)):[];
 let _dayP=null;
@@ -1125,15 +1133,15 @@ function shopHTML(){
   const left=`<div class="card"><div class="dsec" style="margin-top:0">${t('master')}</div>`
     +`<div class="chips">${slists.map(c=>`<button class="chip${c.id===shopList?' on':''}" data-a="snav" data-v="${c.id}">${esc(c.icon||'🛒')} ${esc(catName(c))}</button>`).join('')}<button class="chip" data-a="sladd" aria-label="${t('newList')}">＋</button></div>`
     +(cur?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sledit" data-id="${cur.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="sldel" data-id="${cur.id}">${t('del')}</button></div>`
-      +(mIts.length?mIts.map(i=>swpWrap('litem',i.id,`<div class="task"><input type="checkbox" class="pc" style="--pc:#43A047" data-a="stog" data-id="${i.id}"${selIds.has(i.id)?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="stog" data-id="${i.id}"><b>${esc(i.title)}</b></div></div>`)).join(''):`<p class="meta">${t('liEmpty')}</p>`)
+      +(mIts.length?mIts.map(i=>swpWrap('litem',i.id,`<div class="task"><input type="checkbox" class="pc" style="--pc:#43A047" data-a="stog" data-id="${i.id}"${selIds.has(i.id)?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="stog" data-id="${i.id}"><b>${esc(i.title)}</b></div><button class="sec mini" data-a="siedit" data-id="${i.id}" aria-label="${t('edit')}">✎</button></div>`)).join(''):`<p class="meta">${t('liEmpty')}</p>`)
       +`<div class="tbar"><input id="si-n" type="text" maxlength="120" placeholder="${t('slPh')}"><button class="pri" data-a="siadd" data-id="${cur.id}" aria-label="${t('liAdd')}">＋</button></div>`
     :`<p class="meta">${t('slNone')}</p>`)
     +`</div>`;
   const dIts=dayItemsOf(dayOf(vd)),dn=dIts.filter(i=>i.done).length;
   const right=`<div class="card"><div class="dsec" style="margin-top:0">${t('todayList')}</div>`
-    +`<div class="dhd"><button class="sec ic" data-a="dday" data-v="-1" aria-label="‹">‹</button><b>${fmtDay(vd)}</b><button class="sec ic" data-a="dday" data-v="1" aria-label="›"${vd>=td?' disabled style="opacity:.3"':''}>›</button></div>`
+    +`<div class="dhd"><button class="sec ic" data-a="dday" data-v="-1" aria-label="‹">‹</button><b>${fmtDayS(vd)}</b><button class="sec ic" data-a="dday" data-v="1" aria-label="›"${vd>=td?' disabled style="opacity:.3"':''}>›</button></div>`
     +(vd!==td?`<button class="lnk" data-a="dtoday">${t('backToday')}</button>`:'')
-    +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt"><b>${esc(i.title)}</b></div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
+    +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt"><b>${esc(i.title)}</b></div><button class="sec mini" data-a="diedit" data-id="${i.id}" aria-label="${t('edit')}">✎</button></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
     +(dIts.length?`<div class="row"><button class="pri" data-a="dshare">📤 ${t('shareBtn')}</button></div>`:'')
     +`</div>`;
   return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div><div class="shop"><div>${left}</div><div>${right}</div></div>`;
@@ -1143,10 +1151,23 @@ function openSlist(id){
   dlg.innerHTML=`<label for="cl-n">${t('listName')}</label><input id="cl-n" type="text" maxlength="20" value="${esc(x?catName(x):'')}"><label for="cl-e">${t('emoji')}</label><input id="cl-e" type="text" maxlength="8" placeholder="🛒" value="${esc(x&&x.icon||'')}"><label for="cl-c">${t('color')}</label><input id="cl-c" type="color" value="${esc(x&&x.color||'#43A047')}"><div class="row"><button class="sec" id="cl-x">${t('cancel')}</button><button class="pri" id="cl-s">${t('save')}</button></div>`;
   $('cl-x').onclick=()=>dlg.close();
   $('cl-s').onclick=async()=>{const n=$('cl-n').value.trim();if(!n)return;const v={name:n,icon:$('cl-e').value.trim()||null,color:$('cl-c').value};
-    if(id){const{error}=await sb.from('categories').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
+    if(id){v.name_key=null;let{error}=await sb.from('categories').update(v).eq('id',id);if(error){delete v.name_key;const r2=await sb.from('categories').update(v).eq('id',id);error=r2.error}if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('categories').insert({kind:'shop',...v,sort_order:slists.length}).select().single();if(error)return alert(error.message);slists.push(data);shopList=data.id}
     dlg.close();render()};
   dlg.showModal();$('cl-n').focus();
+}
+// v26: edit a shopping item's text. Master edits write list_items only; day edits
+// write day_list_items only — the two sides keep v25 copy semantics and never
+// rewrite each other. Empty names are rejected.
+function openItemEdit(kind,id){
+  const it=kind==='litem'?litems.find(x=>x.id===id):ditems.find(x=>x.id===id);if(!it)return;
+  const dlg=$('dlg');
+  dlg.innerHTML=`<label for="ie-n">${t('title')}</label><input id="ie-n" type="text" maxlength="120" value="${esc(it.title||'')}"><div class="row"><button class="sec" id="ie-x">${t('cancel')}</button><button class="pri" id="ie-s">${t('save')}</button></div>`;
+  $('ie-x').onclick=()=>dlg.close();
+  $('ie-s').onclick=async()=>{const n=$('ie-n').value.trim();if(!n)return alert(t('nameReq'));
+    const{error}=await sb.from(kind==='litem'?'list_items':'day_list_items').update({title:n}).eq('id',id);if(error)return alert(error.message);
+    it.title=n;dlg.close();render()};
+  dlg.showModal();const inp=$('ie-n');inp.focus();try{inp.select()}catch(_){}
 }
 async function delSlist(id){
   const c=slists.find(z=>z.id===id);if(!c)return;
@@ -1581,6 +1602,8 @@ $('app').addEventListener('click',async e=>{
   else if(a==='sldel')await delSlist(id)
   else if(a==='siadd'){const inp=$('si-n'),tx=inp?inp.value.trim():'';if(tx){const v={list_id:id,title:tx,sort_order:litems.filter(i=>i.list_id===id).length};const{data,error}=await sb.from('list_items').insert(v).select().single();if(error)alert(error.message);else{litems.push(data);render()}}}
   else if(a==='stog'){const it=litems.find(x=>x.id===id);if(it)await toggleShopItem(it)}
+  else if(a==='siedit')openItemEdit('litem',id);
+  else if(a==='diedit')openItemEdit('ditem',id);
   else if(a==='dtog'){const it=ditems.find(x=>x.id===id);if(it){const{error}=await sb.from('day_list_items').update({done:b.checked}).eq('id',id);if(error)alert(error.message);else{it.done=b.checked;render()}}}
   else if(a==='dday'){const p=(shopDate||ymd(new Date())).split('-').map(Number);const s=ymd(new Date(p[0],p[1]-1,p[2]+ +b.dataset.v));if(s<=ymd(new Date()))shopDate=s;render()}
   else if(a==='dtoday'){shopDate=null;render()}
@@ -1645,8 +1668,14 @@ $('app').addEventListener('click',async e=>{
 });
 $('app').addEventListener('change',async e=>{
   const el=e.target,d=el.dataset,id=d.cn||d.cc||d.ci;if(!id)return;
-  const patch=d.cn?{name:el.value.trim()||'—'}:d.cc?{color:el.value}:{icon:el.value.trim()||null};
-  const{error}=await sb.from('categories').update(patch).eq('id',id);if(error)return alert(error.message);Object.assign(anyCat(id),patch);
+  // v26: renaming a list/category makes it pure user text — clear name_key so the
+  // name is never run through the i18n table again (seeded defaults keep their key
+  // only until the user renames them). Fall back to a name-only update if the
+  // name_key column is unavailable.
+  const patch=d.cn?{name:el.value.trim()||'—',name_key:null}:d.cc?{color:el.value}:{icon:el.value.trim()||null};
+  let{error}=await sb.from('categories').update(patch).eq('id',id);
+  if(error&&d.cn){const r2=await sb.from('categories').update({name:patch.name}).eq('id',id);error=r2.error;if(!error)patch.name_key=anyCat(id)?anyCat(id).name_key:null}
+  if(error)return alert(error.message);Object.assign(anyCat(id),patch);
 });
 $('app').addEventListener('change',e=>{if(e.target.id==='bgf')upBg(e.target.files[0])});
 document.addEventListener('change',e=>{if(e.target.id==='expsel'){const v=e.target.value;e.target.value='';if(v)exportImg(v);return}if(e.target.dataset&&e.target.dataset.dsel){if(e.target.dataset.dsel==='A')dA=e.target.value;else dB=e.target.value;render()}});
