@@ -197,7 +197,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .cw2{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center;font-size:var(--fs5);color:var(--mut);margin-bottom:2px}
 .cg2{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
 .cd2{position:relative;background:none;border:0;border-top:1px solid var(--ln);border-radius:0;padding:5px 2px 4px;min-height:56px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--ink);min-width:0}
-.cd2 .dn{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-size:14px;line-height:1}
+.cd2 .dn{display:flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;font-size:7px;line-height:1}
 .cg2 .cd2:nth-child(7n+6) .dn{color:#4A7FB5}
 .cg2 .cd2:nth-child(7n) .dn{color:#D0483E}
 .cd2.dim .dn{opacity:.38}
@@ -206,7 +206,12 @@ select.mini{flex:0 1 auto!important;width:auto}
 .cd2.on{box-shadow:inset 0 0 0 2px var(--ac)}
 .hn{font-size:9px;line-height:1.2;color:#D0483E;text-align:center;overflow-wrap:anywhere}
 .hn2{font-size:var(--fs5);color:#D0483E;font-weight:600}
-.dt2{width:5px;height:5px;border-radius:50%;background:var(--ac);margin-top:2px}
+/* v34: month view marks days with event BARS (category colour + title),
+   replacing the old single-dot marker. Max 3 bars + a "+N" overflow. */
+.calcard.mm .cd2{min-height:88px;justify-content:flex-start}
+.evbars{display:flex;flex-direction:column;gap:2px;width:100%;min-width:0;margin-top:2px}
+.evbar{display:block;background:var(--bc,#8FA382);color:#fff;font-size:9.5px;line-height:1.45;padding:0 4px;border-radius:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;min-width:0}
+.evmore{font-size:9px;color:var(--mut);text-align:left;line-height:1.3;padding-left:2px}
 /* v32: scope pills + today merged into ONE row (nowrap); tightened
    padding/font so the controls fit 360px; the ✓ state tick is dropped
    only on very narrow screens (the .on fill still signals state).
@@ -217,16 +222,17 @@ select.mini{flex:0 1 auto!important;width:auto}
 @media (max-width:374px){.calpills .ck{display:none}}
 .wkrow{display:grid;gap:0}
 .wkrow.n7{grid-template-columns:repeat(7,minmax(0,1fr))}
-.wkrow.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .wkcol{background:none;border:0;border-left:1px solid var(--ln);padding:6px 3px 8px;min-height:96px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--ink);min-width:0;text-align:center}
 .wkcol:first-child{border-left:0}
 .wkcol .wkw{font-size:var(--fs5);color:var(--mut)}
-.wkcol .dn{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-size:14px}
+.wkcol .dn{display:flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;font-size:7px}
 .wkcol.td .dn{background:var(--ac);color:#fff;font-weight:700}
 .wkcol.on{background:color-mix(in srgb,var(--ac) 10%,#fff)}
 .wkcol .wkh{font-size:8.5px;line-height:1.15;color:#D0483E;overflow-wrap:anywhere}
 .wkcol i{font-style:normal;font-size:10.5px;line-height:1.35;color:var(--ink);width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wkcol i.more2{color:var(--mut)}
+/* v34: week columns list events as colour bars (category colour + title). */
+.wkcol i.wb{background:var(--bc,#8FA382);color:#fff;border-radius:3px;padding:0 3px;font-size:9.5px;line-height:1.5;text-align:left;min-width:0}
 .yrgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .yrmon{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:8px 7px;text-align:left;cursor:pointer;color:var(--ink)}
 .yrmon>b{display:block;font-size:var(--fs4);margin-bottom:4px}
@@ -274,7 +280,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v33)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v34)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -387,9 +393,9 @@ Object.assign(T.zh,{sv:'單版',dv:'雙版'});Object.assign(T.ja,{sv:'シング�
 Object.assign(T.zh,{todoT:'To Do List',copied:'已複製計劃文字 ✓',mvUp:'上移',mvDn:'下移',posReset:'位置重置',share:'分享行程',shDay:'本日',shWeek:'本週',shMonth:'本月',openH:'營業中'});Object.assign(T.ja,{todoT:'To Do List',copied:'プランをコピーしました ✓',mvUp:'上へ',mvDn:'下へ',posReset:'位置リセット',share:'スケジュール共有',shDay:'今日',shWeek:'今週',shMonth:'今月',openH:'営業中'});Object.assign(T.en,{todoT:'To Do List',copied:'Plan copied ✓',mvUp:'Move up',mvDn:'Move down',posReset:'Reset positions',share:'Share schedule',shDay:'Day',shWeek:'Week',shMonth:'Month',openH:'Open now'});
 Object.assign(T.zh,{plan:'計劃',planName:'計劃名稱',toTodo:'加入待辦',planTodoQ:'把這個計劃的全部節點加入待辦清單？重複執行會重複加入。',addedTodo:'已加入待辦 ✓'});Object.assign(T.ja,{plan:'プラン',planName:'プラン名',toTodo:'ToDoに追加',planTodoQ:'このプランの全ノードをToDoに追加しますか？重複実行すると重複します。',addedTodo:'ToDoに追加しました ✓'});Object.assign(T.en,{plan:'Plan',planName:'Plan name',toTodo:'To To-Do',planTodoQ:'Add all nodes of this plan to the To-Do list? Running again creates duplicates.',addedTodo:'Added to To-Do ✓'});
 Object.assign(T.zh,{mapV:'地圖',listV:'列表',mmChild:'加子節點',mmDel:'刪除這個節點和它下面所有分支？'});Object.assign(T.zh,{expSched:'匯出行程'});Object.assign(T.ja,{expSched:'予定を書き出す'});Object.assign(T.en,{expSched:'Export schedule'});
-Object.assign(T.zh,{vwList:'清單',vwYear:'年',vwMonth:'月',vwWeek:'週',vw3:'3日',vwDay:'日',views:'檢視方式',more:'更多',mSelect:'選擇',selDel:'刪除所選',yrSel:'選擇年份'});
-Object.assign(T.ja,{vwList:'リスト',vwYear:'年',vwMonth:'月',vwWeek:'週',vw3:'3日',vwDay:'日',views:'表示切替',more:'その他',mSelect:'選択',selDel:'選択した予定を削除',yrSel:'年を選択'});
-Object.assign(T.en,{vwList:'List',vwYear:'Year',vwMonth:'Month',vwWeek:'Week',vw3:'3 days',vwDay:'Day',views:'View',more:'More',mSelect:'Select',selDel:'Delete selected',yrSel:'Choose year'});Object.assign(T.ja,{mapV:'マップ',listV:'リスト',mmChild:'子ノード追加',mmDel:'このノードと配下すべてを削除しますか？'});Object.assign(T.en,{mapV:'Map',listV:'List',mmChild:'Add sub-node',mmDel:'Delete this node and everything under it?'});
+Object.assign(T.zh,{vwList:'清單',vwYear:'年',vwMonth:'月',vwWeek:'週',vwDay:'日',views:'檢視方式',more:'更多',mSelect:'選擇',selDel:'刪除所選',yrSel:'選擇年份'});
+Object.assign(T.ja,{vwList:'リスト',vwYear:'年',vwMonth:'月',vwWeek:'週',vwDay:'日',views:'表示切替',more:'その他',mSelect:'選択',selDel:'選択した予定を削除',yrSel:'年を選択'});
+Object.assign(T.en,{vwList:'List',vwYear:'Year',vwMonth:'Month',vwWeek:'Week',vwDay:'Day',views:'View',more:'More',mSelect:'Select',selDel:'Delete selected',yrSel:'Choose year'});Object.assign(T.ja,{mapV:'マップ',listV:'リスト',mmChild:'子ノード追加',mmDel:'このノードと配下すべてを削除しますか？'});Object.assign(T.en,{mapV:'Map',listV:'List',mmChild:'Add sub-node',mmDel:'Delete this node and everything under it?'});
 Object.assign(T.zh,{gt_check:'完成就得',gt_amt:'達到數量',unit:'單位',td:'目標日數',tdF:'永遠',tdC:'自訂',pwater:'飲水',pex:'做運動',prd:'讀書',cup:'杯',presets:'預設',linkHint:'點 ↗ 會直接開啟手機上的 App。填 App 連結（如 drops://、spotify://）；沒有連結的 App，先在 iOS「捷徑」建一個開啟 App 的捷徑，再填 shortcuts://run-shortcut?name=捷徑名稱。'});Object.assign(T.ja,{gt_check:'完了すればOK',gt_amt:'量を達成',unit:'単位',td:'目標日数',tdF:'永遠',tdC:'カスタム',pwater:'水を飲む',pex:'運動する',prd:'読書',cup:'杯',presets:'プリセット',linkHint:'↗でスマホのアプリを直接開きます。アプリのリンク（例：drops://、spotify://）を入力。リンクがないアプリは、iOS「ショートカット」でアプリを開くショートカットを作り、shortcuts://run-shortcut?name=名前 を入力。'});Object.assign(T.en,{gt_check:'Just complete it',gt_amt:'Reach an amount',unit:'Unit',td:'Target days',tdF:'Forever',tdC:'Custom',pwater:'Drink water',pex:'Exercise',prd:'Reading',cup:'cups',presets:'Presets',linkHint:'Tap ↗ to open the app on your phone. Enter an app link (e.g. drops://, spotify://). For apps without one, make an iOS Shortcut that opens it, then use shortcuts://run-shortcut?name=ShortcutName.'});Object.assign(T.ja,{iconL:'アイコン',freq:'曜日',startd:'開始日',restToday:'今日はお休み / 未開始'});Object.assign(T.en,{iconL:'Icon',freq:'Days',startd:'Start date',restToday:'Resting today / not started'});
 Object.assign(T.zh,{slot:'時段',slot_any:'隨時',slot_am:'早上',slot_pm:'下午',slot_night:'晚上',streak:'目前連續',stats:'統計',st_m:'本月打卡',st_t:'累計打卡',st_r:'本月達成率',st_s:'目前連續',st_ma:'本月總量',st_ta:'累計總量',times:'次',days:'日',chart:'每日紀錄'});Object.assign(T.ja,{slot:'時間帯',slot_any:'いつでも',slot_am:'朝',slot_pm:'午後',slot_night:'夜',streak:'現在の連続',stats:'統計',st_m:'今月のチェックイン',st_t:'累計チェックイン',st_r:'今月の達成率',st_s:'現在の連続',st_ma:'今月の合計',st_ta:'総累計',times:'回',days:'日',chart:'毎日の記録'});Object.assign(T.en,{slot:'Time of day',slot_any:'Anytime',slot_am:'Morning',slot_pm:'Afternoon',slot_night:'Night',streak:'Current streak',stats:'Stats',st_m:'Check-ins this month',st_t:'Total check-ins',st_r:'Completion this month',st_s:'Current streak',st_ma:'This month total',st_ta:'All-time total',times:'times',days:'d',chart:'Daily record'});
 Object.assign(T.zh,{study:'語言學習',studySql:'語言學習的資料表還沒建立，請先在 Supabase 執行 sql-language-study.sql。',newLang:'新增語言',langName:'語言名稱',langLevel:'目標級別（如 B1，可留空）',studyEmpty:'還沒有學習中的語言，按下方按鈕新增第一個。',sToday:'今日學習',sWeek:'本週學習',sWords:'生詞總數',sDue:'今日待複習',logTime:'記錄',min:'分鐘',vHome:'概覽',vWords:'生詞本',vReview:'閃卡複習',word:'生詞／短句',meaning:'意思',example:'例句／備註',addWord:'新增生詞',flip:'翻卡睇答案',know:'識 ✓',dontKnow:'唔識 ✗',noDue:'今日冇到期嘅卡 🎉',reviewAll:'複習全部',reviewDue:'開始複習到期卡',revDone:'複習完成 ✓',nextRev:'下次複習',wordsEmpty:'生詞本還沒有生詞，按上方 ＋ 新增第一個。',notifT:'行程提醒通知',notifHint:'提醒時間到時會彈出通知，用返手機本身的預設通知聲；手機靜音或勿擾模式時，通知會跟住靜音。權限被拒時，App 內仍會顯示橫額提醒。',notifBtn:'允許通知',notifOk:'通知已允許 ✓',notifNo:'通知未開啟（被拒絕或此裝置不支援）。請到系統設定開啟，或把 App 加到主畫面後再試。'});
@@ -462,7 +468,7 @@ let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate
 let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
 let visPriv=true,visShared=true,visComp=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;visShared=_v.s!==false;visComp=_v.co!==false;calVis=_v.c||{}}catch(e){}
 const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,co:visComp,c:calVis})};
-let calView='list';try{const _cv=localStorage.mdcalview;if(['list','year','month','week','3day','day'].includes(_cv))calView=_cv}catch(e){}
+let calView='list';try{const _cv=localStorage.mdcalview;if(['list','year','month','week','day'].includes(_cv))calView=_cv}catch(e){}
 let calSelMode=false;const calSel=new Set();
 const myCal=id=>shareCals.find(c=>c.id===id),calName=id=>(myCal(id)||{}).name||'';
 const evVisible=e=>e.calendar_id?(visShared&&calVis[e.calendar_id]!==false&&!!myCal(e.calendar_id)):(e.scope==='company'?visComp:e.scope==='shared'?visShared:visPriv);
@@ -752,8 +758,10 @@ function evRow(e){
   const _h=`<div class="task ev${picked?' picked':''}" style="--hc:${esc(c&&c.color||'#8FA382')}">${sel?`<input type="checkbox" class="evpick" data-a="evpick" data-id="${e.id}"${picked?' checked':''} aria-label="${t('mSelect')}">`:''}<span class="bar2"></span><div class="tt" data-a="${sel?'evpick':'eedit'}" data-id="${e.id}">${_tm||_rp?`<div class="meta evtime">${_tm}${_rp?' 🔁':''}</div>`:''}<b>${esc(e.title||'')}</b>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.url&&safeLink(e.url)?`<div class="meta evurl">🔗 <a data-a="evurl" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener">${esc(e.url)}</a></div>`:''}${e.note?`<div class="meta evnote">📝 ${esc(e.note)}</div>`:''}<div class="meta rw"><span>${c?esc((c.icon||'')+' '+c.name):''}</span><span class="evsc">${scope}</span></div>${e.plan_id&&planOf(e.plan_id)?`<div class="meta"><span class="ptag">🗂 ${t('plan')}</span></div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}</div>`;
   return _ro||calSelMode?_h:swpWrap('event',e.id,_h);
 }
-/* ===== v30: calendar views (list / year / month / week / 3day / day) ===== */
-const VIEWS=[['list','vwList','☰'],['year','vwYear','▦'],['month','vwMonth','▤'],['week','vwWeek','▥'],['3day','vw3','▨'],['day','vwDay','▢']];
+/* ===== v30: calendar views (list / year / month / week / day) =====
+   v34: the old 3-day view is removed; a stored choice for it no longer
+   matches the boot whitelist and falls back to 'list'. */
+const VIEWS=[['list','vwList','☰'],['year','vwYear','▦'],['month','vwMonth','▤'],['week','vwWeek','▥'],['day','vwDay','▢']];
 const viewGlyph=v=>(VIEWS.find(x=>x[0]===v)||VIEWS[0])[2];
 const anchorYear=()=>['list','month','year'].includes(calView)?cm.getFullYear():cs.getFullYear();
 const navRow=inner=>`<div class="cm2"><button class="sec ic" data-a="cnav" data-v="-1" aria-label="‹">‹</button><b class="cmttl">${inner}</b><button class="sec ic" data-a="cnav" data-v="1" aria-label="›">›</button></div>`;
@@ -766,14 +774,24 @@ function calPills(){
 function monthCard(mode){
   const y=cm.getFullYear(),m=cm.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),pn=new Date(y,m,0).getDate();
   const by=calBy(new Date(y,m,1),new Date(y,m,n));
+  // v34: month-view cells carry event BARS (category colour + title, events
+  // first in time order, then due tasks in the default colour), max 3 + "+N".
+  // Bars are plain spans inside the cell button — tapping a bar taps the cell
+  // (month: jump to day view), same as tapping anywhere else in the cell.
+  const barsFor=dt=>{
+    const{evs,tks}=dayParts(by,dt),items=[...evs,...tks];
+    if(!items.length)return '';
+    const bars=items.slice(0,3).map(x=>{const c=x.start_at?ecats.find(k=>k.id===x.category_id):null;return `<span class="evbar" style="--bc:${esc(c&&c.color||'#8FA382')}">${esc(x.title||'')}</span>`}).join('');
+    return `<span class="evbars">${bars}${items.length>3?`<span class="evmore">+${items.length-3}</span>`:''}</span>`;
+  };
   const cell=(yy,mm,d,dim)=>{
     const dt=new Date(yy,mm,d),has=(by[dkOf(dt)]||[]).length>0,hn=holName(dt);
-    return `<button class="cd2${dim?' dim':''}${mode==='list'&&has?' has':''}${dkOf(new Date())===dkOf(dt)?' td':''}${dkOf(cs)===dkOf(dt)?' on':''}" data-a="${mode==='month'?'cmday':'cday'}" data-v="${yy}-${mm}-${d}"><span class="dn">${d}</span>${hn?`<span class="hn">${esc(hn)}</span>`:''}${mode==='month'&&has?'<span class="dt2"></span>':''}</button>`};
+    return `<button class="cd2${dim?' dim':''}${mode==='list'&&has?' has':''}${dkOf(new Date())===dkOf(dt)?' td':''}${dkOf(cs)===dkOf(dt)?' on':''}" data-a="${mode==='month'?'cmday':'cday'}" data-v="${yy}-${mm}-${d}"><span class="dn">${d}</span>${hn?`<span class="hn">${esc(hn)}</span>`:''}${mode==='month'?barsFor(dt):''}</button>`};
   let cells='';
   for(let i=first-1;i>=0;i--)cells+=cell(y,m-1,pn-i,true);
   for(let d=1;d<=n;d++)cells+=cell(y,m,d,false);
   const trail=(7-(first+n)%7)%7;for(let d=1;d<=trail;d++)cells+=cell(y,m+1,d,true);
-  return `<div class="card calcard">${navRow(`<span class="cmnum">${m+1}</span>`)}<div class="cw2">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg2">${cells}</div></div>`;
+  return `<div class="card calcard${mode==='month'?' mm':''}">${navRow(`<span class="cmnum">${m+1}</span>`)}<div class="cw2">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg2">${cells}</div></div>`;
 }
 function rangeCard(n){
   let first=sod(cs);
@@ -781,9 +799,11 @@ function rangeCard(n){
   const days=[];for(let i=0;i<n;i++){const d=new Date(first);d.setDate(d.getDate()+i);days.push(d)}
   const by=calBy(days[0],days[n-1]);
   const cols=days.map(dt=>{
-    const{items}=dayParts(by,dt),hn=holName(dt);
-    const sums=items.slice(0,3).map(x=>x.start_at?((x.all_day?'':hm(x.start_at)+' ')+(x.title||'')):('・'+(x.title||'')));
-    return `<button class="wkcol${dkOf(cs)===dkOf(dt)?' on':''}${dkOf(new Date())===dkOf(dt)?' td':''}" data-a="cday" data-v="${dt.getFullYear()}-${dt.getMonth()}-${dt.getDate()}"><span class="wkw">${[...WK[lang]][(dt.getDay()+6)%7]}</span><span class="dn">${dt.getDate()}</span>${hn?`<span class="wkh">${esc(hn)}</span>`:''}${sums.map(s=>`<i>${esc(s)}</i>`).join('')}${items.length>3?`<i class="more2">+${items.length-3}</i>`:''}</button>`}).join('');
+    const{evs,tks}=dayParts(by,dt),items=[...evs,...tks],hn=holName(dt);
+    // v34: week columns list events as colour bars (category colour + title,
+    // truncated by the narrow column), max 3 + "+N" — same cap as month view.
+    const bars=items.slice(0,3).map(x=>{const c=x.start_at?ecats.find(k=>k.id===x.category_id):null;return `<i class="wb" style="--bc:${esc(c&&c.color||'#8FA382')}">${esc(x.title||'')}</i>`}).join('');
+    return `<button class="wkcol${dkOf(cs)===dkOf(dt)?' on':''}${dkOf(new Date())===dkOf(dt)?' td':''}" data-a="cday" data-v="${dt.getFullYear()}-${dt.getMonth()}-${dt.getDate()}"><span class="wkw">${[...WK[lang]][(dt.getDay()+6)%7]}</span><span class="dn">${dt.getDate()}</span>${hn?`<span class="wkh">${esc(hn)}</span>`:''}${bars}${items.length>3?`<i class="more2">+${items.length-3}</i>`:''}</button>`}).join('');
   const last=days[n-1],rng=`${first.getMonth()+1}/${first.getDate()} – ${last.getMonth()+1}/${last.getDate()}`;
   return `<div class="card calcard">${navRow(rng)}<div class="wkrow n${n}">${cols}</div></div>`;
 }
@@ -798,7 +818,9 @@ function yearCard(){
     const trail=(7-(first+n)%7)%7;for(let d=1;d<=trail;d++)cells+=`<span class="ymd dim"><i>${d}</i></span>`;
     months+=`<button class="yrmon" data-a="cyear" data-v="${Y}-${M}"><b>${new Date(Y,M,1).toLocaleDateString(LOC[lang],{month:'long'})}</b><span class="ymin">${cells}</span></button>`;
   }
-  return `<div class="card calcard">${navRow(String(Y))}<div class="yrgrid">${months}</div></div>`;
+  // v34: no in-card year row — it duplicated the top-row year selector,
+  // which is also how the year is switched in this view.
+  return `<div class="card calcard"><div class="yrgrid">${months}</div></div>`;
 }
 function selBarHtml(){
   return `<div class="selbar"><span>${t('mSelect')} · ${calSel.size}</span><span class="sp"></span><button class="sec mini" data-a="seldel">${t('selDel')}</button><button class="sec mini" data-a="selexit">${t('done')}</button></div>`;
@@ -817,7 +839,6 @@ function calHTML(){
   else if(calView==='month'){main=monthCard('month')}
   else if(calView==='year'){main=yearCard()}
   else if(calView==='week'){main=rangeCard(7);below=daySection(cs)}
-  else if(calView==='3day'){main=rangeCard(3);below=daySection(cs)}
   else{const hn=holName(cs);main=`<div class="card calcard">${navRow(fmtDayS(ymd(cs))+(hn?` <span class="hn2">${esc(hn)}</span>`:''))}</div>`;below=daySection(cs)}
   return head+main+calPills()+below+(evErr?'':`<button class="fab" data-a="calfab" aria-label="${t('events')}">＋</button>`);
 }
@@ -1965,7 +1986,6 @@ $('app').addEventListener('click',async e=>{
     if(calView==='list'||calView==='month')cm=new Date(cm.getFullYear(),cm.getMonth()+s,1);
     else if(calView==='year')cm=new Date(cm.getFullYear()+s,0,1);
     else if(calView==='week'){cs=new Date(cs.getFullYear(),cs.getMonth(),cs.getDate()+7*s);cm=new Date(cs.getFullYear(),cs.getMonth(),1)}
-    else if(calView==='3day'){cs=new Date(cs.getFullYear(),cs.getMonth(),cs.getDate()+3*s);cm=new Date(cs.getFullYear(),cs.getMonth(),1)}
     else{cs=new Date(cs.getFullYear(),cs.getMonth(),cs.getDate()+s);cm=new Date(cs.getFullYear(),cs.getMonth(),1)}
     render()}
   else if(a==='cmday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);calView='day';try{localStorage.mdcalview='day'}catch(e){}render()}
