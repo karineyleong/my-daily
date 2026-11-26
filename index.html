@@ -242,8 +242,6 @@ select.mini{flex:0 1 auto!important;width:auto}
 .selbar .sp{flex:1}
 .yrpick2{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .yrpick2 button{padding:10px 0}
-#printArea{display:none}
-@media print{body>*{display:none!important}#printArea{display:block!important;color:#000}#printArea h1{font-size:19px;border:0}#printArea h2{font-size:14px;margin:14px 0 4px}#printArea p{margin:2px 0;font-size:12.5px}}
 
 .caltop .chip{flex:0 1 auto;min-width:0;padding:6px 10px;font-size:14px;overflow:hidden;text-overflow:ellipsis}
 .caltop .ic{flex:none}
@@ -270,7 +268,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v30)</p></main><dialog id="dlg"></dialog><div id="printArea" aria-hidden="true"></div>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v31)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -383,9 +381,9 @@ Object.assign(T.zh,{sv:'單版',dv:'雙版'});Object.assign(T.ja,{sv:'シング�
 Object.assign(T.zh,{todoT:'To Do List',copied:'已複製計劃文字 ✓',mvUp:'上移',mvDn:'下移',posReset:'位置重置',share:'分享行程',shDay:'本日',shWeek:'本週',shMonth:'本月',openH:'營業中'});Object.assign(T.ja,{todoT:'To Do List',copied:'プランをコピーしました ✓',mvUp:'上へ',mvDn:'下へ',posReset:'位置リセット',share:'スケジュール共有',shDay:'今日',shWeek:'今週',shMonth:'今月',openH:'営業中'});Object.assign(T.en,{todoT:'To Do List',copied:'Plan copied ✓',mvUp:'Move up',mvDn:'Move down',posReset:'Reset positions',share:'Share schedule',shDay:'Day',shWeek:'Week',shMonth:'Month',openH:'Open now'});
 Object.assign(T.zh,{plan:'計劃',planName:'計劃名稱',toTodo:'加入待辦',planTodoQ:'把這個計劃的全部節點加入待辦清單？重複執行會重複加入。',addedTodo:'已加入待辦 ✓'});Object.assign(T.ja,{plan:'プラン',planName:'プラン名',toTodo:'ToDoに追加',planTodoQ:'このプランの全ノードをToDoに追加しますか？重複実行すると重複します。',addedTodo:'ToDoに追加しました ✓'});Object.assign(T.en,{plan:'Plan',planName:'Plan name',toTodo:'To To-Do',planTodoQ:'Add all nodes of this plan to the To-Do list? Running again creates duplicates.',addedTodo:'Added to To-Do ✓'});
 Object.assign(T.zh,{mapV:'地圖',listV:'列表',mmChild:'加子節點',mmDel:'刪除這個節點和它下面所有分支？'});Object.assign(T.zh,{expSched:'匯出行程'});Object.assign(T.ja,{expSched:'予定を書き出す'});Object.assign(T.en,{expSched:'Export schedule'});
-Object.assign(T.zh,{vwList:'清單',vwYear:'年',vwMonth:'月',vwWeek:'週',vw3:'3日',vwDay:'日',views:'檢視方式',more:'更多',mPrint:'列印',mSelect:'選擇',mDisp:'顯示選項',holShow:'顯示假期名稱',selDel:'刪除所選',yrSel:'選擇年份'});
-Object.assign(T.ja,{vwList:'リスト',vwYear:'年',vwMonth:'月',vwWeek:'週',vw3:'3日',vwDay:'日',views:'表示切替',more:'その他',mPrint:'印刷',mSelect:'選択',mDisp:'表示オプション',holShow:'祝日名を表示',selDel:'選択した予定を削除',yrSel:'年を選択'});
-Object.assign(T.en,{vwList:'List',vwYear:'Year',vwMonth:'Month',vwWeek:'Week',vw3:'3 days',vwDay:'Day',views:'View',more:'More',mPrint:'Print',mSelect:'Select',mDisp:'Display options',holShow:'Show holiday names',selDel:'Delete selected',yrSel:'Choose year'});Object.assign(T.ja,{mapV:'マップ',listV:'リスト',mmChild:'子ノード追加',mmDel:'このノードと配下すべてを削除しますか？'});Object.assign(T.en,{mapV:'Map',listV:'List',mmChild:'Add sub-node',mmDel:'Delete this node and everything under it?'});
+Object.assign(T.zh,{vwList:'清單',vwYear:'年',vwMonth:'月',vwWeek:'週',vw3:'3日',vwDay:'日',views:'檢視方式',more:'更多',mSelect:'選擇',selDel:'刪除所選',yrSel:'選擇年份'});
+Object.assign(T.ja,{vwList:'リスト',vwYear:'年',vwMonth:'月',vwWeek:'週',vw3:'3日',vwDay:'日',views:'表示切替',more:'その他',mSelect:'選択',selDel:'選択した予定を削除',yrSel:'年を選択'});
+Object.assign(T.en,{vwList:'List',vwYear:'Year',vwMonth:'Month',vwWeek:'Week',vw3:'3 days',vwDay:'Day',views:'View',more:'More',mSelect:'Select',selDel:'Delete selected',yrSel:'Choose year'});Object.assign(T.ja,{mapV:'マップ',listV:'リスト',mmChild:'子ノード追加',mmDel:'このノードと配下すべてを削除しますか？'});Object.assign(T.en,{mapV:'Map',listV:'List',mmChild:'Add sub-node',mmDel:'Delete this node and everything under it?'});
 Object.assign(T.zh,{gt_check:'完成就得',gt_amt:'達到數量',unit:'單位',td:'目標日數',tdF:'永遠',tdC:'自訂',pwater:'飲水',pex:'做運動',prd:'讀書',cup:'杯',presets:'預設',linkHint:'點 ↗ 會直接開啟手機上的 App。填 App 連結（如 drops://、spotify://）；沒有連結的 App，先在 iOS「捷徑」建一個開啟 App 的捷徑，再填 shortcuts://run-shortcut?name=捷徑名稱。'});Object.assign(T.ja,{gt_check:'完了すればOK',gt_amt:'量を達成',unit:'単位',td:'目標日数',tdF:'永遠',tdC:'カスタム',pwater:'水を飲む',pex:'運動する',prd:'読書',cup:'杯',presets:'プリセット',linkHint:'↗でスマホのアプリを直接開きます。アプリのリンク（例：drops://、spotify://）を入力。リンクがないアプリは、iOS「ショートカット」でアプリを開くショートカットを作り、shortcuts://run-shortcut?name=名前 を入力。'});Object.assign(T.en,{gt_check:'Just complete it',gt_amt:'Reach an amount',unit:'Unit',td:'Target days',tdF:'Forever',tdC:'Custom',pwater:'Drink water',pex:'Exercise',prd:'Reading',cup:'cups',presets:'Presets',linkHint:'Tap ↗ to open the app on your phone. Enter an app link (e.g. drops://, spotify://). For apps without one, make an iOS Shortcut that opens it, then use shortcuts://run-shortcut?name=ShortcutName.'});Object.assign(T.ja,{iconL:'アイコン',freq:'曜日',startd:'開始日',restToday:'今日はお休み / 未開始'});Object.assign(T.en,{iconL:'Icon',freq:'Days',startd:'Start date',restToday:'Resting today / not started'});
 Object.assign(T.zh,{slot:'時段',slot_any:'隨時',slot_am:'早上',slot_pm:'下午',slot_night:'晚上',streak:'目前連續',stats:'統計',st_m:'本月打卡',st_t:'累計打卡',st_r:'本月達成率',st_s:'目前連續',st_ma:'本月總量',st_ta:'累計總量',times:'次',days:'日',chart:'每日紀錄'});Object.assign(T.ja,{slot:'時間帯',slot_any:'いつでも',slot_am:'朝',slot_pm:'午後',slot_night:'夜',streak:'現在の連続',stats:'統計',st_m:'今月のチェックイン',st_t:'累計チェックイン',st_r:'今月の達成率',st_s:'現在の連続',st_ma:'今月の合計',st_ta:'総累計',times:'回',days:'日',chart:'毎日の記録'});Object.assign(T.en,{slot:'Time of day',slot_any:'Anytime',slot_am:'Morning',slot_pm:'Afternoon',slot_night:'Night',streak:'Current streak',stats:'Stats',st_m:'Check-ins this month',st_t:'Total check-ins',st_r:'Completion this month',st_s:'Current streak',st_ma:'This month total',st_ta:'All-time total',times:'times',days:'d',chart:'Daily record'});
 Object.assign(T.zh,{study:'語言學習',studySql:'語言學習的資料表還沒建立，請先在 Supabase 執行 sql-language-study.sql。',newLang:'新增語言',langName:'語言名稱',langLevel:'目標級別（如 B1，可留空）',studyEmpty:'還沒有學習中的語言，按下方按鈕新增第一個。',sToday:'今日學習',sWeek:'本週學習',sWords:'生詞總數',sDue:'今日待複習',logTime:'記錄',min:'分鐘',vHome:'概覽',vWords:'生詞本',vReview:'閃卡複習',word:'生詞／短句',meaning:'意思',example:'例句／備註',addWord:'新增生詞',flip:'翻卡睇答案',know:'識 ✓',dontKnow:'唔識 ✗',noDue:'今日冇到期嘅卡 🎉',reviewAll:'複習全部',reviewDue:'開始複習到期卡',revDone:'複習完成 ✓',nextRev:'下次複習',wordsEmpty:'生詞本還沒有生詞，按上方 ＋ 新增第一個。',notifT:'行程提醒通知',notifHint:'提醒時間到時會彈出通知，用返手機本身的預設通知聲；手機靜音或勿擾模式時，通知會跟住靜音。權限被拒時，App 內仍會顯示橫額提醒。',notifBtn:'允許通知',notifOk:'通知已允許 ✓',notifNo:'通知未開啟（被拒絕或此裝置不支援）。請到系統設定開啟，或把 App 加到主畫面後再試。'});
@@ -460,7 +458,6 @@ let visPriv=true,visShared=true,visComp=true,calVis={};try{const _v=JSON.parse(l
 const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,co:visComp,c:calVis})};
 let calView='list';try{const _cv=localStorage.mdcalview;if(['list','year','month','week','3day','day'].includes(_cv))calView=_cv}catch(e){}
 let calSelMode=false;const calSel=new Set();
-let showHol=true;try{showHol=localStorage.mdhol!=='0'}catch(e){}
 const myCal=id=>shareCals.find(c=>c.id===id),calName=id=>(myCal(id)||{}).name||'';
 const evVisible=e=>e.calendar_id?(visShared&&calVis[e.calendar_id]!==false&&!!myCal(e.calendar_id)):(e.scope==='company'?visComp:visPriv);
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
@@ -707,7 +704,7 @@ const hm=d=>new Date(d).toLocaleTimeString(LOC[lang],{hour:'2-digit',minute:'2-d
    days, equinoxes (2025-2027: 春分 3/20, 秋分 9/23), 振替休日 and 国民の休日 applied.
    Counts: 2025=19, 2026=18, 2027=16 (53 entries). Names always Japanese. ===== */
 const HOL={"2025-01-01":"元日","2025-01-13":"成人の日","2025-02-11":"建国記念の日","2025-02-23":"天皇誕生日","2025-02-24":"振替休日","2025-03-20":"春分の日","2025-04-29":"昭和の日","2025-05-03":"憲法記念日","2025-05-04":"みどりの日","2025-05-05":"こどもの日","2025-05-06":"振替休日","2025-07-21":"海の日","2025-08-11":"山の日","2025-09-15":"敬老の日","2025-09-23":"秋分の日","2025-10-13":"スポーツの日","2025-11-03":"文化の日","2025-11-23":"勤労感謝の日","2025-11-24":"振替休日","2026-01-01":"元日","2026-01-12":"成人の日","2026-02-11":"建国記念の日","2026-02-23":"天皇誕生日","2026-03-20":"春分の日","2026-04-29":"昭和の日","2026-05-03":"憲法記念日","2026-05-04":"みどりの日","2026-05-05":"こどもの日","2026-05-06":"振替休日","2026-07-20":"海の日","2026-08-11":"山の日","2026-09-21":"敬老の日","2026-09-22":"国民の休日","2026-09-23":"秋分の日","2026-10-12":"スポーツの日","2026-11-03":"文化の日","2026-11-23":"勤労感謝の日","2027-01-01":"元日","2027-01-11":"成人の日","2027-02-11":"建国記念の日","2027-02-23":"天皇誕生日","2027-03-20":"春分の日","2027-04-29":"昭和の日","2027-05-03":"憲法記念日","2027-05-04":"みどりの日","2027-05-05":"こどもの日","2027-07-19":"海の日","2027-08-11":"山の日","2027-09-20":"敬老の日","2027-09-23":"秋分の日","2027-10-11":"スポーツの日","2027-11-03":"文化の日","2027-11-23":"勤労感謝の日"};
-const holName=d=>showHol?HOL[ymd(d)]:undefined;
+const holName=d=>HOL[ymd(d)];
 const dkOf=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
 /* Occurrence map for a date range: visible events expanded (repeats + multi-day)
    plus undone tasks with a due date. Same expansion math as the pre-v30 month grid. */
@@ -818,24 +815,13 @@ function openViewMenu(){
 function openMoreMenu(){
   const dlg=$('dlg'),ex=(v,k)=>`<button class="di" data-ex="${v}"><span class="ic2">📤</span><span class="nm">${t('expSched')} · ${t(k)}</span></button>`;
   dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('more')}</h3>`
-    +`<button class="di" id="mm-print"><span class="ic2">🖨</span><span class="nm">${t('mPrint')}</span></button>`
     +`<button class="di" id="mm-sel"><span class="ic2">☑</span><span class="nm">${t('mSelect')}</span></button>`
-    +`<button class="di" id="mm-disp"><span class="ic2">⚙</span><span class="nm">${t('mDisp')}</span></button>`
     +ex('day','shDay')+ex('week','shWeek')+ex('month','shMonth')
     +`<div class="row"><button class="sec" id="mm-x">${t('cancel')}</button></div>`;
   dlg.showModal();
-  $('mm-print').onclick=()=>{dlg.close();calPrint()};
   $('mm-sel').onclick=()=>{calSelMode=true;calSel.clear();if(calView==='month'||calView==='year'){calView='list';try{localStorage.mdcalview='list'}catch(e){}}dlg.close();render()};
-  $('mm-disp').onclick=()=>{dlg.close();openDispOpt()};
   dlg.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{dlg.close();exportImg(b.dataset.ex)});
   $('mm-x').onclick=()=>dlg.close();
-}
-function openDispOpt(){
-  const dlg=$('dlg');
-  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('mDisp')}</h3><button class="di" id="do-hol"><span class="ic2">${showHol?'✓':'○'}</span><span class="nm">${t('holShow')}</span></button><div class="row"><button class="sec" id="do-x">${t('done')}</button></div>`;
-  dlg.showModal();
-  $('do-hol').onclick=()=>{showHol=!showHol;try{localStorage.mdhol=showHol?'1':'0'}catch(e){}dlg.close();render()};
-  $('do-x').onclick=()=>dlg.close();
 }
 function openYearPick(){
   const dlg=$('dlg'),cur=anchorYear();let btns='';
@@ -847,23 +833,6 @@ function openYearPick(){
     else{const nd=new Date(y,cs.getMonth(),Math.min(cs.getDate(),new Date(y,cs.getMonth()+1,0).getDate()));cs=nd;cm=new Date(y,nd.getMonth(),1)}
     dlg.close();render()});
   $('yp-x').onclick=()=>dlg.close();
-}
-function calPrint(){
-  let from,to;
-  if(calView==='week'){from=sod(cs);from.setDate(from.getDate()-((from.getDay()+6)%7));to=new Date(from);to.setDate(to.getDate()+6)}
-  else if(calView==='3day'){from=sod(cs);to=new Date(from);to.setDate(to.getDate()+2)}
-  else if(calView==='day'){from=sod(cs);to=sod(cs)}
-  else if(calView==='year'){from=new Date(cm.getFullYear(),0,1);to=new Date(cm.getFullYear(),11,31)}
-  else{from=new Date(cm.getFullYear(),cm.getMonth(),1);to=new Date(cm.getFullYear(),cm.getMonth()+1,0)}
-  const by=calBy(from,to);let h=`<h1>${t('calendar')} · ${from.toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric'})} – ${to.toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric'})}</h1>`,any=false;
-  for(let d=new Date(from);d<=to;d.setDate(d.getDate()+1)){
-    const{items,evs,tks}=dayParts(by,d);if(!items.length)continue;any=true;
-    const hn=HOL[ymd(d)];
-    h+=`<h2>${fmtDayS(ymd(d))}${hn?' · '+esc(hn):''}</h2>`+evs.map(e=>`<p>${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}　${esc(e.title||'')}${e.location?'　📍 '+esc(e.location):''}</p>`).join('')+tks.map(x=>`<p>・${esc(x.title||'')}</p>`).join('');
-  }
-  if(!any)h+=`<p>${t('noItems')}</p>`;
-  $('printArea').innerHTML=h;
-  window.print();
 }
 async function loadShare(){
   shareCals=[];calMembers=[];shareErr=false;
