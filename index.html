@@ -193,11 +193,15 @@ select.mini{flex:0 1 auto!important;width:auto}
 .calcard{padding:12px 10px 14px}
 .cm2{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:6px}
 .cmttl{font-size:var(--fs1)}
-.cmnum{font-size:36px;font-weight:800;line-height:1.1}
+/* v35: big month numeral halved, 36px -> 18px — the user's "numbers
+   -50%" referred to THIS digit all along, not the grid date numbers. */
+.cmnum{font-size:18px;font-weight:800;line-height:1.1}
 .cw2{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center;font-size:var(--fs5);color:var(--mut);margin-bottom:2px}
 .cg2{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
 .cd2{position:relative;background:none;border:0;border-top:1px solid var(--ln);border-radius:0;padding:5px 2px 4px;min-height:56px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--ink);min-width:0}
-.cd2 .dn{display:flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;font-size:7px;line-height:1}
+/* v35: grid date digits restored to the v33 size (14px in a 26px circle);
+   the v34 halving was a misunderstanding and is reverted. */
+.cd2 .dn{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-size:14px;line-height:1}
 .cg2 .cd2:nth-child(7n+6) .dn{color:#4A7FB5}
 .cg2 .cd2:nth-child(7n) .dn{color:#D0483E}
 .cd2.dim .dn{opacity:.38}
@@ -207,11 +211,15 @@ select.mini{flex:0 1 auto!important;width:auto}
 .hn{font-size:9px;line-height:1.2;color:#D0483E;text-align:center;overflow-wrap:anywhere}
 .hn2{font-size:var(--fs5);color:#D0483E;font-weight:600}
 /* v34: month view marks days with event BARS (category colour + title),
-   replacing the old single-dot marker. Max 3 bars + a "+N" overflow. */
-.calcard.mm .cd2{min-height:88px;justify-content:flex-start}
-.evbars{display:flex;flex-direction:column;gap:2px;width:100%;min-width:0;margin-top:2px}
-.evbar{display:block;background:var(--bc,#8FA382);color:#fff;font-size:9.5px;line-height:1.45;padding:0 4px;border-radius:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;min-width:0}
-.evmore{font-size:9px;color:var(--mut);text-align:left;line-height:1.3;padding-left:2px}
+   replacing the old single-dot marker. Max 3 bars + a "+N" overflow.
+   v35: the 88px cell floor is GONE — month cells are content-height
+   compact again (the v33 feel the user asked back); the bars were
+   tightened instead, so a busy month still fits the viewport with
+   the pills row visible below the grid. */
+.calcard.mm .cd2{justify-content:flex-start}
+.evbars{display:flex;flex-direction:column;gap:1px;width:100%;min-width:0;margin-top:1px}
+.evbar{display:block;background:var(--bc,#8FA382);color:#fff;font-size:9.5px;line-height:1.25;padding:0 3px;border-radius:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;min-width:0}
+.evmore{font-size:9px;color:var(--mut);text-align:left;line-height:1.2;padding-left:2px}
 /* v32: scope pills + today merged into ONE row (nowrap); tightened
    padding/font so the controls fit 360px; the ✓ state tick is dropped
    only on very narrow screens (the .on fill still signals state).
@@ -225,7 +233,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .wkcol{background:none;border:0;border-left:1px solid var(--ln);padding:6px 3px 8px;min-height:96px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--ink);min-width:0;text-align:center}
 .wkcol:first-child{border-left:0}
 .wkcol .wkw{font-size:var(--fs5);color:var(--mut)}
-.wkcol .dn{display:flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;font-size:7px}
+.wkcol .dn{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-size:14px}
 .wkcol.td .dn{background:var(--ac);color:#fff;font-weight:700}
 .wkcol.on{background:color-mix(in srgb,var(--ac) 10%,#fff)}
 .wkcol .wkh{font-size:8.5px;line-height:1.15;color:#D0483E;overflow-wrap:anywhere}
@@ -280,7 +288,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v34)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v35)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
