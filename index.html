@@ -10,16 +10,17 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>My Daily</title>
 <style>
-:root{--ac:#1E88E5;--bg:#F6F9FB;--ink:#22303C;--mut:#8494A3;--card:#FFFFFF;--ln:#E1E8EE;--on:#FFFFFF;--ac2:#64B5F6;--fd:-apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--ac:#1E88E5;--bg:#F6F9FB;--ink:#22303C;--mut:#8494A3;--card:#FFFFFF;--ln:#E1E8EE;--on:#FFFFFF;--ac2:#64B5F6;--fd:-apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif;--fs1:20px;--fs2:13px;--fs3:15px;--fs4:13px;--fs5:12px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* ===== v29: type scale — --fs1 page title / --fs2 section heading / --fs3 body (item names, buttons) / --fs4 secondary (dates, counts, meta) / --fs5 small (memo, hints). Form controls keep 16px so iOS Safari does not zoom on focus. ===== */
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif}
-main{max-width:420px;margin:0 auto;padding:28px 20px}
-h1{display:inline-block;font-family:var(--fd);font-weight:700;font-size:27px;margin:8px 0 24px;letter-spacing:.02em;border-bottom:4px solid var(--ac)}
+main{max-width:420px;margin:0 auto;padding:10px 20px}
+h1{display:inline-block;font-family:var(--fd);font-weight:700;font-size:var(--fs1);margin:4px 0 12px;letter-spacing:.02em;border-bottom:4px solid var(--ac)}
 .card{background:var(--card);border:1px solid var(--ln);border-top:1px solid var(--ln);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 1px 8px rgba(30,60,90,.06)}
 label{display:block;font-size:14px;color:var(--mut);margin:12px 0 4px}
 input[type=email],input[type=password],input[type=text],input[type=number],input[type=datetime-local],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:#F4F7FA;color:var(--ink)}
 input[type=color]{width:56px;height:40px;border:1px solid var(--ln);border-radius:10px;background:none;padding:2px}
-button{font:inherit;padding:12px 16px;border-radius:10px;border:1px solid var(--ac);cursor:pointer}
+button{font:inherit;font-size:var(--fs3);padding:12px 16px;border-radius:10px;border:1px solid var(--ac);cursor:pointer}
 .pri{background:var(--ac);color:var(--on)}.sec{background:none;color:var(--ink);border-color:var(--ln)}
 .row{display:flex;gap:10px;margin-top:16px}.row button{flex:1}
 .msg{min-height:24px;font-size:14px;color:var(--mut);margin-top:10px}
@@ -31,12 +32,12 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 .chip{white-space:nowrap;padding:6px 14px;border-radius:20px;border-color:var(--ln);background:var(--card);color:var(--ink)}
 .chip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 .task{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--ln)}.task:first-child{border-top:0}
-.task.sub{margin-left:30px}.tt{flex:1;min-width:0}.tt b{font-weight:600;word-break:break-word}
+.task.sub{margin-left:30px}.tt{flex:1;min-width:0}.tt b{font-weight:600;word-break:break-word;font-size:var(--fs3)}
 .done b{text-decoration:line-through;color:var(--mut)}
-.meta{font-size:13px;color:var(--mut);margin-top:2px}.od{color:#D9534F}
+.meta{font-size:var(--fs4);color:var(--mut);margin-top:2px}.od{color:#D9534F}
 .bar{height:6px;border-radius:3px;background:var(--ln);margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2))}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
-.tag{display:inline-block;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
+.tag{display:inline-block;font-size:var(--fs5);padding:1px 9px;border-radius:10px;margin-right:6px}
 .act{display:flex;gap:6px;margin-top:8px}.act button{padding:4px 10px;font-size:14px}
 input[type=checkbox]{width:22px;height:22px;accent-color:var(--ac);margin-top:2px;flex:none}
 dialog{border:1px solid var(--ln);border-top:1px solid var(--ln);border-radius:14px;background:var(--card);color:var(--ink);width:min(92vw,400px);padding:18px}
@@ -90,10 +91,10 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .cm b{font-family:var(--fd);letter-spacing:.05em}
 .seg{display:flex;gap:6px}.segbtn{padding:7px 12px;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:13px}.segbtn.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 .pchips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
-.ctds{padding:3px 10px;font-size:12px;border-radius:99px}
+.ctds{padding:3px 10px;font-size:var(--fs5);border-radius:99px}
 .pac-container{z-index:10000!important;border-radius:12px}
-.dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}.dcol select{width:100%;margin:0 0 6px}.dcol .card{padding:10px}.dcol .task b{font-size:14px}
-.appt{font-family:var(--fd);text-align:center;font-size:19px;letter-spacing:.06em;padding:10px 0 2px;color:var(--ac)}
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}.dcol select{width:100%;margin:0 0 6px}.dcol .card{padding:10px}
+.appt{font-family:var(--fd);text-align:center;font-size:var(--fs1);letter-spacing:.06em;padding:2px 0 0;color:var(--ac)}
 .toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ac);color:var(--on);padding:10px 20px;border-radius:99px;z-index:60;box-shadow:0 6px 20px rgba(20,40,60,.22);font-size:14px}
 .remb{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(92vw,400px);background:var(--ac);color:var(--on);border-radius:14px;padding:12px 16px;z-index:80;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.3);font-size:15px}
 .remb button{background:none;border:0;color:var(--on);font-size:18px;padding:2px 8px;cursor:pointer;flex:none}
@@ -108,9 +109,9 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .igrid{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}.icob{width:44px;height:44px;border-radius:50%;border:2px solid var(--ln);background:var(--card);font-size:20px;cursor:pointer;padding:0}.icob.on{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 15%,var(--card))}
 .dchips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}.dchip{flex:1;min-width:38px;padding:9px 0;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:14px}.dchip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 .hc .off{opacity:.3}
-.stk{text-align:right;flex:none}.stk b{display:block;font-size:17px}.stk span{font-size:11px;color:var(--mut)}
+.stk{text-align:right;flex:none}.stk b{display:block;font-size:17px}.stk span{font-size:var(--fs5);color:var(--mut)}
 .ghd{display:flex;justify-content:space-between;align-items:center;margin:14px 2px 8px}
-.wstrip{display:flex;justify-content:space-between;text-align:center}.wd{display:flex;flex-direction:column;gap:4px;align-items:center;font-size:11px;color:var(--mut)}
+.wstrip{display:flex;justify-content:space-between;text-align:center}.wd{display:flex;flex-direction:column;gap:4px;align-items:center;font-size:var(--fs5);color:var(--mut)}
 .hd2{position:relative;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;margin:0 auto;font-size:14px}.hd2.full{color:#fff;font-weight:700}.hd2 b{position:relative;z-index:1;font-weight:400}.hd2.tdy{outline:2px solid var(--ac);outline-offset:1px}
 .rsvg{width:40px;height:40px;position:absolute;inset:0}.rb{fill:none;stroke:var(--ln);stroke-width:3.5}.rf{fill:none;stroke-width:3.5;stroke-linecap:round;transform:rotate(-90deg);transform-origin:center}
 .hcg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.hc{text-align:center;padding:2px 0}.hc.dim{opacity:.35}
@@ -138,7 +139,7 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .chp.st{margin-right:-8px}.chp.mid{margin:0 -8px}.chp.en{margin-left:-8px}
 .chp.st,.chp.mid,.chp.en{background:var(--c,#1E88E5);color:#fff}
 .errbar{position:fixed;left:50%;bottom:170px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:6px 14px;border-radius:99px;z-index:65;font-size:12px;opacity:.92;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
-.offbar{text-align:center;font-size:12px;color:var(--mut);padding:2px 0 6px}
+.offbar{text-align:center;font-size:var(--fs5);color:var(--mut);padding:2px 0 6px}
 .lpchips .pchip{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 
 /* ===== v25: shopping page (two columns, left slightly wider) ===== */
@@ -149,7 +150,6 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .shop .card{padding:10px;margin-bottom:0;min-width:0}
 .shop .chips{min-width:0}
 .shop .task{padding:9px 0;gap:6px;min-width:0}
-.shop .tt b{font-size:14px}
 .shop .tbar input{padding:9px;font-size:14px}
 .shop .tbar button{padding:9px 12px}
 .shop .chips{padding-bottom:6px}
@@ -157,9 +157,10 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .selrow{display:flex;gap:6px;align-items:center;margin-bottom:6px;min-width:0}
 .selrow select{flex:1;min-width:0;width:auto;padding:9px;font-size:14px}
 .selrow .ic{flex:none}
-.dhd{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:4px;flex-wrap:wrap}
-.dhd b{font-size:13.5px;text-align:center;line-height:1.35;flex:1 1 100%;order:-1;white-space:nowrap}
-.dhd .ic{padding:4px 10px;font-size:16px;flex:none}
+/* v29: day nav on ONE row — ‹ date › side by side, vertically centred. */
+.dhd{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:4px;flex-wrap:nowrap}
+.dhd b{font-size:var(--fs4);text-align:center;line-height:1.35;flex:1;min-width:0;white-space:nowrap}
+.dhd .ic{padding:4px 8px;font-size:16px;flex:none}
 .dhd .sp{flex:1}
 /* ===== v28: history rows in the shopping drawer (nav + pin + rename) ===== */
 .hrow{display:flex;align-items:center;gap:6px}
@@ -167,6 +168,11 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .hrow .ic{flex:none;padding:6px 9px;font-size:15px}
 .pinb{opacity:.35}
 .pinb.on{opacity:1;background:color-mix(in srgb,var(--ac) 22%,transparent);border-color:transparent}
+
+/* ===== v29: per-item memo line under a shopping item's name (small, grey) ===== */
+.memo{font-size:var(--fs5);color:var(--mut);margin-top:1px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;cursor:pointer}
+.memo .madd{opacity:.55}
+.memo.ro{cursor:default}
 
 /* ===== v23 ===== */
 .card{margin-bottom:18px}
@@ -176,10 +182,69 @@ main{padding-bottom:132px}
 .dr{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 dialog{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .chips{scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
-.mini{font-size:12px!important;padding:3px 9px!important;border-radius:99px}
+.mini{font-size:var(--fs5)!important;padding:3px 9px!important;border-radius:99px}
 .calrow .mini{flex:0 0 auto}
 select.mini{flex:0 1 auto!important;width:auto}
 .caltop{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+/* ===== v30 calendar: white-layout top row + capsule buttons, big month number, hairline grid ===== */
+.calhd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.yrpick{flex:1;background:none;border:0;font-size:var(--fs1);font-weight:700;color:var(--ink);padding:6px 4px;cursor:pointer}
+.capgrp{display:flex;background:var(--card);border:1px solid var(--ln);border-radius:999px;overflow:hidden;flex:none}
+.capbtn{background:none;border:0;padding:8px 15px;font-size:16px;line-height:1;color:var(--ink);cursor:pointer}
+.capbtn+.capbtn{border-left:1px solid var(--ln)}
+.calcard{padding:12px 10px 14px}
+.cm2{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:6px}
+.cmttl{font-size:var(--fs1)}
+.cmnum{font-size:36px;font-weight:800;line-height:1.1}
+.cw2{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center;font-size:var(--fs5);color:var(--mut);margin-bottom:2px}
+.cg2{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.cd2{position:relative;background:none;border:0;border-top:1px solid var(--ln);border-radius:0;padding:5px 2px 4px;min-height:56px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--ink);min-width:0}
+.cd2 .dn{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-size:14px;line-height:1}
+.cg2 .cd2:nth-child(7n+6) .dn{color:#4A7FB5}
+.cg2 .cd2:nth-child(7n) .dn{color:#D0483E}
+.cd2.dim .dn{opacity:.38}
+.cd2.has{background:color-mix(in srgb,var(--ac) 13%,#fff)}
+.cd2.td .dn{background:var(--ac);color:#fff;font-weight:700}
+.cd2.on{box-shadow:inset 0 0 0 2px var(--ac)}
+.hn{font-size:9px;line-height:1.2;color:#D0483E;text-align:center;overflow-wrap:anywhere}
+.hn2{font-size:var(--fs5);color:#D0483E;font-weight:600}
+.dt2{width:5px;height:5px;border-radius:50%;background:var(--ac);margin-top:2px}
+.calpills{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px}
+.calpills .expsel{flex:1;min-width:118px;width:auto;margin:0}
+.calpills .mini{flex:none}
+.wkrow{display:grid;gap:0}
+.wkrow.n7{grid-template-columns:repeat(7,minmax(0,1fr))}
+.wkrow.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.wkcol{background:none;border:0;border-left:1px solid var(--ln);padding:6px 3px 8px;min-height:96px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--ink);min-width:0;text-align:center}
+.wkcol:first-child{border-left:0}
+.wkcol .wkw{font-size:var(--fs5);color:var(--mut)}
+.wkcol .dn{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-size:14px}
+.wkcol.td .dn{background:var(--ac);color:#fff;font-weight:700}
+.wkcol.on{background:color-mix(in srgb,var(--ac) 10%,#fff)}
+.wkcol .wkh{font-size:8.5px;line-height:1.15;color:#D0483E;overflow-wrap:anywhere}
+.wkcol i{font-style:normal;font-size:10.5px;line-height:1.35;color:var(--ink);width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wkcol i.more2{color:var(--mut)}
+.yrgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.yrmon{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:8px 7px;text-align:left;cursor:pointer;color:var(--ink)}
+.yrmon>b{display:block;font-size:var(--fs4);margin-bottom:4px}
+.ymin{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.ymd{display:flex;flex-direction:column;align-items:center;font-size:9px;line-height:1.3;color:var(--ink);padding:1px 0}
+.ymd i{font-style:normal;width:14px;height:14px;line-height:14px;text-align:center;border-radius:50%}
+.ymd.wk{color:var(--mut);font-size:8px}
+.ymd.dim i{opacity:.35}
+.ymd.td i{background:var(--ac);color:#fff;font-weight:700}
+.ymd u{width:3px;height:3px;border-radius:50%;background:var(--ac);text-decoration:none}
+.ymd u.no{background:transparent}
+.evtime{margin-top:0}
+.evsc{flex:none}
+.task.ev.picked{background:color-mix(in srgb,var(--ac) 10%,#fff)}
+.selbar{display:flex;align-items:center;gap:8px;margin:10px 0 2px;font-size:var(--fs4);color:var(--mut)}
+.selbar .sp{flex:1}
+.yrpick2{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.yrpick2 button{padding:10px 0}
+#printArea{display:none}
+@media print{body>*{display:none!important}#printArea{display:block!important;color:#000}#printArea h1{font-size:19px;border:0}#printArea h2{font-size:14px;margin:14px 0 4px}#printArea p{margin:2px 0;font-size:12.5px}}
+
 .caltop .chip{flex:0 1 auto;min-width:0;padding:6px 10px;font-size:14px;overflow:hidden;text-overflow:ellipsis}
 .caltop .ic{flex:none}
 .caltop .sp{flex:1;min-width:0}
@@ -190,8 +255,8 @@ select.mini{flex:0 1 auto!important;width:auto}
 .hswp.go-l .hswp-bg{background:#8A96A0}.hswp.go-l .hb-r{opacity:1}
 .hswp-in{position:relative;background:var(--card);transition:transform .18s ease;touch-action:pan-y}
 .hswp:first-child .task{border-top:0}
-.ptag{display:inline-block;font-size:11px;padding:0 8px;border-radius:9px;background:color-mix(in srgb,var(--ac) 16%,#fff);color:var(--ac);font-weight:700}
-.dsec{font-size:12px;color:var(--mut);font-weight:700;margin:14px 2px 4px}
+.ptag{display:inline-block;font-size:var(--fs5);padding:0 8px;border-radius:9px;background:color-mix(in srgb,var(--ac) 16%,#fff);color:var(--ac);font-weight:700}
+.dsec{font-size:var(--fs2);color:var(--mut);font-weight:700;margin:14px 2px 4px}
 .pbar{height:8px;border-radius:4px;background:var(--ln);overflow:hidden;margin-top:8px}.pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2))}
 .modsw{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
 .finstat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
@@ -199,13 +264,13 @@ select.mini{flex:0 1 auto!important;width:auto}
 .mb-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:2px}
 .mb-bars{display:flex;align-items:flex-end;gap:3px;height:84px}
 .mb-bars i{display:block;width:13px;border-radius:3px 3px 0 0}
-.mb-col span{font-size:11px;color:var(--mut)}
+.mb-col span{font-size:var(--fs5);color:var(--mut)}
 .pie-wrap{display:flex;gap:14px;align-items:center;margin-top:8px}
 .pie-leg{flex:1;min-width:0}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v28)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v30)</p></main><dialog id="dlg"></dialog><div id="printArea" aria-hidden="true"></div>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -317,7 +382,10 @@ Object.assign(T.zh,{iconL:'圖示',freq:'做嘅日子',startd:'開始日期',res
 Object.assign(T.zh,{sv:'單版',dv:'雙版'});Object.assign(T.ja,{sv:'シングル',dv:'デュアル'});Object.assign(T.en,{sv:'Single',dv:'Dual'});
 Object.assign(T.zh,{todoT:'To Do List',copied:'已複製計劃文字 ✓',mvUp:'上移',mvDn:'下移',posReset:'位置重置',share:'分享行程',shDay:'本日',shWeek:'本週',shMonth:'本月',openH:'營業中'});Object.assign(T.ja,{todoT:'To Do List',copied:'プランをコピーしました ✓',mvUp:'上へ',mvDn:'下へ',posReset:'位置リセット',share:'スケジュール共有',shDay:'今日',shWeek:'今週',shMonth:'今月',openH:'営業中'});Object.assign(T.en,{todoT:'To Do List',copied:'Plan copied ✓',mvUp:'Move up',mvDn:'Move down',posReset:'Reset positions',share:'Share schedule',shDay:'Day',shWeek:'Week',shMonth:'Month',openH:'Open now'});
 Object.assign(T.zh,{plan:'計劃',planName:'計劃名稱',toTodo:'加入待辦',planTodoQ:'把這個計劃的全部節點加入待辦清單？重複執行會重複加入。',addedTodo:'已加入待辦 ✓'});Object.assign(T.ja,{plan:'プラン',planName:'プラン名',toTodo:'ToDoに追加',planTodoQ:'このプランの全ノードをToDoに追加しますか？重複実行すると重複します。',addedTodo:'ToDoに追加しました ✓'});Object.assign(T.en,{plan:'Plan',planName:'Plan name',toTodo:'To To-Do',planTodoQ:'Add all nodes of this plan to the To-Do list? Running again creates duplicates.',addedTodo:'Added to To-Do ✓'});
-Object.assign(T.zh,{mapV:'地圖',listV:'列表',mmChild:'加子節點',mmDel:'刪除這個節點和它下面所有分支？'});Object.assign(T.zh,{expSched:'匯出行程'});Object.assign(T.ja,{expSched:'予定を書き出す'});Object.assign(T.en,{expSched:'Export schedule'});Object.assign(T.ja,{mapV:'マップ',listV:'リスト',mmChild:'子ノード追加',mmDel:'このノードと配下すべてを削除しますか？'});Object.assign(T.en,{mapV:'Map',listV:'List',mmChild:'Add sub-node',mmDel:'Delete this node and everything under it?'});
+Object.assign(T.zh,{mapV:'地圖',listV:'列表',mmChild:'加子節點',mmDel:'刪除這個節點和它下面所有分支？'});Object.assign(T.zh,{expSched:'匯出行程'});Object.assign(T.ja,{expSched:'予定を書き出す'});Object.assign(T.en,{expSched:'Export schedule'});
+Object.assign(T.zh,{vwList:'清單',vwYear:'年',vwMonth:'月',vwWeek:'週',vw3:'3日',vwDay:'日',views:'檢視方式',more:'更多',mPrint:'列印',mSelect:'選擇',mDisp:'顯示選項',holShow:'顯示假期名稱',selDel:'刪除所選',yrSel:'選擇年份'});
+Object.assign(T.ja,{vwList:'リスト',vwYear:'年',vwMonth:'月',vwWeek:'週',vw3:'3日',vwDay:'日',views:'表示切替',more:'その他',mPrint:'印刷',mSelect:'選択',mDisp:'表示オプション',holShow:'祝日名を表示',selDel:'選択した予定を削除',yrSel:'年を選択'});
+Object.assign(T.en,{vwList:'List',vwYear:'Year',vwMonth:'Month',vwWeek:'Week',vw3:'3 days',vwDay:'Day',views:'View',more:'More',mPrint:'Print',mSelect:'Select',mDisp:'Display options',holShow:'Show holiday names',selDel:'Delete selected',yrSel:'Choose year'});Object.assign(T.ja,{mapV:'マップ',listV:'リスト',mmChild:'子ノード追加',mmDel:'このノードと配下すべてを削除しますか？'});Object.assign(T.en,{mapV:'Map',listV:'List',mmChild:'Add sub-node',mmDel:'Delete this node and everything under it?'});
 Object.assign(T.zh,{gt_check:'完成就得',gt_amt:'達到數量',unit:'單位',td:'目標日數',tdF:'永遠',tdC:'自訂',pwater:'飲水',pex:'做運動',prd:'讀書',cup:'杯',presets:'預設',linkHint:'點 ↗ 會直接開啟手機上的 App。填 App 連結（如 drops://、spotify://）；沒有連結的 App，先在 iOS「捷徑」建一個開啟 App 的捷徑，再填 shortcuts://run-shortcut?name=捷徑名稱。'});Object.assign(T.ja,{gt_check:'完了すればOK',gt_amt:'量を達成',unit:'単位',td:'目標日数',tdF:'永遠',tdC:'カスタム',pwater:'水を飲む',pex:'運動する',prd:'読書',cup:'杯',presets:'プリセット',linkHint:'↗でスマホのアプリを直接開きます。アプリのリンク（例：drops://、spotify://）を入力。リンクがないアプリは、iOS「ショートカット」でアプリを開くショートカットを作り、shortcuts://run-shortcut?name=名前 を入力。'});Object.assign(T.en,{gt_check:'Just complete it',gt_amt:'Reach an amount',unit:'Unit',td:'Target days',tdF:'Forever',tdC:'Custom',pwater:'Drink water',pex:'Exercise',prd:'Reading',cup:'cups',presets:'Presets',linkHint:'Tap ↗ to open the app on your phone. Enter an app link (e.g. drops://, spotify://). For apps without one, make an iOS Shortcut that opens it, then use shortcuts://run-shortcut?name=ShortcutName.'});Object.assign(T.ja,{iconL:'アイコン',freq:'曜日',startd:'開始日',restToday:'今日はお休み / 未開始'});Object.assign(T.en,{iconL:'Icon',freq:'Days',startd:'Start date',restToday:'Resting today / not started'});
 Object.assign(T.zh,{slot:'時段',slot_any:'隨時',slot_am:'早上',slot_pm:'下午',slot_night:'晚上',streak:'目前連續',stats:'統計',st_m:'本月打卡',st_t:'累計打卡',st_r:'本月達成率',st_s:'目前連續',st_ma:'本月總量',st_ta:'累計總量',times:'次',days:'日',chart:'每日紀錄'});Object.assign(T.ja,{slot:'時間帯',slot_any:'いつでも',slot_am:'朝',slot_pm:'午後',slot_night:'夜',streak:'現在の連続',stats:'統計',st_m:'今月のチェックイン',st_t:'累計チェックイン',st_r:'今月の達成率',st_s:'現在の連続',st_ma:'今月の合計',st_ta:'総累計',times:'回',days:'日',chart:'毎日の記録'});Object.assign(T.en,{slot:'Time of day',slot_any:'Anytime',slot_am:'Morning',slot_pm:'Afternoon',slot_night:'Night',streak:'Current streak',stats:'Stats',st_m:'Check-ins this month',st_t:'Total check-ins',st_r:'Completion this month',st_s:'Current streak',st_ma:'This month total',st_ta:'All-time total',times:'times',days:'d',chart:'Daily record'});
 Object.assign(T.zh,{study:'語言學習',studySql:'語言學習的資料表還沒建立，請先在 Supabase 執行 sql-language-study.sql。',newLang:'新增語言',langName:'語言名稱',langLevel:'目標級別（如 B1，可留空）',studyEmpty:'還沒有學習中的語言，按下方按鈕新增第一個。',sToday:'今日學習',sWeek:'本週學習',sWords:'生詞總數',sDue:'今日待複習',logTime:'記錄',min:'分鐘',vHome:'概覽',vWords:'生詞本',vReview:'閃卡複習',word:'生詞／短句',meaning:'意思',example:'例句／備註',addWord:'新增生詞',flip:'翻卡睇答案',know:'識 ✓',dontKnow:'唔識 ✗',noDue:'今日冇到期嘅卡 🎉',reviewAll:'複習全部',reviewDue:'開始複習到期卡',revDone:'複習完成 ✓',nextRev:'下次複習',wordsEmpty:'生詞本還沒有生詞，按上方 ＋ 新增第一個。',notifT:'行程提醒通知',notifHint:'提醒時間到時會彈出通知，用返手機本身的預設通知聲；手機靜音或勿擾模式時，通知會跟住靜音。權限被拒時，App 內仍會顯示橫額提醒。',notifBtn:'允許通知',notifOk:'通知已允許 ✓',notifNo:'通知未開啟（被拒絕或此裝置不支援）。請到系統設定開啟，或把 App 加到主畫面後再試。'});
@@ -342,9 +410,9 @@ Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_f
 Object.assign(T.zh,{compCal:'公司',listsPage:'購買清單',liAdd:'新增項目',liEmpty:'還沒有項目，在下方新增第一個。',evScope:'類別'});
 Object.assign(T.ja,{compCal:'会社',listsPage:'買い物リスト',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',evScope:'区分'});
 Object.assign(T.en,{compCal:'Company',listsPage:'Shopping list',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',evScope:'Scope'});
-Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v28.sql。',history:'歷史清單',histNone:'還沒有歷史清單。',nameReq:'名稱不可空白'});
-Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v28.sql を実行してください。',history:'過去のリスト',histNone:'過去のリストはまだありません。',nameReq:'名前を入力してください'});
-Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v28.sql in Supabase first.',history:'History',histNone:'No past lists yet.',nameReq:'Name cannot be empty'});
+Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v29.sql。',history:'歷史清單',histNone:'還沒有歷史清單。',nameReq:'名稱不可空白',memo:'備註',memoPh:'寫低備註（例如：2 包、特價先買）…'});
+Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v29.sql を実行してください。',history:'過去のリスト',histNone:'過去のリストはまだありません。',nameReq:'名前を入力してください',memo:'メモ',memoPh:'メモを書く（例：2パック、特売なら買う）…'});
+Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v29.sql in Supabase first.',history:'History',histNone:'No past lists yet.',nameReq:'Name cannot be empty',memo:'Memo',memoPh:'Add a memo (e.g. 2 packs, buy if on sale)…'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#1E88E5',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -386,10 +454,13 @@ let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
 let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false,evV24=false;
 let hlists=[],plans=[],pfin=[],planErr=false,planV23=false,habList=false,hlistView='all',planView=null,finCur=null;
-let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null,shopDay=null,dayNameV27=false,dayPinV28=false;
+let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null,shopDay=null,dayNameV27=false,dayPinV28=false,noteV29=false;
 let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
 let visPriv=true,visShared=true,visComp=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;visShared=_v.s!==false;visComp=_v.co!==false;calVis=_v.c||{}}catch(e){}
 const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,co:visComp,c:calVis})};
+let calView='list';try{const _cv=localStorage.mdcalview;if(['list','year','month','week','3day','day'].includes(_cv))calView=_cv}catch(e){}
+let calSelMode=false;const calSel=new Set();
+let showHol=true;try{showHol=localStorage.mdhol!=='0'}catch(e){}
 const myCal=id=>shareCals.find(c=>c.id===id),calName=id=>(myCal(id)||{}).name||'';
 const evVisible=e=>e.calendar_id?(visShared&&calVis[e.calendar_id]!==false&&!!myCal(e.calendar_id)):(e.scope==='company'?visComp:visPriv);
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
@@ -402,12 +473,12 @@ const todayP=x=>x.due_at&&new Date(x.due_at)<nextDay(new Date());
 const tmrP=x=>{if(!x.due_at)return false;const d=new Date(x.due_at),a=nextDay(new Date());return d>=a&&d<nextDay(a)};
 const fmt=d=>new Date(d).toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang],{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
 const toL=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
-function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24,dayNameV27,dayPinV28})}catch(e){}}
+function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24,dayNameV27,dayPinV28,noteV29})}catch(e){}}
 function hydrate(){
   try{const c=JSON.parse(localStorage.mdcache||'null');if(!c)return false;
   tasks=c.tasks||[];cats=c.cats||[];ideas=c.ideas||[];maps=c.maps||[];habits=c.habits||[];hlogs=c.hlogs||[];events=c.events||[];ecats=c.ecats||[];langs=c.langs||[];words=c.words||[];ssess=c.ssess||[];squiz=c.squiz||[];shareCals=c.shareCals||[];calMembers=c.calMembers||[];
   evV20=!!c.evV20;habV21=!!c.habV21;curMap=c.curMap||curMap;if(c.curLang)curLang=c.curLang;hlists=c.hlists||[];plans=c.plans||[];pfin=c.pfin||[];planV23=!!c.planV23;habList=!!c.habList;planErr=false;
-  slists=c.slists||[];litems=c.litems||[];dlists=c.dlists||[];ditems=c.ditems||[];shopV25=!!c.shopV25;evV24=!!c.evV24;dayNameV27=!!c.dayNameV27;dayPinV28=!!c.dayPinV28;
+  slists=c.slists||[];litems=c.litems||[];dlists=c.dlists||[];ditems=c.ditems||[];shopV25=!!c.shopV25;evV24=!!c.evV24;dayNameV27=!!c.dayNameV27;dayPinV28=!!c.dayPinV28;noteV29=!!c.noteV29;
   ideaErr=null;habitErr=null;evErr=null;langErr=null;shareErr=false;return true}catch(e){return false}
 }
 async function dedupCats(){
@@ -489,6 +560,8 @@ async function loadDataImpl(){
   try{const _pd=await sb.from('day_lists').select('name').limit(1);dayNameV27=!_pd.error}catch(_){dayNameV27=false}
   // ===== v28: pinnable day lists (graceful if sql-v28.sql not run yet: no pinned column -> pin buttons hidden, rename + history keep working) =====
   try{const _pp=await sb.from('day_lists').select('pinned').limit(1);dayPinV28=!_pp.error}catch(_){dayPinV28=false}
+  // ===== v29: per-item memos (graceful if sql-v29.sql not run yet: no note columns -> memo lines + editors hidden, everything else unchanged) =====
+  try{const _n1=await sb.from('list_items').select('note').limit(1);const _n2=await sb.from('day_list_items').select('note').limit(1);noteV29=!_n1.error&&!_n2.error}catch(_){noteV29=false}
   if(!dedupDone){dedupDone=true;try{await dedupCats()}catch(_){}try{await dedupDays()}catch(_){}}
   try{
     // v23.1: idempotent seeding — decide from a live DB query (never localStorage, never memory arrays alone)
@@ -629,17 +702,19 @@ const anyCat=id=>cats.find(c=>c.id===id)||ecats.find(c=>c.id===id)||hlists.find(
 const catName=c=>c?(c.name_key&&T[lang]&&T[lang][c.name_key]?t(c.name_key):c.name):'';
 const planOf=id=>plans.find(p=>p.id===id);
 const hm=d=>new Date(d).toLocaleTimeString(LOC[lang],{hour:'2-digit',minute:'2-digit'});
-function evRow(e){
-  const c=ecats.find(x=>x.id===e.category_id),map=e.location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}`:'';
-  const _ro=e.calendar_id&&myCal(e.calendar_id)&&myCal(e.calendar_id).role==='viewer';
-  const _h=`<div class="task ev" style="--hc:${esc(c&&c.color||'#8FA382')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}"><b>${esc(e.title||'')}</b><div class="meta rw"><span>${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}</span><span>${c?esc((c.icon||'')+' '+c.name):''}</span>${e.repeat_kind&&e.repeat_kind!=='none'?'<span>🔁</span>':''}${e.calendar_id&&calName(e.calendar_id)?`<span>👥 ${esc(calName(e.calendar_id))}</span>`:''}${!e.calendar_id&&e.scope==='company'?`<span>💼 ${t('compCal')}</span>`:''}${e.plan_id&&planOf(e.plan_id)?`<span class="ptag">🗂 ${t('plan')}</span>`:''}</div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}${e.url&&safeLink(e.url)?`<a class="go" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener" aria-label="URL">🔗</a>`:''}</div>`;
-  return _ro?_h:swpWrap('event',e.id,_h);
-}
-function calHTML(){
-  const y=cm.getFullYear(),m=cm.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),pn=new Date(y,m,0).getDate();
-  const dk=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate(),by={},mark=(d,x)=>{const k=dk(d);(by[k]=by[k]||[]).push(x)};
+/* ===== v30: Japanese national holidays 2025-2027 (embedded static table, offline).
+   Source: 内閣府「国民の祝日について」/ 国民の祝日に関する法律 — fixed days, Happy-Monday
+   days, equinoxes (2025-2027: 春分 3/20, 秋分 9/23), 振替休日 and 国民の休日 applied.
+   Counts: 2025=19, 2026=18, 2027=16 (53 entries). Names always Japanese. ===== */
+const HOL={"2025-01-01":"元日","2025-01-13":"成人の日","2025-02-11":"建国記念の日","2025-02-23":"天皇誕生日","2025-02-24":"振替休日","2025-03-20":"春分の日","2025-04-29":"昭和の日","2025-05-03":"憲法記念日","2025-05-04":"みどりの日","2025-05-05":"こどもの日","2025-05-06":"振替休日","2025-07-21":"海の日","2025-08-11":"山の日","2025-09-15":"敬老の日","2025-09-23":"秋分の日","2025-10-13":"スポーツの日","2025-11-03":"文化の日","2025-11-23":"勤労感謝の日","2025-11-24":"振替休日","2026-01-01":"元日","2026-01-12":"成人の日","2026-02-11":"建国記念の日","2026-02-23":"天皇誕生日","2026-03-20":"春分の日","2026-04-29":"昭和の日","2026-05-03":"憲法記念日","2026-05-04":"みどりの日","2026-05-05":"こどもの日","2026-05-06":"振替休日","2026-07-20":"海の日","2026-08-11":"山の日","2026-09-21":"敬老の日","2026-09-22":"国民の休日","2026-09-23":"秋分の日","2026-10-12":"スポーツの日","2026-11-03":"文化の日","2026-11-23":"勤労感謝の日","2027-01-01":"元日","2027-01-11":"成人の日","2027-02-11":"建国記念の日","2027-02-23":"天皇誕生日","2027-03-20":"春分の日","2027-04-29":"昭和の日","2027-05-03":"憲法記念日","2027-05-04":"みどりの日","2027-05-05":"こどもの日","2027-07-19":"海の日","2027-08-11":"山の日","2027-09-20":"敬老の日","2027-09-23":"秋分の日","2027-10-11":"スポーツの日","2027-11-03":"文化の日","2027-11-23":"勤労感謝の日"};
+const holName=d=>showHol?HOL[ymd(d)]:undefined;
+const dkOf=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+/* Occurrence map for a date range: visible events expanded (repeats + multi-day)
+   plus undone tasks with a due date. Same expansion math as the pre-v30 month grid. */
+function calBy(f,t){
+  const w0=new Date(+sod(f)-45*864e5),w1=new Date(+sod(t)+45*864e5);
+  const by={},mark=(d,x)=>{const k=dkOf(d);(by[k]=by[k]||[]).push(x)};
   tasks.forEach(x=>{if(!x.done&&x.due_at)mark(new Date(x.due_at),x)});
-  const w0=new Date(y,m-1,1),w1=new Date(y,m+2,0);
   const shift=(d0,k,kind)=>{const d=new Date(d0);if(kind==='daily')d.setDate(d.getDate()+k);else if(kind==='weekly')d.setDate(d.getDate()+7*k);else if(kind==='monthly')d.setMonth(d.getMonth()+k);else if(kind==='yearly')d.setFullYear(d.getFullYear()+k);return d};
   events.filter(evVisible).forEach(e=>{
     const st0=new Date(e.start_at),dur=(e.end_at?+new Date(e.end_at):+st0)-+st0,kind=e.repeat_kind||'none';
@@ -648,30 +723,147 @@ function calHTML(){
     else if(kind==='weekly')k0=Math.max(0,Math.floor((w0-st0)/(7*864e5))-1);
     else if(kind==='monthly')k0=Math.max(0,(w0.getFullYear()-st0.getFullYear())*12+(w0.getMonth()-st0.getMonth())-1);
     else if(kind==='yearly')k0=Math.max(0,w0.getFullYear()-st0.getFullYear()-1);
-    for(let k=k0;k<k0+600;k++){
+    for(let k=k0;k<k0+900;k++){
       if(k>0&&kind==='none')break;
       const os=shift(st0,k,kind);if(os>w1)break;
       const oe=new Date(+os+dur);if(oe<w0)continue;
       for(let d=sod(os),i=0;d<=oe&&i<42;d.setDate(d.getDate()+1),i++)mark(new Date(d),e);
     }
   });
-  const chip=(x,dt)=>{
-    if(x.start_at){const c=ecats.find(z=>z.id===x.category_id),s0=sod(x.start_at),e2=sod(x.end_at||x.start_at),cls=s0<dt&&dt<e2?' mid':s0<dt?' en':e2>dt?' st':'';
-      const showT=!cls||cls===' st'||((dt.getDay()+6)%7)===0;
-      return `<span class="chp${cls}" style="--c:${esc(c&&c.color||'#1E88E5')}">${showT?esc(x.title||''):'\u00a0'}</span>`}
-    return `<span class="chp tk">${esc(x.title||'')}</span>`};
+  return by;
+}
+function dayParts(by,d){
+  const items=(by[dkOf(d)]||[]).slice();
+  return{items,evs:items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks:items.filter(x=>!x.start_at).sort(cmp)};
+}
+const evViewer=e=>!!(e.calendar_id&&myCal(e.calendar_id)&&myCal(e.calendar_id).role==='viewer');
+function evRow(e){
+  const c=ecats.find(x=>x.id===e.category_id),map=e.location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}`:'';
+  const _ro=evViewer(e);
+  const sel=calSelMode&&!_ro,picked=sel&&calSel.has(e.id);
+  const scope=e.calendar_id?(calName(e.calendar_id)?`👥 ${esc(calName(e.calendar_id))}`:`👥 ${t('shareCal')}`):(!e.calendar_id&&e.scope==='company'?`💼 ${t('compCal')}`:`🔒 ${t('privCal')}`);
+  const _h=`<div class="task ev${picked?' picked':''}" style="--hc:${esc(c&&c.color||'#8FA382')}">${sel?`<input type="checkbox" class="evpick" data-a="evpick" data-id="${e.id}"${picked?' checked':''} aria-label="${t('mSelect')}">`:''}<span class="bar2"></span><div class="tt" data-a="${sel?'evpick':'eedit'}" data-id="${e.id}"><div class="meta evtime">${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}${e.repeat_kind&&e.repeat_kind!=='none'?' 🔁':''}</div><b>${esc(e.title||'')}</b><div class="meta rw"><span>${c?esc((c.icon||'')+' '+c.name):''}</span><span class="evsc">${scope}</span></div>${e.plan_id&&planOf(e.plan_id)?`<div class="meta"><span class="ptag">🗂 ${t('plan')}</span></div>`:''}${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}${e.url&&safeLink(e.url)?`<a class="go" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener" aria-label="URL">🔗</a>`:''}</div>`;
+  return _ro||calSelMode?_h:swpWrap('event',e.id,_h);
+}
+/* ===== v30: calendar views (list / year / month / week / 3day / day) ===== */
+const VIEWS=[['list','vwList','☰'],['year','vwYear','▦'],['month','vwMonth','▤'],['week','vwWeek','▥'],['3day','vw3','▨'],['day','vwDay','▢']];
+const viewGlyph=v=>(VIEWS.find(x=>x[0]===v)||VIEWS[0])[2];
+const anchorYear=()=>['list','month','year'].includes(calView)?cm.getFullYear():cs.getFullYear();
+const navRow=inner=>`<div class="cm2"><button class="sec ic" data-a="cnav" data-v="-1" aria-label="‹">‹</button><b class="cmttl">${inner}</b><button class="sec ic" data-a="cnav" data-v="1" aria-label="›">›</button></div>`;
+function calPills(){
+  return `<div class="calpills"><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${visPriv?'✓ ':''}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${visShared?'✓ ':''}👥 ${t('shareCal')}</button>${evV24?`<button class="chip${visComp?' on':''}" data-a="calvis" data-v="comp">${visComp?'✓ ':''}💼 ${t('compCal')}</button>`:''}<button class="sec mini" data-a="ctd">${t('ctoday')}</button><select id="expsel" class="expsel mini" aria-label="${t('expSched')}"><option value="">${t('expSched')} ▾</option><option value="day">${t('shDay')}</option><option value="week">${t('shWeek')}</option><option value="month">${t('shMonth')}</option></select></div>`;
+}
+function monthCard(mode){
+  const y=cm.getFullYear(),m=cm.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),pn=new Date(y,m,0).getDate();
+  const by=calBy(new Date(y,m,1),new Date(y,m,n));
   const cell=(yy,mm,d,dim)=>{
-    const dt=new Date(yy,mm,d),k=dk(dt),its=(by[k]||[]).slice().sort((a,b)=>(a.start_at?0:1)-(b.start_at?0:1)||String(a.start_at||a.due_at||'').localeCompare(String(b.start_at||b.due_at||'')));
-    const ch=its.slice(0,3).map(x=>chip(x,dt)).join('')+(its.length>3?`<span class="more">+${its.length-3}</span>`:'');
-    return `<button class="cd${dim?' dim':''}${dk(cs)===k?' on':''}${dk(new Date())===k?' td':''}" data-a="cday" data-v="${yy}-${mm}-${d}"><span class="dn">${d}</span>${ch}</button>`};
+    const dt=new Date(yy,mm,d),has=(by[dkOf(dt)]||[]).length>0,hn=holName(dt);
+    return `<button class="cd2${dim?' dim':''}${mode==='list'&&has?' has':''}${dkOf(new Date())===dkOf(dt)?' td':''}${dkOf(cs)===dkOf(dt)?' on':''}" data-a="${mode==='month'?'cmday':'cday'}" data-v="${yy}-${mm}-${d}"><span class="dn">${d}</span>${hn?`<span class="hn">${esc(hn)}</span>`:''}${mode==='month'&&has?'<span class="dt2"></span>':''}</button>`};
   let cells='';
   for(let i=first-1;i>=0;i--)cells+=cell(y,m-1,pn-i,true);
   for(let d=1;d<=n;d++)cells+=cell(y,m,d,false);
   const trail=(7-(first+n)%7)%7;for(let d=1;d<=trail;d++)cells+=cell(y,m+1,d,true);
-  const items=by[dk(cs)]||[],evs=items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks=items.filter(x=>!x.start_at).sort(cmp);
-  return drawer()+`<div class="caltop"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${visPriv?'✓ ':''}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${visShared?'✓ ':''}👥 ${t('shareCal')}</button>${evV24?`<button class="chip${visComp?' on':''}" data-a="calvis" data-v="comp">${visComp?'✓ ':''}💼 ${t('compCal')}</button>`:''}<span class="sp"></span></div><div class="card"><div class="cm"><button class="sec ic" data-a="cmo" data-v="-1" aria-label="‹">‹</button><b>${new Date(y,m,1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long'})}</b><button class="sec ic" data-a="cmo" data-v="1" aria-label="›">›</button></div>
-<div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div><div class="row calrow"><button class="sec mini" data-a="ctd">${t('ctoday')}</button><select id="expsel" class="expsel mini" aria-label="${t('expSched')}"><option value="">${t('expSched')} ▾</option><option value="day">${t('shDay')}</option><option value="week">${t('shWeek')}</option><option value="month">${t('shMonth')}</option></select></div></div>
-<div class="card"><b>${cs.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${evErr?`<p class="meta">${t('evSql')}</p>`:''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`+evCatCard()+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
+  return `<div class="card calcard">${navRow(`<span class="cmnum">${m+1}</span>`)}<div class="cw2">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="cg2">${cells}</div></div>`;
+}
+function rangeCard(n){
+  let first=sod(cs);
+  if(n===7)first.setDate(first.getDate()-((first.getDay()+6)%7));
+  const days=[];for(let i=0;i<n;i++){const d=new Date(first);d.setDate(d.getDate()+i);days.push(d)}
+  const by=calBy(days[0],days[n-1]);
+  const cols=days.map(dt=>{
+    const{items}=dayParts(by,dt),hn=holName(dt);
+    const sums=items.slice(0,3).map(x=>x.start_at?((x.all_day?'':hm(x.start_at)+' ')+(x.title||'')):('・'+(x.title||'')));
+    return `<button class="wkcol${dkOf(cs)===dkOf(dt)?' on':''}${dkOf(new Date())===dkOf(dt)?' td':''}" data-a="cday" data-v="${dt.getFullYear()}-${dt.getMonth()}-${dt.getDate()}"><span class="wkw">${[...WK[lang]][(dt.getDay()+6)%7]}</span><span class="dn">${dt.getDate()}</span>${hn?`<span class="wkh">${esc(hn)}</span>`:''}${sums.map(s=>`<i>${esc(s)}</i>`).join('')}${items.length>3?`<i class="more2">+${items.length-3}</i>`:''}</button>`}).join('');
+  const last=days[n-1],rng=`${first.getMonth()+1}/${first.getDate()} – ${last.getMonth()+1}/${last.getDate()}`;
+  return `<div class="card calcard">${navRow(rng)}<div class="wkrow n${n}">${cols}</div></div>`;
+}
+function yearCard(){
+  const Y=cm.getFullYear(),by=calBy(new Date(Y,0,1),new Date(Y,11,31)),tdk=dkOf(new Date());
+  let months='';
+  for(let M=0;M<12;M++){
+    const first=(new Date(Y,M,1).getDay()+6)%7,n=new Date(Y,M+1,0).getDate(),pn=new Date(Y,M,0).getDate();
+    let cells=[...WK[lang]].map(w=>`<span class="ymd wk">${w}</span>`).join('');
+    for(let i=first-1;i>=0;i--)cells+=`<span class="ymd dim"><i>${pn-i}</i></span>`;
+    for(let d=1;d<=n;d++){const dt=new Date(Y,M,d),has=(by[dkOf(dt)]||[]).length>0;cells+=`<span class="ymd${dkOf(dt)===tdk?' td':''}"><i>${d}</i>${has?'<u></u>':'<u class="no"></u>'}</span>`}
+    const trail=(7-(first+n)%7)%7;for(let d=1;d<=trail;d++)cells+=`<span class="ymd dim"><i>${d}</i></span>`;
+    months+=`<button class="yrmon" data-a="cyear" data-v="${Y}-${M}"><b>${new Date(Y,M,1).toLocaleDateString(LOC[lang],{month:'long'})}</b><span class="ymin">${cells}</span></button>`;
+  }
+  return `<div class="card calcard">${navRow(String(Y))}<div class="yrgrid">${months}</div></div>`;
+}
+function selBarHtml(){
+  return `<div class="selbar"><span>${t('mSelect')} · ${calSel.size}</span><span class="sp"></span><button class="sec mini" data-a="seldel">${t('selDel')}</button><button class="sec mini" data-a="selexit">${t('done')}</button></div>`;
+}
+function daySection(d){
+  const by=calBy(sod(d),sod(d)),{items,evs,tks}=dayParts(by,sod(d)),hn=holName(d);
+  return `<div class="card"><b>${d.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${hn?` <span class="hn2">${esc(hn)}</span>`:''}${evErr?`<p class="meta">${t('evSql')}</p>`:''}${calSelMode?selBarHtml():''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`;
+}
+function calHTML(){
+  const head=drawer()+`<div class="calhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><button class="yrpick" data-a="yrpick" aria-label="${t('yrSel')}">${anchorYear()} ▼</button><span class="capgrp"><button class="capbtn" data-a="vmenu" aria-label="${t('views')}">${viewGlyph(calView)}</button><button class="capbtn" data-a="mmenu" aria-label="${t('more')}">⋯</button></span></div>`;
+  let main='',below='';
+  if(calView==='list'){main=monthCard('list');below=daySection(cs)+evCatCard()}
+  else if(calView==='month'){main=monthCard('month')}
+  else if(calView==='year'){main=yearCard()}
+  else if(calView==='week'){main=rangeCard(7);below=daySection(cs)}
+  else if(calView==='3day'){main=rangeCard(3);below=daySection(cs)}
+  else{const hn=holName(cs);main=`<div class="card calcard">${navRow(fmtDayS(ymd(cs))+(hn?` <span class="hn2">${esc(hn)}</span>`:''))}</div>`;below=daySection(cs)}
+  return head+main+calPills()+below+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
+}
+function openViewMenu(){
+  const dlg=$('dlg');
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('views')}</h3>`+VIEWS.map(([v,k,g])=>`<button class="di" data-vm="${v}"><span class="ic2">${calView===v?'✓':''}</span><span class="ic2">${g}</span><span class="nm">${t(k)}</span></button>`).join('')+`<div class="row"><button class="sec" id="vm-x">${t('cancel')}</button></div>`;
+  dlg.showModal();
+  dlg.querySelectorAll('[data-vm]').forEach(b=>b.onclick=()=>{calView=b.dataset.vm;try{localStorage.mdcalview=calView}catch(e){}if(calSelMode&&(calView==='month'||calView==='year')){calSelMode=false;calSel.clear()}dlg.close();render()});
+  $('vm-x').onclick=()=>dlg.close();
+}
+function openMoreMenu(){
+  const dlg=$('dlg'),ex=(v,k)=>`<button class="di" data-ex="${v}"><span class="ic2">📤</span><span class="nm">${t('expSched')} · ${t(k)}</span></button>`;
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('more')}</h3>`
+    +`<button class="di" id="mm-print"><span class="ic2">🖨</span><span class="nm">${t('mPrint')}</span></button>`
+    +`<button class="di" id="mm-sel"><span class="ic2">☑</span><span class="nm">${t('mSelect')}</span></button>`
+    +`<button class="di" id="mm-disp"><span class="ic2">⚙</span><span class="nm">${t('mDisp')}</span></button>`
+    +ex('day','shDay')+ex('week','shWeek')+ex('month','shMonth')
+    +`<div class="row"><button class="sec" id="mm-x">${t('cancel')}</button></div>`;
+  dlg.showModal();
+  $('mm-print').onclick=()=>{dlg.close();calPrint()};
+  $('mm-sel').onclick=()=>{calSelMode=true;calSel.clear();if(calView==='month'||calView==='year'){calView='list';try{localStorage.mdcalview='list'}catch(e){}}dlg.close();render()};
+  $('mm-disp').onclick=()=>{dlg.close();openDispOpt()};
+  dlg.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{dlg.close();exportImg(b.dataset.ex)});
+  $('mm-x').onclick=()=>dlg.close();
+}
+function openDispOpt(){
+  const dlg=$('dlg');
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('mDisp')}</h3><button class="di" id="do-hol"><span class="ic2">${showHol?'✓':'○'}</span><span class="nm">${t('holShow')}</span></button><div class="row"><button class="sec" id="do-x">${t('done')}</button></div>`;
+  dlg.showModal();
+  $('do-hol').onclick=()=>{showHol=!showHol;try{localStorage.mdhol=showHol?'1':'0'}catch(e){}dlg.close();render()};
+  $('do-x').onclick=()=>dlg.close();
+}
+function openYearPick(){
+  const dlg=$('dlg'),cur=anchorYear();let btns='';
+  for(let y=2020;y<=2035;y++)btns+=`<button class="${y===cur?'pri':'sec'}" data-yr="${y}">${y}</button>`;
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('yrSel')}</h3><div class="yrpick2">${btns}</div><div class="row"><button class="sec" id="yp-x">${t('cancel')}</button></div>`;
+  dlg.showModal();
+  dlg.querySelectorAll('[data-yr]').forEach(b=>b.onclick=()=>{const y=+b.dataset.yr;
+    if(['list','month','year'].includes(calView))cm=new Date(y,cm.getMonth(),1);
+    else{const nd=new Date(y,cs.getMonth(),Math.min(cs.getDate(),new Date(y,cs.getMonth()+1,0).getDate()));cs=nd;cm=new Date(y,nd.getMonth(),1)}
+    dlg.close();render()});
+  $('yp-x').onclick=()=>dlg.close();
+}
+function calPrint(){
+  let from,to;
+  if(calView==='week'){from=sod(cs);from.setDate(from.getDate()-((from.getDay()+6)%7));to=new Date(from);to.setDate(to.getDate()+6)}
+  else if(calView==='3day'){from=sod(cs);to=new Date(from);to.setDate(to.getDate()+2)}
+  else if(calView==='day'){from=sod(cs);to=sod(cs)}
+  else if(calView==='year'){from=new Date(cm.getFullYear(),0,1);to=new Date(cm.getFullYear(),11,31)}
+  else{from=new Date(cm.getFullYear(),cm.getMonth(),1);to=new Date(cm.getFullYear(),cm.getMonth()+1,0)}
+  const by=calBy(from,to);let h=`<h1>${t('calendar')} · ${from.toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric'})} – ${to.toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric'})}</h1>`,any=false;
+  for(let d=new Date(from);d<=to;d.setDate(d.getDate()+1)){
+    const{items,evs,tks}=dayParts(by,d);if(!items.length)continue;any=true;
+    const hn=HOL[ymd(d)];
+    h+=`<h2>${fmtDayS(ymd(d))}${hn?' · '+esc(hn):''}</h2>`+evs.map(e=>`<p>${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}　${esc(e.title||'')}${e.location?'　📍 '+esc(e.location):''}</p>`).join('')+tks.map(x=>`<p>・${esc(x.title||'')}</p>`).join('');
+  }
+  if(!any)h+=`<p>${t('noItems')}</p>`;
+  $('printArea').innerHTML=h;
+  window.print();
 }
 async function loadShare(){
   shareCals=[];calMembers=[];shareErr=false;
@@ -1105,6 +1297,12 @@ function openPlan(id){
 const fmtDay=ds=>{const p=String(ds).split('-').map(Number);return new Date(p[0],(p[1]||1)-1,p[2]||1).toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric',weekday:'short'})};
 // v26: compact one-line date for the narrow day-list header (date + weekday kept in full).
 const fmtDayS=ds=>{const p=String(ds).split('-').map(Number);const d=new Date(p[0],(p[1]||1)-1,p[2]||1);const wd=d.toLocaleDateString(LOC[lang],{weekday:'short'});return p[0]+'/'+pad(p[1]||1)+'/'+pad(p[2]||1)+(lang==='en'?' ('+wd+')':'（'+wd+'）')};
+// v29: the day-nav header sits BETWEEN the ‹ › buttons on a single row. In the
+// half-width column the full fmtDayS string (year + parenthesised weekday)
+// overflows its flex cell and paints over the buttons, so the nav header uses
+// month/day + weekday only. The year stays where there is room for it: the
+// drawer history rows (fmtDayS) and the share text (fmtDay).
+const fmtDayNav=ds=>{const p=String(ds).split('-').map(Number);const d=new Date(p[0],(p[1]||1)-1,p[2]||1);const wd=d.toLocaleDateString(LOC[lang],{weekday:'short'});return (p[1]||1)+'/'+(p[2]||1)+' '+wd};
 const daysOf=ds=>dlists.filter(d=>d.list_date===ds).sort((a,b)=>String(a.created_at||'').localeCompare(String(b.created_at||'')));
 // v27: display name of a day list. Legacy rows (created before v27) carry no
 // name yet and fall back to the generic title; degraded mode (no name column)
@@ -1114,6 +1312,25 @@ const dayName=d=>d?(dayNameV27?(d.name||t('listsPage')):t('listsPage')):'';
 // that date, otherwise the earliest list of the day.
 const curDayList=ds=>{const g=daysOf(ds);if(!g.length)return null;return g.find(d=>d.id===shopDay)||g[0]};
 const dayItemsOf=dl=>dl?ditems.filter(i=>i.day_list_id===dl.id).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.created_at<b.created_at?-1:1)):[];
+// v29: memo line under a shopping item's name. Editable rows carry data-a so a
+// tap opens the memo editor (the innermost [data-a] wins, so it never toggles
+// the item); the To Do reflection passes ro=1 and renders read-only text.
+// Hidden entirely until sql-v29.sql adds the note columns (noteV29 probe).
+const memoLine=(a,id,note,ro)=>{if(!noteV29)return '';if(ro)return note?`<div class="memo ro">${esc(note)}</div>`:'';
+  return `<div class="memo" data-a="${a}" data-id="${id}">${note?esc(note):`<span class="madd">＋ ${t('memo')}</span>`}</div>`};
+// v29: edit one item's memo. Master items write list_items, day copies write
+// day_list_items — the two sides never write through to each other, exactly
+// like titles. An emptied memo is stored as NULL.
+function openMemo(kind,id){
+  const it=kind==='litem'?litems.find(x=>x.id===id):ditems.find(x=>x.id===id);if(!it)return;
+  const dlg=$('dlg');
+  dlg.innerHTML=`<label for="mm-t">${t('memo')}</label><input id="mm-t" type="text" maxlength="200" placeholder="${t('memoPh')}" value="${esc(it.note||'')}"><div class="row"><button class="sec" id="mm-x">${t('cancel')}</button><button class="pri" id="mm-s">${t('save')}</button></div>`;
+  $('mm-x').onclick=()=>dlg.close();
+  $('mm-s').onclick=async()=>{const n=$('mm-t').value.trim()||null;
+    const{error}=await sb.from(kind==='litem'?'list_items':'day_list_items').update({note:n}).eq('id',id);if(error)return alert(error.message);
+    it.note=n;dlg.close();render()};
+  dlg.showModal();const inp=$('mm-t');inp.focus();try{inp.select()}catch(_){}
+}
 let _dayP=null;
 function ensureDayList(ds){
   const ex=curDayList(ds);
@@ -1140,6 +1357,7 @@ async function toggleShopItem(it){
   }else{
     const day=await ensureDayList(td);if(!day)return;
     const v={day_list_id:day.id,title:it.title,src_id:it.id,sort_order:ditems.filter(x=>x.day_list_id===day.id).length};
+    if(noteV29)v.note=it.note||null; // v29: the memo copies with the title; afterwards the two sides are independent
     const{data,error}=await sb.from('day_list_items').insert(v).select().single();if(error)return alert(error.message);
     ditems.push(data);
   }
@@ -1147,7 +1365,8 @@ async function toggleShopItem(it){
 }
 function shopShareText(ds){
   const dl=curDayList(ds),its=dayItemsOf(dl);
-  return '🛒 '+t('listsPage')+'\n'+fmtDay(ds)+(dayNameV27&&dl?'\n'+dayName(dl):'')+(its.length?'\n'+its.map(i=>(i.done?'☑ ':'☐ ')+i.title).join('\n'):'');
+  // v29: an item with a memo gets the memo on the next line, indented two spaces.
+  return '🛒 '+t('listsPage')+'\n'+fmtDay(ds)+(dayNameV27&&dl?'\n'+dayName(dl):'')+(its.length?'\n'+its.map(i=>(i.done?'☑ ':'☐ ')+i.title+(noteV29&&i.note?'\n  '+i.note:'')).join('\n'):'');
 }
 async function shareDayList(){
   const tx=shopShareText(shopDate||ymd(new Date()));
@@ -1173,20 +1392,28 @@ function shopHTML(){
     +(slists.length?`<div class="selrow"><select data-shopsel="master" aria-label="${t('master')}">${slists.map(c=>`<option value="${c.id}"${c.id===shopList?' selected':''}>${esc(c.icon||'🛒')} ${esc(catName(c))}</option>`).join('')}</select><button class="sec ic" data-a="sladd" aria-label="${t('newList')}">＋</button></div>`
       :`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sladd">＋ ${t('newList')}</button></div>`)
     +(cur?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sledit" data-id="${cur.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="sldel" data-id="${cur.id}">${t('del')}</button></div>`
-      +(mIts.length?mIts.map(i=>swpWrap('litem',i.id,`<div class="task"><input type="checkbox" class="pc" style="--pc:#43A047" data-a="stog" data-id="${i.id}"${selIds.has(i.id)?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="stog" data-id="${i.id}"><b>${esc(i.title)}</b></div><button class="sec mini" data-a="siedit" data-id="${i.id}" aria-label="${t('edit')}">✎</button></div>`)).join(''):`<p class="meta">${t('liEmpty')}</p>`)
+      +(mIts.length?mIts.map(i=>swpWrap('litem',i.id,`<div class="task"><input type="checkbox" class="pc" style="--pc:#43A047" data-a="stog" data-id="${i.id}"${selIds.has(i.id)?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="stog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('smemo',i.id,i.note)}</div><button class="sec mini" data-a="siedit" data-id="${i.id}" aria-label="${t('edit')}">✎</button></div>`)).join(''):`<p class="meta">${t('liEmpty')}</p>`)
       +`<div class="tbar"><input id="si-n" type="text" maxlength="120" placeholder="${t('slPh')}"><button class="pri" data-a="siadd" data-id="${cur.id}" aria-label="${t('liAdd')}">＋</button></div>`
     :`<p class="meta">${t('slNone')}</p>`)
     +`</div>`;
   const dgs=daysOf(vd),dIts=dayItemsOf(dl),dn=dIts.filter(i=>i.done).length;
   // v27: a day may hold several NAMED lists — picked from a dropdown like the left column.
   // Day items have NO edit button (removed by request); tick + swipe-remove only.
+  // v29 FIX: the day item's .tt now carries data-a="dtog" like every other row
+  // type (master items wire .tt with stog, tasks with edit). Before v29 the ONLY
+  // wired element was the 22px checkbox — taps on the title / row body (the
+  // natural tap target, ~85% of the row) hit closest('[data-a]') === null and
+  // the delegated click handler returned without doing anything, which read on
+  // a real phone as "day items cannot be ticked". The dtog handler derives the
+  // new state from the checkbox when the checkbox itself was tapped, and from
+  // !it.done when the title/row was tapped.
   const daySel=dayNameV27?`<div class="selrow"><select data-shopsel="day" aria-label="${t('todayList')}"${dgs.length?'':' disabled'}>${dgs.map(d=>`<option value="${d.id}"${dl&&d.id===dl.id?' selected':''}>${esc(dayName(d))}</option>`).join('')}</select><button class="sec ic" data-a="dladd" aria-label="${t('newList')}">＋</button></div>`
     +(dl?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="dledit" data-id="${dl.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="dldel" data-id="${dl.id}">${t('del')}</button></div>`:''):'';
   const right=`<div class="card"><div class="dsec" style="margin-top:0">${t('todayList')}</div>`
-    +`<div class="dhd"><button class="sec ic" data-a="dday" data-v="-1" aria-label="‹">‹</button><b>${fmtDayS(vd)}</b><button class="sec ic" data-a="dday" data-v="1" aria-label="›"${vd>=td?' disabled style="opacity:.3"':''}>›</button></div>`
+    +`<div class="dhd"><button class="sec ic" data-a="dday" data-v="-1" aria-label="‹">‹</button><b>${fmtDayNav(vd)}</b><button class="sec ic" data-a="dday" data-v="1" aria-label="›"${vd>=td?' disabled style="opacity:.3"':''}>›</button></div>`
     +(vd!==td?`<button class="lnk" data-a="dtoday">${t('backToday')}</button>`:'')
     +daySel
-    +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt"><b>${esc(i.title)}</b></div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
+    +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('dmemo',i.id,i.note)}</div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
     +(dIts.length?`<div class="row"><button class="pri" data-a="dshare">📤 ${t('shareBtn')}</button></div>`:'')
     +`</div>`;
   return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div><div class="shop"><div>${left}</div><div>${right}</div></div>`;
@@ -1201,7 +1428,7 @@ function todoShopHTML(){
   return `<div class="card"><div class="dsec" style="margin-top:0">🛒 ${t('todayList')}</div>`
     +gs.map(dl=>{const its=dayItemsOf(dl),dn=its.filter(i=>i.done).length;
       return `<div class="meta" style="margin:8px 0 2px"><b>${esc(dayName(dl))}</b> · ${dn}/${its.length}</div>`
-      +(its.length?its.map(i=>`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt"><b>${esc(i.title)}</b></div></div>`).join(''):`<p class="meta">${t('dayEmpty')}</p>`)}).join('')
+      +(its.length?its.map(i=>`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('',i.id,i.note,1)}</div></div>`).join(''):`<p class="meta">${t('dayEmpty')}</p>`)}).join('')
     +`</div>`;
 }
 function openSlist(id){
@@ -1221,11 +1448,13 @@ function openItemEdit(kind,id){
   if(kind!=='litem')return;
   const it=litems.find(x=>x.id===id);if(!it)return;
   const dlg=$('dlg');
-  dlg.innerHTML=`<label for="ie-n">${t('title')}</label><input id="ie-n" type="text" maxlength="120" value="${esc(it.title||'')}"><div class="row"><button class="sec" id="ie-x">${t('cancel')}</button><button class="pri" id="ie-s">${t('save')}</button></div>`;
+  // v29: the master item's memo is edited here too (same dialog), alongside the title.
+  dlg.innerHTML=`<label for="ie-n">${t('title')}</label><input id="ie-n" type="text" maxlength="120" value="${esc(it.title||'')}">${noteV29?`<label for="ie-m">${t('memo')}</label><input id="ie-m" type="text" maxlength="200" placeholder="${t('memoPh')}" value="${esc(it.note||'')}">`:''}<div class="row"><button class="sec" id="ie-x">${t('cancel')}</button><button class="pri" id="ie-s">${t('save')}</button></div>`;
   $('ie-x').onclick=()=>dlg.close();
   $('ie-s').onclick=async()=>{const n=$('ie-n').value.trim();if(!n)return alert(t('nameReq'));
-    const{error}=await sb.from('list_items').update({title:n}).eq('id',id);if(error)return alert(error.message);
-    it.title=n;dlg.close();render()};
+    const patch={title:n};if(noteV29)patch.note=$('ie-m').value.trim()||null;
+    const{error}=await sb.from('list_items').update(patch).eq('id',id);if(error)return alert(error.message);
+    it.title=n;if(noteV29)it.note=patch.note;dlg.close();render()};
   dlg.showModal();const inp=$('ie-n');inp.focus();try{inp.select()}catch(_){}
 }
 // v27: create/rename one of a day's named shopping lists.
@@ -1273,7 +1502,7 @@ const setHTML=()=>setHTML0()+notifCard();
 function pageTitle(){
   if(tab==='todo')return vname();
   if(tab==='habit'){if(hview){const hx=habits.find(x=>x.id===hview);if(hx)return esc((hx.icon||'')+' '+hx.name)}return esc(t('habits'))}
-  if(tab==='cal')return esc(t('calendar'));
+  if(tab==='cal')return ''; // v30: calendar page has its own top row (white layout), no generic page title
   if(tab==='lists')return esc(t('listsPage'));
   if(tab==='plan')return esc(t('plans'));
   if(tab==='fin')return esc(t('finance'));
@@ -1292,7 +1521,7 @@ function appView(){
   else if(tab==='fin')body=finHTML();
   else if(tab==='study')body=studyHTML();
   else body=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1">${t('sv')}</button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2">${t('dv')}</button></span></div>`+listHTML()+todoShopHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`;
-  $('app').innerHTML=`<div class="appt">${pageTitle()}</div>`+(OFFLINE?`<div class="offbar">${t('offMsg')}</div>`:'')+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
+  const _pt=pageTitle();$('app').innerHTML=(_pt?`<div class="appt">${_pt}</div>`:'')+(OFFLINE?`<div class="offbar">${t('offMsg')}</div>`:'')+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
   if(session&&Date.now()-_cacheAt>1500){_cacheAt=Date.now();cacheData()}
   if(tab==='set')bind();
 }
@@ -1543,12 +1772,14 @@ async function swDelete(kind,id){
 async function undoDelete(kind,snaps){
   if(kind==='litem'){
     const sn={...snaps[0],user_id:session.user.id};
+    if(!noteV29)delete sn.note; // v29: same guard as pinned below — never insert a column the DB lacks
     const{data,error}=await sb.from('list_items').insert(sn).select().single();
     if(error)return alert(error.message);
     litems.push(data||sn);render();return;
   }
   if(kind==='ditem'){
     const sn={...snaps[0],user_id:session.user.id};
+    if(!noteV29)delete sn.note;
     const{data,error}=await sb.from('day_list_items').insert(sn).select().single();
     if(error)return alert(error.message);
     ditems.push(data||sn);render();return;
@@ -1557,7 +1788,7 @@ async function undoDelete(kind,snaps){
     const{data,error}=await sb.from('categories').insert(snaps.c).select().single();
     if(error)return alert(error.message);
     slists.push(data||snaps.c);
-    for(const it of snaps.its){const r=await sb.from('list_items').insert({...it,user_id:session.user.id}).select().single();if(!r.error&&r.data)litems.push(r.data)}
+    for(const it of snaps.its){const sn={...it,user_id:session.user.id};if(!noteV29)delete sn.note;const r=await sb.from('list_items').insert(sn).select().single();if(!r.error&&r.data)litems.push(r.data)}
     render();return;
   }
   if(kind==='dlist'){
@@ -1567,7 +1798,11 @@ async function undoDelete(kind,snaps){
     const{data,error}=await sb.from('day_lists').insert(sn0).select().single();
     if(error)return alert(error.message);
     dlists.push(data||snaps.d);
-    for(const it of snaps.its){const r=await sb.from('day_list_items').insert({...it,user_id:session.user.id}).select().single();if(!r.error&&r.data)ditems.push(r.data)}
+    for(const it of snaps.its){const sn={...it,user_id:session.user.id};if(!noteV29)delete sn.note;const r=await sb.from('day_list_items').insert(sn).select().single();if(!r.error&&r.data)ditems.push(r.data)}
+    render();return;
+  }
+  if(kind==='evbatch'){
+    for(const s0 of snaps){const sn={...s0,user_id:session.user.id};if(!evV24)delete sn.scope;const{data,error}=await sb.from('events').insert(sn).select().single();if(!error)events.push(data||sn)}
     render();return;
   }
   if(kind==='task'){
@@ -1671,6 +1906,24 @@ $('app').addEventListener('click',async e=>{
   else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);render()}
   else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
   else if(a==='ctd'){cm=new Date();cs=new Date();render()}
+  else if(a==='cnav'){const s=+b.dataset.v;
+    if(calView==='list'||calView==='month')cm=new Date(cm.getFullYear(),cm.getMonth()+s,1);
+    else if(calView==='year')cm=new Date(cm.getFullYear()+s,0,1);
+    else if(calView==='week'){cs=new Date(cs.getFullYear(),cs.getMonth(),cs.getDate()+7*s);cm=new Date(cs.getFullYear(),cs.getMonth(),1)}
+    else if(calView==='3day'){cs=new Date(cs.getFullYear(),cs.getMonth(),cs.getDate()+3*s);cm=new Date(cs.getFullYear(),cs.getMonth(),1)}
+    else{cs=new Date(cs.getFullYear(),cs.getMonth(),cs.getDate()+s);cm=new Date(cs.getFullYear(),cs.getMonth(),1)}
+    render()}
+  else if(a==='cmday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);calView='day';try{localStorage.mdcalview='day'}catch(e){}render()}
+  else if(a==='cyear'){const[y,m]=b.dataset.v.split('-').map(Number);cm=new Date(y,m,1);const nw=new Date();cs=(nw.getFullYear()===y&&nw.getMonth()===m)?nw:new Date(y,m,1);calView='list';try{localStorage.mdcalview='list'}catch(e){}render()}
+  else if(a==='vmenu')openViewMenu()
+  else if(a==='mmenu')openMoreMenu()
+  else if(a==='yrpick')openYearPick()
+  else if(a==='evpick'){const on=b.tagName==='INPUT'?b.checked:!calSel.has(id);if(on)calSel.add(id);else calSel.delete(id);render()}
+  else if(a==='selexit'){calSelMode=false;calSel.clear();render()}
+  else if(a==='seldel'){const selEv=[...calSel].map(x=>events.find(e=>e.id===x)).filter(Boolean);
+    if(selEv.length&&confirm(t('confirmDel'))){const snaps=[];
+      for(const e of selEv){const{error}=await sb.from('events').delete().eq('id',e.id);if(!error){snaps.push(e);events=events.filter(x=>x.id!==e.id)}}
+      calSel.clear();calSelMode=false;render();if(snaps.length)showUndo('evbatch',snaps)}}
   else if(a==='hunarc'){const{error}=await sb.from('habits').update({archived:false}).eq('id',id);if(error)alert(error.message);else{const hx=habits.find(h=>h.id===id);if(hx)hx.archived=false;render()}}
   else if(a==='nidea')openIdea()
   else if(a==='exp')exportImg('month')
@@ -1708,7 +1961,9 @@ $('app').addEventListener('click',async e=>{
   else if(a==='dladd')openDayList();
   else if(a==='dledit')openDayList(id);
   else if(a==='dldel')await delDayList(id);
-  else if(a==='dtog'){const it=ditems.find(x=>x.id===id);if(it){const{error}=await sb.from('day_list_items').update({done:b.checked}).eq('id',id);if(error)alert(error.message);else{it.done=b.checked;render()}}}
+  else if(a==='dtog'){const it=ditems.find(x=>x.id===id);if(it){const nv=b.tagName==='INPUT'?b.checked:!it.done;const{error}=await sb.from('day_list_items').update({done:nv}).eq('id',id);if(error)alert(error.message);else{it.done=nv;render()}}}
+  else if(a==='smemo')openMemo('litem',id)
+  else if(a==='dmemo')openMemo('ditem',id)
   else if(a==='dday'){const p=(shopDate||ymd(new Date())).split('-').map(Number);const s=ymd(new Date(p[0],p[1]-1,p[2]+ +b.dataset.v));if(s<=ymd(new Date()))shopDate=s;render()}
   else if(a==='dtoday'){shopDate=null;render()}
   else if(a==='dshare')await shareDayList()
