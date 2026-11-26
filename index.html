@@ -101,7 +101,7 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .fcard{text-align:center;padding:38px 18px}.fcard .fw{font-size:28px;font-weight:700;overflow-wrap:anywhere}.fcard .fm{font-size:21px;font-weight:600;margin-top:12px;overflow-wrap:anywhere}.fcard .fe{margin-top:8px}
 .pchip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 .trow{display:flex;gap:8px;align-items:center;padding:9px 8px;border-bottom:1px solid var(--ln);cursor:pointer}.trow:last-child{border-bottom:0}.dot{width:10px;height:10px;border-radius:99px;flex:none}
-.mmwrap{position:relative;overflow:hidden;border:1px solid var(--ln);border-radius:16px;background:var(--card);height:calc(100dvh - 200px);min-height:360px}.mmvt{position:absolute;top:8px;right:8px;z-index:3;display:flex;gap:6px}.calrow button{flex:0 0 88px}.expsel{flex:1;width:auto;margin:0}
+.mmwrap{position:relative;overflow:hidden;border:1px solid var(--ln);border-radius:16px;background:var(--card);height:calc(100dvh - 200px);min-height:360px}.mmvt{position:absolute;top:8px;right:8px;z-index:3;display:flex;gap:6px}.calrow button{flex:0 0 88px}
 .mm{position:relative}.mm svg{position:absolute;inset:0}
 .mmnode{position:absolute;transform:translate(-50%,-50%);width:148px;max-height:66px;overflow:hidden;padding:9px 10px;border-radius:12px;border:1px solid var(--ic,#D9A441);background:color-mix(in srgb,var(--ic,#D9A441) 20%,var(--card));color:var(--tx);font-size:13px;cursor:pointer;text-align:center;line-height:1.3}
 .mmL1{font-weight:700;font-size:14px;background:var(--ic,#D9A441);color:#fff}
@@ -189,9 +189,6 @@ select.mini{flex:0 1 auto!important;width:auto}
 /* ===== v30 calendar: white-layout top row + capsule buttons, big month number, hairline grid ===== */
 .calhd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .yrpick{flex:1;background:none;border:0;font-size:var(--fs1);font-weight:700;color:var(--ink);padding:6px 4px;cursor:pointer}
-.capgrp{display:flex;background:var(--card);border:1px solid var(--ln);border-radius:999px;overflow:hidden;flex:none}
-.capbtn{background:none;border:0;padding:8px 15px;font-size:16px;line-height:1;color:var(--ink);cursor:pointer}
-.capbtn+.capbtn{border-left:1px solid var(--ln)}
 .calcard{padding:12px 10px 14px}
 .cm2{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:6px}
 .cmttl{font-size:var(--fs1)}
@@ -209,9 +206,13 @@ select.mini{flex:0 1 auto!important;width:auto}
 .hn{font-size:9px;line-height:1.2;color:#D0483E;text-align:center;overflow-wrap:anywhere}
 .hn2{font-size:var(--fs5);color:#D0483E;font-weight:600}
 .dt2{width:5px;height:5px;border-radius:50%;background:var(--ac);margin-top:2px}
-.calpills{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px}
-.calpills .expsel{flex:1;min-width:118px;width:auto;margin:0}
-.calpills .mini{flex:none}
+/* v32: scope pills + today + export merged into ONE row (nowrap); tightened
+   padding/font so all five controls fit 360px; the ✓ state tick is dropped
+   only on very narrow screens (the .on fill still signals state). */
+.calpills{display:flex;flex-wrap:nowrap;align-items:center;gap:5px;margin:0 0 16px}
+.calpills .chip{padding:6px;font-size:var(--fs5);flex:none;height:32px;display:inline-flex;align-items:center}
+.calpills .mini{flex:none;padding:6px 8px!important;height:32px;display:inline-flex;align-items:center}
+@media (max-width:374px){.calpills .ck{display:none}}
 .wkrow{display:grid;gap:0}
 .wkrow.n7{grid-template-columns:repeat(7,minmax(0,1fr))}
 .wkrow.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -268,7 +269,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v31)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v32)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -366,9 +367,9 @@ Object.assign(T.en,{calendar:'Calendar',brainstorm:'Brain storm',tdo:'To-do',eve
 Object.assign(T.zh,{habits:'習慣',newHabit:'新習慣',habitName:'習慣名稱',appLink:'App 連結（選填）',linkHint:'點 ↗ 會跳到該 App。例如 shortcuts://run-shortcut?name=捷徑名稱 可開啟任何 App。',metric:'Apple 健康數據（之後連動）',goal:'目標值',open:'開啟',habitEmpty:'還沒有習慣，按右下角的 ＋ 新增第一個。',habitSql:'習慣的資料表還沒補齊，請先在 Supabase 執行 SQL。',m_none:'不連動',m_steps:'步數',m_sleep:'睡眠（小時）',m_exercise:'運動（分鐘）',m_water:'飲水（毫升）',m_mindful:'正念（分鐘）'});
 Object.assign(T.ja,{habits:'習慣',newHabit:'新しい習慣',habitName:'習慣の名前',appLink:'アプリのリンク（任意）',linkHint:'↗でそのアプリに移動します。例: shortcuts://run-shortcut?name=ショートカット名 で任意のアプリを開けます。',metric:'Appleヘルスケア（後で連携）',goal:'目標値',open:'開く',habitEmpty:'習慣がありません。右下の＋で最初の1つを追加。',habitSql:'習慣のテーブルが未整備です。先にSupabaseでSQLを実行してください。',m_none:'連携しない',m_steps:'歩数',m_sleep:'睡眠（時間）',m_exercise:'運動（分）',m_water:'水分（ml）',m_mindful:'マインドフルネス（分）'});
 Object.assign(T.en,{habits:'Habits',newHabit:'New habit',habitName:'Habit name',appLink:'App link (optional)',linkHint:'Tap ↗ to jump to that app. e.g. shortcuts://run-shortcut?name=ShortcutName can open any app.',metric:'Apple Health data (linked later)',goal:'Goal',open:'Open',habitEmpty:'No habits yet. Tap ＋ to add the first one.',habitSql:'The habits tables are incomplete. Run the SQL in Supabase first.',m_none:'Not linked',m_steps:'Steps',m_sleep:'Sleep (hours)',m_exercise:'Exercise (min)',m_water:'Water (ml)',m_mindful:'Mindful (min)'});
-Object.assign(T.zh,{evTitle:'行程標題',start:'開始',end:'結束',place:'地點',placeHint:'地址或店名（可在 Google 地圖開啟）',remind:'提醒',r_none:'不提醒',r_0:'準時',r_10:'10 分鐘前',r_30:'30 分鐘前',r_60:'1 小時前',r_1440:'1 天前',openMap:'在 Google 地圖開啟',evCats:'行程類別',newEvCat:'新增行程類別',noItems:'這一天沒有行程或待辦。',evSql:'行程的資料表還沒補齊，請先在 Supabase 執行 SQL。'});
-Object.assign(T.ja,{evTitle:'予定のタイトル',start:'開始',end:'終了',place:'場所',placeHint:'住所や店名（Googleマップで開けます）',remind:'通知',r_none:'通知なし',r_0:'時刻ちょうど',r_10:'10分前',r_30:'30分前',r_60:'1時間前',r_1440:'1日前',openMap:'Googleマップで開く',evCats:'予定のカテゴリ',newEvCat:'予定カテゴリを追加',noItems:'この日の予定とToDoはありません。',evSql:'予定のテーブルが未整備です。先にSupabaseでSQLを実行してください。'});
-Object.assign(T.en,{evTitle:'Event title',start:'Start',end:'End',place:'Place',placeHint:'Address or venue (opens in Google Maps)',remind:'Reminder',r_none:'No reminder',r_0:'At start',r_10:'10 min before',r_30:'30 min before',r_60:'1 hour before',r_1440:'1 day before',openMap:'Open in Google Maps',evCats:'Event categories',newEvCat:'Add event category',noItems:'No events or tasks on this day.',evSql:'The events tables are incomplete. Run the SQL in Supabase first.'});
+Object.assign(T.zh,{evTitle:'行程標題',start:'開始',end:'結束',place:'地點',placeHint:'地址或店名（可在 Google 地圖開啟）',remind:'提醒',r_none:'不提醒',r_0:'準時',r_10:'10 分鐘前',r_30:'30 分鐘前',r_60:'1 小時前',r_1440:'1 天前',openMap:'在 Google 地圖開啟',evCats:'行程類別',newEvCat:'新增行程類別',addEv:'新增行程',mngEvCat:'管理行程類別',noItems:'這一天沒有行程或待辦。',evSql:'行程的資料表還沒補齊，請先在 Supabase 執行 SQL。'});
+Object.assign(T.ja,{evTitle:'予定のタイトル',start:'開始',end:'終了',place:'場所',placeHint:'住所や店名（Googleマップで開けます）',remind:'通知',r_none:'通知なし',r_0:'時刻ちょうど',r_10:'10分前',r_30:'30分前',r_60:'1時間前',r_1440:'1日前',openMap:'Googleマップで開く',evCats:'予定のカテゴリ',newEvCat:'予定カテゴリを追加',addEv:'予定を追加',mngEvCat:'予定カテゴリを管理',noItems:'この日の予定とToDoはありません。',evSql:'予定のテーブルが未整備です。先にSupabaseでSQLを実行してください。'});
+Object.assign(T.en,{evTitle:'Event title',start:'Start',end:'End',place:'Place',placeHint:'Address or venue (opens in Google Maps)',remind:'Reminder',r_none:'No reminder',r_0:'At start',r_10:'10 min before',r_30:'30 min before',r_60:'1 hour before',r_1440:'1 day before',openMap:'Open in Google Maps',evCats:'Event categories',newEvCat:'Add event category',addEv:'Add event',mngEvCat:'Manage event categories',noItems:'No events or tasks on this day.',evSql:'The events tables are incomplete. Run the SQL in Supabase first.'});
 Object.assign(T.zh,{noCat:'（無類別）'});Object.assign(T.ja,{noCat:'（カテゴリなし）'});Object.assign(T.en,{noCat:'(none)'});
 Object.assign(T.zh,{bgImg:'背景圖片',bgHint:'上傳你的插圖當作 App 背景（會自動縮小）。',bgPick:'選擇圖片',bgDel:'移除背景',bgErr:'無法讀取這張圖片。',exportImg:'匯出本月行程圖片',share:'分享',shareHint:'可以直接分享，或長按圖片儲存。'});
 Object.assign(T.ja,{bgImg:'背景画像',bgHint:'イラストをアプリの背景にできます（自動で縮小されます）。',bgPick:'画像を選ぶ',bgDel:'背景を削除',bgErr:'この画像を読み込めません。',exportImg:'今月の予定を画像で書き出す',share:'共有',shareHint:'そのまま共有するか、画像を長押しして保存できます。'});
@@ -748,7 +749,19 @@ const viewGlyph=v=>(VIEWS.find(x=>x[0]===v)||VIEWS[0])[2];
 const anchorYear=()=>['list','month','year'].includes(calView)?cm.getFullYear():cs.getFullYear();
 const navRow=inner=>`<div class="cm2"><button class="sec ic" data-a="cnav" data-v="-1" aria-label="‹">‹</button><b class="cmttl">${inner}</b><button class="sec ic" data-a="cnav" data-v="1" aria-label="›">›</button></div>`;
 function calPills(){
-  return `<div class="calpills"><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${visPriv?'✓ ':''}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${visShared?'✓ ':''}👥 ${t('shareCal')}</button>${evV24?`<button class="chip${visComp?' on':''}" data-a="calvis" data-v="comp">${visComp?'✓ ':''}💼 ${t('compCal')}</button>`:''}<button class="sec mini" data-a="ctd">${t('ctoday')}</button><select id="expsel" class="expsel mini" aria-label="${t('expSched')}"><option value="">${t('expSched')} ▾</option><option value="day">${t('shDay')}</option><option value="week">${t('shWeek')}</option><option value="month">${t('shMonth')}</option></select></div>`;
+  // v32: ONE row — scope pills + today + export. The export <select> became a
+  // button opening openExportMenu (same 本日/本週/本月 targets via exportImg).
+  const ck=on=>on?'<span class="ck">✓ </span>':'';
+  return `<div class="calpills"><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${ck(visPriv)}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${ck(visShared)}👥 ${t('shareCal')}</button>${evV24?`<button class="chip${visComp?' on':''}" data-a="calvis" data-v="comp">${ck(visComp)}💼 ${t('compCal')}</button>`:''}<button class="sec mini" data-a="ctd">${t('ctoday')}</button><button class="sec mini" data-a="expmenu" aria-label="${t('expSched')}">${t('expSched')} ▾</button></div>`;
+}
+function openExportMenu(){
+  const dlg=$('dlg'),ex=(v,k)=>`<button class="di" data-ex="${v}"><span class="ic2">📤</span><span class="nm">${t('expSched')} · ${t(k)}</span></button>`;
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('expSched')}</h3>`
+    +ex('day','shDay')+ex('week','shWeek')+ex('month','shMonth')
+    +`<div class="row"><button class="sec" id="ex-x">${t('cancel')}</button></div>`;
+  dlg.showModal();
+  dlg.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{dlg.close();exportImg(b.dataset.ex)});
+  $('ex-x').onclick=()=>dlg.close();
 }
 function monthCard(mode){
   const y=cm.getFullYear(),m=cm.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),pn=new Date(y,m,0).getDate();
@@ -795,15 +808,18 @@ function daySection(d){
   return `<div class="card"><b>${d.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${hn?` <span class="hn2">${esc(hn)}</span>`:''}${evErr?`<p class="meta">${t('evSql')}</p>`:''}${calSelMode?selBarHtml():''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`;
 }
 function calHTML(){
-  const head=drawer()+`<div class="calhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><button class="yrpick" data-a="yrpick" aria-label="${t('yrSel')}">${anchorYear()} ▼</button><span class="capgrp"><button class="capbtn" data-a="vmenu" aria-label="${t('views')}">${viewGlyph(calView)}</button><button class="capbtn" data-a="mmenu" aria-label="${t('more')}">⋯</button></span></div>`;
+  // v32: no drawer button on this page — the view switcher moves to the
+  // top-left slot (same .sec.ic chrome as other pages' ☰), year stays centred,
+  // and the top-right keeps only the "…" more key as a single square button.
+  const head=drawer()+`<div class="calhd"><button class="sec ic" data-a="vmenu" aria-label="${t('views')}">${viewGlyph(calView)}</button><button class="yrpick" data-a="yrpick" aria-label="${t('yrSel')}">${anchorYear()} ▼</button><button class="sec ic" data-a="mmenu" aria-label="${t('more')}">⋯</button></div>`;
   let main='',below='';
-  if(calView==='list'){main=monthCard('list');below=daySection(cs)+evCatCard()}
+  if(calView==='list'){main=monthCard('list');below=daySection(cs)}
   else if(calView==='month'){main=monthCard('month')}
   else if(calView==='year'){main=yearCard()}
   else if(calView==='week'){main=rangeCard(7);below=daySection(cs)}
   else if(calView==='3day'){main=rangeCard(3);below=daySection(cs)}
   else{const hn=holName(cs);main=`<div class="card calcard">${navRow(fmtDayS(ymd(cs))+(hn?` <span class="hn2">${esc(hn)}</span>`:''))}</div>`;below=daySection(cs)}
-  return head+main+calPills()+below+(evErr?'':`<button class="fab" data-a="nev" aria-label="${t('events')}">＋</button>`);
+  return head+main+calPills()+below+(evErr?'':`<button class="fab" data-a="calfab" aria-label="${t('events')}">＋</button>`);
 }
 function openViewMenu(){
   const dlg=$('dlg');
@@ -1072,7 +1088,36 @@ ${evV24?`<div class="frow"><span>💼 ${t('evScope')}</span><select id="e-scope"
 function loadGk(cb){if(window.google&&google.maps&&google.maps.places)return cb();if(window._gkL)return;window._gkL=true;const sc=document.createElement('script');sc.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(localStorage.gk||'')+'&libraries=places';sc.onload=()=>cb();document.head.appendChild(sc)}
 function dayItems(d){const out=[];events.filter(evVisible).forEach(e=>{if(occursOn(e,d))out.push({t:+new Date(e.start_at),s:(e.all_day?'':hm(e.start_at)+' ')+(e.title||'')+(e.location?' 📍'+e.location:'')+(e.place_phone?' 📞'+e.place_phone:'')})});tasks.forEach(x=>{if(x.due_at&&!x.done&&+sod(x.due_at)===+sod(d))out.push({t:+new Date(x.due_at),s:'・'+(x.icon?x.icon+' ':'')+x.title})});return out.sort((a,b)=>a.t-b.t).map(o=>o.s)}
 function occursOn(e,d){const st=sod(e.start_at),en=sod(e.end_at||e.start_at),dd=sod(d),kind=e.repeat_kind||'none';if(kind==='none')return dd>=st&&dd<=en;if(dd<st)return false;const dur=Math.round((en-st)/864e5);let cur=new Date(st),g=0;const step=c=>{const n=new Date(c);if(kind==='daily')n.setDate(n.getDate()+1);else if(kind==='weekly')n.setDate(n.getDate()+7);else if(kind==='monthly')n.setMonth(n.getMonth()+1);else if(kind==='yearly')n.setFullYear(n.getFullYear()+1);return n};while(cur<=dd&&g++<900){if(dd>=cur&&dd<=new Date(+cur+dur*864e5))return true;cur=step(cur)}return false}
-const evCatCard=()=>`<div class="card"><b>${t('evCats')}</b>${ecats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')}<div class="row"><button class="sec" data-a="nle">＋ ${t('newEvCat')}</button></div></div>`;
+/* ===== v32: calendar FAB action menu + event-category manager dialog =====
+   The old inline 行程類別 card is gone: its add flow lives in the
+   FAB menu (openList('event')), and its per-category icon/name/colour/delete
+   editing lives in evCatMgrInto below — same fields, same save paths
+   (catFieldSave / delCategory), so nothing the card could do is lost. */
+function openCalFab(){
+  const dlg=$('dlg');
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">＋</h3>`
+    +`<button class="di" id="cf-ev"><span class="ic2">📅</span><span class="nm">${t('addEv')}</span></button>`
+    +`<button class="di" id="cf-nc"><span class="ic2">🏷</span><span class="nm">${t('newEvCat')}</span></button>`
+    +`<button class="di" id="cf-mg"><span class="ic2">⚙</span><span class="nm">${t('mngEvCat')}</span></button>`
+    +`<div class="row"><button class="sec" id="cf-x">${t('cancel')}</button></div>`;
+  dlg.showModal();
+  $('cf-ev').onclick=()=>{dlg.close();openEvent()};
+  $('cf-nc').onclick=()=>{dlg.close();openList('event')};
+  $('cf-mg').onclick=()=>evCatMgrInto();
+  $('cf-x').onclick=()=>dlg.close();
+}
+function evCatMgrInto(){
+  const dlg=$('dlg');
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">🏷 ${t('evCats')}</h3>`
+    +ecats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-ecdel="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')
+    +`<div class="row"><button class="sec" id="ecm-x">${t('done')}</button></div>`;
+  if(!dlg.open)dlg.showModal();
+  // dialog inputs live outside #app, so the app-level change delegation does
+  // not reach them — wire the very same save path (catFieldSave) directly.
+  dlg.querySelectorAll('[data-cn],[data-cc],[data-ci]').forEach(el=>el.addEventListener('change',()=>catFieldSave(el)));
+  dlg.querySelectorAll('[data-ecdel]').forEach(b=>b.onclick=async()=>{if(!confirm(t('confirmDel')))return;if(await delCategory(b.dataset.ecdel))evCatMgrInto()});
+  $('ecm-x').onclick=()=>{dlg.close();render()};
+}
 const MMW=148,MMH=46,MGAP=16,MLEVEL=178;
 function mmTree(){const byP=new Map();mapIdeas().forEach(i=>{const k=i.parent_id||'';if(!byP.has(k))byP.set(k,[]);byP.get(k).push(i)});const srt=a=>a.sort(srtIdeas);const build=i=>({i,kids:srt(byP.get(i.id)||[]).map(build)});return srt(byP.get('')||[]).map(build)}
 function mmLayout(){const roots=mmTree(),R=roots.filter((_,x)=>x%2===0),L=roots.filter((_,x)=>x%2===1);const meas=n=>{n.u=n.kids.length?n.kids.reduce((a,k)=>a+meas(k),0):1;return n.u};roots.forEach(meas);const nodes=[],edges=[];const place=(n,x,yT,dir,p)=>{const hgt=n.u*(MMH+MGAP)-MGAP;n.cx=x;n.cy=yT+hgt/2;const _ov=mmPos[n.i.id];if(_ov){n.cx=_ov.x;n.cy=_ov.y}nodes.push(n);edges.push([p,n,dir]);let cy=yT;n.kids.forEach(k=>{place(k,x+dir*MLEVEL,cy,dir,n);cy+=k.u*(MMH+MGAP)})};const totR=R.reduce((a,n)=>a+n.u,0),totL=L.reduce((a,n)=>a+n.u,0),tot=Math.max(totR,totL,1);const H=tot*(MMH+MGAP)+56,cyC=H/2;const dep=n=>1+(n.kids.length?Math.max(...n.kids.map(dep)):0);const mR=R.reduce((a,n)=>Math.max(a,dep(n)),0),mL=L.reduce((a,n)=>Math.max(a,dep(n)),0);const rootX=24+mL*MLEVEL+MMW/2;let y=cyC-(totR*(MMH+MGAP)-MGAP)/2;R.forEach(n=>{place(n,rootX+MLEVEL,y,1,null);y+=n.u*(MMH+MGAP)});y=cyC-(totL*(MMH+MGAP)-MGAP)/2;L.forEach(n=>{place(n,rootX-MLEVEL,y,-1,null);y+=n.u*(MMH+MGAP)});const W=rootX+mR*MLEVEL+MMW/2+24;return{nodes,edges,W,H,rootX,cyC}}
@@ -1947,6 +1992,8 @@ $('app').addEventListener('click',async e=>{
   else if(a==='fincur'){finCur=b.dataset.v;dr=false;render()}
   else if(a==='hfocus'){const hx=habits.find(h=>h.id===id);if(hx)openFocus(hx)}
   else if(a==='nev')openEvent()
+  else if(a==='calfab')openCalFab()
+  else if(a==='expmenu')openExportMenu()
   else if(a==='eedit')openEvent(id)
   else if(a==='nle')openList('event')
   else if(a==='idea')openIdea(id)
@@ -1963,7 +2010,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='ovt'){ovOpen=!ovOpen;render()}
   else if(a==='pst')await postpone()
   else if(a==='chk')await setDone(id,b.checked)
-  else if(a==='cdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('categories').delete().eq('id',id);if(error)alert(error.message);else{cats=cats.filter(c=>c.id!==id);ecats=ecats.filter(c=>c.id!==id);hlists=hlists.filter(c=>c.id!==id);slists=slists.filter(c=>c.id!==id);litems=litems.filter(i=>i.list_id!==id);if(shopList===id)shopList=null;tasks.forEach(x=>{if(x.category_id===id)x.category_id=null});events.forEach(x=>{if(x.category_id===id)x.category_id=null});habits.forEach(h=>{if(h.list_id===id)h.list_id=null});if(view===id)view='all';if(hlistView===id)hlistView='all';render()}}}
+  else if(a==='cdel'){if(confirm(t('confirmDel')))await delCategory(id)}
   else if(a==='ctab'){courseLvl=b.dataset.v;localStorage.clvl=b.dataset.v;render()}
   else if(a==='gtog'){const k=b.dataset.v;expG.has(k)?expG.delete(k):expG.add(k);render()}
   else if(a==='wfil'){wordF=b.dataset.v;localStorage.wf=b.dataset.v;render()}
@@ -1994,8 +2041,8 @@ $('app').addEventListener('click',async e=>{
   else if(a==='rvdont')await gradeWord(false)
   else if(a==='lo')sb.auth.signOut();
 });
-$('app').addEventListener('change',async e=>{
-  const el=e.target,d=el.dataset,id=d.cn||d.cc||d.ci;if(!id)return;
+async function catFieldSave(el){
+  const d=el.dataset,id=d.cn||d.cc||d.ci;if(!id)return;
   // v26: renaming a list/category makes it pure user text — clear name_key so the
   // name is never run through the i18n table again (seeded defaults keep their key
   // only until the user renames them). Fall back to a name-only update if the
@@ -2004,9 +2051,16 @@ $('app').addEventListener('change',async e=>{
   let{error}=await sb.from('categories').update(patch).eq('id',id);
   if(error&&d.cn){const r2=await sb.from('categories').update({name:patch.name}).eq('id',id);error=r2.error;if(!error)patch.name_key=anyCat(id)?anyCat(id).name_key:null}
   if(error)return alert(error.message);Object.assign(anyCat(id),patch);
-});
+}
+async function delCategory(id){
+  const{error}=await sb.from('categories').delete().eq('id',id);
+  if(error){alert(error.message);return false}
+  cats=cats.filter(c=>c.id!==id);ecats=ecats.filter(c=>c.id!==id);hlists=hlists.filter(c=>c.id!==id);slists=slists.filter(c=>c.id!==id);litems=litems.filter(i=>i.list_id!==id);if(shopList===id)shopList=null;tasks.forEach(x=>{if(x.category_id===id)x.category_id=null});events.forEach(x=>{if(x.category_id===id)x.category_id=null});habits.forEach(h=>{if(h.list_id===id)h.list_id=null});if(view===id)view='all';if(hlistView===id)hlistView='all';render();
+  return true;
+}
+$('app').addEventListener('change',e=>{catFieldSave(e.target)});
 $('app').addEventListener('change',e=>{if(e.target.id==='bgf')upBg(e.target.files[0])});
-document.addEventListener('change',e=>{if(e.target.id==='expsel'){const v=e.target.value;e.target.value='';if(v)exportImg(v);return}if(e.target.dataset&&e.target.dataset.shopsel){if(e.target.dataset.shopsel==='master')shopList=e.target.value||null;else shopDay=e.target.value||null;render();return}if(e.target.dataset&&e.target.dataset.dsel){if(e.target.dataset.dsel==='A')dA=e.target.value;else dB=e.target.value;render()}});
+document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.shopsel){if(e.target.dataset.shopsel==='master')shopList=e.target.value||null;else shopDay=e.target.value||null;render();return}if(e.target.dataset&&e.target.dataset.dsel){if(e.target.dataset.dsel==='A')dA=e.target.value;else dB=e.target.value;render()}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(()=>{if(tab!=='set')render()})});
 async function loadSettings(){
   if(OFFLINE)return;
