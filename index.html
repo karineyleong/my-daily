@@ -257,9 +257,10 @@ select.mini{flex:0 1 auto!important;width:auto}
 .evurl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .evurl a{color:var(--ac);text-decoration:none}
 .evnote{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
-.task.ev.picked{background:color-mix(in srgb,var(--ac) 10%,#fff)}
-.selbar{display:flex;align-items:center;gap:8px;margin:10px 0 2px;font-size:var(--fs4);color:var(--mut)}
-.selbar .sp{flex:1}
+.exprow{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--ln);cursor:pointer}
+.exprow input{width:20px;height:20px;flex:none;margin:0}
+.exprow .tm{flex:none;color:var(--mut);font-size:var(--fs5)}
+.exprow .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .yrpick2{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .yrpick2 button{padding:10px 0}
 
@@ -288,7 +289,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v35)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v36)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -390,9 +391,9 @@ Object.assign(T.zh,{evTitle:'行程標題',start:'開始',end:'結束',place:'�
 Object.assign(T.ja,{evTitle:'予定のタイトル',start:'開始',end:'終了',place:'場所',placeHint:'住所や店名（Googleマップで開けます）',remind:'通知',r_none:'通知なし',r_0:'時刻ちょうど',r_10:'10分前',r_30:'30分前',r_60:'1時間前',r_1440:'1日前',openMap:'Googleマップで開く',evCats:'予定のカテゴリ',newEvCat:'予定カテゴリを追加',addEv:'予定を追加',mngEvCat:'予定カテゴリを管理',noItems:'この日の予定とToDoはありません。',evSql:'予定のテーブルが未整備です。先にSupabaseでSQLを実行してください。'});
 Object.assign(T.en,{evTitle:'Event title',start:'Start',end:'End',place:'Place',placeHint:'Address or venue (opens in Google Maps)',remind:'Reminder',r_none:'No reminder',r_0:'At start',r_10:'10 min before',r_30:'30 min before',r_60:'1 hour before',r_1440:'1 day before',openMap:'Open in Google Maps',evCats:'Event categories',newEvCat:'Add event category',addEv:'Add event',mngEvCat:'Manage event categories',noItems:'No events or tasks on this day.',evSql:'The events tables are incomplete. Run the SQL in Supabase first.'});
 Object.assign(T.zh,{noCat:'（無類別）'});Object.assign(T.ja,{noCat:'（カテゴリなし）'});Object.assign(T.en,{noCat:'(none)'});
-Object.assign(T.zh,{bgImg:'背景圖片',bgHint:'上傳你的插圖當作 App 背景（會自動縮小）。',bgPick:'選擇圖片',bgDel:'移除背景',bgErr:'無法讀取這張圖片。',exportImg:'匯出本月行程圖片',share:'分享',shareHint:'可以直接分享，或長按圖片儲存。'});
-Object.assign(T.ja,{bgImg:'背景画像',bgHint:'イラストをアプリの背景にできます（自動で縮小されます）。',bgPick:'画像を選ぶ',bgDel:'背景を削除',bgErr:'この画像を読み込めません。',exportImg:'今月の予定を画像で書き出す',share:'共有',shareHint:'そのまま共有するか、画像を長押しして保存できます。'});
-Object.assign(T.en,{bgImg:'Background image',bgHint:'Upload your illustration as the app background (resized automatically).',bgPick:'Choose image',bgDel:'Remove background',bgErr:'Could not read this image.',exportImg:"Export this month's events as image",share:'Share',shareHint:'Share it directly, or long-press the image to save.'});
+Object.assign(T.zh,{bgImg:'背景圖片',bgHint:'上傳你的插圖當作 App 背景（會自動縮小）。',bgPick:'選擇圖片',bgDel:'移除背景',bgErr:'無法讀取這張圖片。',exportImg:'匯出本月行程圖片',share:'分享',shareHint:'可以直接分享，或長按圖片儲存。',expTitle:'我的行程',expPick:'選擇要匯出的行程',selAll:'全選',selNone:'全不選',expGo:'生成圖片'});
+Object.assign(T.ja,{bgImg:'背景画像',bgHint:'イラストをアプリの背景にできます（自動で縮小されます）。',bgPick:'画像を選ぶ',bgDel:'背景を削除',bgErr:'この画像を読み込めません。',exportImg:'今月の予定を画像で書き出す',share:'共有',shareHint:'そのまま共有するか、画像を長押しして保存できます。',expTitle:'私のスケジュール',expPick:'書き出す予定を選択',selAll:'すべて選択',selNone:'すべて解除',expGo:'画像を作成'});
+Object.assign(T.en,{bgImg:'Background image',bgHint:'Upload your illustration as the app background (resized automatically).',bgPick:'Choose image',bgDel:'Remove background',bgErr:'Could not read this image.',exportImg:"Export this month's events as image",share:'Share',shareHint:'Share it directly, or long-press the image to save.',expTitle:'My Schedule',expPick:'Choose events to export',selAll:'Select all',selNone:'Select none',expGo:'Create image'});
 Object.assign(T.zh,{ctoday:'今日',arc:'封存',arcSec:'已封存',unarc:'取消封存'});Object.assign(T.ja,{ctoday:'今日',arc:'アーカイブ',arcSec:'アーカイブ済み',unarc:'アーカイブ解除'});Object.assign(T.en,{ctoday:'Today',arc:'Archive',arcSec:'Archived',unarc:'Restore'});
 Object.assign(T.zh,{allDay:'全日',r_120:'2 小時前'});Object.assign(T.ja,{allDay:'終日',r_120:'2時間前'});Object.assign(T.en,{allDay:'All day',r_120:'2 hours before'});
 Object.assign(T.zh,{rpt:'重複',rp_none:'不重複',rp_d:'每日',rp_w:'每週',rp_m:'每月',rp_y:'每年'});Object.assign(T.ja,{rpt:'繰り返し',rp_none:'なし',rp_d:'毎日',rp_w:'毎週',rp_m:'毎月',rp_y:'毎年'});Object.assign(T.en,{rpt:'Repeat',rp_none:'None',rp_d:'Daily',rp_w:'Weekly',rp_m:'Monthly',rp_y:'Yearly'});
@@ -477,7 +478,6 @@ let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
 let visPriv=true,visShared=true,visComp=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;visShared=_v.s!==false;visComp=_v.co!==false;calVis=_v.c||{}}catch(e){}
 const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,co:visComp,c:calVis})};
 let calView='list';try{const _cv=localStorage.mdcalview;if(['list','year','month','week','day'].includes(_cv))calView=_cv}catch(e){}
-let calSelMode=false;const calSel=new Set();
 const myCal=id=>shareCals.find(c=>c.id===id),calName=id=>(myCal(id)||{}).name||'';
 const evVisible=e=>e.calendar_id?(visShared&&calVis[e.calendar_id]!==false&&!!myCal(e.calendar_id)):(e.scope==='company'?visComp:e.scope==='shared'?visShared:visPriv);
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
@@ -759,12 +759,11 @@ const evViewer=e=>!!(e.calendar_id&&myCal(e.calendar_id)&&myCal(e.calendar_id).r
 function evRow(e){
   const c=ecats.find(x=>x.id===e.category_id),map=e.location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}`:'';
   const _ro=evViewer(e);
-  const sel=calSelMode&&!_ro,picked=sel&&calSel.has(e.id);
   const scope=e.calendar_id?(calName(e.calendar_id)?`👥 ${esc(calName(e.calendar_id))}`:`👥 ${t('shareCal')}`):(e.scope==='company'?`💼 ${t('compCal')}`:e.scope==='shared'?`👥 ${t('shareCal')}`:`🔒 ${t('privCal')}`);
   // v33: a no-time event shows NO time line at all (a repeat marker still shows).
   const _tm=e.all_day?t('allDay'):(e.no_time?'':hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')),_rp=e.repeat_kind&&e.repeat_kind!=='none';
-  const _h=`<div class="task ev${picked?' picked':''}" style="--hc:${esc(c&&c.color||'#8FA382')}">${sel?`<input type="checkbox" class="evpick" data-a="evpick" data-id="${e.id}"${picked?' checked':''} aria-label="${t('mSelect')}">`:''}<span class="bar2"></span><div class="tt" data-a="${sel?'evpick':'eedit'}" data-id="${e.id}">${_tm||_rp?`<div class="meta evtime">${_tm}${_rp?' 🔁':''}</div>`:''}<b>${esc(e.title||'')}</b>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.url&&safeLink(e.url)?`<div class="meta evurl">🔗 <a data-a="evurl" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener">${esc(e.url)}</a></div>`:''}${e.note?`<div class="meta evnote">📝 ${esc(e.note)}</div>`:''}<div class="meta rw"><span>${c?esc((c.icon||'')+' '+c.name):''}</span><span class="evsc">${scope}</span></div>${e.plan_id&&planOf(e.plan_id)?`<div class="meta"><span class="ptag">🗂 ${t('plan')}</span></div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}</div>`;
-  return _ro||calSelMode?_h:swpWrap('event',e.id,_h);
+  const _h=`<div class="task ev" style="--hc:${esc(c&&c.color||'#8FA382')}"><span class="bar2"></span><div class="tt" data-a="eedit" data-id="${e.id}">${_tm||_rp?`<div class="meta evtime">${_tm}${_rp?' 🔁':''}</div>`:''}<b>${esc(e.title||'')}</b>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.url&&safeLink(e.url)?`<div class="meta evurl">🔗 <a data-a="evurl" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener">${esc(e.url)}</a></div>`:''}${e.note?`<div class="meta evnote">📝 ${esc(e.note)}</div>`:''}<div class="meta rw"><span>${c?esc((c.icon||'')+' '+c.name):''}</span><span class="evsc">${scope}</span></div>${e.plan_id&&planOf(e.plan_id)?`<div class="meta"><span class="ptag">🗂 ${t('plan')}</span></div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}</div>`;
+  return _ro?_h:swpWrap('event',e.id,_h);
 }
 /* ===== v30: calendar views (list / year / month / week / day) =====
    v34: the old 3-day view is removed; a stored choice for it no longer
@@ -830,12 +829,9 @@ function yearCard(){
   // which is also how the year is switched in this view.
   return `<div class="card calcard"><div class="yrgrid">${months}</div></div>`;
 }
-function selBarHtml(){
-  return `<div class="selbar"><span>${t('mSelect')} · ${calSel.size}</span><span class="sp"></span><button class="sec mini" data-a="seldel">${t('selDel')}</button><button class="sec mini" data-a="selexit">${t('done')}</button></div>`;
-}
 function daySection(d){
   const by=calBy(sod(d),sod(d)),{items,evs,tks}=dayParts(by,sod(d)),hn=holName(d);
-  return `<div class="card"><b>${d.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${hn?` <span class="hn2">${esc(hn)}</span>`:''}${evErr?`<p class="meta">${t('evSql')}</p>`:''}${calSelMode?selBarHtml():''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`;
+  return `<div class="card"><b>${d.toLocaleDateString(LOC[lang],{month:'long',day:'numeric',weekday:'short'})}</b>${hn?` <span class="hn2">${esc(hn)}</span>`:''}${evErr?`<p class="meta">${t('evSql')}</p>`:''}${evs.map(evRow).join('')}${tks.map(x=>row(x)).join('')}${items.length?'':`<p class="meta">${t('noItems')}</p>`}</div>`;
 }
 function calHTML(){
   // v32: no drawer button on this page — the view switcher moves to the
@@ -854,17 +850,17 @@ function openViewMenu(){
   const dlg=$('dlg');
   dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('views')}</h3>`+VIEWS.map(([v,k,g])=>`<button class="di" data-vm="${v}"><span class="ic2">${calView===v?'✓':''}</span><span class="ic2">${g}</span><span class="nm">${t(k)}</span></button>`).join('')+`<div class="row"><button class="sec" id="vm-x">${t('cancel')}</button></div>`;
   dlg.showModal();
-  dlg.querySelectorAll('[data-vm]').forEach(b=>b.onclick=()=>{calView=b.dataset.vm;try{localStorage.mdcalview=calView}catch(e){}if(calSelMode&&(calView==='month'||calView==='year')){calSelMode=false;calSel.clear()}dlg.close();render()});
+  dlg.querySelectorAll('[data-vm]').forEach(b=>b.onclick=()=>{calView=b.dataset.vm;try{localStorage.mdcalview=calView}catch(e){}dlg.close();render()});
   $('vm-x').onclick=()=>dlg.close();
 }
 function openMoreMenu(){
+  // v36: exports only — the old multi-select batch delete is gone; choosing
+  // which events to export now happens inside the export flow itself.
   const dlg=$('dlg'),ex=(v,k)=>`<button class="di" data-ex="${v}"><span class="ic2">📤</span><span class="nm">${t('expSched')} · ${t(k)}</span></button>`;
   dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('more')}</h3>`
-    +`<button class="di" id="mm-sel"><span class="ic2">☑</span><span class="nm">${t('mSelect')}</span></button>`
     +ex('day','shDay')+ex('week','shWeek')+ex('month','shMonth')
     +`<div class="row"><button class="sec" id="mm-x">${t('cancel')}</button></div>`;
   dlg.showModal();
-  $('mm-sel').onclick=()=>{calSelMode=true;calSel.clear();if(calView==='month'||calView==='year'){calView='list';try{localStorage.mdcalview='list'}catch(e){}}dlg.close();render()};
   dlg.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{dlg.close();exportImg(b.dataset.ex)});
   $('mm-x').onclick=()=>dlg.close();
 }
@@ -1885,10 +1881,6 @@ async function undoDelete(kind,snaps){
     for(const it of snaps.its){const sn={...it,user_id:session.user.id};if(!noteV29)delete sn.note;const r=await sb.from('day_list_items').insert(sn).select().single();if(!r.error&&r.data)ditems.push(r.data)}
     render();return;
   }
-  if(kind==='evbatch'){
-    for(const s0 of snaps){const sn={...s0,user_id:session.user.id};if(!evV24)delete sn.scope;const{data,error}=await sb.from('events').insert(sn).select().single();if(!error)events.push(data||sn)}
-    render();return;
-  }
   if(kind==='task'){
     const byId={};snaps.forEach(z=>byId[z.id]=z);
     const depth=x=>{let d=0;while(x.parent_id&&byId[x.parent_id]){d++;x=byId[x.parent_id]}return d};
@@ -2001,12 +1993,6 @@ $('app').addEventListener('click',async e=>{
   else if(a==='vmenu')openViewMenu()
   else if(a==='mmenu')openMoreMenu()
   else if(a==='yrpick')openYearPick()
-  else if(a==='evpick'){const on=b.tagName==='INPUT'?b.checked:!calSel.has(id);if(on)calSel.add(id);else calSel.delete(id);render()}
-  else if(a==='selexit'){calSelMode=false;calSel.clear();render()}
-  else if(a==='seldel'){const selEv=[...calSel].map(x=>events.find(e=>e.id===x)).filter(Boolean);
-    if(selEv.length&&confirm(t('confirmDel'))){const snaps=[];
-      for(const e of selEv){const{error}=await sb.from('events').delete().eq('id',e.id);if(!error){snaps.push(e);events=events.filter(x=>x.id!==e.id)}}
-      calSel.clear();calSelMode=false;render();if(snaps.length)showUndo('evbatch',snaps)}}
   else if(a==='hunarc'){const{error}=await sb.from('habits').update({archived:false}).eq('id',id);if(error)alert(error.message);else{const hx=habits.find(h=>h.id===id);if(hx)hx.archived=false;render()}}
   else if(a==='nidea')openIdea()
   else if(a==='exp')exportImg('month')
@@ -2169,12 +2155,35 @@ function exportImg(kind){
   else if(kind==='week'){from=new Date(d0);from.setDate(from.getDate()-((from.getDay()+6)%7));to=new Date(from);to.setDate(to.getDate()+6)}
   else{from=new Date(cm.getFullYear(),cm.getMonth(),1);to=new Date(cm.getFullYear(),cm.getMonth()+1,0)}
   const sub=kind==='day'?from.toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric',weekday:'short'}):kind==='week'?from.toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric'})+' – '+to.toLocaleDateString(LOC[lang],{year:'numeric',month:'long',day:'numeric'}):from.toLocaleDateString(LOC[lang],{year:'numeric',month:'long'});
-  const F='-apple-system,"Hiragino Sans","PingFang TC",sans-serif';
+  // v36: the candidate set is unchanged — pill-visible events whose start date
+  // falls in the range, in start order (same set the old flow drew).
   const list=events.filter(evVisible).filter(e=>{const s=sod(e.start_at);return s>=from&&s<=to}).sort((a,b)=>a.start_at<b.start_at?-1:1);
+  // v36: an empty range keeps the old behaviour (straight to the empty image);
+  // otherwise the user first picks which of the range's events to include.
+  if(!list.length){drawExportImg(sub,list);return}
+  openExportPick(sub,list);
+}
+function openExportPick(sub,list){
+  const dlg=$('dlg');
+  const when=e=>new Date(e.start_at).toLocaleDateString(LOC[lang],{month:'numeric',day:'numeric',weekday:'short'})+(e.all_day?' '+t('allDay'):e.no_time?'':' '+hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):''));
+  dlg.innerHTML=`<h3 style="margin:2px 0 6px">${t('expPick')}</h3><p class="meta" style="margin:0 0 6px">${esc(sub)}</p>`
+    +`<div class="row"><button class="sec mini" id="xp-all">${t('selAll')}</button><button class="sec mini" id="xp-none">${t('selNone')}</button><span class="meta" id="xp-n"></span></div>`
+    +`<div style="max-height:46dvh;overflow:auto">${list.map(e=>`<label class="exprow"><input type="checkbox" class="exppick" data-id="${e.id}" checked><span class="tm">${esc(when(e))}</span><span class="nm">${esc(e.title||'')}</span></label>`).join('')}</div>`
+    +`<div class="row"><button class="sec" id="xp-x">${t('cancel')}</button><button class="pri" id="xp-go">${t('expGo')}</button></div>`;
+  dlg.showModal();
+  const boxes=[...dlg.querySelectorAll('.exppick')],cnt=()=>{const n=boxes.filter(x=>x.checked).length;$('xp-n').textContent=n+' / '+boxes.length};
+  boxes.forEach(x=>x.onchange=cnt);cnt();
+  $('xp-all').onclick=()=>{boxes.forEach(x=>x.checked=true);cnt()};
+  $('xp-none').onclick=()=>{boxes.forEach(x=>x.checked=false);cnt()};
+  $('xp-x').onclick=()=>dlg.close();
+  $('xp-go').onclick=()=>{const keep=new Set(boxes.filter(x=>x.checked).map(x=>x.dataset.id));dlg.close();drawExportImg(sub,list.filter(e=>keep.has(e.id)))};
+}
+function drawExportImg(sub,list){
+  const F='-apple-system,"Hiragino Sans","PingFang TC",sans-serif';
   const W=1080,P=64,H0=220,RH=150,H=H0+Math.max(list.length,1)*RH+80,c=document.createElement('canvas');c.width=W;c.height=H;
   const g=c.getContext('2d'),cut=(s,w)=>{while(s.length>1&&g.measureText(s).width>w)s=s.slice(0,-1);return s};
   g.fillStyle='#fff';g.fillRect(0,0,W,H);g.fillStyle=color;g.fillRect(0,0,W,170);g.textBaseline='middle';
-  g.fillStyle=onColor(color);g.font=`700 56px ${F}`;g.fillText(uname?uname+'’s Daily':'My Daily',P,64);
+  g.fillStyle=onColor(color);g.font=`700 56px ${F}`;g.fillText(t('expTitle'),P,64);
   g.font=`400 36px ${F}`;g.fillText(sub,P,126);
   if(!list.length){g.fillStyle='#66727D';g.font=`400 36px ${F}`;g.fillText(t('noItems'),P,H0+40)}
   list.forEach((e,i)=>{
@@ -2189,7 +2198,7 @@ function exportImg(kind){
     const f=new File([b],'schedule.png',{type:'image/png'}),u=URL.createObjectURL(b),dlg=$('dlg');
     dlg.innerHTML=`<img src="${u}" alt="" style="width:100%;border-radius:10px;border:1px solid var(--ln)"><p class="meta">${t('shareHint')}</p><div class="row"><button class="sec" id="x-c">${t('cancel')}</button><button class="pri" id="x-s">${t('share')}</button></div>`;
     $('x-c').onclick=()=>dlg.close();
-    $('x-s').onclick=async()=>{try{if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:'My Daily'});else{const a=document.createElement('a');a.href=u;a.download='schedule.png';a.click()}}catch(e){}};
+    $('x-s').onclick=async()=>{try{if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:t('expTitle')});else{const a=document.createElement('a');a.href=u;a.download='schedule.png';a.click()}}catch(e){}};
     dlg.showModal();
   });
 }
