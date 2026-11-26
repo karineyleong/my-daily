@@ -44,7 +44,7 @@ dialog{border:1px solid var(--ln);border-top:1px solid var(--ln);border-radius:1
 dialog::backdrop{background:rgba(0,0,0,.5)}
 dialog{margin:auto 0 0;width:100%;max-width:none;border:0;border-top:1px solid var(--ln);border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
 textarea{width:100%;padding:10px;font:inherit;border:1px solid var(--ln);border-radius:10px;background:#F4F7FA;color:var(--ink);resize:none;margin-top:8px}
-.tbar{display:flex;gap:8px;margin-top:10px}.tbar>*{flex:1;min-width:0}.snd{flex:none;width:48px;padding:10px;border-radius:50%;font-size:20px}
+.tbar{display:flex;gap:8px;margin-top:10px;align-items:center}.tbar>*{flex:1;min-width:0}.snd{flex:none;width:48px;height:48px;aspect-ratio:1;padding:0;border-radius:50%;font-size:20px}
 .pc{-webkit-appearance:none;appearance:none;width:22px;height:22px;border:2px solid var(--pc);border-radius:6px;background:none;margin-top:2px;flex:none}
 .pc:checked{background:var(--pc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E") center/80% no-repeat}
 .rw{display:flex;justify-content:space-between;gap:8px}
@@ -188,6 +188,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .caltop{display:flex;align-items:center;gap:6px;margin-bottom:12px}
 /* ===== v30 calendar: white-layout top row + capsule buttons, big month number, hairline grid ===== */
 .calhd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.calhd .ic{font-size:20px;line-height:1}
 .yrpick{flex:1;background:none;border:0;font-size:var(--fs1);font-weight:700;color:var(--ink);padding:6px 4px;cursor:pointer}
 .calcard{padding:12px 10px 14px}
 .cm2{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:6px}
@@ -206,9 +207,10 @@ select.mini{flex:0 1 auto!important;width:auto}
 .hn{font-size:9px;line-height:1.2;color:#D0483E;text-align:center;overflow-wrap:anywhere}
 .hn2{font-size:var(--fs5);color:#D0483E;font-weight:600}
 .dt2{width:5px;height:5px;border-radius:50%;background:var(--ac);margin-top:2px}
-/* v32: scope pills + today + export merged into ONE row (nowrap); tightened
-   padding/font so all five controls fit 360px; the ✓ state tick is dropped
-   only on very narrow screens (the .on fill still signals state). */
+/* v32: scope pills + today merged into ONE row (nowrap); tightened
+   padding/font so the controls fit 360px; the ✓ state tick is dropped
+   only on very narrow screens (the .on fill still signals state).
+   v33: the export button left this row — export lives in the "…" menu only. */
 .calpills{display:flex;flex-wrap:nowrap;align-items:center;gap:5px;margin:0 0 16px}
 .calpills .chip{padding:6px;font-size:var(--fs5);flex:none;height:32px;display:inline-flex;align-items:center}
 .calpills .mini{flex:none;padding:6px 8px!important;height:32px;display:inline-flex;align-items:center}
@@ -238,6 +240,9 @@ select.mini{flex:0 1 auto!important;width:auto}
 .ymd u.no{background:transparent}
 .evtime{margin-top:0}
 .evsc{flex:none}
+.evurl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.evurl a{color:var(--ac);text-decoration:none}
+.evnote{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
 .task.ev.picked{background:color-mix(in srgb,var(--ac) 10%,#fff)}
 .selbar{display:flex;align-items:center;gap:8px;margin:10px 0 2px;font-size:var(--fs4);color:var(--mut)}
 .selbar .sp{flex:1}
@@ -269,7 +274,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v32)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v33)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -451,7 +456,7 @@ let langs=[],words=[],ssess=[],squiz=[],langErr=null,curLang=localStorage.curlan
 let courseLvl=localStorage.clvl||'A1',expG=new Set(),wordF=localStorage.wf||'all',quiz=null;const TTS=('speechSynthesis' in window);
 let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
-let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false,evV24=false;
+let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false,evV24=false,evV33=false;
 let hlists=[],plans=[],pfin=[],planErr=false,planV23=false,habList=false,hlistView='all',planView=null,finCur=null;
 let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null,shopDay=null,dayNameV27=false,dayPinV28=false,noteV29=false;
 let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
@@ -460,7 +465,7 @@ const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,co:v
 let calView='list';try{const _cv=localStorage.mdcalview;if(['list','year','month','week','3day','day'].includes(_cv))calView=_cv}catch(e){}
 let calSelMode=false;const calSel=new Set();
 const myCal=id=>shareCals.find(c=>c.id===id),calName=id=>(myCal(id)||{}).name||'';
-const evVisible=e=>e.calendar_id?(visShared&&calVis[e.calendar_id]!==false&&!!myCal(e.calendar_id)):(e.scope==='company'?visComp:visPriv);
+const evVisible=e=>e.calendar_id?(visShared&&calVis[e.calendar_id]!==false&&!!myCal(e.calendar_id)):(e.scope==='company'?visComp:e.scope==='shared'?visShared:visPriv);
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
 const T0=d=>d?+new Date(d):1e18;
 const cmp=(a,b)=>(b.importance-a.importance)||(T0(a.due_at)-T0(b.due_at))||(a.created_at<b.created_at?-1:1);
@@ -471,12 +476,12 @@ const todayP=x=>x.due_at&&new Date(x.due_at)<nextDay(new Date());
 const tmrP=x=>{if(!x.due_at)return false;const d=new Date(x.due_at),a=nextDay(new Date());return d>=a&&d<nextDay(a)};
 const fmt=d=>new Date(d).toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang],{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
 const toL=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
-function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24,dayNameV27,dayPinV28,noteV29})}catch(e){}}
+function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24,dayNameV27,dayPinV28,noteV29,evV33})}catch(e){}}
 function hydrate(){
   try{const c=JSON.parse(localStorage.mdcache||'null');if(!c)return false;
   tasks=c.tasks||[];cats=c.cats||[];ideas=c.ideas||[];maps=c.maps||[];habits=c.habits||[];hlogs=c.hlogs||[];events=c.events||[];ecats=c.ecats||[];langs=c.langs||[];words=c.words||[];ssess=c.ssess||[];squiz=c.squiz||[];shareCals=c.shareCals||[];calMembers=c.calMembers||[];
   evV20=!!c.evV20;habV21=!!c.habV21;curMap=c.curMap||curMap;if(c.curLang)curLang=c.curLang;hlists=c.hlists||[];plans=c.plans||[];pfin=c.pfin||[];planV23=!!c.planV23;habList=!!c.habList;planErr=false;
-  slists=c.slists||[];litems=c.litems||[];dlists=c.dlists||[];ditems=c.ditems||[];shopV25=!!c.shopV25;evV24=!!c.evV24;dayNameV27=!!c.dayNameV27;dayPinV28=!!c.dayPinV28;noteV29=!!c.noteV29;
+  slists=c.slists||[];litems=c.litems||[];dlists=c.dlists||[];ditems=c.ditems||[];shopV25=!!c.shopV25;evV24=!!c.evV24;dayNameV27=!!c.dayNameV27;dayPinV28=!!c.dayPinV28;noteV29=!!c.noteV29;evV33=!!c.evV33;
   ideaErr=null;habitErr=null;evErr=null;langErr=null;shareErr=false;return true}catch(e){return false}
 }
 async function dedupCats(){
@@ -546,6 +551,8 @@ async function loadDataImpl(){
   }habitErr=h.error||l.error;habits=habitErr?[]:h.data;hlogs=habitErr?[]:l.data;evErr=ev.error||ec.error;events=evErr?[]:ev.data;ecats=ec.error?[]:ec.data;
   try{const _pr=await sb.from('events').select('calendar_id,remind_list').limit(1);evV20=!_pr.error}catch(_){evV20=false}
   try{const _ps=await sb.from('events').select('scope').limit(1);evV24=!_ps.error}catch(_){evV24=false}
+  // ===== v33: no_time events + scope 'shared' (graceful if sql-v33.sql not run yet: no no_time column -> times cannot be left empty, 区分 keeps the legacy two options) =====
+  try{const _pnt=await sb.from('events').select('no_time').limit(1);evV33=!_pnt.error}catch(_){evV33=false}
   try{const _ph=await sb.from('habits').select('timer_min').limit(1);habV21=!_ph.error}catch(_){habV21=false}
   // ===== v23: habit lists / plans / finance (graceful if sql-v23.sql not run yet) =====
   try{const hl=await sb.from('categories').select('*').eq('kind','habit').order('sort_order');hlists=hl.error?[]:hl.data}catch(_){hlists=[]}
@@ -739,8 +746,10 @@ function evRow(e){
   const c=ecats.find(x=>x.id===e.category_id),map=e.location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}`:'';
   const _ro=evViewer(e);
   const sel=calSelMode&&!_ro,picked=sel&&calSel.has(e.id);
-  const scope=e.calendar_id?(calName(e.calendar_id)?`👥 ${esc(calName(e.calendar_id))}`:`👥 ${t('shareCal')}`):(!e.calendar_id&&e.scope==='company'?`💼 ${t('compCal')}`:`🔒 ${t('privCal')}`);
-  const _h=`<div class="task ev${picked?' picked':''}" style="--hc:${esc(c&&c.color||'#8FA382')}">${sel?`<input type="checkbox" class="evpick" data-a="evpick" data-id="${e.id}"${picked?' checked':''} aria-label="${t('mSelect')}">`:''}<span class="bar2"></span><div class="tt" data-a="${sel?'evpick':'eedit'}" data-id="${e.id}"><div class="meta evtime">${e.all_day?t('allDay'):hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')}${e.repeat_kind&&e.repeat_kind!=='none'?' 🔁':''}</div><b>${esc(e.title||'')}</b><div class="meta rw"><span>${c?esc((c.icon||'')+' '+c.name):''}</span><span class="evsc">${scope}</span></div>${e.plan_id&&planOf(e.plan_id)?`<div class="meta"><span class="ptag">🗂 ${t('plan')}</span></div>`:''}${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}${e.url&&safeLink(e.url)?`<a class="go" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener" aria-label="URL">🔗</a>`:''}</div>`;
+  const scope=e.calendar_id?(calName(e.calendar_id)?`👥 ${esc(calName(e.calendar_id))}`:`👥 ${t('shareCal')}`):(e.scope==='company'?`💼 ${t('compCal')}`:e.scope==='shared'?`👥 ${t('shareCal')}`:`🔒 ${t('privCal')}`);
+  // v33: a no-time event shows NO time line at all (a repeat marker still shows).
+  const _tm=e.all_day?t('allDay'):(e.no_time?'':hm(e.start_at)+(e.end_at?' – '+hm(e.end_at):'')),_rp=e.repeat_kind&&e.repeat_kind!=='none';
+  const _h=`<div class="task ev${picked?' picked':''}" style="--hc:${esc(c&&c.color||'#8FA382')}">${sel?`<input type="checkbox" class="evpick" data-a="evpick" data-id="${e.id}"${picked?' checked':''} aria-label="${t('mSelect')}">`:''}<span class="bar2"></span><div class="tt" data-a="${sel?'evpick':'eedit'}" data-id="${e.id}">${_tm||_rp?`<div class="meta evtime">${_tm}${_rp?' 🔁':''}</div>`:''}<b>${esc(e.title||'')}</b>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.url&&safeLink(e.url)?`<div class="meta evurl">🔗 <a data-a="evurl" href="${esc(safeLink(e.url))}" target="_blank" rel="noopener">${esc(e.url)}</a></div>`:''}${e.note?`<div class="meta evnote">📝 ${esc(e.note)}</div>`:''}<div class="meta rw"><span>${c?esc((c.icon||'')+' '+c.name):''}</span><span class="evsc">${scope}</span></div>${e.plan_id&&planOf(e.plan_id)?`<div class="meta"><span class="ptag">🗂 ${t('plan')}</span></div>`:''}${e.place_phone?`<div class="meta">📞 <a href="tel:${esc(e.place_phone.replace(/[^+0-9]/g,''))}">${esc(e.place_phone)}</a></div>`:''}${e.place_hours?`<div class="meta">🕐 ${esc(e.place_hours.split(' / ')[0]||'')}</div>`:''}</div>${map?`<a class="go" href="${map}" target="_blank" rel="noopener" aria-label="${t('openMap')}">🗺</a>`:''}</div>`;
   return _ro||calSelMode?_h:swpWrap('event',e.id,_h);
 }
 /* ===== v30: calendar views (list / year / month / week / 3day / day) ===== */
@@ -749,19 +758,10 @@ const viewGlyph=v=>(VIEWS.find(x=>x[0]===v)||VIEWS[0])[2];
 const anchorYear=()=>['list','month','year'].includes(calView)?cm.getFullYear():cs.getFullYear();
 const navRow=inner=>`<div class="cm2"><button class="sec ic" data-a="cnav" data-v="-1" aria-label="‹">‹</button><b class="cmttl">${inner}</b><button class="sec ic" data-a="cnav" data-v="1" aria-label="›">›</button></div>`;
 function calPills(){
-  // v32: ONE row — scope pills + today + export. The export <select> became a
-  // button opening openExportMenu (same 本日/本週/本月 targets via exportImg).
+  // v32: ONE row — scope pills + today. v33: the export button is gone from
+  // this row; export lives only in the top-right "…" menu (openMoreMenu).
   const ck=on=>on?'<span class="ck">✓ </span>':'';
-  return `<div class="calpills"><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${ck(visPriv)}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${ck(visShared)}👥 ${t('shareCal')}</button>${evV24?`<button class="chip${visComp?' on':''}" data-a="calvis" data-v="comp">${ck(visComp)}💼 ${t('compCal')}</button>`:''}<button class="sec mini" data-a="ctd">${t('ctoday')}</button><button class="sec mini" data-a="expmenu" aria-label="${t('expSched')}">${t('expSched')} ▾</button></div>`;
-}
-function openExportMenu(){
-  const dlg=$('dlg'),ex=(v,k)=>`<button class="di" data-ex="${v}"><span class="ic2">📤</span><span class="nm">${t('expSched')} · ${t(k)}</span></button>`;
-  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('expSched')}</h3>`
-    +ex('day','shDay')+ex('week','shWeek')+ex('month','shMonth')
-    +`<div class="row"><button class="sec" id="ex-x">${t('cancel')}</button></div>`;
-  dlg.showModal();
-  dlg.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{dlg.close();exportImg(b.dataset.ex)});
-  $('ex-x').onclick=()=>dlg.close();
+  return `<div class="calpills"><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${ck(visPriv)}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${ck(visShared)}👥 ${t('shareCal')}</button>${evV24?`<button class="chip${visComp?' on':''}" data-a="calvis" data-v="comp">${ck(visComp)}💼 ${t('compCal')}</button>`:''}<button class="sec mini" data-a="ctd">${t('ctoday')}</button></div>`;
 }
 function monthCard(mode){
   const y=cm.getFullYear(),m=cm.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),pn=new Date(y,m,0).getDate();
@@ -811,7 +811,7 @@ function calHTML(){
   // v32: no drawer button on this page — the view switcher moves to the
   // top-left slot (same .sec.ic chrome as other pages' ☰), year stays centred,
   // and the top-right keeps only the "…" more key as a single square button.
-  const head=drawer()+`<div class="calhd"><button class="sec ic" data-a="vmenu" aria-label="${t('views')}">${viewGlyph(calView)}</button><button class="yrpick" data-a="yrpick" aria-label="${t('yrSel')}">${anchorYear()} ▼</button><button class="sec ic" data-a="mmenu" aria-label="${t('more')}">⋯</button></div>`;
+  const head=drawer()+`<div class="calhd"><button class="sec ic" data-a="vmenu" aria-label="${t('views')}">👁️</button><button class="yrpick" data-a="yrpick" aria-label="${t('yrSel')}">${anchorYear()} ▼</button><button class="sec ic" data-a="mmenu" aria-label="${t('more')}">📤</button></div>`;
   let main='',below='';
   if(calView==='list'){main=monthCard('list');below=daySection(cs)}
   else if(calView==='month'){main=monthCard('month')}
@@ -1025,13 +1025,16 @@ function openEvent(id){
   const dlg=$('dlg'),b=new Date(cs);b.setHours(9,0,0,0);
   const x=id?events.find(e=>e.id===id):{start_at:b.toISOString(),end_at:new Date(+b+36e5).toISOString(),category_id:ecats[0]?ecats[0].id:null,remind_min:null,all_day:false,repeat_kind:'none'};
   const L0=toL(x.start_at),L1=x.end_at?toL(x.end_at):L0;
+  // v33: the カレンダー picker row is gone. 区分 is the single 3-way scope
+  // (私人/共享/公司); an event on a shared calendar derives 共享 from its
+  // calendar_id, which save always carries over verbatim (never washed out).
+  const dScope=x.calendar_id?'shared':(x.scope==='company'?'company':x.scope==='shared'?'shared':'private');
   dlg.innerHTML=`<textarea id="e-t" rows="1" maxlength="100" style="font-size:20px;font-weight:700" placeholder="${t('evTitle')}" aria-label="${t('evTitle')}">${esc(x.title||'')}</textarea>
 <div class="frow"><span>🏷 ${t('cat')}</span><select id="e-c" aria-label="${t('cat')}"><option value="">${t('noCat')}</option>${ecats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc((c.icon||'')+' '+c.name)}</option>`).join('')}</select></div>
-${shareErr?'':`<div class="frow"><span>👥 ${t('whichCal')}</span><select id="e-cal" aria-label="${t('whichCal')}"><option value="">🔒 ${t('privCal')}</option>${shareCals.filter(c=>c.role==='owner'||c.role==='editor').map(c=>`<option value="${c.id}"${x.calendar_id===c.id?' selected':''}>👥 ${esc(c.name)}</option>`).join('')}${x.calendar_id&&!shareCals.some(c=>c.id===x.calendar_id&&(c.role==='owner'||c.role==='editor'))?`<option value="${x.calendar_id}" selected>👥 ${esc(calName(x.calendar_id))}</option>`:''}</select></div>`}
-${evV24?`<div class="frow"><span>💼 ${t('evScope')}</span><select id="e-scope" aria-label="${t('evScope')}"><option value="private"${x.scope!=='company'?' selected':''}>🔒 ${t('privCal')}</option><option value="company"${x.scope==='company'?' selected':''}>💼 ${t('compCal')}</option></select></div>`:''}
+${evV24?`<div class="frow"><span>💼 ${t('evScope')}</span><select id="e-scope" aria-label="${t('evScope')}"><option value="private"${dScope==='private'?' selected':''}>🔒 ${t('privCal')}</option>${evV33?`<option value="shared"${dScope==='shared'?' selected':''}>👥 ${t('shareCal')}</option>`:''}<option value="company"${dScope==='company'?' selected':''}>💼 ${t('compCal')}</option></select></div>`:''}
 <div class="frow"><span>${t('allDay')}</span><input type="checkbox" id="e-a" class="sw"${x.all_day?' checked':''} aria-label="${t('allDay')}"></div>
-<div class="frow"><span>${t('start')}</span><span class="dt"><input type="date" id="e-sd" value="${L0.slice(0,10)}" aria-label="${t('start')}"><input type="time" id="e-st" value="${L0.slice(11,16)}"></span></div>
-<div class="frow"><span>${t('end')}</span><span class="dt"><input type="date" id="e-ed" value="${L1.slice(0,10)}" aria-label="${t('end')}"><input type="time" id="e-et" value="${L1.slice(11,16)}"></span></div>
+<div class="frow"><span>${t('start')}</span><span class="dt"><input type="date" id="e-sd" value="${L0.slice(0,10)}" aria-label="${t('start')}"><input type="time" id="e-st" value="${x.no_time?'':L0.slice(11,16)}"></span></div>
+<div class="frow"><span>${t('end')}</span><span class="dt"><input type="date" id="e-ed" value="${L1.slice(0,10)}" aria-label="${t('end')}"><input type="time" id="e-et" value="${x.no_time?'':L1.slice(11,16)}"></span></div>
 <div class="frow"><span>🔔 ${t('remind')}</span><span class="dt"><input id="e-rc" type="number" min="1" max="9999" style="width:84px;margin:0" placeholder="${t('customMin')}"><button type="button" class="sec" id="e-radd" style="padding:6px 12px">＋</button></span></div><div class="pchips" id="e-rems" style="margin-top:2px"></div>
 <div class="frow"><span>🔁 ${t('rpt')}</span><select id="e-rp" aria-label="${t('rpt')}">${RPT.map(([v,k])=>`<option value="${v}"${(x.repeat_kind||'none')===v?' selected':''}>${t(k)}</option>`).join('')}</select></div>
 <div class="fchips"><button type="button" class="sec fchip" id="c-loc">📍 ${t('place')}</button><button type="button" class="sec fchip" id="c-url">🔗 URL</button><button type="button" class="sec fchip" id="c-note">📝 ${t('note')}</button></div>
@@ -1043,6 +1046,31 @@ ${evV24?`<div class="frow"><span>💼 ${t('evScope')}</span><select id="e-scope"
   if(localStorage.gk&&$('e-l'))loadGk(()=>{try{const ac=new google.maps.places.Autocomplete($('e-l'),{fields:['name','formatted_address','formatted_phone_number','opening_hours']});ac.addListener('place_changed',()=>{const p=ac.getPlace();if(!p)return;$('e-l').value=((p.name?p.name+' ':'')+(p.formatted_address||''))||$('e-l').value;window._place={phone:p.formatted_phone_number||'',hours:p.opening_hours&&p.opening_hours.weekday_text?p.opening_hours.weekday_text.join(' / '):''}})}catch(_){}});
   const syncA=()=>{const on=$('e-a').checked;$('e-st').style.display=on?'none':'';$('e-et').style.display=on?'none':''};
   $('e-a').onchange=syncA;syncA();
+  // v33: start/end auto-correspond. Moving the start shifts the end by the
+  // same delta (duration preserved; with either time empty only the DATE
+  // moves, so no-time spans stay timeless). An end at/before the start snaps
+  // to start+1h. Filling the start time while the end time is empty (same
+  // day) fills end = start+1h. Save below enforces the same rules.
+  const _p2=n=>String(n).padStart(2,'0'),HHMM=d=>_p2(d.getHours())+':'+_p2(d.getMinutes()),_dt=(d,t)=>new Date(d+'T'+(t||'00:00'));
+  let pvS={d:$('e-sd').value,t:$('e-st').value};
+  const onStart=()=>{
+    const nd=$('e-sd').value,nt=$('e-st').value,edEl=$('e-ed'),etEl=$('e-et');
+    if(!nd||!pvS.d){pvS={d:nd,t:nt};return}
+    if(nt&&pvS.t){const delta=+_dt(nd,nt)-+_dt(pvS.d,pvS.t);
+      if(delta&&edEl.value){const ne=new Date(+_dt(edEl.value,etEl.value)+delta);edEl.value=ymd(ne);if(etEl.value)etEl.value=HHMM(ne)}
+    }else{const dd=Math.round((new Date(nd)-new Date(pvS.d))/864e5);
+      if(dd&&edEl.value){const ne=new Date(edEl.value+'T12:00');ne.setDate(ne.getDate()+dd);edEl.value=ymd(ne)}}
+    if(nt&&!etEl.value&&edEl.value===nd){const ne=new Date(+_dt(nd,nt)+36e5);edEl.value=ymd(ne);etEl.value=HHMM(ne)}
+    pvS={d:nd,t:nt};
+  };
+  const onEnd=()=>{
+    const sdEl=$('e-sd'),edEl=$('e-ed'),stEl=$('e-st'),etEl=$('e-et');
+    if(!sdEl.value||!edEl.value||!stEl.value||!etEl.value)return;
+    const s=_dt(sdEl.value,stEl.value),e=_dt(edEl.value,etEl.value);
+    if(e<=s){const ne=new Date(+s+36e5);edEl.value=ymd(ne);etEl.value=HHMM(ne)}
+  };
+  ['e-sd','e-st'].forEach(i=>$(i).addEventListener('change',onStart));
+  ['e-ed','e-et'].forEach(i=>$(i).addEventListener('change',onEnd));
   const secW=(btn,wrap,has)=>{const w=$(wrap);w.style.display=has?'':'none';if(has)$(btn).classList.add('on');$(btn).onclick=()=>{const open=w.style.display==='none';w.style.display=open?'':'none';$(btn).classList.toggle('on',open)}};
   secW('c-loc','w-loc',!!x.location);secW('c-url','w-url',!!x.url);secW('c-note','w-note',!!x.note);
   let remList=(Array.isArray(x.remind_list)&&x.remind_list.length?[...new Set(x.remind_list)]:x.remind_min!=null?[x.remind_min]:[]).slice(0,3);
@@ -1063,13 +1091,26 @@ ${evV24?`<div class="frow"><span>💼 ${t('evScope')}</span><select id="e-scope"
     $('e-rc').value='';paintRem()};
   $('e-ok').onclick=async()=>{
     const title=$('e-t').value.trim(),sd=$('e-sd').value;if(!title||!sd)return;
-    const ad=$('e-a').checked,ed=$('e-ed').value||sd;
-    const st=new Date(sd+'T'+(ad?'00:00':($('e-st').value||'09:00')));
-    const en=ad?new Date(ed+'T23:59'):($('e-et').value?new Date(ed+'T'+$('e-et').value):null);
+    const ad=$('e-a').checked,ed=$('e-ed').value||sd,stv=$('e-st').value,etv=$('e-et').value;
+    // v33: clearable times. Both empty (and sql-v33 run) = a no-time event:
+    // no_time flag set, start anchors the day at 00:00, end only when the
+    // event spans days. One-sided times mirror to the other side (same-day
+    // one-sided = 1 hour). End at/before start snaps to start+1h. Before
+    // sql-v33, both-empty keeps the legacy 09:00 / no-end behaviour.
+    let st,en,noTime=false;
+    if(ad){st=new Date(sd+'T00:00');en=new Date(ed+'T23:59')}
+    else if(!stv&&!etv&&evV33){noTime=true;st=new Date(sd+'T00:00');en=ed>sd?new Date(ed+'T00:00'):null}
+    else if(!stv&&!etv){st=new Date(sd+'T09:00');en=null}
+    else if(stv&&!etv){st=new Date(sd+'T'+stv);en=ed>sd?new Date(ed+'T'+stv):new Date(+st+36e5)}
+    else if(!stv&&etv){en=new Date(ed+'T'+etv);st=ed>sd?new Date(sd+'T'+etv):new Date(+en-36e5)}
+    else{st=new Date(sd+'T'+stv);en=new Date(ed+'T'+etv);if(en<=st)en=new Date(+st+36e5)}
     const rl=[...remList].sort((a,b)=>a-b),rMin=rl.length?rl[0]:null;
     if(rl.length&&'Notification'in window&&Notification.permission==='default'){try{Notification.requestPermission()}catch(_){}}
-    const v={title,start_at:st.toISOString(),end_at:en&&en>=st?en.toISOString():null,all_day:ad,location:$('e-l').value.trim()||null,url:$('e-u').value.trim()||null,repeat_kind:$('e-rp').value,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:rMin,remind_at:rMin==null?null:new Date(+st-rMin*6e4).toISOString(),place_phone:(window._place&&window._place.phone)||null,place_hours:(window._place&&window._place.hours)||null};
-    if(evV20){v.remind_list=rl.length?rl:null;if(!shareErr)v.calendar_id=$('e-cal')?($('e-cal').value||null):(x.calendar_id||null)}
+    const v={title,start_at:st.toISOString(),end_at:en?en.toISOString():null,all_day:ad,location:$('e-l').value.trim()||null,url:$('e-u').value.trim()||null,repeat_kind:$('e-rp').value,category_id:$('e-c').value||null,note:$('e-n').value.trim()||null,remind_min:rMin,remind_at:rMin==null?null:new Date(+st-rMin*6e4).toISOString(),place_phone:(window._place&&window._place.phone)||null,place_hours:(window._place&&window._place.hours)||null};
+    if(evV33)v.no_time=noTime;
+    // v33: no カレンダー picker anymore — calendar_id is carried over verbatim
+    // from the loaded event (new events: undefined -> null = personal calendar).
+    if(evV20){v.remind_list=rl.length?rl:null;v.calendar_id=x.calendar_id||null}
     if(evV24)v.scope=$('e-scope')?$('e-scope').value:'private';
     if(id){const{error}=await sb.from('events').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{const{data,error}=await sb.from('events').insert(v).select().single();if(error)return alert(error.message);events.push(data);cs=new Date(st)}
@@ -1086,7 +1127,7 @@ ${evV24?`<div class="frow"><span>💼 ${t('evScope')}</span><select id="e-scope"
   dlg.showModal();$('e-t').focus();
 }
 function loadGk(cb){if(window.google&&google.maps&&google.maps.places)return cb();if(window._gkL)return;window._gkL=true;const sc=document.createElement('script');sc.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(localStorage.gk||'')+'&libraries=places';sc.onload=()=>cb();document.head.appendChild(sc)}
-function dayItems(d){const out=[];events.filter(evVisible).forEach(e=>{if(occursOn(e,d))out.push({t:+new Date(e.start_at),s:(e.all_day?'':hm(e.start_at)+' ')+(e.title||'')+(e.location?' 📍'+e.location:'')+(e.place_phone?' 📞'+e.place_phone:'')})});tasks.forEach(x=>{if(x.due_at&&!x.done&&+sod(x.due_at)===+sod(d))out.push({t:+new Date(x.due_at),s:'・'+(x.icon?x.icon+' ':'')+x.title})});return out.sort((a,b)=>a.t-b.t).map(o=>o.s)}
+function dayItems(d){const out=[];events.filter(evVisible).forEach(e=>{if(occursOn(e,d))out.push({t:+new Date(e.start_at),s:(e.all_day||e.no_time?'':hm(e.start_at)+' ')+(e.title||'')+(e.location?' 📍'+e.location:'')+(e.place_phone?' 📞'+e.place_phone:'')})});tasks.forEach(x=>{if(x.due_at&&!x.done&&+sod(x.due_at)===+sod(d))out.push({t:+new Date(x.due_at),s:'・'+(x.icon?x.icon+' ':'')+x.title})});return out.sort((a,b)=>a.t-b.t).map(o=>o.s)}
 function occursOn(e,d){const st=sod(e.start_at),en=sod(e.end_at||e.start_at),dd=sod(d),kind=e.repeat_kind||'none';if(kind==='none')return dd>=st&&dd<=en;if(dd<st)return false;const dur=Math.round((en-st)/864e5);let cur=new Date(st),g=0;const step=c=>{const n=new Date(c);if(kind==='daily')n.setDate(n.getDate()+1);else if(kind==='weekly')n.setDate(n.getDate()+7);else if(kind==='monthly')n.setMonth(n.getMonth()+1);else if(kind==='yearly')n.setFullYear(n.getFullYear()+1);return n};while(cur<=dd&&g++<900){if(dd>=cur&&dd<=new Date(+cur+dur*864e5))return true;cur=step(cur)}return false}
 /* ===== v32: calendar FAB action menu + event-category manager dialog =====
    The old inline 行程類別 card is gone: its add flow lives in the
@@ -1993,7 +2034,6 @@ $('app').addEventListener('click',async e=>{
   else if(a==='hfocus'){const hx=habits.find(h=>h.id===id);if(hx)openFocus(hx)}
   else if(a==='nev')openEvent()
   else if(a==='calfab')openCalFab()
-  else if(a==='expmenu')openExportMenu()
   else if(a==='eedit')openEvent(id)
   else if(a==='nle')openList('event')
   else if(a==='idea')openIdea(id)
