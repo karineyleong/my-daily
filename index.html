@@ -289,7 +289,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v36)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v37)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -784,7 +784,8 @@ function monthCard(mode){
   // v34: month-view cells carry event BARS (category colour + title, events
   // first in time order, then due tasks in the default colour), max 3 + "+N".
   // Bars are plain spans inside the cell button — tapping a bar taps the cell
-  // (month: jump to day view), same as tapping anywhere else in the cell.
+  // (month: selects the day, detail section below refreshes — v37), same as
+  // tapping anywhere else in the cell.
   const barsFor=dt=>{
     const{evs,tks}=dayParts(by,dt),items=[...evs,...tks];
     if(!items.length)return '';
@@ -840,7 +841,9 @@ function calHTML(){
   const head=drawer()+`<div class="calhd"><button class="sec ic" data-a="vmenu" aria-label="${t('views')}">👁️</button><button class="yrpick" data-a="yrpick" aria-label="${t('yrSel')}">${anchorYear()} ▼</button><button class="sec ic" data-a="mmenu" aria-label="${t('more')}">📤</button></div>`;
   let main='',below='';
   if(calView==='list'){main=monthCard('list');below=daySection(cs)}
-  else if(calView==='month'){main=monthCard('month')}
+  // v37: month view shows the SAME selected-day detail section as list view,
+  // below grid + pills — tapping a day selects it instead of jumping away.
+  else if(calView==='month'){main=monthCard('month');below=daySection(cs)}
   else if(calView==='year'){main=yearCard()}
   else if(calView==='week'){main=rangeCard(7);below=daySection(cs)}
   else{const hn=holName(cs);main=`<div class="card calcard">${navRow(fmtDayS(ymd(cs))+(hn?` <span class="hn2">${esc(hn)}</span>`:''))}</div>`;below=daySection(cs)}
@@ -1988,7 +1991,7 @@ $('app').addEventListener('click',async e=>{
     else if(calView==='week'){cs=new Date(cs.getFullYear(),cs.getMonth(),cs.getDate()+7*s);cm=new Date(cs.getFullYear(),cs.getMonth(),1)}
     else{cs=new Date(cs.getFullYear(),cs.getMonth(),cs.getDate()+s);cm=new Date(cs.getFullYear(),cs.getMonth(),1)}
     render()}
-  else if(a==='cmday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);calView='day';try{localStorage.mdcalview='day'}catch(e){}render()}
+  else if(a==='cmday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);render()}
   else if(a==='cyear'){const[y,m]=b.dataset.v.split('-').map(Number);cm=new Date(y,m,1);const nw=new Date();cs=(nw.getFullYear()===y&&nw.getMonth()===m)?nw:new Date(y,m,1);calView='list';try{localStorage.mdcalview='list'}catch(e){}render()}
   else if(a==='vmenu')openViewMenu()
   else if(a==='mmenu')openMoreMenu()
