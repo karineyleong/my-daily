@@ -18,7 +18,7 @@ main{max-width:420px;margin:0 auto;padding:10px 20px}
 h1{display:inline-block;font-family:var(--fd);font-weight:700;font-size:var(--fs1);margin:4px 0 12px;letter-spacing:.02em;border-bottom:4px solid var(--ac)}
 .card{background:var(--card);border:1px solid var(--ln);border-top:1px solid var(--ln);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 1px 8px rgba(30,60,90,.06)}
 label{display:block;font-size:14px;color:var(--mut);margin:12px 0 4px}
-input[type=email],input[type=password],input[type=text],input[type=number],input[type=datetime-local],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:#F4F7FA;color:var(--ink)}
+input[type=email],input[type=password],input[type=text],input[type=number],input[type=datetime-local],input[type=date],input[type=time],select{width:100%;padding:12px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:#F4F7FA;color:var(--ink)}
 input[type=color]{width:56px;height:40px;border:1px solid var(--ln);border-radius:10px;background:none;padding:2px}
 button{font:inherit;font-size:var(--fs3);padding:12px 16px;border-radius:10px;border:1px solid var(--ac);cursor:pointer}
 .pri{background:var(--ac);color:var(--on)}.sec{background:none;color:var(--ink);border-color:var(--ln)}
@@ -190,6 +190,14 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .hrow{display:flex;align-items:center;gap:6px}
 .hrow .di{flex:1;width:auto;min-width:0}
 .hrow .ic{flex:none;padding:6px 9px;font-size:15px}
+.hnm{display:flex;flex-direction:column;gap:1px;min-width:0}.hnm .ht1{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hnm .ht2{font-size:11px;color:var(--mut)}
+.planwrap{display:flex;gap:10px;align-items:flex-start}
+.prail{flex:none;width:40px;display:flex;flex-direction:column;gap:8px}
+.ptab{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0 8px;border:1px solid var(--ln);border-radius:10px;background:var(--card);color:var(--mut);font-size:13px;cursor:pointer}
+.ptab .ptl{writing-mode:vertical-rl;letter-spacing:.16em;line-height:1.25}
+.ptab .ptn{font-size:10px;line-height:1;opacity:.85}
+.ptab.on{background:var(--ac);border-color:var(--ac);color:var(--on);transform:translateX(3px);box-shadow:0 2px 8px rgba(30,60,90,.25);font-weight:700}
+.planmain{flex:1;min-width:0}
 .pinb{opacity:.35}
 .pinb.on{opacity:1;background:color-mix(in srgb,var(--ac) 22%,transparent);border-color:transparent}
 
@@ -357,7 +365,7 @@ dialog.full{height:93dvh;max-height:93dvh}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v40)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v41)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -467,7 +475,7 @@ Object.assign(T.zh,{allDay:'全日',r_120:'2 小時前'});Object.assign(T.ja,{al
 Object.assign(T.zh,{rpt:'重複',rp_none:'不重複',rp_d:'每日',rp_w:'每週',rp_m:'每月',rp_y:'每年'});Object.assign(T.ja,{rpt:'繰り返し',rp_none:'なし',rp_d:'毎日',rp_w:'毎週',rp_m:'毎月',rp_y:'毎年'});Object.assign(T.en,{rpt:'Repeat',rp_none:'None',rp_d:'Daily',rp_w:'Weekly',rp_m:'Monthly',rp_y:'Yearly'});
 Object.assign(T.zh,{iconL:'圖示',freq:'做嘅日子',startd:'開始日期',restToday:'今日休息 / 未開始'});
 Object.assign(T.zh,{sv:'單版',dv:'雙版'});Object.assign(T.ja,{sv:'シングル',dv:'デュアル'});Object.assign(T.en,{sv:'Single',dv:'Dual'});
-Object.assign(T.zh,{todoT:'To Do List',copied:'已複製計劃文字 ✓',mvUp:'上移',mvDn:'下移',posReset:'位置重置',share:'分享行程',shDay:'本日',shWeek:'本週',shMonth:'本月',openH:'營業中'});Object.assign(T.ja,{todoT:'To Do List',copied:'プランをコピーしました ✓',mvUp:'上へ',mvDn:'下へ',posReset:'位置リセット',share:'スケジュール共有',shDay:'今日',shWeek:'今週',shMonth:'今月',openH:'営業中'});Object.assign(T.en,{todoT:'To Do List',copied:'Plan copied ✓',mvUp:'Move up',mvDn:'Move down',posReset:'Reset positions',share:'Share schedule',shDay:'Day',shWeek:'Week',shMonth:'Month',openH:'Open now'});
+Object.assign(T.zh,{todoTitle:'待辦清單',todoT:'To Do List',copied:'已複製計劃文字 ✓',mvUp:'上移',mvDn:'下移',posReset:'位置重置',share:'分享行程',shDay:'本日',shWeek:'本週',shMonth:'本月',openH:'營業中'});Object.assign(T.ja,{todoTitle:'To Do リスト',todoT:'To Do List',copied:'プランをコピーしました ✓',mvUp:'上へ',mvDn:'下へ',posReset:'位置リセット',share:'スケジュール共有',shDay:'今日',shWeek:'今週',shMonth:'今月',openH:'営業中'});Object.assign(T.en,{todoTitle:'To Do List',todoT:'To Do List',copied:'Plan copied ✓',mvUp:'Move up',mvDn:'Move down',posReset:'Reset positions',share:'Share schedule',shDay:'Day',shWeek:'Week',shMonth:'Month',openH:'Open now'});
 Object.assign(T.zh,{plan:'計劃',planName:'計劃名稱',toTodo:'加入待辦',planTodoQ:'把這個計劃的全部節點加入待辦清單？重複執行會重複加入。',addedTodo:'已加入待辦 ✓'});Object.assign(T.ja,{plan:'プラン',planName:'プラン名',toTodo:'ToDoに追加',planTodoQ:'このプランの全ノードをToDoに追加しますか？重複実行すると重複します。',addedTodo:'ToDoに追加しました ✓'});Object.assign(T.en,{plan:'Plan',planName:'Plan name',toTodo:'To To-Do',planTodoQ:'Add all nodes of this plan to the To-Do list? Running again creates duplicates.',addedTodo:'Added to To-Do ✓'});
 Object.assign(T.zh,{mapV:'地圖',listV:'列表',mmChild:'加子節點',mmDel:'刪除這個節點和它下面所有分支？'});Object.assign(T.zh,{expSched:'匯出行程'});Object.assign(T.ja,{expSched:'予定を書き出す'});Object.assign(T.en,{expSched:'Export schedule'});
 Object.assign(T.zh,{vwList:'清單',vwYear:'年',vwMonth:'月',vwWeek:'週',vwDay:'日',views:'檢視方式',more:'更多',mSelect:'選擇',selDel:'刪除所選',yrSel:'選擇年份'});
@@ -560,6 +568,10 @@ const isOv=x=>x.due_at&&new Date(x.due_at)<new Date();
 const todayP=x=>x.due_at&&new Date(x.due_at)<nextDay(new Date());
 const tmrP=x=>{if(!x.due_at)return false;const d=new Date(x.due_at),a=nextDay(new Date());return d>=a&&d<nextDay(a)};
 const fmt=d=>new Date(d).toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang],{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+/* v41: tasks have no has_time column — a due time of exactly 00:00 IS the
+   "no time specified" convention (see openSheet). Such tasks render the
+   date only in task rows; any other time renders in full via fmt(). */
+const fmtDue=d=>{const dt=new Date(d);return dt.getHours()===0&&dt.getMinutes()===0?dt.toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang],{month:'numeric',day:'numeric'}):fmt(d)};
 const toL=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
 function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24,dayNameV27,dayPinV28,noteV29,evV33})}catch(e){}}
 function hydrate(){
@@ -614,6 +626,35 @@ async function dedupDays(){
     }
   }
 }
+async function purgeSeedCats(){
+  // v41: the v23 seed preset lists are retired — the habit drawer keeps only
+  // 「全部」 and the todo drawer only its built-in views + user lists. Remove
+  // a seed row ONLY while it still carries its seed name_key: renaming a
+  // list clears its name_key, which makes the row user-owned and kept, and
+  // user-created lists never carry a seed key. Affected habits/tasks fall
+  // back to uncategorised (still visible under 「全部」). Idempotent: once
+  // purged, no seed-key rows remain, and the seed() calls are gone, so the
+  // presets can never come back. Runs after dedupCats, whose merge logic is
+  // untouched (dup seed rows merge onto the earliest row first, which this
+  // then removes like any other seed row).
+  const SEEDKEYS={habit:['lk_interest','lk_study','lk_life'],task:['lk_family','lk_work']};
+  for(const kind of Object.keys(SEEDKEYS)){
+    const arr=kind==='habit'?hlists:cats,keys=SEEDKEYS[kind];
+    for(const c of arr.filter(c=>keys.includes(c.name_key))){
+      if(kind==='habit'){
+        try{await sb.from('habits').update({list_id:null}).eq('list_id',c.id)}catch(_){}
+        habits.forEach(h=>{if(h.list_id===c.id)h.list_id=null});
+        if(hlistView===c.id)hlistView='all';
+      }else{
+        try{await sb.from('tasks').update({category_id:null}).eq('category_id',c.id)}catch(_){}
+        tasks.forEach(x=>{if(x.category_id===c.id)x.category_id=null});
+        if(view===c.id)view='all';
+      }
+      try{await sb.from('categories').delete().eq('id',c.id)}catch(_){}
+      const ix=arr.findIndex(z=>z.id===c.id);if(ix>=0)arr.splice(ix,1);
+    }
+  }
+}
 function loadData(){
   if(_loadP)return _loadP;
   const p=loadDataImpl();_loadP=p;
@@ -653,22 +694,11 @@ async function loadDataImpl(){
   // ===== v29: per-item memos (graceful if sql-v29.sql not run yet: no note columns -> memo lines + editors hidden, everything else unchanged) =====
   try{const _n1=await sb.from('list_items').select('note').limit(1);const _n2=await sb.from('day_list_items').select('note').limit(1);noteV29=!_n1.error&&!_n2.error}catch(_){noteV29=false}
   if(!dedupDone){dedupDone=true;try{await dedupCats()}catch(_){}try{await dedupDays()}catch(_){}}
-  try{
-    // v23.1: idempotent seeding — decide from a live DB query (never localStorage, never memory arrays alone)
-    const seed=async(kind,defs)=>{
-      const chk=await sb.from('categories').select('id').eq('kind',kind).limit(1);
-      if(chk.error||(chk.data&&chk.data.length))return;
-      for(let i=0;i<defs.length;i++){
-        const d=defs[i];
-        let r=await sb.from('categories').insert({kind,name:d.n,name_key:d.k,icon:d.i,color:d.c,sort_order:i}).select().single();
-        if(r.error)r=await sb.from('categories').insert({kind,name:d.n,icon:d.i,color:d.c,sort_order:i}).select().single();
-        if(r.error)return;
-        (kind==='habit'?hlists:cats).push(r.data);
-      }
-    };
-    await seed('task',[{n:'家庭',k:'lk_family',i:'🏠',c:'#8FA382'},{n:'工作',k:'lk_work',i:'💼',c:'#4A7FB5'}]);
-    await seed('habit',[{n:'興趣',k:'lk_interest',i:'🎨',c:'#D9A441'},{n:'學習',k:'lk_study',i:'📚',c:'#4A7FB5'},{n:'生活',k:'lk_life',i:'🌱',c:'#8FA382'}]);
-  }catch(_){}
+  try{await purgeSeedCats()}catch(_){}
+  // v41: no seeding any more — the v23 preset lists （家庭/工作/興趣/學習/生活）
+  // are retired (see purgeSeedCats). New users start with only the built-in
+  // views; the idempotent seed() helper and its two calls are removed so the
+  // presets can never be re-created on a later boot.
   try{const _pp=await sb.from('tasks').select('plan_id').limit(1);const _pe=await sb.from('events').select('plan_id').limit(1);planV23=!_pp.error&&!_pe.error}catch(_){planV23=false}
   try{const _pl2=await sb.from('habits').select('list_id').limit(1);habList=!_pl2.error}catch(_){habList=false}
   try{
@@ -694,7 +724,7 @@ function row(x,sub){
   const p=k.length?Math.round(k.filter(y=>y.done).length/k.length*100):(x.done?100:x.progress||0);
   return swpWrap('task',x.id,`<div class="task${sub?' sub':''}${x.done?' done':''}"><input type="checkbox" class="pc" style="--pc:${PC[x.importance]||PC[0]}" data-a="chk" data-id="${x.id}"${x.done?' checked':''} aria-label="${t('chk')}">
 <div class="tt" data-a="edit" data-id="${x.id}"><b>${x.icon?esc(x.icon)+' ':''}${esc(x.title)}</b>${x.note?`<div class="meta">${esc(x.note.slice(0,60))}</div>`:''}
-<div class="meta rw"><span class="${od?'od':''}">${x.due_at?fmt(x.due_at):''}</span>${sub?'':`<span>${c?esc((c.icon||'')+' '+catName(c)):t('inbox')}</span>`}${!sub&&x.plan_id&&planOf(x.plan_id)?`<span class="ptag">🗂 ${esc(planOf(x.plan_id).title)}</span>`:''}</div>
+<div class="meta rw"><span class="${od?'od':''}">${x.due_at?fmtDue(x.due_at):''}</span>${sub?'':`<span>${c?esc((c.icon||'')+' '+catName(c)):t('inbox')}</span>`}${!sub&&x.plan_id&&planOf(x.plan_id)?`<span class="ptag">🗂 ${esc(planOf(x.plan_id).title)}</span>`:''}</div>
 ${(k.length||p)?`<div class="bar"><i style="width:${p}%"></i></div>`:''}</div></div>`)+k.map(y=>row(y,1)).join('');
 }
 function listFor(vw){
@@ -707,7 +737,9 @@ function listFor(vw){
     items=p.sort(cmp);
   }
   const sec=ov.length?`<div class="card"><div class="ovh"><b>${t('overdue')}</b><button class="lnk" data-a="pst">${t('postpone')}</button><button class="lnk" data-a="ovt">${ov.length} ${ovOpen?'▾':'▸'}</button></div>${ovOpen?ov.map(x=>row(x)).join(''):''}</div>`:'';
-  const body=items.length?`<div class="card">${items.map(x=>row(x)).join('')}</div>`:(ov.length?'':`<div class="card"><p class="meta">${t(vw==='done'?'doneEmpty':'empty')}</p></div>`);
+  // v41: an empty task view renders NOTHING (the old "還沒有待辦…" hint card
+  // is deleted by request). The completed view keeps its own empty note.
+  const body=items.length?`<div class="card">${items.map(x=>row(x)).join('')}</div>`:(ov.length?'':(vw==='done'?`<div class="card"><p class="meta">${t('doneEmpty')}</p></div>`:''));
   return sec+body;
 }
 function listHTML(){
@@ -720,7 +752,12 @@ function drawer(){
   // v23.1: one drawer per page — only controls relevant to that page. List management lives
   // ONLY here, in the ✎ edit mode of the todo/habit drawers (nav rows ARE the lists).
   const it=(a,v,ic,nm,cnt,on)=>`<button class="di${on?' on':''}" data-a="${a}" data-v="${v}"><span class="ic2">${ic}</span><span class="nm">${nm}</span><i>${cnt||''}</i></button>`;
-  const head=`<div class="ov${dr?' op':''}" data-a="dr"></div><aside class="dr${dr?' op':''}" aria-label="${t('menu')}"><div class="dh"><b>${appTitle()}</b>${(tab==='todo'||tab==='habit')?`<button class="sec ic" data-a="dredit" aria-label="${t('edit')}">${drEdit?'✓':'✎'}</button>`:''}</div>`;
+  // v41: the todo + habit drawers drop the "My Daily" title entirely — the
+  // header row carries only the list-manager button, pushed to the right.
+  // Its glyph is now ＋ (tap = open list management, the old ✎ edit mode);
+  // while managing it flips to ✓ (done), exactly as before. Other pages'
+  // drawers keep the app title and have no such button.
+  const head=`<div class="ov${dr?' op':''}" data-a="dr"></div><aside class="dr${dr?' op':''}" aria-label="${t('menu')}"><div class="dh">${(tab==='todo'||tab==='habit')?`<button class="sec ic" data-a="dredit" style="margin-left:auto" aria-label="${t('edit')}">${drEdit?'✓':'＋'}</button>`:`<b>${tab==='lists'?t('history'):appTitle()}</b>`}</div>`;
   const editRows=(arr,kind)=>arr.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(catName(c))}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')+`<div class="row"><button class="sec" data-a="${kind==='habit'?'nlh':'nl'}">＋ ${t('addOnly')}</button></div>`;
   if(tab==='habit'){
     const act=habits.filter(h=>!h.archived);
@@ -761,12 +798,12 @@ function drawer(){
     // the very day_lists row the page dropdown and the To Do section render.
     const rows=[...dlists].sort((a,b)=>((b.pinned?1:0)-(a.pinned?1:0))||(a.list_date<b.list_date?1:a.list_date>b.list_date?-1:0)||String(b.created_at||'').localeCompare(String(a.created_at||''))).slice(0,30);
     const hrow=d=>{const on=(shopDate||ymd(new Date()))===d.list_date&&curDayList(d.list_date)===d,cnt=ditems.filter(i=>i.day_list_id===d.id).length;
-      return `<div class="hrow"><button class="di${on?' on':''}" data-a="dgo2" data-id="${d.id}"><span class="ic2">🗓</span><span class="nm">${fmtDayS(d.list_date)} · ${esc(dayName(d))}</span><i>${cnt||''}</i></button>`
+      return `<div class="hrow"><button class="di${on?' on':''}" data-a="dgo2" data-id="${d.id}"><span class="ic2">🗓</span><span class="nm hnm"><span class="ht1">${esc(dayName(d))}</span><span class="ht2">${fmtDayS(d.list_date)}</span></span><i>${cnt||''}</i></button>`
       +(dayPinV28?`<button class="sec ic pinb${d.pinned?' on':''}" data-a="dpin" data-id="${d.id}" aria-pressed="${d.pinned?'true':'false'}" aria-label="📌">📌</button>`:'')
       +(dayNameV27?`<button class="sec ic" data-a="dren" data-id="${d.id}" aria-label="${t('edit')}">✎</button>`:'')
       +`</div>`};
     return head
-      +`<div class="dsec">${t('history')}</div>`+(rows.length?rows.map(hrow).join(''):`<p class="meta" style="padding:4px 2px">${t('histNone')}</p>`)
+      +(rows.length?rows.map(hrow).join(''):`<p class="meta" style="padding:4px 2px">${t('histNone')}</p>`)
       +'</aside>';
   }
   if(tab==='study'){
@@ -778,7 +815,13 @@ function drawer(){
     return head+`<p class="meta" style="padding:4px 2px">${session?esc(session.user.email):''}</p><button class="di" data-a="lo"><span class="ic2">🚪</span><span class="nm">${t('out')}</span></button></aside>`;
   }
   const n=pool(),it2=(v,ic,nm,cnt)=>it('nav',v,ic,nm,cnt,view===v);
-  return head+(drEdit?editRows(cats,'task'):`${it2('all','🗂',t('all'),n.length)}${it2('today','📅',t('today'),n.filter(todayP).length)}${it2('tomorrow','🌅',t('tomorrow'),n.filter(tmrP).length)}${it2('inbox','📥',t('inbox'),n.filter(x=>!x.category_id).length)}
+  // v41: the drawer's built-in entries are only 全部/今天/明天/已完成 + user
+  // lists. 「收件匣」 is a built-in VIEW (uncategorised tasks), not a list —
+  // its drawer entry is removed; the view itself stays in the code (the
+  // dual-view column picker still offers it, task rows still label
+  // uncategorised tasks as 收件匣）, and uncategorised tasks remain fully
+  // visible under 全部， so nothing is lost.
+  return head+(drEdit?editRows(cats,'task'):`${it2('all','🗂',t('all'),n.length)}${it2('today','📅',t('today'),n.filter(todayP).length)}${it2('tomorrow','🌅',t('tomorrow'),n.filter(tmrP).length)}
 ${cats.map(c=>it2(c.id,c.icon||'📁',esc(catName(c)),n.filter(x=>x.category_id===c.id).length)).join('')}${it2('done','✅',t('completed'))}`)+'</aside>';
 }
 const setHTML0=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
@@ -1357,8 +1400,17 @@ function planHTML(){
 ${p.type||p.tag?`<div class="meta">${p.type?`<span class="tag" style="background:var(--ln)">${esc(p.type)}</span>`:''}${p.tag?`<span class="tag" style="background:var(--ln)">#${esc(p.tag)}</span>`:''}</div>`:''}
 ${p.people!=null?`<div class="meta">👥 ${p.people}</div>`:''}
 ${pr.ts.length?`<div class="pbar"><i style="width:${pr.pct}%"></i></div>`:''}</div></div>`};
-  return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div>`
-  +(list.length?`<div class="card">${list.map(row).join('')}</div>`:`<div class="card"><p class="meta">${t('planEmpty')}</p></div>`)
+  // v41: no drawer nav on the plans page — a slim vertical tab rail on the
+  // left edge carries the very same planFlt filters (all/doing/over/done +
+  // one tab per plan type + the finance entry), labels written vertically,
+  // the active tab highlighted and nudged out. Header keeps the centred
+  // title with an empty left slot (the ☰ went away with the drawer).
+  const types=[...new Set(list0.map(p=>p.type).filter(Boolean))];
+  const cnt=f=>list0.filter(f).length;
+  const ptab=(v,nm,c)=>`<button class="ptab${planFlt===v?' on':''}" data-a="pflt" data-v="${v}"><span class="ptl">${nm}</span>${c!=null?`<span class="ptn">${c}</span>`:''}</button>`;
+  const rail=ptab('all',t('all'),list0.length)+ptab('doing',t('pDoing'),cnt(p=>stOf(p)==='doing'))+ptab('over',t('pOver'),cnt(p=>stOf(p)==='over'))+ptab('done',t('pDone'),cnt(p=>stOf(p)==='done'))+types.map(ty=>ptab('type:'+ty,esc(ty),cnt(p=>p.type===ty))).join('')+`<button class="ptab" data-a="tab" data-v="fin"><span class="ptl">${t('finance')}</span></button>`;
+  return `<div class="calhd habhd"><span></span><span class="habttl">${t('plans')}</span><span></span></div>`
+  +`<div class="planwrap"><nav class="prail" aria-label="${t('plans')}">${rail}</nav><div class="planmain">${list.length?`<div class="card">${list.map(row).join('')}</div>`:`<div class="card"><p class="meta">${t('planEmpty')}</p></div>`}</div></div>`
   +`<button class="fab" data-a="nplan" aria-label="${t('planNew')}">＋</button>`;
 }
 function planDetailHTML(p){
@@ -1534,7 +1586,7 @@ async function shareDayList(){
   if(!dlg.open)dlg.showModal();
 }
 function shopHTML(){
-  if(!shopV25)return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div><div class="card"><p class="meta">${t('shopSql')}</p></div>`;
+  if(!shopV25)return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('listsPage')}</span><span></span></div><div class="card"><p class="meta">${t('shopSql')}</p></div>`;
   const td=ymd(new Date()),vd=shopDate||td;
   if(shopList&&!slists.some(c=>c.id===shopList))shopList=null;
   if(!shopList&&slists.length)shopList=slists[0].id;
@@ -1545,8 +1597,8 @@ function shopHTML(){
   const mIts=cur?litems.filter(i=>i.list_id===cur.id).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.created_at<b.created_at?-1:1)):[];
   // v27: master lists are picked from a dropdown — only the picked list's items show.
   const left=`<div class="card"><div class="dsec" style="margin-top:0">${t('master')}</div>`
-    +(slists.length?`<div class="selrow"><select data-shopsel="master" aria-label="${t('master')}">${slists.map(c=>`<option value="${c.id}"${c.id===shopList?' selected':''}>${esc(c.icon||'🛒')} ${esc(catName(c))}</option>`).join('')}</select><button class="sec ic" data-a="sladd" aria-label="${t('newList')}">＋</button></div>`
-      :`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sladd">＋ ${t('newList')}</button></div>`)
+    +(slists.length?`<div class="selrow"><select data-shopsel="master" aria-label="${t('master')}">${slists.map(c=>`<option value="${c.id}"${c.id===shopList?' selected':''}>${esc(c.icon||'🛒')} ${esc(catName(c))}</option>`).join('')}</select></div>`
+      :'')
     +(cur?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sledit" data-id="${cur.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="sldel" data-id="${cur.id}">${t('del')}</button></div>`
       +(mIts.length?mIts.map(i=>swpWrap('litem',i.id,`<div class="task"><input type="checkbox" class="pc" style="--pc:#43A047" data-a="stog" data-id="${i.id}"${selIds.has(i.id)?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="stog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('smemo',i.id,i.note)}</div><button class="sec mini" data-a="siedit" data-id="${i.id}" aria-label="${t('edit')}">✎</button></div>`)).join(''):`<p class="meta">${t('liEmpty')}</p>`)
       +`<div class="tbar"><input id="si-n" type="text" maxlength="120" placeholder="${t('slPh')}"><button class="pri" data-a="siadd" data-id="${cur.id}" aria-label="${t('liAdd')}">＋</button></div>`
@@ -1570,21 +1622,33 @@ function shopHTML(){
     +(vd!==td?`<button class="lnk" data-a="dtoday">${t('backToday')}</button>`:'')
     +daySel
     +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('dmemo',i.id,i.note)}</div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
-    +(dIts.length?`<div class="row"><button class="pri" data-a="dshare">📤 ${t('shareBtn')}</button></div>`:'')
     +`</div>`;
-  return drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span></span></div><div class="shop"><div>${left}</div><div>${right}</div></div>`;
+  // v41: header adopts the .calhd single row — drawer button left, centred
+  // title, and (item 11, superseding item 10's empty slot) two compact icon
+  // buttons on the right, moved up from the columns: ＋ = the master list's
+  // new-list button (data-a="sladd", same openSlist action) and 📤 = the day
+  // list share button (data-a="dshare", same shareDayList action) that used
+  // to be a wide button under the right column. The right column's own ＋
+  // (data-a="dladd", new day list) stays where it was.
+  return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('listsPage')}</span><span class="habbtns"><button class="sec ic" data-a="sladd" aria-label="${t('newList')}">＋</button><button class="sec ic" data-a="dshare" aria-label="${t('shareBtn')}">📤</button></span></div><div class="shop"><div>${left}</div><div>${right}</div></div>`;
 }
 // v27: today's shopping lists as a section on the To Do page — a second VIEW of
 // the same dlists/ditems arrays, never a copy into tasks. Ticking a box here
 // flips the very day_list_items row the shopping page renders (data-a="dtog").
+// v41: the To Do page's 今日購買清單 section is collapsible and starts
+// COLLAPSED — only the title row (plus each list's name · progress line) is
+// shown; tapping the title row expands the items (ticking/sync unchanged).
+// The open state persists in localStorage, following the app's other
+// localStorage UI flags (itAuto / mmpos).
+let shopSecOpen=false;try{shopSecOpen=localStorage.mdShopOpen==='1'}catch(_){}
 function todoShopHTML(){
   if(!shopV25)return '';
   const td=ymd(new Date()),gs=daysOf(td);
   if(!gs.length)return '';
-  return `<div class="card"><div class="dsec" style="margin-top:0">🛒 ${t('todayList')}</div>`
+  return `<div class="card"><div class="dsec" style="margin-top:0;cursor:pointer" data-a="shopsec" role="button" aria-expanded="${shopSecOpen}" aria-label="${t('todayList')}">🛒 ${t('todayList')} <span aria-hidden="true">${shopSecOpen?'▾':'▸'}</span></div>`
     +gs.map(dl=>{const its=dayItemsOf(dl),dn=its.filter(i=>i.done).length;
       return `<div class="meta" style="margin:8px 0 2px"><b>${esc(dayName(dl))}</b> · ${dn}/${its.length}</div>`
-      +(its.length?its.map(i=>`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('',i.id,i.note,1)}</div></div>`).join(''):`<p class="meta">${t('dayEmpty')}</p>`)}).join('')
+      +(shopSecOpen?(its.length?its.map(i=>`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('',i.id,i.note,1)}</div></div>`).join(''):`<p class="meta">${t('dayEmpty')}</p>`):'')}).join('')
     +`</div>`;
 }
 function openSlist(id){
@@ -1624,6 +1688,18 @@ function openDayList(id){
     dlg.close();render()};
   dlg.showModal();$('dl-n').focus();
 }
+// v41: clicking a history row opens a read-only content sheet (title on top,
+// small grey date below, ✕ top-right) instead of jumping the page selection.
+function openDayView(id){
+  const d=dlists.find(z=>z.id===id);if(!d)return;
+  const its=dayItemsOf(d);
+  const dlg=$('dlg');
+  dlg.innerHTML=`<div class="hd"><div class="hnm"><b>${esc(dayName(d))}</b><span class="ht2">${fmtDayS(d.list_date)}</span></div><button class="sec ic" id="dv-x" aria-label="✕">✕</button></div>`
+    +(its.length?its.map(i=>`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" disabled${i.done?' checked':''}><div class="tt"><b>${esc(i.title)}</b>${memoLine('',i.id,i.note,1)}</div></div>`).join(''):`<p class="meta">${t('dayEmpty')}</p>`);
+  $('dv-x').onclick=()=>dlg.close();
+  if(!dlg.open)dlg.showModal();
+  dlgUnfocus();
+}
 // v28: pin/unpin a day list from the history drawer. Pinned lists stay on top
 // of the drawer (persisted in day_lists.pinned; hidden entirely when the
 // column is missing, see the dayPinV28 probe in loadData).
@@ -1656,11 +1732,11 @@ async function delSlist(id){
 const notifCard=()=>{const sup='Notification'in window,st=sup?Notification.permission:'na';return `<div class="card"><b>🔔 ${t('notifT')}</b><p class="meta">${t('notifHint')}</p>${st==='granted'?`<p class="meta">${t('notifOk')}</p>`:st==='denied'||!sup?`<p class="meta">${t('notifNo')}</p>`:`<div class="row"><button class="pri" data-a="nreq">${t('notifBtn')}</button></div>`}</div>`};
 const setHTML=()=>setHTML0()+notifCard();
 function pageTitle(){
-  if(tab==='todo')return vname();
+  if(tab==='todo')return ''; // v41: the todo page carries its title in the new .calhd header row (like habit/cal)
   if(tab==='habit'){if(hview){const hx=habits.find(x=>x.id===hview);if(hx)return esc((hx.icon||'')+' '+hx.name)}return ''} // v39: list view carries its title in the new calendar-style header row
   if(tab==='cal')return ''; // v30: calendar page has its own top row (white layout), no generic page title
-  if(tab==='lists')return esc(t('listsPage'));
-  if(tab==='plan')return esc(t('plans'));
+  if(tab==='lists')return ''; // v41: shopping page carries its title in the new .calhd header row
+  if(tab==='plan')return ''; // v41: plans page carries its title in the new .calhd header row
   if(tab==='fin')return esc(t('finance'));
   if(tab==='study')return esc(t('study'));
   if(tab==='set')return esc(t('settings'));
@@ -1676,7 +1752,11 @@ function appView(){
   else if(tab==='plan')body=planHTML();
   else if(tab==='fin')body=finHTML();
   else if(tab==='study')body=studyHTML();
-  else body=drawer()+`<div class="hd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1">${t('sv')}</button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2">${t('dv')}</button></span></div>`+listHTML()+todoShopHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`;
+  // v41: todo header adopts the habit/calendar .calhd single row — drawer
+  // button left, centred i18n title, the 單版/雙版 switch in the right slot.
+  // The old two-row header (big list-name title + .hd row) is gone; the
+  // current list stays identifiable by the drawer's selected row.
+  else body=drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('todoTitle')}</span><span class="habbtns"><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1">${t('sv')}</button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2">${t('dv')}</button></span></span></div>`+listHTML()+todoShopHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`;
   const _pt=pageTitle();$('app').innerHTML=(_pt?`<div class="appt">${_pt}</div>`:'')+(OFFLINE?`<div class="offbar">${t('offMsg')}</div>`:'')+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
   if(session&&Date.now()-_cacheAt>1500){_cacheAt=Date.now();cacheData()}
   if(tab==='set')bind();
@@ -1828,7 +1908,15 @@ const hDoneOn=(h,ds)=>hAmtOf(h,ds)>=(h.goal||1);
 const hTotDays=h=>new Set(hlogs.filter(l=>l.habit_id===h.id).map(l=>l.log_date)).size;
 let hstTab='week',hstWk=new Date(),hstMo=new Date(),hlpTab='act';
 $('dlg').addEventListener('close',()=>$('dlg').classList.remove('full'));
-function openHStats(tab){if(tab)hstTab=tab;const dlg=$('dlg');dlg.classList.add('full');paintHStats();if(!dlg.open)dlg.showModal()}
+/* v41: showModal() auto-focuses the dialog's first focusable element (the
+   stats sheet's ✕, the list sheet's first tab button). The global
+   :focus-visible rule (3px outline + 2px offset, line 28) then renders as a
+   second, offset thick frame around that button — the "broken double border"
+   the user photographed on the ✕. These two sheets are opened by touch, so
+   drop the stolen focus right after opening; the buttons keep their plain
+   single-border look and stay fully clickable. */
+const dlgUnfocus=()=>{const ae=document.activeElement;if(ae&&ae!==document.body&&$('dlg').contains(ae))ae.blur()};
+function openHStats(tab){if(tab)hstTab=tab;const dlg=$('dlg');dlg.classList.add('full');paintHStats();if(!dlg.open){dlg.showModal();dlgUnfocus()}}
 function paintHStats(){
   const dlg=$('dlg'),act=habits.filter(h=>!h.archived),today=ymd(new Date());
   const seg=`<span class="seg">${[['week','stTabW'],['month','stTabM'],['record','stTabR']].map(([k,lk])=>`<button type="button" class="segbtn${hstTab===k?' on':''}" data-hst="${k}">${t(lk)}</button>`).join('')}</span>`;
@@ -1870,7 +1958,7 @@ function paintHStats(){
   if(pv&&hstTab==='week'){pv.onclick=()=>{const d=new Date(hstWk);d.setDate(d.getDate()-7);hstWk=d;paintHStats()};nx.onclick=()=>{const d=new Date(hstWk);d.setDate(d.getDate()+7);hstWk=d;paintHStats()}}
   if(pv&&hstTab==='month'){pv.onclick=()=>{hstMo=new Date(hstMo.getFullYear(),hstMo.getMonth()-1,1);paintHStats()};nx.onclick=()=>{hstMo=new Date(hstMo.getFullYear(),hstMo.getMonth()+1,1);paintHStats()}}
 }
-function openHList(){const dlg=$('dlg');dlg.classList.add('full');paintHList();if(!dlg.open)dlg.showModal()}
+function openHList(){const dlg=$('dlg');dlg.classList.add('full');paintHList();if(!dlg.open){dlg.showModal();dlgUnfocus()}}
 function paintHList(){
   const dlg=$('dlg'),arc=hlpTab==='arc',set=habits.filter(h=>arc?h.archived:!h.archived);
   const rowH=h=>`<div class="task" style="--hc:${esc(h.color||'#1E88E5')}"><div class="tt" data-hlopen="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b></div>${arc?`<button class="sec" data-hlun="${h.id}">${t('hUnarchive')}</button>`:''}<div class="stk"><b>${hTotDays(h)}${t('days')}</b><span>${t('hTotalDays')}</span></div></div>`;
@@ -1904,7 +1992,7 @@ function openSheet(id,pid){
   dlg.innerHTML=`<textarea id="f-t" rows="2" maxlength="200" placeholder="${t('ph')}" aria-label="${t('title')}">${esc(x.title||'')}</textarea>
 <textarea id="f-n" rows="2" placeholder="${t('note')}" aria-label="${t('note')}">${esc(x.note||'')}</textarea>
 <label>${t('iconL')}</label><div class="igrid" id="f-ig">${TICONS.map(e=>`<button type="button" data-tic="${e}" class="icob${x.icon===e?' on':''}">${e}</button>`).join('')}</div><div class="meta" id="f-igv">${t('iconL')}：${x.icon||'—'}</div>
-<div class="tbar"><input id="f-d" type="datetime-local" value="${x.due_at?toL(x.due_at):''}" aria-label="${t('due')}"><select id="f-i" aria-label="${t('imp')}">${[3,2,1,0].map(v=>`<option value="${v}"${x.importance===v?' selected':''}>🚩 ${t(['impN0','impL','impM','impH'][v])}</option>`).join('')}</select></div>
+<div class="tbar"><input id="f-dd" type="date" value="${x.due_at?toL(x.due_at).slice(0,10):''}" aria-label="${t('due')}"><input id="f-dt" type="time" value="${x.due_at?toL(x.due_at).slice(11,16):'00:00'}" aria-label="${t('due')}"><select id="f-i" aria-label="${t('imp')}">${[3,2,1,0].map(v=>`<option value="${v}"${x.importance===v?' selected':''}>🚩 ${t(['impN0','impL','impM','impH'][v])}</option>`).join('')}</select></div>
 <div class="tbar"><select id="f-c" aria-label="${t('cat')}"><option value="">${t('inbox')}</option>${cats.map(c=>`<option value="${c.id}"${x.category_id===c.id?' selected':''}>${esc((c.icon||'')+' '+c.name)}</option>`).join('')}</select><button class="pri snd" id="f-s" aria-label="${t('save')}">↑</button></div>
 ${id&&!hasK?`<label for="f-p">${t('prog')}：<span id="pv">${x.progress||0}</span>%</label><input id="f-p" type="range" min="0" max="100" step="5" value="${x.progress||0}" oninput="document.getElementById('pv').textContent=this.value">`:''}
 ${id?`<div class="row">${x.parent_id?'':`<button class="sec" id="f-sub">＋ ${t('sub')}</button>`}<button class="sec" id="f-del">${t('del')}</button></div>`:''}`;
@@ -1913,7 +2001,13 @@ ${id?`<div class="row">${x.parent_id?'':`<button class="sec" id="f-sub">＋ ${t(
   $('f-s').onclick=async()=>{
     const title=$('f-t').value.trim();if(!title)return;
     const p=$('f-p')?+$('f-p').value:(x.progress||0);
-    const v={title,icon:tic||null,note:$('f-n').value.trim()||null,importance:+$('f-i').value,due_at:$('f-d').value?new Date($('f-d').value).toISOString():null,category_id:$('f-c').value||null,progress:p};
+    // v41: date and time are separate fields. The old single datetime-local
+    // opened the OS wheel picker at the CURRENT time, so picking a date
+    // silently stamped "now" as the time. The time field now starts at
+    // 00:00 — and 00:00 is the app's "no time specified" convention (tasks
+    // have no has_time column): untouched time saves as 00:00, and task
+    // rows render such tasks with the date only (fmtDue). No date = no due.
+    const v={title,icon:tic||null,note:$('f-n').value.trim()||null,importance:+$('f-i').value,due_at:$('f-dd').value?new Date($('f-dd').value+'T'+($('f-dt').value||'00:00')).toISOString():null,category_id:$('f-c').value||null,progress:p};
     if($('f-p'))v.done=p===100;
     if(id){const{error}=await sb.from('tasks').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{v.parent_id=x.parent_id;const{data,error}=await sb.from('tasks').insert(v).select().single();if(error)return alert(error.message);tasks.push(data)}
@@ -2158,7 +2252,7 @@ $('app').addEventListener('click',async e=>{
     else calVis[v]=!(calVis[v]!==false);saveVis();render()}
   else if(a==='snav'){shopList=b.dataset.v;dr=false;render()}
   else if(a==='dgo'){shopDate=b.dataset.v;shopDay=null;dr=false;render()}
-  else if(a==='dgo2'){const d=dlists.find(z=>z.id===id);if(d){shopDate=d.list_date;shopDay=d.id;dr=false;render()}}
+  else if(a==='dgo2')openDayView(id);
   else if(a==='dpin')await toggleDayPin(id);
   else if(a==='dren')openDayList(id);
   else if(a==='sladd')openSlist()
@@ -2202,6 +2296,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='edit')openSheet(id)
   else if(a==='nl'){dr=false;render();openList()}
   else if(a==='ovt'){ovOpen=!ovOpen;render()}
+  else if(a==='shopsec'){shopSecOpen=!shopSecOpen;try{localStorage.mdShopOpen=shopSecOpen?'1':''}catch(_){}render()}
   else if(a==='pst')await postpone()
   else if(a==='chk')await setDone(id,b.checked)
   else if(a==='cdel'){if(confirm(t('confirmDel')))await delCategory(id)}
