@@ -99,10 +99,17 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .hasbg h1{background:var(--card);padding:4px 14px;border-radius:14px;border-bottom:0}
 .cm b{font-family:var(--fd);letter-spacing:.05em}
 .seg{display:flex;gap:6px}.segbtn{padding:7px 12px;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:13px}.segbtn.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
+/* v42: the todo single/dual switch is icon-only (the シングル/デュアル text labels wrapped and broke the header pills in Japanese) */
+.segbtn svg{display:block}
 .pchips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
 .ctds{padding:3px 10px;font-size:var(--fs5);border-radius:99px}
 .pac-container{z-index:10000!important;border-radius:12px}
-.dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}.dcol select{width:100%;margin:0 0 6px}.dcol .card{padding:10px}
+/* v42 FIX (dual-mode layout bug): bare 1fr tracks are minmax(auto,1fr) — a
+   column whose card content has a wide min-content (long task titles, the
+   meta row) claims more than half the grid and squeezes the other column,
+   so dual mode rendered as one wide + one narrow column (the same bug
+   class v26 fixed for .shop). minmax(0,1fr) makes the halves truly equal. */
+.dual{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:start}.dcol{min-width:0}.dcol select{width:100%;margin:0 0 6px}.dcol .card{padding:10px;min-width:0}
 .appt{font-family:var(--fd);text-align:center;font-size:var(--fs1);letter-spacing:.06em;padding:2px 0 0;color:var(--ac)}
 .toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ac);color:var(--on);padding:10px 20px;border-radius:99px;z-index:60;box-shadow:0 6px 20px rgba(20,40,60,.22);font-size:14px}
 .remb{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(92vw,400px);background:var(--ac);color:var(--on);border-radius:14px;padding:12px 16px;z-index:80;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.3);font-size:15px}
@@ -170,6 +177,14 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 /* v26: minmax(0,...) tracks + min-width:0 items — nowrap chip rows inside a column
    must never inflate the track minimum and push the other column off-screen. */
 .shop{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:start}
+/* v42: shopping item rows go compact (timeline-style list): checkbox left,
+   title, memo as a small grey sub-line, hairline dividers, tight rhythm —
+   and the item text drops one size step in both columns. */
+.shop .task.srow{padding:7px 0;gap:8px;align-items:flex-start}
+.shop .srow .tt b{font-size:14px;line-height:1.35}
+.shop .srow .memo{font-size:11px;margin-top:0}
+.shop .srow .pc{width:20px;height:20px;margin-top:1px}
+.shop .srow .sec.mini{padding:5px 9px}
 .shop>*{min-width:0}
 .shop .card{padding:10px;margin-bottom:0;min-width:0}
 .shop .chips{min-width:0}
@@ -192,12 +207,27 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .hrow .ic{flex:none;padding:6px 9px;font-size:15px}
 .hnm{display:flex;flex-direction:column;gap:1px;min-width:0}.hnm .ht1{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hnm .ht2{font-size:11px;color:var(--mut)}
 .planwrap{display:flex;gap:10px;align-items:flex-start}
-.prail{flex:none;width:40px;display:flex;flex-direction:column;gap:8px}
-.ptab{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0 8px;border:1px solid var(--ln);border-radius:10px;background:var(--card);color:var(--mut);font-size:13px;cursor:pointer}
+/* v42: the rail becomes notebook index tabs — flush against the left edge
+   of the screen (the -20px cancels main's side padding), stacked tight,
+   each tab carrying its own pastel shade (--tc); the selected tab deepens
+   (color-mix toward the accent) and protrudes further right. */
+.prail{flex:none;width:44px;display:flex;flex-direction:column;gap:2px;margin-left:-20px}
+.ptab{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0 8px;border:1px solid var(--ln);border-left:0;border-radius:0 10px 10px 0;background:var(--tc,#EEF3F8);color:var(--ink);font-size:13px;cursor:pointer;width:44px}
 .ptab .ptl{writing-mode:vertical-rl;letter-spacing:.16em;line-height:1.25}
 .ptab .ptn{font-size:10px;line-height:1;opacity:.85}
-.ptab.on{background:var(--ac);border-color:var(--ac);color:var(--on);transform:translateX(3px);box-shadow:0 2px 8px rgba(30,60,90,.25);font-weight:700}
+.ptab.on{background:color-mix(in srgb,var(--tc,#DCE9F7) 42%,var(--ac));border-color:transparent;color:var(--on);width:52px;box-shadow:0 2px 8px rgba(30,60,90,.25);font-weight:700}
+.ptab.addb{border-style:dashed;color:var(--mut)}
 .planmain{flex:1;min-width:0}
+/* v42: plans search row + funnel filter panel */
+.psearch{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.psearch input{flex:1;min-width:0}
+.psearch .sec.ic{flex:none}
+.psearch .sec.ic.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
+.pfilter{border:1px solid var(--ln);border-radius:12px;padding:4px 12px 12px;margin-bottom:10px;background:var(--card)}
+.pfilter label{margin-top:8px}
+.pfilter select{margin:0}
+.dtf{display:flex;gap:6px;align-items:center}
+.dtf input{width:auto;margin:0;flex:1;min-width:0}
 .pinb{opacity:.35}
 .pinb.on{opacity:1;background:color-mix(in srgb,var(--ac) 22%,transparent);border-color:transparent}
 
@@ -365,7 +395,7 @@ dialog.full{height:93dvh;max-height:93dvh}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v41)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v42)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -508,9 +538,12 @@ Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_f
 Object.assign(T.zh,{compCal:'公司',listsPage:'購買清單',liAdd:'新增項目',liEmpty:'還沒有項目，在下方新增第一個。',evScope:'類別'});
 Object.assign(T.ja,{compCal:'会社',listsPage:'買い物リスト',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',evScope:'区分'});
 Object.assign(T.en,{compCal:'Company',listsPage:'Shopping list',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',evScope:'Scope'});
-Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v29.sql。',history:'歷史清單',histNone:'還沒有歷史清單。',nameReq:'名稱不可空白',memo:'備註',memoPh:'寫低備註（例如：2 包、特價先買）…'});
-Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v29.sql を実行してください。',history:'過去のリスト',histNone:'過去のリストはまだありません。',nameReq:'名前を入力してください',memo:'メモ',memoPh:'メモを書く（例：2パック、特売なら買う）…'});
-Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v29.sql in Supabase first.',history:'History',histNone:'No past lists yet.',nameReq:'Name cannot be empty',memo:'Memo',memoPh:'Add a memo (e.g. 2 packs, buy if on sale)…'});
+Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v29.sql。',history:'購買記錄',histNone:'還沒有購買記錄。',nameReq:'名稱不可空白',memo:'備註',memoPh:'寫低備註（例如：2 包、特價先買）…'});
+Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v29.sql を実行してください。',history:'購入記録',histNone:'購入記録はまだありません。',nameReq:'名前を入力してください',memo:'メモ',memoPh:'メモを書く（例：2パック、特売なら買う）…'});
+Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v29.sql in Supabase first.',history:'Purchase records',histNone:'No purchase records yet.',nameReq:'Name cannot be empty',memo:'Memo',memoPh:'Add a memo (e.g. 2 packs, buy if on sale)…'});
+Object.assign(T.zh,{pSearchPh:'搜尋計劃…',pFilter:'篩選',pClearF:'清除篩選',pStatus:'狀態',pNewType:'＋ 新增種類…',pPickTag:'已有的 #'});
+Object.assign(T.ja,{pSearchPh:'プランを検索…',pFilter:'絞り込み',pClearF:'絞り込みをクリア',pStatus:'状態',pNewType:'＋ 新しいタイプ…',pPickTag:'既存の #'});
+Object.assign(T.en,{pSearchPh:'Search plans…',pFilter:'Filter',pClearF:'Clear filters',pStatus:'Status',pNewType:'＋ New type…',pPickTag:'Existing #'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#1E88E5',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -554,6 +587,18 @@ let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false,evV24=fal
 let hlists=[],plans=[],pfin=[],planErr=false,planV23=false,habList=false,hlistView='all',planView=null,finCur=null;
 let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null,shopDay=null,dayNameV27=false,dayPinV28=false,noteV29=false;
 let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
+// v42: plans page keyword search + funnel filter state (ANDed with the rail)
+let pQ='',pFStatus='',pFType='',pFTag='',pFOpen=false;
+// v42: plan types created from the rail's ＋ tab live in localStorage (the
+// plans.type column itself needs no schema change — a type is just a value
+// in the set; this list only remembers types that have no plan yet).
+const planTypeStore=()=>{try{const a=JSON.parse(localStorage.mdPlanTypes||'[]');return Array.isArray(a)?a.filter(x=>typeof x==='string'&&x):[]}catch(_){return[]}};
+const planTypeSave=a=>{try{localStorage.mdPlanTypes=JSON.stringify(a)}catch(_){}};
+const planTagsOf=p=>String(p&&p.tag||'').split(/[,，、\s]+/).filter(Boolean);
+// v42: rail tab colours — pastel set, assigned stably by name hash so a tab
+// keeps its shade across renders; the selected tab deepens via color-mix.
+const PTABC=['#DCE9F7','#FDEBD3','#E2F2DF','#FBE3E8','#EFE7F7','#FFF0B8','#DFF3F0','#F9E2D0'];
+const ptabColor=nm=>{let h=0;for(const c of String(nm))h=(h*31+c.charCodeAt(0))>>>0;return PTABC[h%PTABC.length]};
 let visPriv=true,visShared=true,visComp=true,calVis={};try{const _v=JSON.parse(localStorage.mdvis||'{}');visPriv=_v.p!==false;visShared=_v.s!==false;visComp=_v.co!==false;calVis=_v.c||{}}catch(e){}
 const saveVis=()=>{localStorage.mdvis=JSON.stringify({p:visPriv,s:visShared,co:visComp,c:calVis})};
 let calView='list';try{const _cv=localStorage.mdcalview;if(['list','year','month','week','day'].includes(_cv))calView=_cv}catch(e){}
@@ -1346,7 +1391,9 @@ const planProg=p=>{
   let st;if(!ts.length)st=t('pNotStarted');else if(dn===ts.length)st=t('pDone');else if(p.end_at&&new Date(p.end_at)<new Date())st=t('pOver');else st=t('pDoing');
   return{ts,dn,pct,st};
 };
-const pPeriod=p=>{const f=d=>new Date(d).toLocaleDateString(LOC[lang],{year:'numeric',month:'numeric',day:'numeric'});return p.start_at?f(p.start_at)+(p.end_at?' – '+f(p.end_at):''):''};
+// v42: a plan datetime at exactly 00:00 means "no time picked" — the period
+// renders the date only; a real time is appended (same rule as fmtDue).
+const pPeriod=p=>{const f=d=>{const dt=new Date(d);const ds=dt.toLocaleDateString(LOC[lang],{year:'numeric',month:'numeric',day:'numeric'});return (dt.getHours()||dt.getMinutes())?ds+' '+pad(dt.getHours())+':'+pad(dt.getMinutes()):ds};return p.start_at?f(p.start_at)+(p.end_at?' – '+f(p.end_at):''):''};
 function pieSVG(parts,size){
   const tot=parts.reduce((a,x)=>a+x.value,0);if(!tot)return '';
   let acc=0;const segs=parts.map(pt=>{const fr=pt.value/tot;const el=`<circle cx="60" cy="60" r="46" fill="none" stroke="${pt.color}" stroke-width="22" pathLength="100" stroke-dasharray="${Math.max(0,fr*100-0.7).toFixed(2)} 100" stroke-dashoffset="${(-acc*100).toFixed(2)}" transform="rotate(-90 60 60)"/>`;acc+=fr;return el}).join('');
@@ -1394,29 +1441,61 @@ function planHTML(){
   if(planView&&planOf(planView))return planDetailHTML(planOf(planView));
   const list0=[...plans].sort((a,b)=>String(a.start_at||'9999').localeCompare(String(b.start_at||'9999'))||String(a.created_at).localeCompare(String(b.created_at)));
   const stOf=p=>{const pr=planProg(p);return pr.ts.length&&pr.dn===pr.ts.length?'done':pr.st===t('pOver')?'over':'doing'};
-  const list=planFlt==='all'?list0:planFlt.startsWith('type:')?list0.filter(p=>p.type===planFlt.slice(5)):list0.filter(p=>stOf(p)===planFlt);
+  // v42: the rail now carries ONLY 全部 + one tab per plan TYPE (+ 新增 +
+  // 收支） — the status tabs moved into the funnel filter below. Types come
+  // from the plans themselves plus any rail-created types (localStorage).
+  const types=[...new Set([...list0.map(p=>p.type),...planTypeStore()].filter(Boolean))];
+  const cnt=f=>list0.filter(f).length;
+  const ptab=(v,nm,c)=>`<button class="ptab${planFlt===v?' on':''}" style="--tc:${ptabColor(v==='all'?'__all':nm)}" data-a="pflt" data-v="${v}"><span class="ptl">${nm}</span>${c!=null?`<span class="ptn">${c}</span>`:''}</button>`;
+  const rail=ptab('all',t('all'),list0.length)+types.map(ty=>ptab('type:'+ty,esc(ty),cnt(p=>p.type===ty))).join('')
+    +`<button class="ptab addb" data-a="ptabadd" aria-label="${t('pNewType')}"><span class="ptl">＋ ${t('addOnly')}</span></button>`
+    +`<button class="ptab" style="--tc:#E1E8EE" data-a="tab" data-v="fin"><span class="ptl">${t('finance')}</span></button>`;
+  return `<div class="calhd habhd"><span></span><span class="habttl">${t('plans')}</span><span></span></div>`
+  +`<div class="planwrap"><nav class="prail" aria-label="${t('plans')}">${rail}</nav><div class="planmain">${planSearchHTML(types)}<div id="plist">${planListHTML(list0)}</div></div></div>`
+  +`<button class="fab" data-a="nplan" aria-label="${t('planNew')}">＋</button>`;
+}
+// v42: keyword search + funnel button + (collapsible) filter panel, sitting
+// at the top of the plans main column. Search, funnel and rail all AND.
+function planSearchHTML(types){
+  const allTags=[...new Set(plans.flatMap(planTagsOf))];
+  const sel=(k,cur,opts)=>`<select data-pf="${k}" aria-label="${k}"><option value="">${t('all')}</option>${opts.map(([v,nm])=>`<option value="${esc(v)}"${v===cur?' selected':''}>${esc(nm)}</option>`).join('')}</select>`;
+  const panel=pFOpen?`<div class="pfilter"><label>${t('pStatus')}</label>${sel('status',pFStatus,[['new',t('pNotStarted')],['doing',t('pDoing')],['over',t('pOver')],['done',t('pDone')]])}<label>${t('pType')}</label>${sel('type',pFType,types.map(ty=>[ty,ty]))}<label>${t('pTag')}</label>${sel('tag',pFTag,allTags.map(g=>[g,'#'+g]))}<div class="row"><button class="sec" data-a="pfclear">${t('pClearF')}</button></div></div>`:'';
+  return `<div class="psearch"><input id="pq" type="text" placeholder="${t('pSearchPh')}" value="${esc(pQ)}" aria-label="${t('pSearchPh')}"><button class="sec ic${(pFStatus||pFType||pFTag)?' on':''}" data-a="pfunnel" aria-label="${t('pFilter')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16l-6 7v5l-4 2v-7z"/></svg></button></div>`+panel;
+}
+// v42: the filtered plan list (rail type/status AND funnel AND keyword).
+function planListHTML(list0){
+  const stOf=p=>{const pr=planProg(p);return pr.ts.length&&pr.dn===pr.ts.length?'done':pr.st===t('pOver')?'over':'doing'};
+  const st4=p=>{const pr=planProg(p);return pr.ts.length&&pr.dn===pr.ts.length?'done':pr.st===t('pOver')?'over':!pr.ts.length?'new':'doing'};
+  let list=list0;
+  if(planFlt.startsWith('type:'))list=list.filter(p=>p.type===planFlt.slice(5));
+  else if(['doing','over','done'].includes(planFlt))list=list.filter(p=>stOf(p)===planFlt);
+  if(pFStatus)list=list.filter(p=>st4(p)===pFStatus);
+  if(pFType)list=list.filter(p=>p.type===pFType);
+  if(pFTag)list=list.filter(p=>planTagsOf(p).includes(pFTag));
+  const kw=pQ.trim().toLowerCase();
+  if(kw)list=list.filter(p=>((p.title||'')+' '+(p.type||'')+' '+planTagsOf(p).map(g=>'#'+g).join(' ')).toLowerCase().includes(kw));
   const row=p=>{const pr=planProg(p);return `<div class="task"><div class="tt" data-a="pview" data-id="${p.id}"><b>${esc(p.title)}</b>
 <div class="meta rw"><span>${pPeriod(p)||''}</span><span>${pr.st}${pr.ts.length?` · ${pr.dn}/${pr.ts.length}`:''}</span></div>
-${p.type||p.tag?`<div class="meta">${p.type?`<span class="tag" style="background:var(--ln)">${esc(p.type)}</span>`:''}${p.tag?`<span class="tag" style="background:var(--ln)">#${esc(p.tag)}</span>`:''}</div>`:''}
+${p.type||p.tag?`<div class="meta">${p.type?`<span class="tag" style="background:var(--ln)">${esc(p.type)}</span>`:''}${planTagsOf(p).map(g=>`<span class="tag" style="background:var(--ln)">#${esc(g)}</span>`).join('')}</div>`:''}
 ${p.people!=null?`<div class="meta">👥 ${p.people}</div>`:''}
 ${pr.ts.length?`<div class="pbar"><i style="width:${pr.pct}%"></i></div>`:''}</div></div>`};
-  // v41: no drawer nav on the plans page — a slim vertical tab rail on the
-  // left edge carries the very same planFlt filters (all/doing/over/done +
-  // one tab per plan type + the finance entry), labels written vertically,
-  // the active tab highlighted and nudged out. Header keeps the centred
-  // title with an empty left slot (the ☰ went away with the drawer).
-  const types=[...new Set(list0.map(p=>p.type).filter(Boolean))];
-  const cnt=f=>list0.filter(f).length;
-  const ptab=(v,nm,c)=>`<button class="ptab${planFlt===v?' on':''}" data-a="pflt" data-v="${v}"><span class="ptl">${nm}</span>${c!=null?`<span class="ptn">${c}</span>`:''}</button>`;
-  const rail=ptab('all',t('all'),list0.length)+ptab('doing',t('pDoing'),cnt(p=>stOf(p)==='doing'))+ptab('over',t('pOver'),cnt(p=>stOf(p)==='over'))+ptab('done',t('pDone'),cnt(p=>stOf(p)==='done'))+types.map(ty=>ptab('type:'+ty,esc(ty),cnt(p=>p.type===ty))).join('')+`<button class="ptab" data-a="tab" data-v="fin"><span class="ptl">${t('finance')}</span></button>`;
-  return `<div class="calhd habhd"><span></span><span class="habttl">${t('plans')}</span><span></span></div>`
-  +`<div class="planwrap"><nav class="prail" aria-label="${t('plans')}">${rail}</nav><div class="planmain">${list.length?`<div class="card">${list.map(row).join('')}</div>`:`<div class="card"><p class="meta">${t('planEmpty')}</p></div>`}</div></div>`
-  +`<button class="fab" data-a="nplan" aria-label="${t('planNew')}">＋</button>`;
+  return list.length?`<div class="card">${list.map(row).join('')}</div>`:`<div class="card"><p class="meta">${t('planEmpty')}</p></div>`;
+}
+// v42: create a new plan type from the rail's ＋ tab (same dialog pattern as
+// the other name prompts). The type is remembered in localStorage, becomes
+// a rail tab immediately and is offered by the plan editor's type dropdown.
+function openPlanType(){
+  const dlg=$('dlg');
+  dlg.innerHTML=`<label for="pt-n">${t('pType')}</label><input id="pt-n" type="text" maxlength="20"><div class="row"><button class="sec" id="pt-x">${t('cancel')}</button><button class="pri" id="pt-s">${t('save')}</button></div>`;
+  $('pt-x').onclick=()=>dlg.close();
+  $('pt-s').onclick=()=>{const n=$('pt-n').value.trim();if(!n)return;const arr=planTypeStore();if(!arr.includes(n)){arr.push(n);planTypeSave(arr)}planFlt='type:'+n;dlg.close();render()};
+  if(!dlg.open)dlg.showModal();
+  const inp=$('pt-n');inp.focus();
 }
 function planDetailHTML(p){
   const M=p.modules||{},pr=planProg(p),ts=tasks.filter(x=>x.plan_id===p.id&&!x.parent_id).sort(cmp);
   const fes=finOf(p.id),curs=[...new Set(fes.map(f=>f.currency||'JPY'))];
-  const info=[M.type&&p.type?`<div class="meta">${t('pType')}：${esc(p.type)}${p.tag?' · #'+esc(p.tag):''}</div>`:'',
+  const info=[M.type&&p.type?`<div class="meta">${t('pType')}：${esc(p.type)}${planTagsOf(p).length?' · '+planTagsOf(p).map(g=>'#'+esc(g)).join(' '):''}</div>`:'',
     M.time&&pPeriod(p)?`<div class="meta">🗓 ${pPeriod(p)}</div>`:'',
     M.loc&&p.location?`<div class="meta">📍 ${esc(p.location)}</div>`:'',
     M.people&&p.people!=null?`<div class="meta">👥 ${p.people}</div>`:''].join('');
@@ -1449,11 +1528,18 @@ function openPlan(id){
   let pTasks=id?tasks.filter(z=>z.plan_id===id).map(z=>({...z})):[];
   let pFin=id?finOf(id).map(f=>({...f})):[];
   const modDefs=[['type','pType'],['tasks','pTasks'],['loc','pLoc'],['time','pTime'],['people','pPeople'],['funds','pFunds']];
+  // v42: the first three fields carry labels saying what goes in them —
+  // 計劃名稱 (planName), 種類 as a dropdown (existing types + custom add),
+  // and # with a picker of already-used tags on the side.
+  const typeOpts=[...new Set([...plans.map(p=>p.type),...planTypeStore(),x&&x.type].filter(Boolean))];
+  const allTags=[...new Set(plans.flatMap(planTagsOf))];
   dlg.innerHTML=`<label>${t('pModules')}</label><div class="modsw">${modDefs.map(([k,lk])=>`<button type="button" class="pchip${M[k]?' on':''}" data-mod="${k}">${t(lk)}</button>`).join('')}</div>
-<textarea id="p-t" rows="1" maxlength="60" placeholder="${t('title')}" aria-label="${t('title')}">${esc(x?x.title:'')}</textarea>
-<div id="w-type"><div class="tbar"><input id="p-type" type="text" maxlength="20" placeholder="${t('pType')}" value="${esc(x&&x.type||'')}"><input id="p-tag" type="text" maxlength="20" placeholder="${t('pTag')}" value="${esc(x&&x.tag||'')}"></div></div>
+<label for="p-t">${t('planName')}</label><textarea id="p-t" rows="1" maxlength="60" placeholder="${t('title')}" aria-label="${t('planName')}">${esc(x?x.title:'')}</textarea>
+<div id="w-type"><div class="tbar" style="align-items:flex-start"><div style="flex:1;min-width:0"><label for="p-type">${t('pType')}</label><select id="p-type"><option value="">—</option>${typeOpts.map(ty=>`<option value="${esc(ty)}"${x&&x.type===ty?' selected':''}>${esc(ty)}</option>`).join('')}<option value="__new">${t('pNewType')}</option></select></div><div style="flex:1;min-width:0"><label for="p-tag">${t('pTag')}</label><input id="p-tag" type="text" maxlength="60" placeholder="#" value="${esc(x&&x.tag||'')}"></div></div>
+<div id="p-newtype" style="display:none"><div class="tbar"><input id="p-typenew" type="text" maxlength="20" placeholder="${t('pType')}"><button type="button" class="pri" id="p-typeadd">＋</button></div></div>
+${allTags.length?`<div class="dchips" id="p-tagpick" aria-label="${t('pPickTag')}">${allTags.map(g=>`<button type="button" class="pchip" data-ptag="${esc(g)}">#${esc(g)}</button>`).join('')}</div>`:''}</div>
 <div id="w-loc"><label>${t('pLoc')}</label><input id="p-loc" type="text" maxlength="120" value="${esc(x&&x.location||'')}"></div>
-<div id="w-time"><div class="frow"><span>${t('start')}</span><input type="datetime-local" id="p-s" style="width:auto;margin:0" value="${x&&x.start_at?toL(x.start_at):''}"></div><div class="frow"><span>${t('end')}</span><input type="datetime-local" id="p-e" style="width:auto;margin:0" value="${x&&x.end_at?toL(x.end_at):''}"></div></div>
+<div id="w-time"><div class="frow"><span>${t('start')}</span><span class="dtf"><input type="date" id="p-sd" value="${x&&x.start_at?toL(x.start_at).slice(0,10):''}" aria-label="${t('start')}"><input type="time" id="p-st" value="${x&&x.start_at?toL(x.start_at).slice(11,16):'00:00'}" aria-label="${t('start')}"></span></div><div class="frow"><span>${t('end')}</span><span class="dtf"><input type="date" id="p-ed" value="${x&&x.end_at?toL(x.end_at).slice(0,10):''}" aria-label="${t('end')}"><input type="time" id="p-et" value="${x&&x.end_at?toL(x.end_at).slice(11,16):'00:00'}" aria-label="${t('end')}"></span></div></div>
 <div id="w-people"><div class="frow"><span>${t('pPeople')}</span><input type="number" id="p-ppl" min="1" max="9999" style="width:90px;margin:0" value="${x&&x.people!=null?x.people:''}"></div></div>
 <div id="w-tasks"><label>${t('pTasks')}</label><div id="p-tasks"></div><div class="tbar"><input id="p-nt" type="text" maxlength="100" placeholder="${t('title')}"><input id="p-ntd" type="datetime-local"></div><div class="row"><button type="button" class="sec" id="p-at">＋ ${t('pAddTask')}</button></div></div>
 <div id="w-funds"><label>${t('pFunds')}</label><div id="p-fins"></div><div class="tbar"><select id="p-fk" style="flex:0 1 32%"><option value="out">${t('pOut')}</option><option value="in">${t('pIn')}</option></select><input id="p-fc" type="text" maxlength="40" placeholder="${t('pContent')}"><input id="p-fa" type="number" min="0" step="any" style="flex:0 1 30%" placeholder="${t('pAmt')}"></div><div class="tbar"><select id="p-fcur">${['JPY','CNY','HKD','USD','EUR','TWD','MOP'].map(c=>`<option${c==='JPY'?' selected':''}>${c}</option>`).join('')}</select><input id="p-fd" type="date" value="${ymd(new Date())}"></div><div class="row"><button type="button" class="sec" id="p-af">＋ ${t('pAddFin')}</button></div></div>
@@ -1473,14 +1559,24 @@ function openPlan(id){
     if(id){const{data,error}=await sb.from('plan_finance').insert({...f,plan_id:id}).select().single();if(error)return alert(error.message);pfin.push(data);pFin.push({...data})}
     else pFin.push({id:'tmp'+Date.now()+Math.random(),...f});
     $('p-fc').value='';$('p-fa').value='';paintFins()};
+  // v42: type dropdown — choosing "＋ 新增種類…" reveals an inline name row;
+  // confirming registers the type (localStorage set) and selects it.
+  const typeSel=$('p-type');
+  if(typeSel)typeSel.onchange=()=>{const r=$('p-newtype');if(!r)return;if(typeSel.value==='__new'){r.style.display='';const ni=$('p-typenew');if(ni)ni.focus()}else r.style.display='none'};
+  const typeAddBtn=$('p-typeadd');
+  if(typeAddBtn)typeAddBtn.onclick=()=>{const n=$('p-typenew').value.trim();if(!n)return;const arr=planTypeStore();if(!arr.includes(n)){arr.push(n);planTypeSave(arr)}const o=document.createElement('option');o.value=n;o.textContent=n;typeSel.insertBefore(o,typeSel.options[typeSel.options.length-1]);typeSel.value=n;$('p-newtype').style.display='none';$('p-typenew').value=''};
+  // v42: existing-tag picker chips append the tag to the # field (no dupes).
+  dlg.querySelectorAll('[data-ptag]').forEach(b=>b.onclick=()=>{const inp=$('p-tag');if(!inp)return;const cur=planTagsOf({tag:inp.value});if(!cur.includes(b.dataset.ptag))cur.push(b.dataset.ptag);inp.value=cur.join(',')});
   $('p-sv').onclick=async()=>{
     const title=$('p-t').value.trim();if(!title)return;
+    const typeVal=()=>{const sv=$('p-type').value;if(sv==='__new')return $('p-typenew').value.trim()||null;return sv||null};
+    const tagVal=()=>{const gs=planTagsOf({tag:$('p-tag').value});return gs.length?gs.join(','):null};
     const v={title,modules:M,
-      type:M.type?($('p-type').value.trim()||null):null,
-      tag:M.type?($('p-tag').value.trim()||null):null,
+      type:M.type?typeVal():null,
+      tag:M.type?tagVal():null,
       location:M.loc?($('p-loc').value.trim()||null):null,
-      start_at:M.time&&$('p-s').value?new Date($('p-s').value).toISOString():null,
-      end_at:M.time&&$('p-e').value?new Date($('p-e').value).toISOString():null,
+      start_at:M.time&&$('p-sd').value?new Date($('p-sd').value+'T'+($('p-st').value||'00:00')).toISOString():null,
+      end_at:M.time&&$('p-ed').value?new Date($('p-ed').value+'T'+($('p-et').value||'00:00')).toISOString():null,
       people:M.people&&$('p-ppl').value?Math.max(1,Math.floor(+$('p-ppl').value)):null};
     let pid=id;
     if(id){const{error}=await sb.from('plans').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
@@ -1524,8 +1620,13 @@ const dayItemsOf=dl=>dl?ditems.filter(i=>i.day_list_id===dl.id).sort((a,b)=>(a.s
 // tap opens the memo editor (the innermost [data-a] wins, so it never toggles
 // the item); the To Do reflection passes ro=1 and renders read-only text.
 // Hidden entirely until sql-v29.sql adds the note columns (noteV29 probe).
-const memoLine=(a,id,note,ro)=>{if(!noteV29)return '';if(ro)return note?`<div class="memo ro">${esc(note)}</div>`:'';
-  return `<div class="memo" data-a="${a}" data-id="${id}">${note?esc(note):`<span class="madd">＋ ${t('memo')}</span>`}</div>`};
+// v42: an item WITHOUT a memo renders NO memo line at all — the old faint
+// "＋ memo" placeholder is gone from both shopping columns. Adding a memo
+// now goes through the item edit dialog (master ✎ carries the memo field);
+// a memo that exists still renders as a tappable line that opens the editor.
+const memoLine=(a,id,note,ro)=>{if(!noteV29||!note)return '';
+  if(ro)return `<div class="memo ro">${esc(note)}</div>`;
+  return `<div class="memo" data-a="${a}" data-id="${id}">${esc(note)}</div>`};
 // v29: edit one item's memo. Master items write list_items, day copies write
 // day_list_items — the two sides never write through to each other, exactly
 // like titles. An emptied memo is stored as NULL.
@@ -1600,7 +1701,7 @@ function shopHTML(){
     +(slists.length?`<div class="selrow"><select data-shopsel="master" aria-label="${t('master')}">${slists.map(c=>`<option value="${c.id}"${c.id===shopList?' selected':''}>${esc(c.icon||'🛒')} ${esc(catName(c))}</option>`).join('')}</select></div>`
       :'')
     +(cur?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sledit" data-id="${cur.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="sldel" data-id="${cur.id}">${t('del')}</button></div>`
-      +(mIts.length?mIts.map(i=>swpWrap('litem',i.id,`<div class="task"><input type="checkbox" class="pc" style="--pc:#43A047" data-a="stog" data-id="${i.id}"${selIds.has(i.id)?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="stog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('smemo',i.id,i.note)}</div><button class="sec mini" data-a="siedit" data-id="${i.id}" aria-label="${t('edit')}">✎</button></div>`)).join(''):`<p class="meta">${t('liEmpty')}</p>`)
+      +(mIts.length?mIts.map(i=>swpWrap('litem',i.id,`<div class="task srow"><input type="checkbox" class="pc" style="--pc:#43A047" data-a="stog" data-id="${i.id}"${selIds.has(i.id)?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="stog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('smemo',i.id,i.note)}</div><button class="sec mini" data-a="siedit" data-id="${i.id}" aria-label="${t('edit')}">✎</button></div>`)).join(''):`<p class="meta">${t('liEmpty')}</p>`)
       +`<div class="tbar"><input id="si-n" type="text" maxlength="120" placeholder="${t('slPh')}"><button class="pri" data-a="siadd" data-id="${cur.id}" aria-label="${t('liAdd')}">＋</button></div>`
     :`<p class="meta">${t('slNone')}</p>`)
     +`</div>`;
@@ -1621,7 +1722,7 @@ function shopHTML(){
     +`<div class="dhd"><button class="sec ic" data-a="dday" data-v="-1" aria-label="‹">‹</button><b>${fmtDayNav(vd)}</b><button class="sec ic" data-a="dday" data-v="1" aria-label="›"${vd>=td?' disabled style="opacity:.3"':''}>›</button></div>`
     +(vd!==td?`<button class="lnk" data-a="dtoday">${t('backToday')}</button>`:'')
     +daySel
-    +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('dmemo',i.id,i.note)}</div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
+    +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task srow${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('dmemo',i.id,i.note)}</div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
     +`</div>`;
   // v41: header adopts the .calhd single row — drawer button left, centred
   // title, and (item 11, superseding item 10's empty slot) two compact icon
@@ -1638,9 +1739,10 @@ function shopHTML(){
 // v41: the To Do page's 今日購買清單 section is collapsible and starts
 // COLLAPSED — only the title row (plus each list's name · progress line) is
 // shown; tapping the title row expands the items (ticking/sync unchanged).
-// The open state persists in localStorage, following the app's other
-// localStorage UI flags (itAuto / mmpos).
-let shopSecOpen=false;try{shopSecOpen=localStorage.mdShopOpen==='1'}catch(_){}
+// v42: the open state NO LONGER persists — every entry into the To Do page
+// starts collapsed (the tab handler resets shopSecOpen; the old
+// localStorage.mdShopOpen flag is neither read nor written any more).
+let shopSecOpen=false;
 function todoShopHTML(){
   if(!shopV25)return '';
   const td=ymd(new Date()),gs=daysOf(td);
@@ -1756,7 +1858,7 @@ function appView(){
   // button left, centred i18n title, the 單版/雙版 switch in the right slot.
   // The old two-row header (big list-name title + .hd row) is gone; the
   // current list stays identifiable by the drawer's selected row.
-  else body=drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('todoTitle')}</span><span class="habbtns"><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1">${t('sv')}</button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2">${t('dv')}</button></span></span></div>`+listHTML()+todoShopHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`;
+  else body=drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('todoTitle')}</span><span class="habbtns"><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1" aria-label="${t('sv')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="2"/></svg></button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2" aria-label="${t('dv')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="2"/><rect x="13" y="4" width="8" height="16" rx="2"/></svg></button></span></span></div>`+listHTML()+todoShopHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`;
   const _pt=pageTitle();$('app').innerHTML=(_pt?`<div class="appt">${_pt}</div>`:'')+(OFFLINE?`<div class="offbar">${t('offMsg')}</div>`:'')+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
   if(session&&Date.now()-_cacheAt>1500){_cacheAt=Date.now();cacheData()}
   if(tab==='set')bind();
@@ -2208,12 +2310,15 @@ $('app').addEventListener('click',async e=>{
   if(a==='dr'){dr=!dr;render()}
   else if(a==='dredit'){drEdit=!drEdit;render()}
   else if(a==='pflt'){planFlt=b.dataset.v;planView=null;dr=false;render()}
+  else if(a==='ptabadd'){openPlanType()}
+  else if(a==='pfunnel'){pFOpen=!pFOpen;render()}
+  else if(a==='pfclear'){pFStatus='';pFType='';pFTag='';pQ='';render()}
   else if(a==='fplan'){finPlan=b.dataset.v;dr=false;render()}
   else if(a==='nav'){view=b.dataset.v;tab='todo';dr=false;render()}
   else if(a==='hnav'){hlistView=b.dataset.v;dr=false;render()}
   else if(a==='nlh'){dr=false;render();openList('habit')}
   else if(a==='set'){tab='set';dr=false;drEdit=false;render()}
-  else if(a==='tab'){tab=b.dataset.v;dr=false;drEdit=false;if(tab==='lists')shopDate=null;render()}
+  else if(a==='tab'){tab=b.dataset.v;dr=false;drEdit=false;if(tab==='lists')shopDate=null;if(tab==='todo')shopSecOpen=false;render()}
   else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);render()}
   else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
   else if(a==='ctd'){cm=new Date();cs=new Date();render()}
@@ -2296,7 +2401,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='edit')openSheet(id)
   else if(a==='nl'){dr=false;render();openList()}
   else if(a==='ovt'){ovOpen=!ovOpen;render()}
-  else if(a==='shopsec'){shopSecOpen=!shopSecOpen;try{localStorage.mdShopOpen=shopSecOpen?'1':''}catch(_){}render()}
+  else if(a==='shopsec'){shopSecOpen=!shopSecOpen;render()}
   else if(a==='pst')await postpone()
   else if(a==='chk')await setDone(id,b.checked)
   else if(a==='cdel'){if(confirm(t('confirmDel')))await delCategory(id)}
@@ -2349,7 +2454,10 @@ async function delCategory(id){
 }
 $('app').addEventListener('change',e=>{catFieldSave(e.target)});
 $('app').addEventListener('change',e=>{if(e.target.id==='bgf')upBg(e.target.files[0])});
-document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.shopsel){if(e.target.dataset.shopsel==='master')shopList=e.target.value||null;else shopDay=e.target.value||null;render();return}if(e.target.dataset&&e.target.dataset.dsel){if(e.target.dataset.dsel==='A')dA=e.target.value;else dB=e.target.value;render()}});
+document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.shopsel){if(e.target.dataset.shopsel==='master')shopList=e.target.value||null;else shopDay=e.target.value||null;render();return}if(e.target.dataset&&e.target.dataset.dsel){if(e.target.dataset.dsel==='A')dA=e.target.value;else dB=e.target.value;render()}if(e.target.dataset&&e.target.dataset.pf){if(e.target.dataset.pf==='status')pFStatus=e.target.value;else if(e.target.dataset.pf==='type')pFType=e.target.value;else if(e.target.dataset.pf==='tag')pFTag=e.target.value;render()}});
+// v42: plans keyword search filters as you type — only the list container
+// re-renders, so the input keeps focus and caret while typing.
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='pq'){pQ=e.target.value;const pl=document.getElementById('plist');if(pl)pl.innerHTML=planListHTML([...plans].sort((a,b)=>String(a.start_at||'9999').localeCompare(String(b.start_at||'9999'))||String(a.created_at).localeCompare(String(b.created_at))))}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(()=>{if(tab!=='set')render()})});
 async function loadSettings(){
   if(OFFLINE)return;
