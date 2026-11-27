@@ -224,7 +224,40 @@ select.mini{flex:0 1 auto!important;width:auto}
 .habhd{display:grid;grid-template-columns:1fr auto 1fr}
 .habhd>button{justify-self:start}
 .habttl{text-align:center;font-family:var(--fd);font-size:var(--fs1);letter-spacing:.06em;color:var(--ac)}
-.habhd .habcnt{justify-self:end;border:1px solid var(--ln);border-radius:10px;background:var(--card);min-width:52px;text-align:center;color:var(--mut)}
+/* v40: the right slot of the habit header now holds two symbol buttons
+   (stats panel + habit list page) instead of the done/total count box. */
+.habbtns{justify-self:end;display:flex;gap:8px}
+.habbtns .sec.ic{display:flex;align-items:center;justify-content:center;color:var(--ink)}
+dialog.full{height:93dvh;max-height:93dvh}
+.hsttop{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.hsttop .seg{margin:0 auto}
+.hstchk{border-radius:50%;width:44px;height:44px;min-width:44px;padding:0;font-size:19px;line-height:1}
+.hstnav{display:flex;align-items:center;justify-content:space-between;margin:2px 0 10px}
+.hstnav b{font-size:var(--fs2)}
+.hstw{display:grid;grid-template-columns:108px repeat(7,minmax(0,1fr));gap:4px;align-items:center;margin-bottom:7px}
+.hstw .hnm{display:flex;align-items:center;gap:6px;min-width:0;font-size:var(--fs4)}
+.hstw .hnm b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.hstw .whd{text-align:center;font-size:var(--fs5);color:var(--mut)}
+.hstw .whd.tdy{color:var(--ac);font-weight:700}
+.hstw .wc{aspect-ratio:1;border-radius:6px;background:#DFE7ED}
+.hstw .wc.off{background:repeating-linear-gradient(45deg,#EDF1F4 0 3px,#DCE3E9 3px 6px)}
+.hstw .wc.tdy{outline:2px solid var(--ac);outline-offset:-2px}
+.hstm{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.hstmc{border:1px solid var(--ln);border-radius:12px;padding:10px;background:var(--card);min-width:0}
+.hstmc .mh{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-size:var(--fs4);min-width:0}
+.hstmc .mh b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hstmc .mg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+.hstmc .mc{aspect-ratio:1;border-radius:3px;background:#DFE7ED}
+.hstmc .mc.off{background:repeating-linear-gradient(45deg,#EDF1F4 0 2px,#DCE3E9 2px 4px)}
+.hstmc .mc.blank{background:transparent}
+.hstrd{margin-bottom:12px}
+.hstrd .rd-h{font-weight:700;margin:0 2px 4px}
+.hstr{display:flex;align-items:center;gap:8px;padding:7px 0}
+.hstr .rn{flex:1;min-width:0}
+.hstr .rn b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.hstr .rbar{height:6px;border-radius:3px;background:#E4EBF0;overflow:hidden;margin-top:4px}
+.hstr .rbar i{display:block;height:100%;border-radius:3px}
+.hstr .rst{font-size:var(--fs5);color:var(--mut);white-space:nowrap;text-align:right}
 .calcard{padding:12px 10px 14px}
 .cm2{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:6px}
 .cmttl{font-size:var(--fs1)}
@@ -324,7 +357,7 @@ select.mini{flex:0 1 auto!important;width:auto}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v39)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v40)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -441,7 +474,10 @@ Object.assign(T.zh,{vwList:'清單',vwYear:'年',vwMonth:'月',vwWeek:'週',vwDa
 Object.assign(T.ja,{vwList:'リスト',vwYear:'年',vwMonth:'月',vwWeek:'週',vwDay:'日',views:'表示切替',more:'その他',mSelect:'選択',selDel:'選択した予定を削除',yrSel:'年を選択'});
 Object.assign(T.en,{vwList:'List',vwYear:'Year',vwMonth:'Month',vwWeek:'Week',vwDay:'Day',views:'View',more:'More',mSelect:'Select',selDel:'Delete selected',yrSel:'Choose year'});Object.assign(T.ja,{mapV:'マップ',listV:'リスト',mmChild:'子ノード追加',mmDel:'このノードと配下すべてを削除しますか？'});Object.assign(T.en,{mapV:'Map',listV:'List',mmChild:'Add sub-node',mmDel:'Delete this node and everything under it?'});
 Object.assign(T.zh,{gt_check:'完成就得',gt_amt:'達到數量',unit:'單位',td:'目標日數',tdF:'永遠',tdC:'自訂',pwater:'飲水',pex:'做運動',prd:'讀書',cup:'杯',presets:'預設',linkHint:'點 ↗ 會直接開啟手機上的 App。填 App 連結（如 drops://、spotify://）；沒有連結的 App，先在 iOS「捷徑」建一個開啟 App 的捷徑，再填 shortcuts://run-shortcut?name=捷徑名稱。'});Object.assign(T.ja,{gt_check:'完了すればOK',gt_amt:'量を達成',unit:'単位',td:'目標日数',tdF:'永遠',tdC:'カスタム',pwater:'水を飲む',pex:'運動する',prd:'読書',cup:'杯',presets:'プリセット',linkHint:'↗でスマホのアプリを直接開きます。アプリのリンク（例：drops://、spotify://）を入力。リンクがないアプリは、iOS「ショートカット」でアプリを開くショートカットを作り、shortcuts://run-shortcut?name=名前 を入力。'});Object.assign(T.en,{gt_check:'Just complete it',gt_amt:'Reach an amount',unit:'Unit',td:'Target days',tdF:'Forever',tdC:'Custom',pwater:'Drink water',pex:'Exercise',prd:'Reading',cup:'cups',presets:'Presets',linkHint:'Tap ↗ to open the app on your phone. Enter an app link (e.g. drops://, spotify://). For apps without one, make an iOS Shortcut that opens it, then use shortcuts://run-shortcut?name=ShortcutName.'});Object.assign(T.ja,{iconL:'アイコン',freq:'曜日',startd:'開始日',restToday:'今日はお休み / 未開始'});Object.assign(T.en,{iconL:'Icon',freq:'Days',startd:'Start date',restToday:'Resting today / not started'});
-Object.assign(T.zh,{slot:'時段',slot_any:'隨時',slot_am:'早上',slot_pm:'下午',slot_night:'晚上',streak:'目前連續',stats:'統計',st_m:'本月打卡',st_t:'累計打卡',st_r:'本月達成率',st_s:'目前連續',st_ma:'本月總量',st_ta:'累計總量',times:'次',days:'日',chart:'每日紀錄'});Object.assign(T.ja,{slot:'時間帯',slot_any:'いつでも',slot_am:'朝',slot_pm:'午後',slot_night:'夜',streak:'現在の連続',stats:'統計',st_m:'今月のチェックイン',st_t:'累計チェックイン',st_r:'今月の達成率',st_s:'現在の連続',st_ma:'今月の合計',st_ta:'総累計',times:'回',days:'日',chart:'毎日の記録'});Object.assign(T.en,{slot:'Time of day',slot_any:'Anytime',slot_am:'Morning',slot_pm:'Afternoon',slot_night:'Night',streak:'Current streak',stats:'Stats',st_m:'Check-ins this month',st_t:'Total check-ins',st_r:'Completion this month',st_s:'Current streak',st_ma:'This month total',st_ta:'All-time total',times:'times',days:'d',chart:'Daily record'});
+Object.assign(T.zh,{slot:'時段',slot_any:'隨時',slot_am:'早上',slot_pm:'下午',slot_night:'晚上',streak:'目前連續',stats:'統計',st_m:'本月打卡',st_t:'累計打卡',st_r:'本月達成率',st_s:'目前連續',st_ma:'本月總量',st_ta:'累計總量',times:'次',days:'日',chart:'每日紀錄'});Object.assign(T.ja,{slot:'時間帯',slot_any:'いつでも',slot_am:'朝',slot_pm:'午後',slot_night:'夜',streak:'現在の連続',stats:'統計',st_m:'今月のチェックイン',st_t:'累計チェックイン',st_r:'今月の達成率',st_s:'現在の連続',st_ma:'今月の合計',st_ta:'総累計',times:'回',days:'日',chart:'毎日の記録'});
+Object.assign(T.zh,{stTabW:'週',stTabM:'月',stTabR:'記錄',thisWeek:'本週',hActive:'進行中',hArchivedT:'已封存',hArchive:'封存',hUnarchive:'取消封存',hConfirmArc:'確定要封存這個習慣嗎？',hTotalDays:'合計日數',hChkd:'已打卡',hUnchkd:'未打卡',hListT:'清單',hArcEmpty:'沒有已封存的習慣'});
+Object.assign(T.ja,{stTabW:'Week',stTabM:'Month',stTabR:'Record',thisWeek:'今週',hActive:'進行中',hArchivedT:'アーカイブ済み',hArchive:'アーカイブ',hUnarchive:'アーカイブ解除',hConfirmArc:'この習慣をアーカイブしますか？',hTotalDays:'合計日数',hChkd:'チェック済み',hUnchkd:'未チェック',hListT:'リスト',hArcEmpty:'アーカイブ済みの習慣はありません'});
+Object.assign(T.en,{stTabW:'Week',stTabM:'Month',stTabR:'Record',thisWeek:'This Week',hActive:'Active',hArchivedT:'Archived',hArchive:'Archive',hUnarchive:'Unarchive',hConfirmArc:'Archive this habit?',hTotalDays:'Total days',hChkd:'Checked',hUnchkd:'Not checked',hListT:'List',hArcEmpty:'No archived habits'});Object.assign(T.en,{slot:'Time of day',slot_any:'Anytime',slot_am:'Morning',slot_pm:'Afternoon',slot_night:'Night',streak:'Current streak',stats:'Stats',st_m:'Check-ins this month',st_t:'Total check-ins',st_r:'Completion this month',st_s:'Current streak',st_ma:'This month total',st_ta:'All-time total',times:'times',days:'d',chart:'Daily record'});
 Object.assign(T.zh,{study:'語言學習',studySql:'語言學習的資料表還沒建立，請先在 Supabase 執行 sql-language-study.sql。',newLang:'新增語言',langName:'語言名稱',langLevel:'目標級別（如 B1，可留空）',studyEmpty:'還沒有學習中的語言，按下方按鈕新增第一個。',sToday:'今日學習',sWeek:'本週學習',sWords:'生詞總數',sDue:'今日待複習',logTime:'記錄',min:'分鐘',vHome:'概覽',vWords:'生詞本',vReview:'閃卡複習',word:'生詞／短句',meaning:'意思',example:'例句／備註',addWord:'新增生詞',flip:'翻卡睇答案',know:'識 ✓',dontKnow:'唔識 ✗',noDue:'今日冇到期嘅卡 🎉',reviewAll:'複習全部',reviewDue:'開始複習到期卡',revDone:'複習完成 ✓',nextRev:'下次複習',wordsEmpty:'生詞本還沒有生詞，按上方 ＋ 新增第一個。',notifT:'行程提醒通知',notifHint:'提醒時間到時會彈出通知，用返手機本身的預設通知聲；手機靜音或勿擾模式時，通知會跟住靜音。權限被拒時，App 內仍會顯示橫額提醒。',notifBtn:'允許通知',notifOk:'通知已允許 ✓',notifNo:'通知未開啟（被拒絕或此裝置不支援）。請到系統設定開啟，或把 App 加到主畫面後再試。'});
 Object.assign(T.ja,{study:'語学学習',studySql:'語学学習のテーブルが未作成です。先にSupabaseで sql-language-study.sql を実行してください。',newLang:'言語を追加',langName:'言語名',langLevel:'目標レベル（例：B1、任意）',studyEmpty:'学習中の言語がありません。下のボタンから追加してください。',sToday:'今日の学習',sWeek:'今週の学習',sWords:'単語の総数',sDue:'今日の復習',logTime:'記録',min:'分',vHome:'概要',vWords:'単語帳',vReview:'フラッシュカード',word:'単語／フレーズ',meaning:'意味',example:'例文／メモ',addWord:'単語を追加',flip:'カードをめくる',know:'分かる ✓',dontKnow:'分からない ✗',noDue:'今日の復習カードはありません 🎉',reviewAll:'すべて復習',reviewDue:'期限のカードを復習',revDone:'復習完了 ✓',nextRev:'次回',wordsEmpty:'単語帳はまだ空です。上の＋で最初の単語を追加。',notifT:'予定のリマインダー通知',notifHint:'リマインダー時刻に通知が届きます。音はスマホ標準の通知音で、サイレント時は通知も無音になります。拒否された場合はアプリ内バナーでお知らせします。',notifBtn:'通知を許可',notifOk:'通知は許可済み ✓',notifNo:'通知がオフです（拒否／未対応）。システム設定でオンにするか、ホーム画面に追加してからお試しください。'});
 Object.assign(T.en,{study:'Language Study',studySql:'The Language Study tables are missing. Run sql-language-study.sql in Supabase first.',newLang:'Add language',langName:'Language name',langLevel:'Target level (e.g. B1, optional)',studyEmpty:'No languages yet. Add your first one below.',sToday:'Studied today',sWeek:'This week',sWords:'Total words',sDue:'Due today',logTime:'Log',min:'min',vHome:'Overview',vWords:'Word book',vReview:'Flashcards',word:'Word / phrase',meaning:'Meaning',example:'Example / note',addWord:'Add word',flip:'Flip card',know:'Know ✓',dontKnow:"Don't know ✗",noDue:'No cards due today 🎉',reviewAll:'Review all',reviewDue:'Review due cards',revDone:'Review done ✓',nextRev:'Next',wordsEmpty:'No words yet. Tap ＋ above to add the first one.',notifT:'Event reminder notifications',notifHint:"When a reminder is due you get a notification with your phone's own default sound; if the phone is muted or in Do Not Disturb, the notification stays silent too. If permission is denied, an in-app banner still appears.",notifBtn:'Allow notifications',notifOk:'Notifications allowed ✓',notifNo:'Notifications are off (denied or unsupported). Enable them in system settings, or add the app to your Home Screen and try again.'});
@@ -1668,7 +1704,7 @@ function habitHTML(){
   const amt=(h,d)=>hAmtOf(h,d),done=h=>amt(h,today)>=(h.goal||1);
   const streak=h=>{let n=0,d=new Date(),g=0;const ok=dt=>amt(h,ymd(dt))>=(h.goal||1);if(hSched(h,d)&&!ok(d))d.setDate(d.getDate()-1);while(g++<370){if(hSched(h,d)){if(ok(d))n++;else break}d.setDate(d.getDate()-1)}return n};
   const rowH=h=>{const a=amt(h,today);
-    return hswpWrap(h.id,`<div class="task" style="--hc:${esc(h.color||'#1E88E5')}"><input type="checkbox" class="pc" style="--pc:${esc(h.color||'#1E88E5')}" data-a="hchk" data-id="${h.id}"${done(h)?' checked':''} aria-label="${t('chk')}">
+    return hswpWrap(h.id,`<div class="task" style="--hc:${esc(h.color||'#1E88E5')}">
 <div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b><div class="meta rw">${h.goal?`<span>${a}/${h.goal}${h.unit?' '+esc(h.unit):''}</span>`:''}${h.target_days?`<span>🎯 ${new Set(hlogs.filter(l=>l.habit_id===h.id).map(l=>l.log_date)).size}/${h.target_days}</span>`:''}</div></div>
 ${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" aria-label="⏱">▶</button>`:''}<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`)};
   const wdays=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d});
@@ -1677,12 +1713,13 @@ ${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" 
   const actF=hlistView==='all'?act:act.filter(h=>h.list_id===hlistView);
   const actT=actF.filter(h=>hSched(h,new Date())),rest=actF.filter(h=>!hSched(h,new Date()));
   const groups=['am','pm','night','any'].map(k=>{const gs=actT.filter(h=>(h.slot||'any')===k);return gs.length?`<div class="ghd"><b>${t('slot_'+k)}</b><span class="meta">${gs.length}</span></div><div class="card">${gs.map(rowH).join('')}</div>`:''}).join('')+(rest.length?`<div class="ghd"><b>${t('restToday')}</b><span class="meta">${rest.length}</span></div><div class="card">${rest.map(h=>`<div class="task" style="--hc:${esc(h.color||'#1E88E5')};opacity:.55"><div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b></div>${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" aria-label="⏱">▶</button>`:''}<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`).join('')}</div>`:'');
-  const n=actT.filter(done).length;
   // v39: header mirrors the calendar top row (.calhd): square drawer button
-  // left, page title centred, the done/total count in the right square slot.
-  // v39: the archive feature is gone — no archived section here any more
-  // (archived rows stay in the database, simply unreachable from the UI).
-  return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('habits')}</span><span class="sec ic habcnt">${n}/${actT.length}</span></div>`+(habitErr?`<div class="card"><p class="meta">${t('habitSql')}</p></div>`:act.length?strip+groups:`<div class="card"><p class="meta">${t('habitEmpty')}</p><b>${t('presets')}</b><div class="pchips">${PRESETS().map((p,i)=>`<button class="pchip" data-a="hpreset" data-v="${i}">${p.icon} ${esc(p.name)}${p.goal?' · '+p.goal+p.unit:''}</button>`).join('')}</div></div>`)+(habitErr?'':`<button class="fab" data-a="nhabit" aria-label="${t('newHabit')}">＋</button><button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`);
+  // left, page title centred, square slot on the right.
+  // v40: the right slot holds two symbol buttons (stats panel / list page)
+  // instead of the done/total count; rows no longer carry a check box —
+  // check-in lives on the swipe gestures (right = complete, left = undo).
+  // Archived habits surface only in the list page's archived tab.
+  return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('habits')}</span><span class="habbtns"><button class="sec ic" data-a="hstats" aria-label="${t('stats')}"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9h-9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15.2 2.7A9 9 0 0 1 21.3 8.8h-6.1z" fill="currentColor"/></svg></button><button class="sec ic" data-a="hlistp" aria-label="${t('hListT')}"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><line x1="9.5" y1="4.5" x2="9.5" y2="19.5" stroke="currentColor" stroke-width="2"/></svg></button></span></div>`+(habitErr?`<div class="card"><p class="meta">${t('habitSql')}</p></div>`:act.length?strip+groups:`<div class="card"><p class="meta">${t('habitEmpty')}</p><b>${t('presets')}</b><div class="pchips">${PRESETS().map((p,i)=>`<button class="pchip" data-a="hpreset" data-v="${i}">${p.icon} ${esc(p.name)}${p.goal?' · '+p.goal+p.unit:''}</button>`).join('')}</div></div>`)+(habitErr?'':`<button class="fab" data-a="nhabit" aria-label="${t('newHabit')}">＋</button><button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`);
 }
 function habitDetail(hid){
   const h=habits.find(x=>x.id===hid);if(!h){hview=null;return habitHTML()}
@@ -1735,6 +1772,7 @@ async function hUncomplete(id){
 }
 function openHabit(id){
   const dlg=$('dlg'),x=id?habits.find(h=>h.id===id):{color:'#1E88E5',metric:'none'};
+  dlg.classList.remove('full');
   dlg.innerHTML=`<textarea id="h-n" rows="1" maxlength="40" placeholder="${t('habitName')}" aria-label="${t('habitName')}">${esc(x.name||'')}</textarea>
 <label>${t('iconL')}</label><div class="igrid">${HICONS.map(e=>`<button type="button" class="icob${(x.icon||'')===e?' on':''}" data-ic="${e}">${e}</button>`).join('')}</div>
 <div class="tbar"><input id="h-i" type="text" maxlength="8" placeholder="😀" value="${esc(x.icon||'')}" aria-label="${t('emoji')}"><input id="h-c" type="color" value="${esc(x.color||'#1E88E5')}" aria-label="${t('color')}"></div>
@@ -1749,7 +1787,7 @@ ${habList?`<div class="frow"><span>🗂 ${t('hList')}</span><select id="h-li"><o
 <div class="frow"><span>⏱ ${t('hTimer')}</span><input type="checkbox" id="h-tm" class="sw"${x.timer_min?' checked':''} aria-label="${t('hTimer')}"></div>
 <div class="frow" id="h-tmrow"><span>${t('hTimerMin')}</span><input id="h-tmv" type="number" min="1" max="999" style="width:90px;margin:0" value="${x.timer_min||25}" aria-label="${t('hTimerMin')}"></div>
 ${habV21?'':`<p class="meta">${t('hTimerSql')}</p>`}
-<div class="tbar">${id?`<button class="sec" id="h-d">${t('del')}</button>`:''}<button class="pri snd" id="h-s" aria-label="${t('save')}">↑</button></div>`;
+<div class="tbar">${id?`<button class="sec" id="h-d">${t('del')}</button><button class="sec" id="h-arc">${x.archived?t('hUnarchive'):t('hArchive')}</button>`:''}<button class="pri snd" id="h-s" aria-label="${t('save')}">↑</button></div>`;
   let gAmt=x.goal!=null;
   const paintG=()=>{$('g-chk').classList.toggle('on',!gAmt);$('g-amt').classList.toggle('on',gAmt);$('g-row').style.display=gAmt?'':'none'};
   $('g-chk').onclick=()=>{gAmt=false;paintG()};$('g-amt').onclick=()=>{gAmt=true;paintG()};paintG();
@@ -1773,6 +1811,7 @@ ${habV21?'':`<p class="meta">${t('hTimerSql')}</p>`}
     dlg.close();render();
   };
   if($('h-d'))$('h-d').onclick=async()=>{if(!confirm(t('confirmDel')))return;const{error}=await sb.from('habits').delete().eq('id',id);if(error)return alert(error.message);habits=habits.filter(h=>h.id!==id);hlogs=hlogs.filter(l=>l.habit_id!==id);dlg.close();render()};
+  if($('h-arc'))$('h-arc').onclick=async()=>{const toArc=!x.archived;if(toArc&&!confirm(t('hConfirmArc')))return;const{error}=await sb.from('habits').update({archived:toArc}).eq('id',id);if(error)return alert(error.message);x.archived=toArc;if(toArc&&hview===id)hview=null;dlg.close();render()};
   dlg.showModal();$('h-n').focus();
 }
 async function hToggle(id,on){
@@ -1780,6 +1819,67 @@ async function hToggle(id,on){
   if(on){const{data,error}=await sb.from('habit_logs').insert({habit_id:id,log_date:today}).select().single();if(error){alert(error.message);return render()}hlogs.push(data)}
   else{const{error}=await sb.from('habit_logs').delete().eq('habit_id',id).eq('log_date',today);if(error){alert(error.message);return render()}hlogs=hlogs.filter(l=>!(l.habit_id===id&&l.log_date===today))}
   render();
+}
+/* ===== v40: habit stats panel (Week / Month / Record) + habit list page =====
+   Both are full-height sheets on the shared dialog; the 'full' class is
+   stripped again whenever the dialog closes, so other sheets keep the
+   standard bottom-sheet height. All data comes from habits / habit_logs. */
+const hDoneOn=(h,ds)=>hAmtOf(h,ds)>=(h.goal||1);
+const hTotDays=h=>new Set(hlogs.filter(l=>l.habit_id===h.id).map(l=>l.log_date)).size;
+let hstTab='week',hstWk=new Date(),hstMo=new Date(),hlpTab='act';
+$('dlg').addEventListener('close',()=>$('dlg').classList.remove('full'));
+function openHStats(tab){if(tab)hstTab=tab;const dlg=$('dlg');dlg.classList.add('full');paintHStats();if(!dlg.open)dlg.showModal()}
+function paintHStats(){
+  const dlg=$('dlg'),act=habits.filter(h=>!h.archived),today=ymd(new Date());
+  const seg=`<span class="seg">${[['week','stTabW'],['month','stTabM'],['record','stTabR']].map(([k,lk])=>`<button type="button" class="segbtn${hstTab===k?' on':''}" data-hst="${k}">${t(lk)}</button>`).join('')}</span>`;
+  let body='';
+  if(hstTab==='week'){
+    const mon=sod(hstWk);mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+    const days=[...Array(7)].map((_,i)=>{const d=new Date(mon);d.setDate(d.getDate()+i);return d});
+    const tMon=sod(new Date());tMon.setDate(tMon.getDate()-((tMon.getDay()+6)%7));
+    const title=ymd(mon)===ymd(tMon)?t('thisWeek'):(mon.getMonth()+1)+'/'+mon.getDate()+' – '+(days[6].getMonth()+1)+'/'+days[6].getDate();
+    const head=`<div class="hstw"><span></span>${days.map(d=>`<span class="whd${ymd(d)===today?' tdy':''}">${WK[lang][(d.getDay()+6)%7]}</span>`).join('')}</div>`;
+    const rows=act.map(h=>{const col=esc(h.color||'#1E88E5');return `<div class="hstw"><span class="hnm"><span>${esc(h.icon||'')}</span><b>${esc(h.name)}</b></span>${days.map(d=>{const ds=ymd(d);if(!hSched(h,d))return `<span class="wc off"></span>`;const dn=hDoneOn(h,ds);return `<span class="wc${dn?' done':''}${ds===today?' tdy':''}"${dn?` style="background:${col}"`:''}></span>`}).join('')}</div>`}).join('');
+    body=`<div class="hstnav"><button class="sec ic" id="hs-p" aria-label="‹">‹</button><b>${title}</b><button class="sec ic" id="hs-n" aria-label="›">›</button></div>`+(act.length?head+rows:`<div class="card"><p class="meta">${t('habitEmpty')}</p></div>`);
+  }else if(hstTab==='month'){
+    const y=hstMo.getFullYear(),mo=hstMo.getMonth(),first=(new Date(y,mo,1).getDay()+6)%7,nd=new Date(y,mo+1,0).getDate();
+    const title=(y===new Date().getFullYear()?'':y+' / ')+(lang==='en'?new Date(y,mo,1).toLocaleDateString('en-US',{month:'long'}):(mo+1)+'月');
+    const cards=act.map(h=>{const col=esc(h.color||'#1E88E5');let cells='';
+      for(let i=0;i<first;i++)cells+=`<span class="mc blank"></span>`;
+      for(let d=1;d<=nd;d++){const dt=new Date(y,mo,d),ds=ymd(dt);
+        if(!hSched(h,dt))cells+=`<span class="mc off"></span>`;
+        else{const a=hAmtOf(h,ds),g=h.goal||1;
+          if(a>=g)cells+=`<span class="mc done" style="background:${col}"></span>`;
+          else if(a>0&&h.goal)cells+=`<span class="mc part" style="background:${col};opacity:.45"></span>`;
+          else cells+=`<span class="mc"></span>`}}
+      return `<div class="hstmc"><div class="mh"><span>${esc(h.icon||'')}</span><b>${esc(h.name)}</b></div><div class="mg">${cells}</div></div>`}).join('');
+    body=`<div class="hstnav"><button class="sec ic" id="hs-p" aria-label="‹">‹</button><b>${title}</b><button class="sec ic" id="hs-n" aria-label="›">›</button></div>`+(act.length?`<div class="hstm">${cards}</div>`:`<div class="card"><p class="meta">${t('habitEmpty')}</p></div>`);
+  }else{
+    const dates=new Set(hlogs.filter(l=>act.some(h=>h.id===l.habit_id)).map(l=>l.log_date));
+    for(let i=0;i<60;i++){const d=new Date();d.setDate(d.getDate()-i);if(act.some(h=>hSched(h,d)))dates.add(ymd(d))}
+    const sorted=[...dates].sort().reverse().slice(0,30);
+    body=sorted.map(ds=>{const dt=new Date(ds+'T12:00:00');
+      const rows=act.filter(h=>hSched(h,dt)||hAmtOf(h,ds)>0).map(h=>{const a=hAmtOf(h,ds),g=h.goal||1,dn=hDoneOn(h,ds),frac=h.goal?Math.min(1,a/h.goal):(a>0?1:0),col=esc(h.color||'#1E88E5');
+        return `<div class="hstr"><span>${esc(h.icon||'')}</span><div class="rn"><b>${esc(h.name)}</b><div class="rbar"><i style="width:${Math.round(frac*100)}%;background:${col}"></i></div></div><span class="rst">${dn?t('hChkd'):t('hUnchkd')}${h.goal?`<br>${a} / ${h.goal}${h.unit?' '+esc(h.unit):''}`:''}</span></div>`}).join('');
+      return rows?`<div class="card hstrd"><div class="rd-h">${dt.toLocaleDateString(LOC[lang],{month:'long',day:'numeric'})}（${WK[lang][(dt.getDay()+6)%7]}）</div>${rows}</div>`:''}).join('')||`<div class="card"><p class="meta">${t('habitEmpty')}</p></div>`;
+  }
+  dlg.innerHTML=`<div class="hsttop"><button class="sec ic" id="hs-x" aria-label="✕">✕</button>${seg}<span style="width:40px;flex:none"></span></div>`+body;
+  $('hs-x').onclick=()=>dlg.close();
+  dlg.querySelectorAll('[data-hst]').forEach(b=>b.onclick=()=>{hstTab=b.dataset.hst;paintHStats()});
+  const pv=$('hs-p'),nx=$('hs-n');
+  if(pv&&hstTab==='week'){pv.onclick=()=>{const d=new Date(hstWk);d.setDate(d.getDate()-7);hstWk=d;paintHStats()};nx.onclick=()=>{const d=new Date(hstWk);d.setDate(d.getDate()+7);hstWk=d;paintHStats()}}
+  if(pv&&hstTab==='month'){pv.onclick=()=>{hstMo=new Date(hstMo.getFullYear(),hstMo.getMonth()-1,1);paintHStats()};nx.onclick=()=>{hstMo=new Date(hstMo.getFullYear(),hstMo.getMonth()+1,1);paintHStats()}}
+}
+function openHList(){const dlg=$('dlg');dlg.classList.add('full');paintHList();if(!dlg.open)dlg.showModal()}
+function paintHList(){
+  const dlg=$('dlg'),arc=hlpTab==='arc',set=habits.filter(h=>arc?h.archived:!h.archived);
+  const rowH=h=>`<div class="task" style="--hc:${esc(h.color||'#1E88E5')}"><div class="tt" data-hlopen="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b></div>${arc?`<button class="sec" data-hlun="${h.id}">${t('hUnarchive')}</button>`:''}<div class="stk"><b>${hTotDays(h)}${t('days')}</b><span>${t('hTotalDays')}</span></div></div>`;
+  const groups=['am','pm','night','any'].map(k=>{const gs=set.filter(h=>(h.slot||'any')===k);return gs.length?`<div class="ghd"><b>${t('slot_'+k)}</b><span class="meta">${gs.length}</span></div><div class="card">${gs.map(rowH).join('')}</div>`:''}).join('');
+  dlg.innerHTML=`<div class="hsttop"><span class="seg"><button type="button" class="segbtn${!arc?' on':''}" data-hlp="act">${t('hActive')}</button><button type="button" class="segbtn${arc?' on':''}" data-hlp="arc">${t('hArchivedT')}</button></span><button class="pri hstchk" id="hl-x" aria-label="✓">✓</button></div>`+(groups||`<div class="card"><p class="meta">${arc?t('hArcEmpty'):t('habitEmpty')}</p></div>`);
+  $('hl-x').onclick=()=>dlg.close();
+  dlg.querySelectorAll('[data-hlp]').forEach(b=>b.onclick=()=>{hlpTab=b.dataset.hlp;paintHList()});
+  dlg.querySelectorAll('[data-hlopen]').forEach(el=>el.onclick=()=>openHabit(el.dataset.hlopen));
+  dlg.querySelectorAll('[data-hlun]').forEach(b=>b.onclick=async e=>{e.stopPropagation();const h=habits.find(x=>x.id===b.dataset.hlun);if(!h)return;const{error}=await sb.from('habits').update({archived:false}).eq('id',h.id);if(error)return alert(error.message);h.archived=false;paintHList();render()});
 }
 function openIdea(id,parentId){
   const dlg=$('dlg'),x=id?ideas.find(i=>i.id===id):{color:'#D9A441'};
@@ -2039,7 +2139,6 @@ $('app').addEventListener('click',async e=>{
   else if(a==='bgdel'){if(bgPath)sb.storage.from('illustrations').remove([bgPath]);await setBgPath('')}
   else if(a==='shr')exportImg(b.dataset.v);
   else if(a==='dmode'){dual=b.dataset.v==='2';render()}
-  else if(a==='hchk')await hToggle(id,b.checked)
   else if(a==='hview'){hview=id;hmon=new Date();render()}
   else if(a==='hpreset'){const p=PRESETS()[+b.dataset.v];const{data,error}=await sb.from('habits').insert({name:p.name,icon:p.icon,color:p.color,goal:p.goal,unit:p.unit,slot:p.slot}).select().single();if(error)alert(error.message);else{habits.push(data);render()}}
   else if(a==='hback'){hview=null;render()}
@@ -2049,6 +2148,8 @@ $('app').addEventListener('click',async e=>{
   else if(a==='hdel'){if(confirm(t('confirmDel'))){const{error}=await sb.from('habits').delete().eq('id',id);if(error)alert(error.message);else{habits=habits.filter(h=>h.id!==id);hlogs=hlogs.filter(l=>l.habit_id!==id);hview=null;render()}}}
   else if(a==='hedit')openHabit(id)
   else if(a==='nhabit')openHabit()
+  else if(a==='hstats')openHStats()
+  else if(a==='hlistp')openHList()
   else if(a==='swdel')await swDelete(b.dataset.kind,id)
   else if(a==='calvis'){const v=b.dataset.v;const ons=()=>(visPriv?1:0)+(visShared?1:0)+(evV24&&visComp?1:0);
     if(v==='priv'){if(visPriv&&ons()<=1){render();return}visPriv=!visPriv}
