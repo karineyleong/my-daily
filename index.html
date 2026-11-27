@@ -176,7 +176,10 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 /* ===== v25: shopping page (two columns, left slightly wider) ===== */
 /* v26: minmax(0,...) tracks + min-width:0 items — nowrap chip rows inside a column
    must never inflate the track minimum and push the other column off-screen. */
-.shop{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:start}
+.shop{display:block}
+.shopseg{display:flex;gap:6px;margin:0 0 10px}
+.shopsegbtn{flex:1;padding:9px 10px;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:14px}
+.shopsegbtn.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 /* v42: shopping item rows go compact (timeline-style list): checkbox left,
    title, memo as a small grey sub-line, hairline dividers, tight rhythm —
    and the item text drops one size step in both columns. */
@@ -186,7 +189,6 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .shop .srow .pc{width:20px;height:20px;margin-top:1px}
 .shop .srow .sec.mini{padding:5px 9px}
 .shop>*{min-width:0}
-.shop .card{padding:10px;margin-bottom:0;min-width:0}
 .shop .chips{min-width:0}
 .shop .task{padding:9px 0;gap:6px;min-width:0}
 .shop .tbar input{padding:9px;font-size:14px}
@@ -538,9 +540,9 @@ Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_f
 Object.assign(T.zh,{compCal:'公司',listsPage:'購買清單',liAdd:'新增項目',liEmpty:'還沒有項目，在下方新增第一個。',evScope:'類別'});
 Object.assign(T.ja,{compCal:'会社',listsPage:'買い物リスト',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',evScope:'区分'});
 Object.assign(T.en,{compCal:'Company',listsPage:'Shopping list',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',evScope:'Scope'});
-Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，點左邊待買清單的項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v29.sql。',history:'購買記錄',histNone:'還沒有購買記錄。',nameReq:'名稱不可空白',memo:'備註',memoPh:'寫低備註（例如：2 包、特價先買）…'});
-Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。左のリストから項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v29.sql を実行してください。',history:'購入記録',histNone:'購入記録はまだありません。',nameReq:'名前を入力してください',memo:'メモ',memoPh:'メモを書く（例：2パック、特売なら買う）…'});
-Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the left list to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v29.sql in Supabase first.',history:'Purchase records',histNone:'No purchase records yet.',nameReq:'Name cannot be empty',memo:'Memo',memoPh:'Add a memo (e.g. 2 packs, buy if on sale)…'});
+Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，去「待買清單」頁籤點選項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v29.sql。',history:'購買記錄',histNone:'還沒有購買記錄。',nameReq:'名稱不可空白',memo:'備註',memoPh:'寫低備註（例如：2 包、特價先買）…'});
+Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。「買うものリスト」タブで項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v29.sql を実行してください。',history:'購入記録',histNone:'購入記録はまだありません。',nameReq:'名前を入力してください',memo:'メモ',memoPh:'メモを書く（例：2パック、特売なら買う）…'});
+Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the To-buy tab to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v29.sql in Supabase first.',history:'Purchase records',histNone:'No purchase records yet.',nameReq:'Name cannot be empty',memo:'Memo',memoPh:'Add a memo (e.g. 2 packs, buy if on sale)…'});
 Object.assign(T.zh,{pSearchPh:'搜尋計劃…',pFilter:'篩選',pClearF:'清除篩選',pStatus:'狀態',pNewType:'＋ 新增種類…',pPickTag:'已有的 #'});
 Object.assign(T.ja,{pSearchPh:'プランを検索…',pFilter:'絞り込み',pClearF:'絞り込みをクリア',pStatus:'状態',pNewType:'＋ 新しいタイプ…',pPickTag:'既存の #'});
 Object.assign(T.en,{pSearchPh:'Search plans…',pFilter:'Filter',pClearF:'Clear filters',pStatus:'Status',pNewType:'＋ New type…',pPickTag:'Existing #'});
@@ -585,7 +587,7 @@ let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
 let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false,evV24=false,evV33=false;
 let hlists=[],plans=[],pfin=[],planErr=false,planV23=false,habList=false,hlistView='all',planView=null,finCur=null;
-let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null,shopDay=null,dayNameV27=false,dayPinV28=false,noteV29=false;
+let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null,shopDay=null,dayNameV27=false,dayPinV28=false,noteV29=false,shopTab='master';
 let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
 // v42: plans page keyword search + funnel filter state (ANDed with the rail)
 let pQ='',pFStatus='',pFType='',pFTag='',pFOpen=false;
@@ -825,7 +827,7 @@ function drawer(){
       +it('pflt','over',lic('alert'),t('pOver'),cnt(p=>stOf(p)==='over'),planFlt==='over')
       +it('pflt','done',lic('checkc'),t('pDone'),cnt(p=>stOf(p)==='done'),planFlt==='done')
       +types.map(ty=>it('pflt','type:'+ty,lic('tag'),esc(ty),cnt(p=>p.type===ty),planFlt==='type:'+ty)).join('')
-      +`<button class="di" data-a="tab" data-v="fin"><span class="ic2">${lic('chart')}</span><span class="nm">${t('finance')}</span></button></aside>`;
+      +'</aside>';
   }
   if(tab==='fin'){
     const curs=[...new Set(pfin.map(f=>f.currency||'JPY'))];
@@ -875,7 +877,13 @@ const LOC={zh:'zh-TW',ja:'ja-JP',en:'en-US'},WK={zh:'一二三四五六日',ja:'
 const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/>',todo:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l3 3 5-6"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',idea:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',study:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>',plan:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9.5 4a2.5 2.5 0 0 1 5 0M9 11h6M9 15h4"/>',lists:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/>',fin:'<path d="M12 3v9h9"/><path d="M20.5 15.5A9 9 0 1 1 12 3a9 9 0 0 1 8.5 12.5z"/><path d="M15.5 3.6A8 8 0 0 1 20.4 9H15.5z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'};
 const LIC={eye:'<path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',share:'<path d="M12 15V3.5"/><path d="M7 7.3L12 2.6l5 4.7"/><path d="M5 12.5V20a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 20v-7.5"/>',lock:'<rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/>',users:'<circle cx="9" cy="8" r="3.4"/><path d="M3.6 19.6c.6-3 2.7-4.7 5.4-4.7s4.8 1.7 5.4 4.7"/><path d="M15.6 5.1a3.4 3.4 0 0 1 0 5.8M17.9 15.3c1.5.8 2.4 2.2 2.7 4.3"/>',brief:'<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V6.5A2.5 2.5 0 0 1 11.5 4h1A2.5 2.5 0 0 1 15 6.5V8"/><path d="M3 13h18"/>',cart:'<circle cx="9.5" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 3.5h2.2l2.2 11a1.6 1.6 0 0 0 1.6 1.3h7.7a1.6 1.6 0 0 0 1.6-1.3L20 7.5H6"/>',stopw:'<path d="M9.5 2.8h5"/><path d="M12 2.8V6"/><circle cx="12" cy="13.2" r="7.3"/><path d="M12 9.9v3.3l2.5 1.7"/>',pin:'<path d="M12 21.2S5.8 15.6 5.8 10.6a6.2 6.2 0 0 1 12.4 0c0 5-6.2 10.6-6.2 10.6z"/><circle cx="12" cy="10.6" r="2.3"/>',sliders:'<path d="M4 8.5h9M17.5 8.5H20M4 15.5h3M11.5 15.5H20"/><circle cx="15" cy="8.5" r="2.3"/><circle cx="9" cy="15.5" r="2.3"/>',inbox:'<path d="M3.5 13.5L5.8 5A1.5 1.5 0 0 1 7.3 4h9.4a1.5 1.5 0 0 1 1.5 1l2.3 8.5V19a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19z"/><path d="M3.5 13.5H9l1.3 2h3.4l1.3-2h5.5"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',calplus:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M12 13.2v5M9.5 15.7h5"/>',sunrise:'<path d="M12 8.5V3"/><path d="M9.2 5.8L12 3l2.8 2.8"/><path d="M5.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M2.5 20h19"/><path d="M5 16.5H3M21 16.5h-2"/>',checkc:'<circle cx="12" cy="12" r="8.6"/><path d="M8.4 12.4l2.5 2.5 4.8-5.4"/>',alert:'<path d="M12 4.2L2.9 19.5h18.2z"/><path d="M12 10v4.2"/><path d="M12 17.3h.01"/>',tag:'<path d="M3.8 3.8h7L20.3 13.3a1.9 1.9 0 0 1 0 2.7l-4.3 4.3a1.9 1.9 0 0 1-2.7 0L3.8 10.8z"/><circle cx="8.2" cy="8.2" r="1.5"/>',chart:'<path d="M12 3v9h9"/><path d="M20.5 15.5A9 9 0 1 1 12 3a9 9 0 0 1 8.5 12.5z"/><path d="M15.5 3.6A8 8 0 0 1 20.4 9H15.5z"/>',coin:'<circle cx="12" cy="12" r="8.6"/><path d="M15.3 9.3c-.6-1-1.8-1.6-3.3-1.6-1.9 0-3.4 1.1-3.4 2.6 0 3.5 6.8 1.9 6.8 4.5 0 1.5-1.5 2.5-3.4 2.5-1.5 0-2.8-.6-3.5-1.7M12 5.2v13.6"/>',globe:'<circle cx="12" cy="12" r="8.8"/><path d="M3.2 12h17.6"/><path d="M12 3.2c2.6 2.5 3.9 5.4 3.9 8.8s-1.3 6.3-3.9 8.8c-2.6-2.5-3.9-5.4-3.9-8.8s1.3-6.3 3.9-8.8z"/>',logout:'<path d="M13.5 4.5H7A1.5 1.5 0 0 0 5.5 6v12A1.5 1.5 0 0 0 7 19.5h6.5"/><path d="M10 12h10.5"/><path d="M17.2 8.3L20.9 12l-3.7 3.7"/>',bell:'<path d="M6.2 16.2v-5.4a5.8 5.8 0 0 1 11.6 0v5.4l1.3 3.1H4.9z"/><path d="M10.1 21a2.1 2.1 0 0 0 3.8 0"/>',belloff:'<path d="M6.2 16.2v-5.4a5.8 5.8 0 0 1 10-4M17.8 16.2l1.3 3.1H4.9z"/><path d="M10.1 21a2.1 2.1 0 0 0 3.8 0"/><path d="M4 3.5l16 17"/>',trash:'<path d="M4 6.8h16"/><path d="M9.2 6.8V4.6A1.4 1.4 0 0 1 10.6 3.2h2.8a1.4 1.4 0 0 1 1.4 1.4v2.2"/><path d="M6.2 6.8l.9 12.4A1.6 1.6 0 0 0 8.7 20.7h6.6a1.6 1.6 0 0 0 1.6-1.5l.9-12.4"/><path d="M10 10.8v6M14 10.8v6"/>',palette:'<path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.2 0 1.9-.9 1.9-1.9 0-.8-.6-1.4-.6-2.2 0-.9.7-1.6 1.7-1.6h1.7a4.3 4.3 0 0 0 4.3-4.3c0-3.8-4-6-9-6z"/><circle cx="7.5" cy="10.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="11" cy="7" r="1.1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"/>',wifioff:'<path d="M2.5 9a15 15 0 0 1 5-3.4M21.5 9a15 15 0 0 0-8.3-3.9"/><path d="M5.2 12.8a10 10 0 0 1 3-2M18.8 12.8a10 10 0 0 0-2.5-1.7"/><path d="M8.6 16.2a5.2 5.2 0 0 1 4.9-.5"/><circle cx="12" cy="19.6" r="1.15" fill="currentColor" stroke="none"/><path d="M3.5 3.5l17 17"/>',note:'<rect x="4.5" y="4" width="15" height="16" rx="2"/><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4"/>',trophy:'<path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 5.8H4.6A2.4 2.4 0 0 0 7 9.2M17 5.8h2.4A2.4 2.4 0 0 1 17 9.2"/><path d="M12 14v2.8M8.8 20.5h6.4M12 16.8v3.7"/>'};
 const lic=(n,s=18)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.22em;flex:none">${LIC[n]||''}</svg>`;
-const tabbar=()=>`<nav class="tabs">${[['habit','habits'],['todo','todoT'],['cal','calendar'],['lists','listsPage'],['plan','plans'],['fin','finance'],['study','study'],['set','settings']].map(([k,n])=>`<button data-a="tab" data-v="${k}" class="${tab===k?'on':''}" aria-label="${t(n)}"${tab===k?' aria-current="page"':''}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></button>`).join('')}</nav>`;
+// v44: the finance (fin) and language-study (study) pages are HIDDEN — their
+// tabbar / drawer / rail entries are removed, but the pages, their code and
+// their data all stay. Any path that still lands on a hidden tab (a stale
+// in-memory state, a future restore) is coerced to a visible page instead of
+// rendering the hidden page or a blank screen.
+const HIDDEN_TABS=['fin','study'];
+const tabbar=()=>`<nav class="tabs">${[['habit','habits'],['todo','todoT'],['cal','calendar'],['lists','listsPage'],['plan','plans'],['set','settings']].map(([k,n])=>`<button data-a="tab" data-v="${k}" class="${tab===k?'on':''}" aria-label="${t(n)}"${tab===k?' aria-current="page"':''}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></button>`).join('')}</nav>`;
 const REM=[['','r_none'],['0','r_0'],['10','r_10'],['30','r_30'],['60','r_60'],['120','r_120'],['1440','r_1440']];
 const RPT=[['none','rp_none'],['daily','rp_d'],['weekly','rp_w'],['monthly','rp_m'],['yearly','rp_y']];
 const anyCat=id=>cats.find(c=>c.id===id)||ecats.find(c=>c.id===id)||hlists.find(c=>c.id===id)||slists.find(c=>c.id===id);
@@ -1443,15 +1451,16 @@ function planHTML(){
   if(planView&&planOf(planView))return planDetailHTML(planOf(planView));
   const list0=[...plans].sort((a,b)=>String(a.start_at||'9999').localeCompare(String(b.start_at||'9999'))||String(a.created_at).localeCompare(String(b.created_at)));
   const stOf=p=>{const pr=planProg(p);return pr.ts.length&&pr.dn===pr.ts.length?'done':pr.st===t('pOver')?'over':'doing'};
-  // v42: the rail now carries ONLY 全部 + one tab per plan TYPE (+ 新增 +
-  // 收支） — the status tabs moved into the funnel filter below. Types come
+  // v42: the rail now carries ONLY 全部 + one tab per plan TYPE (+ 新增） —
+  // the status tabs moved into the funnel filter below. Types come
   // from the plans themselves plus any rail-created types (localStorage).
+  // v44: the fixed 收支 (finance) tab at the rail's end is REMOVED — the
+  // finance page is hidden (see HIDDEN_TABS); the add-type tab is now last.
   const types=[...new Set([...list0.map(p=>p.type),...planTypeStore()].filter(Boolean))];
   const cnt=f=>list0.filter(f).length;
   const ptab=(v,nm,c)=>`<button class="ptab${planFlt===v?' on':''}" style="--tc:${ptabColor(v==='all'?'__all':nm)}" data-a="pflt" data-v="${v}"><span class="ptl">${nm}</span>${c!=null?`<span class="ptn">${c}</span>`:''}</button>`;
   const rail=ptab('all',t('all'),list0.length)+types.map(ty=>ptab('type:'+ty,esc(ty),cnt(p=>p.type===ty))).join('')
-    +`<button class="ptab addb" data-a="ptabadd" aria-label="${t('pNewType')}"><span class="ptl">＋ ${t('addOnly')}</span></button>`
-    +`<button class="ptab" style="--tc:#E1E8EE" data-a="tab" data-v="fin"><span class="ptl">${t('finance')}</span></button>`;
+    +`<button class="ptab addb" data-a="ptabadd" aria-label="${t('pNewType')}"><span class="ptl">＋ ${t('addOnly')}</span></button>`;
   return `<div class="calhd habhd"><span></span><span class="habttl">${t('plans')}</span><span></span></div>`
   +`<div class="planwrap"><nav class="prail" aria-label="${t('plans')}">${rail}</nav><div class="planmain">${planSearchHTML(types)}<div id="plist">${planListHTML(list0)}</div></div></div>`
   +`<button class="fab" data-a="nplan" aria-label="${t('planNew')}">＋</button>`;
@@ -1699,7 +1708,14 @@ function shopHTML(){
   const selIds=new Set(dayItemsOf(curDayList(td)).map(i=>i.src_id));
   const mIts=cur?litems.filter(i=>i.list_id===cur.id).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.created_at<b.created_at?-1:1)):[];
   // v27: master lists are picked from a dropdown — only the picked list's items show.
-  const left=`<div class="card"><div class="dsec" style="margin-top:0">${t('master')}</div>`
+  // v44: the two columns are now two full-width SEGMENTED TABS shown one at
+  // a time, and each side renders FLAT — no .card frame, rows run edge to
+  // edge with the usual thin .task dividers (the mineo-timeline reference).
+  // Every control moved into its own tab: master keeps the dropdown, the
+  // ✎/delete list row, the item rows (with ✎ item edit) and the add box;
+  // the day tab keeps the ‹ date › nav, the named-list dropdown + ＋, the
+  // ✎/delete list row and the progress count. All actions are unchanged.
+  const master=`<div class="shopflat">`
     +(slists.length?`<div class="selrow"><select data-shopsel="master" aria-label="${t('master')}">${slists.map(c=>`<option value="${c.id}"${c.id===shopList?' selected':''}>${esc(c.icon||'🛒')} ${esc(catName(c))}</option>`).join('')}</select></div>`
       :'')
     +(cur?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sledit" data-id="${cur.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="sldel" data-id="${cur.id}">${t('del')}</button></div>`
@@ -1720,20 +1736,23 @@ function shopHTML(){
   // !it.done when the title/row was tapped.
   const daySel=dayNameV27?`<div class="selrow"><select data-shopsel="day" aria-label="${t('todayList')}"${dgs.length?'':' disabled'}>${dgs.map(d=>`<option value="${d.id}"${dl&&d.id===dl.id?' selected':''}>${esc(dayName(d))}</option>`).join('')}</select><button class="sec ic" data-a="dladd" aria-label="${t('newList')}">＋</button></div>`
     +(dl?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="dledit" data-id="${dl.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="dldel" data-id="${dl.id}">${t('del')}</button></div>`:''):'';
-  const right=`<div class="card"><div class="dsec" style="margin-top:0">${t('todayList')}</div>`
+  const day=`<div class="shopflat">`
     +`<div class="dhd"><button class="sec ic" data-a="dday" data-v="-1" aria-label="‹">‹</button><b>${fmtDayNav(vd)}</b><button class="sec ic" data-a="dday" data-v="1" aria-label="›"${vd>=td?' disabled style="opacity:.3"':''}>›</button></div>`
     +(vd!==td?`<button class="lnk" data-a="dtoday">${t('backToday')}</button>`:'')
     +daySel
     +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task srow${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('dmemo',i.id,i.note)}</div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
     +`</div>`;
+  const seg=`<div class="shopseg" role="tablist"><button class="shopsegbtn${shopTab==='master'?' on':''}" data-a="shoptab" data-v="master" role="tab" aria-selected="${shopTab==='master'}">${t('master')}</button><button class="shopsegbtn${shopTab==='day'?' on':''}" data-a="shoptab" data-v="day" role="tab" aria-selected="${shopTab==='day'}">${t('todayList')}</button></div>`;
   // v41: header adopts the .calhd single row — drawer button left, centred
   // title, and (item 11, superseding item 10's empty slot) two compact icon
   // buttons on the right, moved up from the columns: ＋ = the master list's
   // new-list button (data-a="sladd", same openSlist action) and 📤 = the day
   // list share button (data-a="dshare", same shareDayList action) that used
-  // to be a wide button under the right column. The right column's own ＋
-  // (data-a="dladd", new day list) stays where it was.
-  return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('listsPage')}</span><span class="habbtns"><button class="sec ic" data-a="sladd" aria-label="${t('newList')}">＋</button><button class="sec ic" data-a="dshare" aria-label="${t('shareBtn')}">${lic('share',20)}</button></span></div><div class="shop"><div>${left}</div><div>${right}</div></div>`;
+  // to be a wide button under the right column. The day side's own ＋
+  // (data-a="dladd", new day list) stays where it was (in the day tab, v44).
+  // v44: below the header sit the segmented tabs; only the active tab's
+  // flat list renders.
+  return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('listsPage')}</span><span class="habbtns"><button class="sec ic" data-a="sladd" aria-label="${t('newList')}">＋</button><button class="sec ic" data-a="dshare" aria-label="${t('shareBtn')}">${lic('share',20)}</button></span></div><div class="shop">${seg}${shopTab==='day'?day:master}</div>`;
 }
 // v27: today's shopping lists as a section on the To Do page — a second VIEW of
 // the same dlists/ditems arrays, never a copy into tasks. Ticking a box here
@@ -1848,6 +1867,7 @@ function pageTitle(){
 }
 let _cacheAt=0;
 function appView(){
+  if(HIDDEN_TABS.includes(tab))tab='todo'; // v44: never render a hidden page
   let body;
   if(tab==='set')body=setHTML();
   else if(tab==='habit')body=hview?habitDetail(hview):habitHTML();
@@ -2321,6 +2341,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='nlh'){dr=false;render();openList('habit')}
   else if(a==='set'){tab='set';dr=false;drEdit=false;render()}
   else if(a==='tab'){tab=b.dataset.v;dr=false;drEdit=false;if(tab==='lists')shopDate=null;if(tab==='todo')shopSecOpen=false;render()}
+  else if(a==='shoptab'){shopTab=b.dataset.v;render()}
   else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);render()}
   else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
   else if(a==='ctd'){cm=new Date();cs=new Date();render()}
