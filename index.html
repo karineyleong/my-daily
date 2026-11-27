@@ -166,7 +166,7 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 .swp:first-child .task{border-top:0}
 .utoast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 12px 10px 20px;border-radius:99px;z-index:70;box-shadow:0 6px 20px rgba(20,40,60,.28);font-size:14px;display:flex;align-items:center;gap:12px;white-space:nowrap}
 .utoast button{background:var(--ac2);color:#33241A;border:0;font-weight:700;padding:6px 14px;border-radius:99px;cursor:pointer}
-.fab2{position:fixed;right:28px;bottom:calc(152px + env(safe-area-inset-bottom,0px));width:48px;height:48px;padding:0;border-radius:50%;background:var(--card);color:var(--ac);font-size:21px;border:1px solid var(--ln);box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:5;cursor:pointer}
+.fab2{position:fixed;right:28px;bottom:calc(152px + env(safe-area-inset-bottom,0px));width:48px;height:48px;padding:0;border-radius:50%;background:var(--card);color:var(--ac);font-size:21px;border:1px solid var(--ln);box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:5;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .chp.st{margin-right:-8px}.chp.mid{margin:0 -8px}.chp.en{margin-left:-8px}
 .chp.st,.chp.mid,.chp.en{background:var(--c,#1E88E5);color:#fff}
 .errbar{position:fixed;left:50%;bottom:170px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:6px 14px;border-radius:99px;z-index:65;font-size:12px;opacity:.92;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
@@ -395,7 +395,7 @@ dialog.full{height:93dvh;max-height:93dvh}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v42)</p></main><dialog id="dlg"></dialog>
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v43)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -529,9 +529,9 @@ Object.assign(T.en,{privCal:'Private',shareMgr:'Shared calendars',shareSql:'The 
 Object.assign(T.zh,{fCustom:'自訂',fAlert:'結束提醒',fSound:'音效',fSilent:'靜音',fRemain:'剩餘',fElapsed:'經過',fGoal:'目標',fLogDone:'✓ 記錄今日完成',fLogged:'已記錄今日完成',hTimer:'使用計時器',hTimerMin:'計時分鐘',hTimerSql:'計時器欄位未建立：先在 Supabase 執行 sql-v21.sql 後，此設定才會儲存。'});
 Object.assign(T.ja,{fCustom:'カスタム',fAlert:'終了時の通知',fSound:'音あり',fSilent:'サイレント',fRemain:'残り',fElapsed:'経過',fGoal:'目標',fLogDone:'✓ 今日の完了を記録',fLogged:'記録済み',hTimer:'タイマーを使う',hTimerMin:'タイマー時間（分）',hTimerSql:'タイマー列が未作成です。Supabaseで sql-v21.sql を実行すると、この設定が保存されます。'});
 Object.assign(T.en,{fCustom:'Custom',fAlert:'End alert',fSound:'Sound',fSilent:'Silent',fRemain:'Left',fElapsed:'Elapsed',fGoal:'Goal',fLogDone:'✓ Log today as done',fLogged:'Logged for today',hTimer:'Use timer',hTimerMin:'Timer (min)',hTimerSql:'Timer column not created yet: run sql-v21.sql in Supabase so this setting can be saved.'});
-Object.assign(T.zh,{offMsg:'📴 離線中 — 顯示本機資料',addOnly:'新增'});
-Object.assign(T.ja,{offMsg:'📴 オフライン — 本機のデータを表示中',addOnly:'追加'});
-Object.assign(T.en,{offMsg:'📴 Offline — showing local data',addOnly:'Add'});
+Object.assign(T.zh,{offMsg:'離線中 — 顯示本機資料',addOnly:'新增'});
+Object.assign(T.ja,{offMsg:'オフライン — 本機のデータを表示中',addOnly:'追加'});
+Object.assign(T.en,{offMsg:'Offline — showing local data',addOnly:'Add'});
 Object.assign(T.zh,{lk_interest:'興趣',lk_study:'學習',lk_life:'生活',lk_family:'家庭',lk_work:'工作',plans:'計劃',finance:'收支',planNew:'新增計劃',planSql:'計劃／收支的資料表還沒建立，請先在 Supabase 執行 sql-v23.sql。',planEmpty:'還沒有進行中的計劃，按「＋新增」建立第一個。',pType:'類型',pTag:'標籤',pTasks:'任務',pLoc:'地點',pTime:'時間',pPeople:'人數',pFunds:'資金',pModules:'版塊',pPeriod:'期間',pProg:'進度',pNotStarted:'未開始',pDone:'已完成',pDoing:'進行中',pOver:'已逾期',pIn:'收入',pOut:'支出',pBal:'結餘',pContent:'內容',pCur:'貨幣',pAmt:'金額',pDate:'日期',pAddTask:'加任務',pAddFin:'加一筆',pByPlan:'按計劃',pMonth:'按月推移',pShare:'佔比',fUnit:'單位',uH:'時',uM:'分',uS:'秒',hList:'分類',shareCal:'共享',allCals:'全部'});
 Object.assign(T.ja,{lk_interest:'趣味',lk_study:'学習',lk_life:'生活',lk_family:'家庭',lk_work:'仕事',plans:'プラン',finance:'収支',planNew:'プランを追加',planSql:'プラン／収支のテーブルが未作成です。先にSupabaseで sql-v23.sql を実行してください。',planEmpty:'進行中のプランはありません。「＋追加」で最初の1つを作成。',pType:'タイプ',pTag:'タグ',pTasks:'タスク',pLoc:'場所',pTime:'時間',pPeople:'人数',pFunds:'資金',pModules:'モジュール',pPeriod:'期間',pProg:'進捗',pNotStarted:'未開始',pDone:'完了',pDoing:'進行中',pOver:'期限切れ',pIn:'収入',pOut:'支出',pBal:'残高',pContent:'内容',pCur:'通貨',pAmt:'金額',pDate:'日付',pAddTask:'タスク追加',pAddFin:'1件追加',pByPlan:'プラン別',pMonth:'月別推移',pShare:'割合',fUnit:'単位',uH:'時間',uM:'分',uS:'秒',hList:'カテゴリ',shareCal:'共有',allCals:'すべて'});
 Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_family:'Family',lk_work:'Work',plans:'Plans',finance:'Finance',planNew:'New plan',planSql:'The Plans / Finance tables are missing. Run sql-v23.sql in Supabase first.',planEmpty:'No plans yet. Tap + New to create the first one.',pType:'Type',pTag:'Tag',pTasks:'Tasks',pLoc:'Location',pTime:'Time',pPeople:'People',pFunds:'Funds',pModules:'Sections',pPeriod:'Period',pProg:'Progress',pNotStarted:'Not started',pDone:'Done',pDoing:'In progress',pOver:'Overdue',pIn:'Income',pOut:'Expense',pBal:'Balance',pContent:'Item',pCur:'Currency',pAmt:'Amount',pDate:'Date',pAddTask:'Add task',pAddFin:'Add entry',pByPlan:'By plan',pMonth:'By month',pShare:'Share',fUnit:'Unit',uH:'hr',uM:'min',uS:'sec',hList:'List',shareCal:'Shared',allCals:'All'});
@@ -806,35 +806,35 @@ function drawer(){
   const editRows=(arr,kind)=>arr.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(catName(c))}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-a="cdel" data-id="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')+`<div class="row"><button class="sec" data-a="${kind==='habit'?'nlh':'nl'}">＋ ${t('addOnly')}</button></div>`;
   if(tab==='habit'){
     const act=habits.filter(h=>!h.archived);
-    return head+(drEdit?editRows(hlists,'habit'):`${it('hnav','all','🗂',t('all'),act.length,hlistView==='all')}${hlists.map(c=>it('hnav',c.id,c.icon||'📁',esc(catName(c)),act.filter(h=>h.list_id===c.id).length,hlistView===c.id)).join('')}`)+'</aside>';
+    return head+(drEdit?editRows(hlists,'habit'):`${it('hnav','all',lic('inbox'),t('all'),act.length,hlistView==='all')}${hlists.map(c=>it('hnav',c.id,c.icon||'📁',esc(catName(c)),act.filter(h=>h.list_id===c.id).length,hlistView===c.id)).join('')}`)+'</aside>';
   }
   if(tab==='cal'){
     const chip=(on,label,v)=>`<button class="di${on?' on':''}" data-a="calvis" data-v="${v}"><span class="ic2">${on?'✓':'○'}</span><span class="nm">${label}</span></button>`;
-    return head+chip(visPriv,'🔒 '+t('privCal'),'priv')+chip(visShared,'👥 '+t('shareCal'),'shared')
-      +(evV24?chip(visComp,'💼 '+t('compCal'),'comp'):'')
-      +shareCals.map(c=>chip(calVis[c.id]!==false,'👥 '+esc(c.name),c.id)).join('')
-      +`<button class="di" data-a="share"><span class="ic2">⚙</span><span class="nm">${t('shareMgr')}</span></button></aside>`;
+    return head+chip(visPriv,lic('lock',14)+' '+t('privCal'),'priv')+chip(visShared,lic('users',14)+' '+t('shareCal'),'shared')
+      +(evV24?chip(visComp,lic('brief',14)+' '+t('compCal'),'comp'):'')
+      +shareCals.map(c=>chip(calVis[c.id]!==false,lic('users',14)+' '+esc(c.name),c.id)).join('')
+      +`<button class="di" data-a="share"><span class="ic2">${lic('sliders')}</span><span class="nm">${t('shareMgr')}</span></button></aside>`;
   }
   if(tab==='plan'){
     const stOf=p=>{const pr=planProg(p);return pr.ts.length&&pr.dn===pr.ts.length?'done':pr.st===t('pOver')?'over':'doing'};
     const cnt=f=>plans.filter(f).length;
     const types=[...new Set(plans.map(p=>p.type).filter(Boolean))];
     return head
-      +it('pflt','all','🗂',t('all'),plans.length,planFlt==='all')
+      +it('pflt','all',lic('inbox'),t('all'),plans.length,planFlt==='all')
       +it('pflt','doing','▶',t('pDoing'),cnt(p=>stOf(p)==='doing'),planFlt==='doing')
-      +it('pflt','over','⚠',t('pOver'),cnt(p=>stOf(p)==='over'),planFlt==='over')
-      +it('pflt','done','✅',t('pDone'),cnt(p=>stOf(p)==='done'),planFlt==='done')
-      +types.map(ty=>it('pflt','type:'+ty,'🏷',esc(ty),cnt(p=>p.type===ty),planFlt==='type:'+ty)).join('')
-      +`<button class="di" data-a="tab" data-v="fin"><span class="ic2">📊</span><span class="nm">${t('finance')}</span></button></aside>`;
+      +it('pflt','over',lic('alert'),t('pOver'),cnt(p=>stOf(p)==='over'),planFlt==='over')
+      +it('pflt','done',lic('checkc'),t('pDone'),cnt(p=>stOf(p)==='done'),planFlt==='done')
+      +types.map(ty=>it('pflt','type:'+ty,lic('tag'),esc(ty),cnt(p=>p.type===ty),planFlt==='type:'+ty)).join('')
+      +`<button class="di" data-a="tab" data-v="fin"><span class="ic2">${lic('chart')}</span><span class="nm">${t('finance')}</span></button></aside>`;
   }
   if(tab==='fin'){
     const curs=[...new Set(pfin.map(f=>f.currency||'JPY'))];
     const cur=finCur&&curs.includes(finCur)?finCur:curs[0];
     const withFin=plans.filter(p=>pfin.some(f=>f.plan_id===p.id));
     return head
-      +(curs.length?`<div class="dsec">${t('pCur')}</div>`+curs.map(c=>it('fincur',c,'💱',c,pfin.filter(f=>(f.currency||'JPY')===c).length,c===cur)).join(''):'')
-      +`<div class="dsec">${t('pByPlan')}</div>`+it('fplan','all','🗂',t('all'),pfin.length,finPlan==='all')
-      +withFin.map(p=>it('fplan',p.id,'🗂',esc(p.title),pfin.filter(f=>f.plan_id===p.id).length,finPlan===p.id)).join('')+'</aside>';
+      +(curs.length?`<div class="dsec">${t('pCur')}</div>`+curs.map(c=>it('fincur',c,lic('coin'),c,pfin.filter(f=>(f.currency||'JPY')===c).length,c===cur)).join(''):'')
+      +`<div class="dsec">${t('pByPlan')}</div>`+it('fplan','all',lic('inbox'),t('all'),pfin.length,finPlan==='all')
+      +withFin.map(p=>it('fplan',p.id,lic('inbox'),esc(p.title),pfin.filter(f=>f.plan_id===p.id).length,finPlan===p.id)).join('')+'</aside>';
   }
   if(tab==='lists'){
     // v28: shopping drawer = HISTORY ONLY — master lists are managed by the page
@@ -843,8 +843,8 @@ function drawer(){
     // the very day_lists row the page dropdown and the To Do section render.
     const rows=[...dlists].sort((a,b)=>((b.pinned?1:0)-(a.pinned?1:0))||(a.list_date<b.list_date?1:a.list_date>b.list_date?-1:0)||String(b.created_at||'').localeCompare(String(a.created_at||''))).slice(0,30);
     const hrow=d=>{const on=(shopDate||ymd(new Date()))===d.list_date&&curDayList(d.list_date)===d,cnt=ditems.filter(i=>i.day_list_id===d.id).length;
-      return `<div class="hrow"><button class="di${on?' on':''}" data-a="dgo2" data-id="${d.id}"><span class="ic2">🗓</span><span class="nm hnm"><span class="ht1">${esc(dayName(d))}</span><span class="ht2">${fmtDayS(d.list_date)}</span></span><i>${cnt||''}</i></button>`
-      +(dayPinV28?`<button class="sec ic pinb${d.pinned?' on':''}" data-a="dpin" data-id="${d.id}" aria-pressed="${d.pinned?'true':'false'}" aria-label="📌">📌</button>`:'')
+      return `<div class="hrow"><button class="di${on?' on':''}" data-a="dgo2" data-id="${d.id}"><span class="ic2">${lic('cal')}</span><span class="nm hnm"><span class="ht1">${esc(dayName(d))}</span><span class="ht2">${fmtDayS(d.list_date)}</span></span><i>${cnt||''}</i></button>`
+      +(dayPinV28?`<button class="sec ic pinb${d.pinned?' on':''}" data-a="dpin" data-id="${d.id}" aria-pressed="${d.pinned?'true':'false'}" aria-label="Pin">${lic('pin',16)}</button>`:'')
       +(dayNameV27?`<button class="sec ic" data-a="dren" data-id="${d.id}" aria-label="${t('edit')}">✎</button>`:'')
       +`</div>`};
     return head
@@ -853,11 +853,11 @@ function drawer(){
   }
   if(tab==='study'){
     const act=langs.filter(l=>!l.archived);
-    return head+act.map(l=>`<button class="di${l.id===curLang?' on':''}" data-a="slang" data-id="${l.id}"><span class="ic2">🌐</span><span class="nm">${esc(l.name)}${l.level?' · '+esc(l.level):''}</span></button>`).join('')
+    return head+act.map(l=>`<button class="di${l.id===curLang?' on':''}" data-a="slang" data-id="${l.id}"><span class="ic2">${lic('globe')}</span><span class="nm">${esc(l.name)}${l.level?' · '+esc(l.level):''}</span></button>`).join('')
       +`<button class="di" data-a="nlang"><span class="ic2">＋</span><span class="nm">${t('newLang')}</span></button></aside>`;
   }
   if(tab==='set'){
-    return head+`<p class="meta" style="padding:4px 2px">${session?esc(session.user.email):''}</p><button class="di" data-a="lo"><span class="ic2">🚪</span><span class="nm">${t('out')}</span></button></aside>`;
+    return head+`<p class="meta" style="padding:4px 2px">${session?esc(session.user.email):''}</p><button class="di" data-a="lo"><span class="ic2">${lic('logout')}</span><span class="nm">${t('out')}</span></button></aside>`;
   }
   const n=pool(),it2=(v,ic,nm,cnt)=>it('nav',v,ic,nm,cnt,view===v);
   // v41: the drawer's built-in entries are only 全部/今天/明天/已完成 + user
@@ -866,13 +866,15 @@ function drawer(){
   // dual-view column picker still offers it, task rows still label
   // uncategorised tasks as 收件匣）, and uncategorised tasks remain fully
   // visible under 全部， so nothing is lost.
-  return head+(drEdit?editRows(cats,'task'):`${it2('all','🗂',t('all'),n.length)}${it2('today','📅',t('today'),n.filter(todayP).length)}${it2('tomorrow','🌅',t('tomorrow'),n.filter(tmrP).length)}
-${cats.map(c=>it2(c.id,c.icon||'📁',esc(catName(c)),n.filter(x=>x.category_id===c.id).length)).join('')}${it2('done','✅',t('completed'))}`)+'</aside>';
+  return head+(drEdit?editRows(cats,'task'):`${it2('all',lic('inbox'),t('all'),n.length)}${it2('today',lic('cal'),t('today'),n.filter(todayP).length)}${it2('tomorrow',lic('sunrise'),t('tomorrow'),n.filter(tmrP).length)}
+${cats.map(c=>it2(c.id,c.icon||'📁',esc(catName(c)),n.filter(x=>x.category_id===c.id).length)).join('')}${it2('done',lic('checkc'),t('completed'))}`)+'</aside>';
 }
 const setHTML0=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
 <p class="meta">${esc(session.user.email)}</p><div class="top"><button class="sec" data-a="lo">${t('out')}</button></div>`;
 const LOC={zh:'zh-TW',ja:'ja-JP',en:'en-US'},WK={zh:'一二三四五六日',ja:'月火水木金土日',en:'MTWTFSS'};
 const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/>',todo:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l3 3 5-6"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',idea:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',study:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>',plan:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9.5 4a2.5 2.5 0 0 1 5 0M9 11h6M9 15h4"/>',lists:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/>',fin:'<path d="M12 3v9h9"/><path d="M20.5 15.5A9 9 0 1 1 12 3a9 9 0 0 1 8.5 12.5z"/><path d="M15.5 3.6A8 8 0 0 1 20.4 9H15.5z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'};
+const LIC={eye:'<path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',share:'<path d="M12 15V3.5"/><path d="M7 7.3L12 2.6l5 4.7"/><path d="M5 12.5V20a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 20v-7.5"/>',lock:'<rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/>',users:'<circle cx="9" cy="8" r="3.4"/><path d="M3.6 19.6c.6-3 2.7-4.7 5.4-4.7s4.8 1.7 5.4 4.7"/><path d="M15.6 5.1a3.4 3.4 0 0 1 0 5.8M17.9 15.3c1.5.8 2.4 2.2 2.7 4.3"/>',brief:'<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V6.5A2.5 2.5 0 0 1 11.5 4h1A2.5 2.5 0 0 1 15 6.5V8"/><path d="M3 13h18"/>',cart:'<circle cx="9.5" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 3.5h2.2l2.2 11a1.6 1.6 0 0 0 1.6 1.3h7.7a1.6 1.6 0 0 0 1.6-1.3L20 7.5H6"/>',stopw:'<path d="M9.5 2.8h5"/><path d="M12 2.8V6"/><circle cx="12" cy="13.2" r="7.3"/><path d="M12 9.9v3.3l2.5 1.7"/>',pin:'<path d="M12 21.2S5.8 15.6 5.8 10.6a6.2 6.2 0 0 1 12.4 0c0 5-6.2 10.6-6.2 10.6z"/><circle cx="12" cy="10.6" r="2.3"/>',sliders:'<path d="M4 8.5h9M17.5 8.5H20M4 15.5h3M11.5 15.5H20"/><circle cx="15" cy="8.5" r="2.3"/><circle cx="9" cy="15.5" r="2.3"/>',inbox:'<path d="M3.5 13.5L5.8 5A1.5 1.5 0 0 1 7.3 4h9.4a1.5 1.5 0 0 1 1.5 1l2.3 8.5V19a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19z"/><path d="M3.5 13.5H9l1.3 2h3.4l1.3-2h5.5"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',calplus:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M12 13.2v5M9.5 15.7h5"/>',sunrise:'<path d="M12 8.5V3"/><path d="M9.2 5.8L12 3l2.8 2.8"/><path d="M5.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M2.5 20h19"/><path d="M5 16.5H3M21 16.5h-2"/>',checkc:'<circle cx="12" cy="12" r="8.6"/><path d="M8.4 12.4l2.5 2.5 4.8-5.4"/>',alert:'<path d="M12 4.2L2.9 19.5h18.2z"/><path d="M12 10v4.2"/><path d="M12 17.3h.01"/>',tag:'<path d="M3.8 3.8h7L20.3 13.3a1.9 1.9 0 0 1 0 2.7l-4.3 4.3a1.9 1.9 0 0 1-2.7 0L3.8 10.8z"/><circle cx="8.2" cy="8.2" r="1.5"/>',chart:'<path d="M12 3v9h9"/><path d="M20.5 15.5A9 9 0 1 1 12 3a9 9 0 0 1 8.5 12.5z"/><path d="M15.5 3.6A8 8 0 0 1 20.4 9H15.5z"/>',coin:'<circle cx="12" cy="12" r="8.6"/><path d="M15.3 9.3c-.6-1-1.8-1.6-3.3-1.6-1.9 0-3.4 1.1-3.4 2.6 0 3.5 6.8 1.9 6.8 4.5 0 1.5-1.5 2.5-3.4 2.5-1.5 0-2.8-.6-3.5-1.7M12 5.2v13.6"/>',globe:'<circle cx="12" cy="12" r="8.8"/><path d="M3.2 12h17.6"/><path d="M12 3.2c2.6 2.5 3.9 5.4 3.9 8.8s-1.3 6.3-3.9 8.8c-2.6-2.5-3.9-5.4-3.9-8.8s1.3-6.3 3.9-8.8z"/>',logout:'<path d="M13.5 4.5H7A1.5 1.5 0 0 0 5.5 6v12A1.5 1.5 0 0 0 7 19.5h6.5"/><path d="M10 12h10.5"/><path d="M17.2 8.3L20.9 12l-3.7 3.7"/>',bell:'<path d="M6.2 16.2v-5.4a5.8 5.8 0 0 1 11.6 0v5.4l1.3 3.1H4.9z"/><path d="M10.1 21a2.1 2.1 0 0 0 3.8 0"/>',belloff:'<path d="M6.2 16.2v-5.4a5.8 5.8 0 0 1 10-4M17.8 16.2l1.3 3.1H4.9z"/><path d="M10.1 21a2.1 2.1 0 0 0 3.8 0"/><path d="M4 3.5l16 17"/>',trash:'<path d="M4 6.8h16"/><path d="M9.2 6.8V4.6A1.4 1.4 0 0 1 10.6 3.2h2.8a1.4 1.4 0 0 1 1.4 1.4v2.2"/><path d="M6.2 6.8l.9 12.4A1.6 1.6 0 0 0 8.7 20.7h6.6a1.6 1.6 0 0 0 1.6-1.5l.9-12.4"/><path d="M10 10.8v6M14 10.8v6"/>',palette:'<path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.2 0 1.9-.9 1.9-1.9 0-.8-.6-1.4-.6-2.2 0-.9.7-1.6 1.7-1.6h1.7a4.3 4.3 0 0 0 4.3-4.3c0-3.8-4-6-9-6z"/><circle cx="7.5" cy="10.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="11" cy="7" r="1.1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"/>',wifioff:'<path d="M2.5 9a15 15 0 0 1 5-3.4M21.5 9a15 15 0 0 0-8.3-3.9"/><path d="M5.2 12.8a10 10 0 0 1 3-2M18.8 12.8a10 10 0 0 0-2.5-1.7"/><path d="M8.6 16.2a5.2 5.2 0 0 1 4.9-.5"/><circle cx="12" cy="19.6" r="1.15" fill="currentColor" stroke="none"/><path d="M3.5 3.5l17 17"/>',note:'<rect x="4.5" y="4" width="15" height="16" rx="2"/><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4"/>',trophy:'<path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 5.8H4.6A2.4 2.4 0 0 0 7 9.2M17 5.8h2.4A2.4 2.4 0 0 1 17 9.2"/><path d="M12 14v2.8M8.8 20.5h6.4M12 16.8v3.7"/>'};
+const lic=(n,s=18)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.22em;flex:none">${LIC[n]||''}</svg>`;
 const tabbar=()=>`<nav class="tabs">${[['habit','habits'],['todo','todoT'],['cal','calendar'],['lists','listsPage'],['plan','plans'],['fin','finance'],['study','study'],['set','settings']].map(([k,n])=>`<button data-a="tab" data-v="${k}" class="${tab===k?'on':''}" aria-label="${t(n)}"${tab===k?' aria-current="page"':''}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></button>`).join('')}</nav>`;
 const REM=[['','r_none'],['0','r_0'],['10','r_10'],['30','r_30'],['60','r_60'],['120','r_120'],['1440','r_1440']];
 const RPT=[['none','rp_none'],['daily','rp_d'],['weekly','rp_w'],['monthly','rp_m'],['yearly','rp_y']];
@@ -937,7 +939,7 @@ function calPills(){
   // v32: ONE row — scope pills + today. v33: the export button is gone from
   // this row; export lives only in the top-right "…" menu (openMoreMenu).
   const ck=on=>on?'<span class="ck">✓ </span>':'';
-  return `<div class="calpills"><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${ck(visPriv)}🔒 ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${ck(visShared)}👥 ${t('shareCal')}</button>${evV24?`<button class="chip${visComp?' on':''}" data-a="calvis" data-v="comp">${ck(visComp)}💼 ${t('compCal')}</button>`:''}<button class="sec mini" data-a="ctd">${t('ctoday')}</button></div>`;
+  return `<div class="calpills"><button class="chip${visPriv?' on':''}" data-a="calvis" data-v="priv">${ck(visPriv)}${lic('lock',13)} ${t('privCal')}</button><button class="chip${visShared?' on':''}" data-a="calvis" data-v="shared">${ck(visShared)}${lic('users',13)} ${t('shareCal')}</button>${evV24?`<button class="chip${visComp?' on':''}" data-a="calvis" data-v="comp">${ck(visComp)}${lic('brief',13)} ${t('compCal')}</button>`:''}<button class="sec mini" data-a="ctd">${t('ctoday')}</button></div>`;
 }
 function monthCard(mode){
   const y=cm.getFullYear(),m=cm.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),pn=new Date(y,m,0).getDate();
@@ -999,7 +1001,7 @@ function calHTML(){
   // v32: no drawer button on this page — the view switcher moves to the
   // top-left slot (same .sec.ic chrome as other pages' ☰), year stays centred,
   // and the top-right keeps only the "…" more key as a single square button.
-  const head=drawer()+`<div class="calhd"><button class="sec ic" data-a="vmenu" aria-label="${t('views')}">👁️</button><button class="yrpick" data-a="yrpick" aria-label="${t('yrSel')}">${anchorYear()} ▼</button><button class="sec ic" data-a="mmenu" aria-label="${t('more')}">📤</button></div>`;
+  const head=drawer()+`<div class="calhd"><button class="sec ic" data-a="vmenu" aria-label="${t('views')}">${lic('eye',20)}</button><button class="yrpick" data-a="yrpick" aria-label="${t('yrSel')}">${anchorYear()} ▼</button><button class="sec ic" data-a="mmenu" aria-label="${t('more')}">${lic('share',20)}</button></div>`;
   let main='',below='';
   if(calView==='list'){main=monthCard('list');below=daySection(cs)}
   // v37: month view shows the SAME selected-day detail section as list view,
@@ -1020,7 +1022,7 @@ function openViewMenu(){
 function openMoreMenu(){
   // v36: exports only — the old multi-select batch delete is gone; choosing
   // which events to export now happens inside the export flow itself.
-  const dlg=$('dlg'),ex=(v,k)=>`<button class="di" data-ex="${v}"><span class="ic2">📤</span><span class="nm">${t('expSched')} · ${t(k)}</span></button>`;
+  const dlg=$('dlg'),ex=(v,k)=>`<button class="di" data-ex="${v}"><span class="ic2">${lic('share')}</span><span class="nm">${t('expSched')} · ${t(k)}</span></button>`;
   dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('more')}</h3>`
     +ex('day','shDay')+ex('week','shWeek')+ex('month','shMonth')
     +`<div class="row"><button class="sec" id="mm-x">${t('cancel')}</button></div>`;
@@ -1055,12 +1057,12 @@ async function loadShare(){
 function openShare(){
   const dlg=$('dlg');
   if(shareErr){
-    dlg.innerHTML=`<h3 style="margin:2px 0 10px">👥 ${t('shareMgr')}</h3><p class="meta">${t('shareSql')}</p><div class="row"><button class="pri" id="sh-x">${t('cancel')}</button></div>`;
+    dlg.innerHTML=`<h3 style="margin:2px 0 10px">${lic('users',18)} ${t('shareMgr')}</h3><p class="meta">${t('shareSql')}</p><div class="row"><button class="pri" id="sh-x">${t('cancel')}</button></div>`;
     dlg.showModal();$('sh-x').onclick=()=>dlg.close();return;
   }
   const mem=cid=>calMembers.filter(m=>m.calendar_id===cid);
   const mname=m=>esc(m.display_name||(m.user_id||'').slice(0,8));
-  dlg.innerHTML=`<h3 style="margin:2px 0 10px">👥 ${t('shareMgr')}</h3>
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${lic('users',18)} ${t('shareMgr')}</h3>
 ${shareCals.length?shareCals.map(c=>`<div class="card" style="margin-bottom:10px"><div class="rw"><b>${esc(c.name)}</b><span class="tag" style="background:var(--ln)">${t(c.role==='owner'?'roleOwner':c.role==='editor'?'roleEditor':'roleViewer')}</span></div>
 ${c.role==='owner'?`<div class="meta">${t('inviteCode')}：<b>${esc(c.invite_code||'')}</b> <button class="lnk" data-copy="${esc(c.invite_code||'')}">${t('copy')}</button></div>`:''}
 <div class="meta">${t('members')}（${mem(c.id).length}）：${mem(c.id).map(mname).join('、')||'—'}</div>
@@ -1127,11 +1129,11 @@ function openFocus(habit){
   const savePresets=()=>{try{localStorage.ftPresets=JSON.stringify(presets)}catch(e){}};
   const initMin=Math.round(dur/60);
   let tmpGone=false;
-  dlg.innerHTML=`<h3 style="margin:2px 0 6px">⏱ ${habit?esc((habit.icon?habit.icon+' ':'')+habit.name):t('focus')}</h3>
+  dlg.innerHTML=`<h3 style="margin:2px 0 6px">${lic('stopw',18)} ${habit?esc((habit.icon?habit.icon+' ':'')+habit.name):t('focus')}</h3>
 <div class="pchips lpchips" id="f-chips"></div>
 <div class="frow"><span>✎ ${t('fCustom')}</span><span class="dt"><input id="f-cm" type="number" min="1" max="9999" style="width:76px;margin:0" value="${customSec?Math.round(customSec/(unit==='h'?3600:unit==='s'?1:60)):''}" aria-label="${t('fCustom')}"><button type="button" class="sec" id="f-cset" style="padding:6px 14px">OK</button></span></div>
 <div class="frow"><span>${t('fUnit')}</span><span class="seg">${[['h','uH'],['m','uM'],['s','uS']].map(([u,k])=>`<button type="button" class="segbtn${unit===u?' on':''}" data-fu="${u}">${t(k)}</button>`).join('')}</span></div>
-<div class="frow"><span>${t('fAlert')}</span><span class="seg"><button type="button" class="segbtn" id="f-snd">🔔 ${t('fSound')}</button><button type="button" class="segbtn" id="f-sil">🔕 ${t('fSilent')}</button></span></div>
+<div class="frow"><span>${t('fAlert')}</span><span class="seg"><button type="button" class="segbtn" id="f-snd">${lic('bell',14)} ${t('fSound')}</button><button type="button" class="segbtn" id="f-sil">${lic('belloff',14)} ${t('fSilent')}</button></span></div>
 <div style="position:relative;width:200px;height:200px;margin:6px auto">
 <svg width="200" height="200" viewBox="0 0 190 190"><circle cx="95" cy="95" r="84" fill="none" stroke="var(--ln)" stroke-width="7"/><circle id="f-ring" cx="95" cy="95" r="84" fill="none" stroke="var(--ac)" stroke-width="7" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" transform="rotate(-90 95 95)"/></svg>
 <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div id="f-time" style="font-size:46px;font-weight:300;font-family:var(--fd);line-height:1.1">${mmss(left)}</div><div class="meta">${t('fRemain')}</div></div></div>
@@ -1326,9 +1328,9 @@ function occursOn(e,d){const st=sod(e.start_at),en=sod(e.end_at||e.start_at),dd=
 function openCalFab(){
   const dlg=$('dlg');
   dlg.innerHTML=`<h3 style="margin:2px 0 10px">＋</h3>`
-    +`<button class="di" id="cf-ev"><span class="ic2">📅</span><span class="nm">${t('addEv')}</span></button>`
-    +`<button class="di" id="cf-nc"><span class="ic2">🏷</span><span class="nm">${t('newEvCat')}</span></button>`
-    +`<button class="di" id="cf-mg"><span class="ic2">⚙</span><span class="nm">${t('mngEvCat')}</span></button>`
+    +`<button class="di" id="cf-ev"><span class="ic2">${lic('calplus')}</span><span class="nm">${t('addEv')}</span></button>`
+    +`<button class="di" id="cf-nc"><span class="ic2">${lic('tag')}</span><span class="nm">${t('newEvCat')}</span></button>`
+    +`<button class="di" id="cf-mg"><span class="ic2">${lic('sliders')}</span><span class="nm">${t('mngEvCat')}</span></button>`
     +`<div class="row"><button class="sec" id="cf-x">${t('cancel')}</button></div>`;
   dlg.showModal();
   $('cf-ev').onclick=()=>{dlg.close();openEvent()};
@@ -1338,7 +1340,7 @@ function openCalFab(){
 }
 function evCatMgrInto(){
   const dlg=$('dlg');
-  dlg.innerHTML=`<h3 style="margin:2px 0 10px">🏷 ${t('evCats')}</h3>`
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${lic('tag',18)} ${t('evCats')}</h3>`
     +ecats.map(c=>`<div class="row" style="align-items:center"><input type="text" class="em" maxlength="8" value="${esc(c.icon||'')}" data-ci="${c.id}" aria-label="${t('emoji')}"><input type="text" maxlength="20" value="${esc(c.name)}" data-cn="${c.id}" aria-label="${t('listName')}"><input type="color" value="${c.color||'#8FA382'}" data-cc="${c.id}" aria-label="${t('color')}"><button class="sec" data-ecdel="${c.id}" aria-label="${t('del')}">✕</button></div>`).join('')
     +`<div class="row"><button class="sec" id="ecm-x">${t('done')}</button></div>`;
   if(!dlg.open)dlg.showModal();
@@ -1361,7 +1363,7 @@ function mmHTML(){
 }
 function openNode(id){
   const x=ideas.find(i=>i.id===id);if(!x)return;const dlg=$('dlg');
-  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${esc(x.title||'')}</h3>${x.body?`<p class="meta" style="white-space:pre-wrap">${esc(x.body)}</p>`:''}<div class="acts"><button class="sec" id="n-e">${t('edit')}</button><button class="sec" id="n-c">＋ ${t('mmChild')}</button><button class="sec" id="n-col">🎨 ${t('color')}</button><button class="sec" id="n-u">⬆ ${t('mvUp')}</button><button class="sec" id="n-dn">⬇ ${t('mvDn')}</button><button class="sec" id="n-t">✓ ${t('toTodo')}</button><button class="sec" id="n-d">${t('del')}</button></div><div class="acts"><button class="pri" id="n-x">${t('cancel')}</button></div>`;
+  dlg.innerHTML=`<h3 style="margin:2px 0 10px">${esc(x.title||'')}</h3>${x.body?`<p class="meta" style="white-space:pre-wrap">${esc(x.body)}</p>`:''}<div class="acts"><button class="sec" id="n-e">${t('edit')}</button><button class="sec" id="n-c">＋ ${t('mmChild')}</button><button class="sec" id="n-col">${lic('palette',14)} ${t('color')}</button><button class="sec" id="n-u">⬆ ${t('mvUp')}</button><button class="sec" id="n-dn">⬇ ${t('mvDn')}</button><button class="sec" id="n-t">✓ ${t('toTodo')}</button><button class="sec" id="n-d">${t('del')}</button></div><div class="acts"><button class="pri" id="n-x">${t('cancel')}</button></div>`;
   if(!dlg.open)dlg.showModal();
   $('n-x').onclick=()=>dlg.close();
   $('n-e').onclick=()=>openIdea(id);
@@ -1412,7 +1414,7 @@ function finBars(entries){
   const by={};entries.forEach(f=>{const k=(f.entry_date||'').slice(0,7);if(!k)return;by[k]=by[k]||{i:0,o:0};if(f.kind==='in')by[k].i+=+f.amount||0;else by[k].o+=+f.amount||0});
   const ks=Object.keys(by).sort().slice(-6);if(!ks.length)return '';
   const mx=Math.max(1,...ks.map(k=>Math.max(by[k].i,by[k].o)));
-  return `<div class="card"><b>${t('pMonth')}</b><div class="mb-row">${ks.map(k=>`<div class="mb-col"><div class="mb-bars"><i style="height:${Math.max(2,Math.round(by[k].i/mx*80))}px;background:#43A047"></i><i style="height:${Math.max(2,Math.round(by[k].o/mx*80))}px;background:#E5484D"></i></div><span>${k}</span></div>`).join('')}</div><p class="meta">🟩 ${t('pIn')}　🟥 ${t('pOut')}</p></div>`;
+  return `<div class="card"><b>${t('pMonth')}</b><div class="mb-row">${ks.map(k=>`<div class="mb-col"><div class="mb-bars"><i style="height:${Math.max(2,Math.round(by[k].i/mx*80))}px;background:#43A047"></i><i style="height:${Math.max(2,Math.round(by[k].o/mx*80))}px;background:#E5484D"></i></div><span>${k}</span></div>`).join('')}</div><p class="meta"><i style="display:inline-block;width:11px;height:11px;border-radius:3px;background:#43A047;vertical-align:-1px"></i> ${t('pIn')}　<i style="display:inline-block;width:11px;height:11px;border-radius:3px;background:#E5484D;vertical-align:-1px"></i> ${t('pOut')}</p></div>`;
 }
 async function syncPlanEvent(pl){
   const linked=events.find(e=>e.plan_id===pl.id);
@@ -1731,7 +1733,7 @@ function shopHTML(){
   // list share button (data-a="dshare", same shareDayList action) that used
   // to be a wide button under the right column. The right column's own ＋
   // (data-a="dladd", new day list) stays where it was.
-  return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('listsPage')}</span><span class="habbtns"><button class="sec ic" data-a="sladd" aria-label="${t('newList')}">＋</button><button class="sec ic" data-a="dshare" aria-label="${t('shareBtn')}">📤</button></span></div><div class="shop"><div>${left}</div><div>${right}</div></div>`;
+  return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('listsPage')}</span><span class="habbtns"><button class="sec ic" data-a="sladd" aria-label="${t('newList')}">＋</button><button class="sec ic" data-a="dshare" aria-label="${t('shareBtn')}">${lic('share',20)}</button></span></div><div class="shop"><div>${left}</div><div>${right}</div></div>`;
 }
 // v27: today's shopping lists as a section on the To Do page — a second VIEW of
 // the same dlists/ditems arrays, never a copy into tasks. Ticking a box here
@@ -1747,7 +1749,7 @@ function todoShopHTML(){
   if(!shopV25)return '';
   const td=ymd(new Date()),gs=daysOf(td);
   if(!gs.length)return '';
-  return `<div class="card"><div class="dsec" style="margin-top:0;cursor:pointer" data-a="shopsec" role="button" aria-expanded="${shopSecOpen}" aria-label="${t('todayList')}">🛒 ${t('todayList')} <span aria-hidden="true">${shopSecOpen?'▾':'▸'}</span></div>`
+  return `<div class="card"><div class="dsec" style="margin-top:0;cursor:pointer" data-a="shopsec" role="button" aria-expanded="${shopSecOpen}" aria-label="${t('todayList')}">${lic('cart',16)} ${t('todayList')} <span aria-hidden="true">${shopSecOpen?'▾':'▸'}</span></div>`
     +gs.map(dl=>{const its=dayItemsOf(dl),dn=its.filter(i=>i.done).length;
       return `<div class="meta" style="margin:8px 0 2px"><b>${esc(dayName(dl))}</b> · ${dn}/${its.length}</div>`
       +(shopSecOpen?(its.length?its.map(i=>`<div class="task${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('',i.id,i.note,1)}</div></div>`).join(''):`<p class="meta">${t('dayEmpty')}</p>`):'')}).join('')
@@ -1831,7 +1833,7 @@ async function delSlist(id){
   render();showUndo('slist',{c,its});
 }
 
-const notifCard=()=>{const sup='Notification'in window,st=sup?Notification.permission:'na';return `<div class="card"><b>🔔 ${t('notifT')}</b><p class="meta">${t('notifHint')}</p>${st==='granted'?`<p class="meta">${t('notifOk')}</p>`:st==='denied'||!sup?`<p class="meta">${t('notifNo')}</p>`:`<div class="row"><button class="pri" data-a="nreq">${t('notifBtn')}</button></div>`}</div>`};
+const notifCard=()=>{const sup='Notification'in window,st=sup?Notification.permission:'na';return `<div class="card"><b>${lic('bell',16)} ${t('notifT')}</b><p class="meta">${t('notifHint')}</p>${st==='granted'?`<p class="meta">${t('notifOk')}</p>`:st==='denied'||!sup?`<p class="meta">${t('notifNo')}</p>`:`<div class="row"><button class="pri" data-a="nreq">${t('notifBtn')}</button></div>`}</div>`};
 const setHTML=()=>setHTML0()+notifCard();
 function pageTitle(){
   if(tab==='todo')return ''; // v41: the todo page carries its title in the new .calhd header row (like habit/cal)
@@ -1858,8 +1860,8 @@ function appView(){
   // button left, centred i18n title, the 單版/雙版 switch in the right slot.
   // The old two-row header (big list-name title + .hd row) is gone; the
   // current list stays identifiable by the drawer's selected row.
-  else body=drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('todoTitle')}</span><span class="habbtns"><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1" aria-label="${t('sv')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="2"/></svg></button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2" aria-label="${t('dv')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="2"/><rect x="13" y="4" width="8" height="16" rx="2"/></svg></button></span></span></div>`+listHTML()+todoShopHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`;
-  const _pt=pageTitle();$('app').innerHTML=(_pt?`<div class="appt">${_pt}</div>`:'')+(OFFLINE?`<div class="offbar">${t('offMsg')}</div>`:'')+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
+  else body=drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('todoTitle')}</span><span class="habbtns"><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1" aria-label="${t('sv')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="2"/></svg></button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2" aria-label="${t('dv')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="2"/><rect x="13" y="4" width="8" height="16" rx="2"/></svg></button></span></span></div>`+listHTML()+todoShopHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">${lic('stopw',22)}</button>`;
+  const _pt=pageTitle();$('app').innerHTML=(_pt?`<div class="appt">${_pt}</div>`:'')+(OFFLINE?`<div class="offbar">${lic('wifioff',13)} ${t('offMsg')}</div>`:'')+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
   if(session&&Date.now()-_cacheAt>1500){_cacheAt=Date.now();cacheData()}
   if(tab==='set')bind();
 }
@@ -1888,20 +1890,20 @@ function habitHTML(){
   const rowH=h=>{const a=amt(h,today);
     return hswpWrap(h.id,`<div class="task" style="--hc:${esc(h.color||'#1E88E5')}">
 <div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b><div class="meta rw">${h.goal?`<span>${a}/${h.goal}${h.unit?' '+esc(h.unit):''}</span>`:''}${h.target_days?`<span>🎯 ${new Set(hlogs.filter(l=>l.habit_id===h.id).map(l=>l.log_date)).size}/${h.target_days}</span>`:''}</div></div>
-${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" aria-label="⏱">▶</button>`:''}<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`)};
+${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" aria-label="focus">▶</button>`:''}<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`)};
   const wdays=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d});
   const strip=act.length?`<div class="card wstrip">${wdays.map(d=>{const ds=ymd(d),sc=act.filter(h=>hSched(h,d)),cnt=sc.filter(h=>amt(h,ds)>0).length,pct=sc.length?cnt/sc.length:0,isT=ds===today;
     return `<div class="wd"><span>${WK[lang][(d.getDay()+6)%7]}</span>${pct>=1?`<span class="hd2 full${isT?' tdy':''}" style="background:var(--ac)">${d.getDate()}</span>`:`<span class="hd2${isT?' tdy':''}">${ringPct(pct,'#1E88E5')}<b>${d.getDate()}</b></span>`}</div>`}).join('')}</div>`:'';
   const actF=hlistView==='all'?act:act.filter(h=>h.list_id===hlistView);
   const actT=actF.filter(h=>hSched(h,new Date())),rest=actF.filter(h=>!hSched(h,new Date()));
-  const groups=['am','pm','night','any'].map(k=>{const gs=actT.filter(h=>(h.slot||'any')===k);return gs.length?`<div class="ghd"><b>${t('slot_'+k)}</b><span class="meta">${gs.length}</span></div><div class="card">${gs.map(rowH).join('')}</div>`:''}).join('')+(rest.length?`<div class="ghd"><b>${t('restToday')}</b><span class="meta">${rest.length}</span></div><div class="card">${rest.map(h=>`<div class="task" style="--hc:${esc(h.color||'#1E88E5')};opacity:.55"><div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b></div>${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" aria-label="⏱">▶</button>`:''}<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`).join('')}</div>`:'');
+  const groups=['am','pm','night','any'].map(k=>{const gs=actT.filter(h=>(h.slot||'any')===k);return gs.length?`<div class="ghd"><b>${t('slot_'+k)}</b><span class="meta">${gs.length}</span></div><div class="card">${gs.map(rowH).join('')}</div>`:''}).join('')+(rest.length?`<div class="ghd"><b>${t('restToday')}</b><span class="meta">${rest.length}</span></div><div class="card">${rest.map(h=>`<div class="task" style="--hc:${esc(h.color||'#1E88E5')};opacity:.55"><div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b></div>${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" aria-label="focus">▶</button>`:''}<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`).join('')}</div>`:'');
   // v39: header mirrors the calendar top row (.calhd): square drawer button
   // left, page title centred, square slot on the right.
   // v40: the right slot holds two symbol buttons (stats panel / list page)
   // instead of the done/total count; rows no longer carry a check box —
   // check-in lives on the swipe gestures (right = complete, left = undo).
   // Archived habits surface only in the list page's archived tab.
-  return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('habits')}</span><span class="habbtns"><button class="sec ic" data-a="hstats" aria-label="${t('stats')}"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9h-9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15.2 2.7A9 9 0 0 1 21.3 8.8h-6.1z" fill="currentColor"/></svg></button><button class="sec ic" data-a="hlistp" aria-label="${t('hListT')}"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><line x1="9.5" y1="4.5" x2="9.5" y2="19.5" stroke="currentColor" stroke-width="2"/></svg></button></span></div>`+(habitErr?`<div class="card"><p class="meta">${t('habitSql')}</p></div>`:act.length?strip+groups:`<div class="card"><p class="meta">${t('habitEmpty')}</p><b>${t('presets')}</b><div class="pchips">${PRESETS().map((p,i)=>`<button class="pchip" data-a="hpreset" data-v="${i}">${p.icon} ${esc(p.name)}${p.goal?' · '+p.goal+p.unit:''}</button>`).join('')}</div></div>`)+(habitErr?'':`<button class="fab" data-a="nhabit" aria-label="${t('newHabit')}">＋</button><button class="fab2" data-a="focus" aria-label="${t('focus')}">⏱</button>`);
+  return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('habits')}</span><span class="habbtns"><button class="sec ic" data-a="hstats" aria-label="${t('stats')}"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9h-9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15.2 2.7A9 9 0 0 1 21.3 8.8h-6.1z" fill="currentColor"/></svg></button><button class="sec ic" data-a="hlistp" aria-label="${t('hListT')}"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><line x1="9.5" y1="4.5" x2="9.5" y2="19.5" stroke="currentColor" stroke-width="2"/></svg></button></span></div>`+(habitErr?`<div class="card"><p class="meta">${t('habitSql')}</p></div>`:act.length?strip+groups:`<div class="card"><p class="meta">${t('habitEmpty')}</p><b>${t('presets')}</b><div class="pchips">${PRESETS().map((p,i)=>`<button class="pchip" data-a="hpreset" data-v="${i}">${p.icon} ${esc(p.name)}${p.goal?' · '+p.goal+p.unit:''}</button>`).join('')}</div></div>`)+(habitErr?'':`<button class="fab" data-a="nhabit" aria-label="${t('newHabit')}">＋</button><button class="fab2" data-a="focus" aria-label="${t('focus')}">${lic('stopw',22)}</button>`);
 }
 function habitDetail(hid){
   const h=habits.find(x=>x.id===hid);if(!h){hview=null;return habitHTML()}
@@ -1931,7 +1933,7 @@ function habitDetail(hid){
 <div class="cw">${[...WK[lang]].map(w=>`<span>${w}</span>`).join('')}</div><div class="hcg">${cells}</div></div>
 <div class="card"><b>${t('stats')}</b><div class="stats">${tile('✅ '+t('st_m'),mDays+' '+t('times'))}${tile('🗓 '+t('st_t'),tDays+' '+t('times'))}${tile('％ '+t('st_r'),rate+' %')}${tile('🔥 '+t('st_s'),streak()+' '+t('days'))}${goal?tile('📊 '+t('st_ma'),String(mAmt)+(h.unit?' '+esc(h.unit):''))+tile('📈 '+t('st_ta'),String(tAmt)+(h.unit?' '+esc(h.unit):'')):''}${h.target_days?tile('🎯 '+t('td'),tDays+' / '+h.target_days+(tDays>=h.target_days?' 🎉':'')):''}</div></div>
 ${goal?`<div class="card"><b>${t('chart')}</b><div class="bars" style="--hc:${col}">${bars}<span class="gline" style="bottom:${Math.round(goal/maxV*100)}%"></span></div></div>`:''}
-<div class="card"><div class="row">${habV21&&h.timer_min?`<button class="sec" data-a="hfocus" data-id="${h.id}">▶ ⏱ ${h.timer_min} ${t('min')}</button>`:''}<button class="sec" data-a="hedit" data-id="${h.id}">✎ ${t('edit')}</button><button class="sec" data-a="hdel" data-id="${h.id}">${t('del')}</button>${safeLink(h.link)?`<a class="go" href="${esc(safeLink(h.link))}" aria-label="${t('open')}">↗</a>`:''}</div></div>`;
+<div class="card"><div class="row">${habV21&&h.timer_min?`<button class="sec" data-a="hfocus" data-id="${h.id}">▶ ${lic('stopw',14)} ${h.timer_min} ${t('min')}</button>`:''}<button class="sec" data-a="hedit" data-id="${h.id}">✎ ${t('edit')}</button><button class="sec" data-a="hdel" data-id="${h.id}">${t('del')}</button>${safeLink(h.link)?`<a class="go" href="${esc(safeLink(h.link))}" aria-label="${t('open')}">↗</a>`:''}</div></div>`;
 }
 async function hSetAmt(id,nv){
   const td=ymd(new Date());nv=Math.max(0,nv);
@@ -2150,7 +2152,7 @@ const end=()=>{if(!drag)return;drag=null;dlg.classList.remove('dlg-drag')};
 dlg.addEventListener('pointerup',end);dlg.addEventListener('pointercancel',end);
 })();
 const hswpWrap=(id,inner)=>`<div class="hswp" data-hid="${id}"><div class="hswp-bg"><span class="hb-l">✓ ${''}</span><span class="hb-r">✗</span></div><div class="hswp-in">${inner}</div></div>`;
-const swpWrap=(kind,id,inner)=>`<div class="swp" data-kind="${kind}" data-id="${id}"><div class="swp-bg"><button class="swp-del" data-a="swdel" data-kind="${kind}" data-id="${id}" tabindex="-1">🗑 ${t('del')}</button></div><div class="swp-in">${inner}</div></div>`;
+const swpWrap=(kind,id,inner)=>`<div class="swp" data-kind="${kind}" data-id="${id}"><div class="swp-bg"><button class="swp-del" data-a="swdel" data-kind="${kind}" data-id="${id}" tabindex="-1">${lic('trash',14)} ${t('del')}</button></div><div class="swp-in">${inner}</div></div>`;
 let _swCur=null,_swSup=false,_undoEl=null,_undoTimer=null;
 function swCloseAll(ex){document.querySelectorAll('.swp.open').forEach(w=>{if(w!==ex){w.classList.remove('open');const i=w.querySelector('.swp-in');if(i)i.style.transform=''}});if(_swCur&&_swCur!==ex)_swCur=null}
 function hideUndo(){if(_undoTimer){clearTimeout(_undoTimer);_undoTimer=null}if(_undoEl){_undoEl.remove();_undoEl=null}}
@@ -2581,7 +2583,7 @@ function studyHTML(){
     const dueN=lw.filter(w=>(w.reviews||0)>0&&(w.next_review||'')<=today).length;
     const tile=(lb,v)=>`<div class="stat"><span>${lb}</span><b>${v}</b></div>`;
     main=`<div class="card"><b>${esc(L.name)}${L.level?' · '+esc(L.level):''}</b><div class="stats">${tile('📅 '+t('sToday'),tMin+' '+t('min'))}${tile('🗓 '+t('sWeek'),wkMin+' '+t('min'))}${tile('🔥 '+t('streak'),stk+' '+t('days'))}${tile('📖 '+t('sWords'),String(lw.length))}${tile('🃏 '+t('sDue'),String(dueN))}</div></div>
-<div class="card"><b>⏱ ${t('logTime')}</b><div class="pchips">${[10,15,25,45,60].map(m=>`<button class="pchip" data-a="logq" data-v="${m}">+${m} ${t('min')}</button>`).join('')}</div><div class="tbar"><input id="lg-min" type="number" min="1" max="600" placeholder="25" aria-label="${t('min')}"><button class="pri" data-a="logm">${t('logTime')}</button></div></div>
+<div class="card"><b>${lic('stopw',16)} ${t('logTime')}</b><div class="pchips">${[10,15,25,45,60].map(m=>`<button class="pchip" data-a="logq" data-v="${m}">+${m} ${t('min')}</button>`).join('')}</div><div class="tbar"><input id="lg-min" type="number" min="1" max="600" placeholder="25" aria-label="${t('min')}"><button class="pri" data-a="logm">${t('logTime')}</button></div></div>
 <div class="card"><div class="row"><button class="sec" data-a="ledit" data-id="${L.id}">✎ ${t('edit')}</button><button class="sec" data-a="larc" data-id="${L.id}">${t('arc')}</button><button class="sec" data-a="ldel" data-id="${L.id}">${t('del')}</button></div></div>`;
   }
   return head+seg+main+arcSec;
@@ -2662,7 +2664,7 @@ async function autoCourseWords(langId){
   say('✓ '+t('autoLoad')+' '+rows.length);
 }
 function quizHTML(){
-  if(quiz.done)return `<div class="card"><b>📝 ${t('qDoneT')}</b><p>${t('qScore')}：<b>${quiz.score} / ${quiz.qs.length}</b></p><div class="row"><button class="sec" data-a="qback">${t('qBack')}</button>${quiz.gi!=null?`<button class="pri" data-a="qstart" data-v="${quiz.gi}">${t('qAgain')}</button>`:`<button class="pri" data-a="qmix" data-v="${quiz.lv}">${t('qAgain')}</button>`}</div></div>`;
+  if(quiz.done)return `<div class="card"><b>${lic('note',16)} ${t('qDoneT')}</b><p>${t('qScore')}：<b>${quiz.score} / ${quiz.qs.length}</b></p><div class="row"><button class="sec" data-a="qback">${t('qBack')}</button>${quiz.gi!=null?`<button class="pri" data-a="qstart" data-v="${quiz.gi}">${t('qAgain')}</button>`:`<button class="pri" data-a="qmix" data-v="${quiz.lv}">${t('qAgain')}</button>`}</div></div>`;
   const cur=quiz.qs[quiz.i].q;
   const opts=cur.o.map((op,oi)=>{
     let st='',cls='sec';
@@ -2699,10 +2701,10 @@ function courseHTML(L){
   const allW=[];lv.packs.forEach(p=>p.w.forEach(w=>allW.push(w)));
   const addedN=allW.filter(w=>have.has(w[0].trim().toLowerCase())).length;
   const chips=`<div class="chips">${['A1','A2','B1','B2'].map(x=>`<button class="chip${courseLvl===x?' on':''}" data-a="ctab" data-v="${x}">${x}</button>`).join('')}</div>`;
-  const exam=`<div class="card"><b>🏆 ${t('cilsExam')} · CILS ${courseLvl}</b><p class="meta" style="white-space:pre-wrap">${esc(lv.exam)}</p><p class="meta">${t('progW')}：${addedN} / ${allW.length}</p><div class="bar"><i style="width:${allW.length?Math.round(addedN/allW.length*100):0}%"></i></div></div>`;
+  const exam=`<div class="card"><b>${lic('trophy',16)} ${t('cilsExam')} · CILS ${courseLvl}</b><p class="meta" style="white-space:pre-wrap">${esc(lv.exam)}</p><p class="meta">${t('progW')}：${addedN} / ${allW.length}</p><div class="bar"><i style="width:${allW.length?Math.round(addedN/allW.length*100):0}%"></i></div></div>`;
   const qDoneN=new Set(squiz.filter(r=>r.language_id===L.id&&r.level===courseLvl).map(r=>r.topic)).size;
-  const qcard=`<div class="card"><b>📝 ${t('quizT')} · ${courseLvl}</b><p class="meta">${t('qProg')}：${qDoneN} / ${lv.grammar.length}</p><div class="row"><button class="pri" data-a="qmix" data-v="${courseLvl}">${t('mixQuiz')}（10）</button></div></div>`;
-  const gram=`<div class="ghd"><b>${t('grammarL')}</b><span class="meta">${lv.grammar.length}</span></div><div class="card">${lv.grammar.map((g,i)=>{const k=courseLvl+'-'+i,open=expG.has(k),lr=squiz.find(r=>r.language_id===L.id&&r.level===courseLvl&&r.topic===g.t);return `<div class="task"><div class="tt" data-a="gtog" data-v="${k}" style="cursor:pointer"><b>${open?'▾':'▸'} ${esc(g.t)}</b>${open?`<div class="meta" style="white-space:pre-wrap">${esc(g.d)}</div>${g.ex.map(e=>`<div class="meta">🇮🇹 ${esc(e[0])}<br>　${esc(e[1])}</div>`).join('')}<div class="row" style="margin-top:8px"><button class="sec" data-a="qstart" data-v="${i}">📝 ${t('doQuiz')}${g.q?'（'+g.q.length+'）':''}</button>${lr?`<span class="meta">${t('qLast')}：${lr.score}/${lr.total}</span>`:''}</div>`:''}</div></div>`}).join('')}</div>`;
+  const qcard=`<div class="card"><b>${lic('note',16)} ${t('quizT')} · ${courseLvl}</b><p class="meta">${t('qProg')}：${qDoneN} / ${lv.grammar.length}</p><div class="row"><button class="pri" data-a="qmix" data-v="${courseLvl}">${t('mixQuiz')}（10）</button></div></div>`;
+  const gram=`<div class="ghd"><b>${t('grammarL')}</b><span class="meta">${lv.grammar.length}</span></div><div class="card">${lv.grammar.map((g,i)=>{const k=courseLvl+'-'+i,open=expG.has(k),lr=squiz.find(r=>r.language_id===L.id&&r.level===courseLvl&&r.topic===g.t);return `<div class="task"><div class="tt" data-a="gtog" data-v="${k}" style="cursor:pointer"><b>${open?'▾':'▸'} ${esc(g.t)}</b>${open?`<div class="meta" style="white-space:pre-wrap">${esc(g.d)}</div>${g.ex.map(e=>`<div class="meta">🇮🇹 ${esc(e[0])}<br>　${esc(e[1])}</div>`).join('')}<div class="row" style="margin-top:8px"><button class="sec" data-a="qstart" data-v="${i}">${lic('note',14)} ${t('doQuiz')}${g.q?'（'+g.q.length+'）':''}</button>${lr?`<span class="meta">${t('qLast')}：${lr.score}/${lr.total}</span>`:''}</div>`:''}</div></div>`}).join('')}</div>`;
   const packs=lv.packs.map((p,pi)=>`<div class="ghd"><b>${esc(p.n)}</b>${p.w.every(w=>have.has(w[0].trim().toLowerCase()))?`<span class="meta">${t('addedW')} ✓</span>`:`<button class="sec" data-a="caddall" data-v="${pi}">${t('addAll')}</button>`}</div><div class="card">${p.w.map((wd,wi)=>{const has=have.has(wd[0].trim().toLowerCase());return `<div class="task"><div class="tt"><b>${esc(wd[0])}</b> <span class="meta">${esc(wd[1])} · ${esc(wd[2])}</span>${TTS?` <button class="lnk" data-a="tts" data-v="${esc(wd[0])}" aria-label="play">🔊</button>`:''}<div class="meta">${esc(wd[3])}${TTS?` <button class="lnk" data-a="tts" data-v="${esc(wd[3])}" aria-label="play">🔊</button>`:''}</div><div class="meta">${esc(wd[4])}</div></div>${has?`<span class="meta">${t('addedW')}</span>`:`<button class="sec" data-a="cadd" data-v="${pi}:${wi}">${t('addW')}</button>`}</div>`}).join('')}</div>`).join('');
   return chips+exam+qcard+gram+`<div class="ghd"><b>${t('packL')}</b><span class="meta">${allW.length}</span></div>`+packs;
 }
