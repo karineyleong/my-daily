@@ -1,0 +1,58 @@
+/* My Daily — responsive layer: every phone size → tablet/foldable → desktop.
+   Loaded after the inline <style> in index.html, so it only overrides layout. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:hidden}
+img,svg,video,canvas{max-width:100%}
+input,select,textarea{font-size:max(16px,1em)} /* stops iOS from zooming into fields */
+main{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+.cg>*,.cw>*,.cd{min-width:0}
+
+/* small phones: iPhone SE / mini, 320–360px Android */
+@media (max-width:360px){
+  main{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+  .tabs{width:96vw;padding:4px;gap:2px}
+  .tabs button{padding:8px 0}
+  .tabs svg{width:22px;height:22px}
+  .cd{min-height:52px;font-size:13px}
+  .chip{padding:6px 10px;font-size:13px}
+  dialog{padding:14px 12px calc(14px + env(safe-area-inset-bottom,0px))}
+}
+
+/* landscape phones (short screens): bar sits in the flow instead of covering content */
+@media (max-height:480px) and (orientation:landscape){
+  .tabs{position:static;transform:none;width:100%;margin-top:12px;box-shadow:none}
+  main{padding-bottom:24px}
+  .fab{bottom:16px}.fab2{bottom:80px}
+  dialog{max-height:92dvh}
+}
+
+/* large phones, foldables, tablets */
+@media (min-width:600px){
+  main{max-width:680px}
+  .tabs{width:min(80vw,520px)}
+  .dr{width:340px}
+  dialog{margin:auto;width:min(560px,92vw);border:1px solid var(--ln);border-radius:18px;max-height:86dvh}
+}
+
+/* desktop / laptop / wide windows: left icon rail + permanent side menu + centred content column */
+@media (min-width:1024px){
+  :root{--rail:76px;--side:272px;--col:820px}
+  main{max-width:none;margin:0;padding:28px 0 56px;
+    width:min(var(--col),calc(100vw - var(--rail) - 56px));
+    margin-left:calc(var(--rail) + (100vw - var(--rail) - min(var(--col),calc(100vw - var(--rail) - 56px)))/2)}
+  main:has(.dr){
+    width:min(var(--col),calc(100vw - var(--rail) - var(--side) - 64px));
+    margin-left:calc(var(--rail) + var(--side) + (100vw - var(--rail) - var(--side) - min(var(--col),calc(100vw - var(--rail) - var(--side) - 64px)))/2)}
+  .tabs{left:0;top:0;bottom:0;transform:none;width:var(--rail);flex-direction:column;justify-content:flex-start;align-items:stretch;gap:8px;
+    padding:20px 10px;border:0;border-right:1px solid var(--ln);border-radius:0;box-shadow:none}
+  .tabs button{flex:none;padding:14px 0;border-radius:14px}
+  .tabs button:hover{background:color-mix(in srgb,var(--ac) 12%,transparent)}
+  .dr{transform:none;left:var(--rail);width:var(--side);z-index:5;padding-top:24px}
+  .ov{display:none}
+  main:has(.dr) [data-a="dr"]{visibility:hidden;pointer-events:none}
+  .fab{right:36px;bottom:36px}.fab2{right:44px;bottom:108px}
+  dialog{width:min(600px,90vw)}
+  button,.chip,.di,.cd,[data-a]{cursor:pointer}
+  .cd{min-height:84px}
+}
+@media (min-width:1500px){:root{--col:940px}}

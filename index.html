@@ -397,7 +397,8 @@ dialog.full{height:93dvh;max-height:93dvh}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v43)</p></main><dialog id="dlg"></dialog>
+</style><link rel="stylesheet" href="responsive.css">
+</head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v43.1)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -2780,4 +2781,5 @@ sb.auth.onAuthStateChange((_e,s)=>{session=s;try{if(s)localStorage.mdsess=JSON.s
 setTimeout(()=>{if(!rendered)render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
-</script></body></html>
+</script><script src="responsive.js"></script>
+</body></html>
