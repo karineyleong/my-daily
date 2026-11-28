@@ -177,8 +177,8 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
 /* v26: minmax(0,...) tracks + min-width:0 items — nowrap chip rows inside a column
    must never inflate the track minimum and push the other column off-screen. */
 .shop{display:block}
-.shopseg{display:flex;gap:6px;margin:0 0 10px}
-.shopsegbtn{flex:1;padding:8px 12px;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:14px}
+.shopseg{display:flex;gap:4px;margin:0 0 10px}
+.shopsegbtn{flex:1;padding:8px 12px;border-radius:var(--r-sm);border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:14px}
 .shopsegbtn.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 /* v42: shopping item rows go compact (timeline-style list): checkbox left,
    title, memo as a small grey sub-line, hairline dividers, tight rhythm —
@@ -682,9 +682,9 @@ Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_f
 Object.assign(T.zh,{compCal:'公司',listsPage:'購買清單',liAdd:'新增項目',liEmpty:'還沒有項目，在下方新增第一個。',evScope:'類別'});
 Object.assign(T.ja,{compCal:'会社',listsPage:'買い物リスト',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',evScope:'区分'});
 Object.assign(T.en,{compCal:'Company',listsPage:'Shopping list',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',evScope:'Scope'});
-Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，去「待買清單」頁籤點選項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v29.sql。',history:'購買記錄',histNone:'還沒有購買記錄。',nameReq:'名稱不可空白',memo:'備註',memoPh:'寫低備註（例如：2 包、特價先買）…'});
-Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。「買うものリスト」タブで項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v29.sql を実行してください。',history:'購入記録',histNone:'購入記録はまだありません。',nameReq:'名前を入力してください',memo:'メモ',memoPh:'メモを書く（例：2パック、特売なら買う）…'});
-Object.assign(T.en,{master:'To-buy lists',todayList:"Today's list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the To-buy tab to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v29.sql in Supabase first.',history:'Purchase records',histNone:'No purchase records yet.',nameReq:'Name cannot be empty',memo:'Memo',memoPh:'Add a memo (e.g. 2 packs, buy if on sale)…'});
+Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',dayTab:'購物清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，去「待買清單」頁籤點選項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v29.sql。',history:'購買記錄',histNone:'還沒有購買記錄。',nameReq:'名稱不可空白',memo:'備註',memoPh:'寫低備註（例如：2 包、特價先買）…'});
+Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物',dayTab:'買い物',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。「買うものリスト」タブで項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v29.sql を実行してください。',history:'購入記録',histNone:'購入記録はまだありません。',nameReq:'名前を入力してください',memo:'メモ',memoPh:'メモを書く（例：2パック、特売なら買う）…'});
+Object.assign(T.en,{master:'To-buy lists',todayList:"Today's list",dayTab:'Shopping',slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the To-buy tab to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v29.sql in Supabase first.',history:'Purchase records',histNone:'No purchase records yet.',nameReq:'Name cannot be empty',memo:'Memo',memoPh:'Add a memo (e.g. 2 packs, buy if on sale)…'});
 Object.assign(T.zh,{pSearchPh:'搜尋計劃…',pFilter:'篩選',pClearF:'清除篩選',pStatus:'狀態',pNewType:'＋ 新增種類…',pPickTag:'已有的 #'});
 Object.assign(T.ja,{pSearchPh:'プランを検索…',pFilter:'絞り込み',pClearF:'絞り込みをクリア',pStatus:'状態',pNewType:'＋ 新しいタイプ…',pPickTag:'既存の #'});
 Object.assign(T.en,{pSearchPh:'Search plans…',pFilter:'Filter',pClearF:'Clear filters',pStatus:'Status',pNewType:'＋ New type…',pPickTag:'Existing #'});
@@ -710,8 +710,41 @@ function bind(){
   if($('cl')){$('cl').oninput=e=>{color=e.target.value;theme()};$('cl').onchange=async e=>{color=e.target.value;await save();msg(t('saved'))}}
 }
 let rendered=false;
+/* v47 (item 3): in-app navigation history for the swipe-BACK gesture.
+   Every render() snapshots the current page (main tab + open detail
+   views); when the snapshot changes, the previous page is pushed onto
+   navStack — EXCEPT when the new page IS the stack top (an on-screen ‹
+   back button returning to the page you just came from), which pops it
+   instead, so back buttons and the gesture stay in agreement. navBack()
+   pops one entry and applies it, reproducing the tab-switch side
+   effects (drawer closed, shopping date reset, To Do sections folded).
+   At the top level (empty stack) the gesture does nothing. */
+let navStack=[],navCur=null,_navApplying=false;
+function navSnap(){return {tab,planView:planView||null,hview:hview||null}}
+function navSame(a,b){return !!a&&!!b&&a.tab===b.tab&&a.planView===b.planView&&a.hview===b.hview}
+function navTrack(){
+  const s=navSnap();
+  if(_navApplying){navCur=s;return}
+  if(!navCur){navCur=s;return}
+  if(navSame(s,navCur))return;
+  const top=navStack[navStack.length-1];
+  if(navSame(s,top))navStack.pop();else{navStack.push(navCur);if(navStack.length>50)navStack.shift()}
+  navCur=s;
+}
+function navBack(){
+  const s=navStack.pop();
+  if(!s)return false;
+  _navApplying=true;
+  tab=s.tab;planView=s.planView;hview=s.hview;
+  dr=false;drEdit=false;
+  if(tab==='lists')shopDate=null;
+  if(tab==='todo')shopSecOpen=false;
+  render();
+  _navApplying=false;
+  return true;
+}
 function render(){
-  rendered=true;theme();
+  rendered=true;theme();navTrack();
   if(!session){
     $('app').innerHTML=`<img src="icon-192.png" alt="" style="width:84px;height:84px;border-radius:20px;display:block;margin:10px auto 4px"><h1>${appTitle()}</h1><div class="card">
     <label for="em">${t('email')}</label><input id="em" type="email" autocomplete="email">
@@ -1012,7 +1045,8 @@ function drawer(){
     // dropdown, so they no longer repeat here. One row per day list (not grouped
     // by date): pinned rows first, then newest date first. Rename and pin write
     // the very day_lists row the page dropdown and the To Do section render.
-    const rows=[...dlists].sort((a,b)=>((b.pinned?1:0)-(a.pinned?1:0))||(a.list_date<b.list_date?1:a.list_date>b.list_date?-1:0)||String(b.created_at||'').localeCompare(String(a.created_at||''))).slice(0,30);
+    // v47 (item 2): same 購入記録 definition as the tab — before today only.
+    const rows=[...dlists].filter(d=>d.list_date<ymd(new Date())).sort((a,b)=>((b.pinned?1:0)-(a.pinned?1:0))||(a.list_date<b.list_date?1:a.list_date>b.list_date?-1:0)||String(b.created_at||'').localeCompare(String(a.created_at||''))).slice(0,30);
     const hrow=d=>{const on=(shopDate||ymd(new Date()))===d.list_date&&curDayList(d.list_date)===d,cnt=ditems.filter(i=>i.day_list_id===d.id).length;
       return `<div class="hrow"><button class="di${on?' on':''}" data-a="dgo2" data-id="${d.id}"><span class="ic2">${lic('cal')}</span><span class="nm hnm"><span class="ht1">${esc(dayName(d))}</span><span class="ht2">${fmtDayS(d.list_date)}</span></span><i>${cnt||''}</i></button>`
       +(dayPinV28?`<button class="sec ic pinb${d.pinned?' on':''}" data-a="dpin" data-id="${d.id}" aria-pressed="${d.pinned?'true':'false'}" aria-label="Pin">${lic('pin',16)}</button>`:'')
@@ -2006,7 +2040,10 @@ function ensureDayList(ds){
 async function toggleShopItem(it){
   // Core rule: selecting NEVER deletes the master item; unselecting only removes the day copy.
   // v27: the copy lands in the day list currently picked in the right column.
-  const td=ymd(new Date());
+  // v47 (item 2): the target date is the date being browsed in the 買い物
+  // tab (shopDate) — a list can be generated for ANY date (next trip, a
+  // future day), not only today. With no date browsed it stays today.
+  const td=shopDate||ymd(new Date());
   const dl=curDayList(td);
   const ex=dl?ditems.find(x=>x.day_list_id===dl.id&&x.src_id===it.id):null;
   if(ex){
@@ -2043,7 +2080,7 @@ function shopHTML(){
   const cur=slists.find(c=>c.id===shopList);
   const dl=curDayList(vd);
   if(dl&&shopDay!==dl.id)shopDay=dl.id;
-  const selIds=new Set(dayItemsOf(curDayList(td)).map(i=>i.src_id));
+  const selIds=new Set(dayItemsOf(curDayList(shopDate||td)).map(i=>i.src_id));
   const mIts=cur?litems.filter(i=>i.list_id===cur.id).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.created_at<b.created_at?-1:1)):[];
   // v27: master lists are picked from a dropdown — only the picked list's items show.
   // v44: the two columns are now two full-width SEGMENTED TABS shown one at
@@ -2054,6 +2091,9 @@ function shopHTML(){
   // the day tab keeps the ‹ date › nav, the named-list dropdown + ＋, the
   // ✎/delete list row and the progress count. All actions are unchanged.
   const master=`<div class="shopflat">`
+    // v47 (item 2): when a non-today date is being browsed, master-tab
+    // selections generate into THAT date's list — say so, with a way back.
+    +(shopDate&&shopDate!==td?`<div class="dhd" style="justify-content:flex-start;gap:10px"><span class="meta">→ ${fmtDayNav(vd)}</span><button class="lnk" data-a="dtoday">${t('backToday')}</button></div>`:'')
     +(slists.length?`<div class="selrow"><select data-shopsel="master" aria-label="${t('master')}">${slists.map(c=>`<option value="${c.id}"${c.id===shopList?' selected':''}>${esc(c.icon||'🛒')} ${esc(catName(c))}</option>`).join('')}</select></div>`
       :'')
     +(cur?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="sledit" data-id="${cur.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="sldel" data-id="${cur.id}">${t('del')}</button></div>`
@@ -2072,10 +2112,10 @@ function shopHTML(){
   // a real phone as "day items cannot be ticked". The dtog handler derives the
   // new state from the checkbox when the checkbox itself was tapped, and from
   // !it.done when the title/row was tapped.
-  const daySel=dayNameV27?`<div class="selrow"><select data-shopsel="day" aria-label="${t('todayList')}"${dgs.length?'':' disabled'}>${dgs.map(d=>`<option value="${d.id}"${dl&&d.id===dl.id?' selected':''}>${esc(dayName(d))}</option>`).join('')}</select><button class="sec ic" data-a="dladd" aria-label="${t('newList')}">＋</button></div>`
+  const daySel=dayNameV27?`<div class="selrow"><select data-shopsel="day" aria-label="${t('dayTab')}"${dgs.length?'':' disabled'}>${dgs.map(d=>`<option value="${d.id}"${dl&&d.id===dl.id?' selected':''}>${esc(dayName(d))}</option>`).join('')}</select><button class="sec ic" data-a="dladd" aria-label="${t('newList')}">＋</button></div>`
     +(dl?`<div class="row" style="margin:0 0 4px"><button class="sec mini" data-a="dledit" data-id="${dl.id}">✎ ${t('edit')}</button><button class="sec mini" data-a="dldel" data-id="${dl.id}">${t('del')}</button></div>`:''):'';
   const day=`<div class="shopflat">`
-    +`<div class="dhd"><button class="sec ic" data-a="dday" data-v="-1" aria-label="‹">‹</button><b>${fmtDayNav(vd)}</b><button class="sec ic" data-a="dday" data-v="1" aria-label="›"${vd>=td?' disabled style="opacity:.3"':''}>›</button></div>`
+    +`<div class="dhd"><button class="sec ic" data-a="dday" data-v="-1" aria-label="‹">‹</button><b>${fmtDayNav(vd)}</b><button class="sec ic" data-a="dday" data-v="1" aria-label="›">›</button></div>`
     +(vd!==td?`<button class="lnk" data-a="dtoday">${t('backToday')}</button>`:'')
     +daySel
     +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task srow${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('dmemo',i.id,i.note)}</div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
@@ -2086,14 +2126,18 @@ function shopHTML(){
   // sheet, ✎ rename, 📌 pin), same ordering (pinned first, then newest
   // date first, cap 30). The shopping page's ☰ drawer entry is GONE —
   // the drawer held nothing else.
-  const histRows=[...dlists].sort((a,b)=>((b.pinned?1:0)-(a.pinned?1:0))||(a.list_date<b.list_date?1:a.list_date>b.list_date?-1:0)||String(b.created_at||'').localeCompare(String(a.created_at||''))).slice(0,30);
+  // v47 (item 2): 購入記録 now means strictly BEFORE today — today's and
+  // future lists live in the 買い物 tab under their own date (a pinned
+  // future list shows there, not here); pin ordering applies within the
+  // past lists only.
+  const histRows=[...dlists].filter(d=>d.list_date<td).sort((a,b)=>((b.pinned?1:0)-(a.pinned?1:0))||(a.list_date<b.list_date?1:a.list_date>b.list_date?-1:0)||String(b.created_at||'').localeCompare(String(a.created_at||''))).slice(0,30);
   const hrow=d=>{const cnt=ditems.filter(i=>i.day_list_id===d.id).length;
     return `<div class="hrow"><button class="di" data-a="dgo2" data-id="${d.id}"><span class="ic2">${lic('cal')}</span><span class="nm hnm"><span class="ht1">${esc(dayName(d))}</span><span class="ht2">${fmtDayS(d.list_date)}</span></span><i>${cnt||''}</i></button>`
     +(dayPinV28?`<button class="sec ic pinb${d.pinned?' on':''}" data-a="dpin" data-id="${d.id}" aria-pressed="${d.pinned?'true':'false'}" aria-label="Pin">${lic('pin',16)}</button>`:'')
     +(dayNameV27?`<button class="sec ic" data-a="dren" data-id="${d.id}" aria-label="${t('edit')}">✎</button>`:'')
     +`</div>`};
   const hist=`<div class="shopflat">`+(histRows.length?histRows.map(hrow).join(''):`<p class="meta">${t('histNone')}</p>`)+`</div>`;
-  const seg=`<div class="shopseg" role="tablist"><button class="shopsegbtn${shopTab==='master'?' on':''}" data-a="shoptab" data-v="master" role="tab" aria-selected="${shopTab==='master'}">${t('master')}</button><button class="shopsegbtn${shopTab==='day'?' on':''}" data-a="shoptab" data-v="day" role="tab" aria-selected="${shopTab==='day'}">${t('todayList')}</button><button class="shopsegbtn${shopTab==='hist'?' on':''}" data-a="shoptab" data-v="hist" role="tab" aria-selected="${shopTab==='hist'}">${t('history')}</button></div>`;
+  const seg=`<div class="shopseg" role="tablist"><button class="shopsegbtn${shopTab==='master'?' on':''}" data-a="shoptab" data-v="master" role="tab" aria-selected="${shopTab==='master'}">${t('master')}</button><button class="shopsegbtn${shopTab==='day'?' on':''}" data-a="shoptab" data-v="day" role="tab" aria-selected="${shopTab==='day'}">${t('dayTab')}</button><button class="shopsegbtn${shopTab==='hist'?' on':''}" data-a="shoptab" data-v="hist" role="tab" aria-selected="${shopTab==='hist'}">${t('history')}</button></div>`;
   // v41: header adopts the .calhd single row — drawer button left, centred
   // title, and (item 11, superseding item 10's empty slot) two compact icon
   // buttons on the right, moved up from the columns: ＋ = the master list's
@@ -2749,7 +2793,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='dtog'){const it=ditems.find(x=>x.id===id);if(it){const nv=b.tagName==='INPUT'?b.checked:!it.done;const{error}=await sb.from('day_list_items').update({done:nv}).eq('id',id);if(error)alert(error.message);else{it.done=nv;render()}}}
   else if(a==='smemo')openMemo('litem',id)
   else if(a==='dmemo')openMemo('ditem',id)
-  else if(a==='dday'){const p=(shopDate||ymd(new Date())).split('-').map(Number);const s=ymd(new Date(p[0],p[1]-1,p[2]+ +b.dataset.v));if(s<=ymd(new Date()))shopDate=s;render()}
+  else if(a==='dday'){const p=(shopDate||ymd(new Date())).split('-').map(Number);const s=ymd(new Date(p[0],p[1]-1,p[2]+ +b.dataset.v));shopDate=s;render()}
   else if(a==='dtoday'){shopDate=null;render()}
   else if(a==='dshare')await shareDayList()
   else if(a==='share')openShare()
@@ -2836,33 +2880,57 @@ document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.sho
 // v42: plans keyword search filters as you type — only the list container
 // re-renders, so the input keeps focus and caret while typing.
 document.addEventListener('input',e=>{if(e.target&&e.target.id==='pq'){pQ=e.target.value;const pl=document.getElementById('plist');if(pl)pl.innerHTML=planListHTML([...plans].sort((a,b)=>String(a.start_at||'9999').localeCompare(String(b.start_at||'9999'))||String(a.created_at).localeCompare(String(b.created_at))))}});
-/* v46 (item 10): page-level horizontal swipe switches between the six
-   main pages in tab-bar order (swipe left = next, right = previous, no
-   wrap-around). It arms ONLY for touches that start on plain page
-   content: never inside a dialog, the drawer, the plans rail, the
-   calendar grids/cards, row-level swipe zones (.swp/.hswp), horizontal
-   scrollers (.chips), the mind map, or any form control — and it fires
-   only when the horizontal travel is at least 72px and at least twice
-   the vertical travel, so scrolls and row swipes can never trigger it. */
-const TABORDER=['habit','todo','cal','lists','plan','set'];
+/* v47 (item 3): the page-level horizontal swipe is a BACK gesture now
+   (v46's tab-order switching is REMOVED — the user clarified 左右切換
+   means 回到上一頁， not jumping between tabs). A right swipe pops the
+   in-app navigation history (see navTrack/navBack): plan detail → plan
+   list, a tab → the previously visited tab; at the top level it does
+   nothing, and a left swipe never navigates (no forward). When a dialog
+   is open the gesture closes it first (same as pressing back); when the
+   drawer is open it closes the drawer. Anti-misfire rules are unchanged
+   from v46: touches starting on the calendar grids/cards, the drawer,
+   the plans rail, horizontal scrollers, form controls or row-swipe
+   zones never arm it, and it fires only when horizontal travel is at
+   least 72px and at least twice the vertical travel. With a dialog
+   open the skip list shrinks to form controls and row/scroll zones
+   inside the sheet, so a swipe starting on the sheet body still backs
+   out of it. */
 const SWIPE_SKIP='dialog,.dr,.prail,.calcard,.cg2,.wkrow,.swp,.hswp,.chips,.mmwrap,.lpchips,input,textarea,select,[data-noswipe]';
+const SWIPE_SKIP_DLG='input,textarea,select,.swp,.hswp,.chips,.mmwrap,.lpchips,[data-noswipe]';
 let _swT=null;
 document.addEventListener('touchstart',e=>{
   _swT=null;
   if(!session||e.touches.length!==1)return;
-  if($('dlg').open||dr)return;
   const t0=e.touches[0],el=e.target;
-  if(!el||!el.closest||!el.closest('#app')||el.closest('.tabs')||el.closest(SWIPE_SKIP))return;
+  if(!el||!el.closest)return;
+  const dlg=$('dlg');
+  if(dlg.open){
+    // #dlg lives OUTSIDE #app, so this branch must come before the #app
+    // check — a touch on the sheet itself has no #app ancestor.
+    if(el.closest(SWIPE_SKIP_DLG))return;
+    _swT={x:t0.clientX,y:t0.clientY,dlg:true};
+    return;
+  }
+  if(!el.closest('#app'))return;
+  if(dr){
+    if(el.closest('.dr')||el.closest(SWIPE_SKIP))return;
+    _swT={x:t0.clientX,y:t0.clientY,dr:true};
+    return;
+  }
+  if(el.closest('.tabs')||el.closest(SWIPE_SKIP))return;
   _swT={x:t0.clientX,y:t0.clientY};
 },{passive:true});
 document.addEventListener('touchend',e=>{
   if(!_swT)return;
-  const t0=e.changedTouches[0],dx=t0.clientX-_swT.x,dy=t0.clientY-_swT.y;_swT=null;
-  if($('dlg').open||dr)return;
+  const mode=_swT;_swT=null;
+  const t0=e.changedTouches[0];if(!t0)return;
+  const dx=t0.clientX-mode.x,dy=t0.clientY-mode.y;
   if(Math.abs(dx)<72||Math.abs(dx)<2*Math.abs(dy))return;
-  const i=TABORDER.indexOf(tab);if(i<0)return;
-  const n=dx<0?i+1:i-1;if(n<0||n>=TABORDER.length)return;
-  tab=TABORDER[n];dr=false;drEdit=false;planView=null;hview=null;if(tab==='lists')shopDate=null;render();
+  if(dx<0)return; // left swipe: no forward navigation, no tab switching
+  const dlg=$('dlg');
+  if(mode.dlg||dlg.open){if(dlg.open)dlg.close();return}
+  if(mode.dr||dr){dr=false;drEdit=false;render();return}
+  navBack();
 },{passive:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(()=>{if(tab!=='set')render()})});
 async function loadSettings(){
