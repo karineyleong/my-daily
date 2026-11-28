@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>My Daily</title>
 <style>
-:root{--ac:#1E88E5;--bg:#F6F9FB;--ink:#22303C;--mut:#8494A3;--card:#FFFFFF;--ln:#E1E8EE;--on:#FFFFFF;--ac2:#64B5F6;--fd:-apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif;--fs1:20px;--fs2:13px;--fs3:15px;--fs4:13px;--fs5:12px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--ac:#1E88E5;--bg:#F6F9FB;--ink:#22303C;--mut:#8494A3;--card:#FFFFFF;--ln:#E1E8EE;--on:#FFFFFF;--ac2:#64B5F6;--fd:-apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif;--fs1:20px;--fs2:13px;--fs3:15px;--fs4:13px;--fs5:12px;--r-xl:16px;--r-md:12px;--r-sm:10px;--r-xs:8px;--bw:1px;--sat:#4A7FB5;--sun:#D0483E;--grn:#43A047;--del:#C0392B;--sp-card:18px;--sp-gap:16px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 /* ===== v29: type scale — --fs1 page title / --fs2 section heading / --fs3 body (item names, buttons) / --fs4 secondary (dates, counts, meta) / --fs5 small (memo, hints). Form controls keep 16px so iOS Safari does not zoom on focus. ===== */
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,"Hiragino Sans","PingFang TC","Noto Sans TC","Noto Sans JP",sans-serif}
@@ -459,7 +459,87 @@ dialog.full{height:93dvh;max-height:93dvh}
    the drawer: flat rows inside the third segmented tab. */
 .shop .hrow{display:flex;align-items:center;gap:6px;padding:9px 2px;border-bottom:1px solid var(--ln)}
 .shop .hrow .pinb{margin-left:auto}
-</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v45)</p></main><dialog id="dlg"></dialog>
+/* ===== v46 design pass =====
+   Item 11 (ONE token set, declared in :root): radii --r-xl 16px (cards,
+   panels) / --r-md 12px (inner cards, images) / --r-sm 10px (buttons,
+   inputs, header icon boxes) / --r-xs 8px (grid cells) / 99px (pills);
+   borders --bw 1px solid var(--ln) everywhere (state rings and the
+   checkbox are the documented exceptions); type --fs1 20 / --fs2 13 /
+   --fs3 15 / --fs4 13 / --fs5 12 with weights 400/600/700; colours
+   --ink / --mut / --ac / --ac2 plus semantic --sat / --sun / --grn /
+   --del; spacing rhythm: card padding --sp-card 18px, card gap
+   --sp-gap 16px, page side padding 20px, row padding 14px (habit rows
+   tightened below). The rules here re-point the shared components at
+   the tokens so every page draws from the same set. */
+.card{border-radius:var(--r-xl);padding:var(--sp-card);margin-bottom:var(--sp-gap)}
+button,.btn,input,select,textarea{border-radius:var(--r-sm)}
+dialog{border-radius:var(--r-xl) var(--r-xl) 0 0}
+.stat,.hstmc,.pfilter,.yrmon,.mmnode,.idea{border-radius:var(--r-md)}
+.cg2 .cd2:nth-child(7n+6) .dn{color:var(--sat)}
+.cg2 .cd2:nth-child(7n) .dn{color:var(--sun)}
+.cg .cd:nth-child(7n+6) .dn{color:var(--sat)}
+.cg .cd:nth-child(7n) .dn{color:var(--sun)}
+/* …and the v45 today rule is re-asserted AFTER them (same specificity,
+   later wins): today's digit stays WHITE on the blue disc, weekends too. */
+.cg2 .cd2.td .dn{color:#fff}
+.cg .cd.td .dn{color:var(--on)}
+.hn,.hn2,.wkcol .wkh{color:var(--sun)}
+.ptl .nd.done i,.ptl .ln.done{background:var(--grn)}
+.swp-bg{background:var(--del)}
+.pst.over{background:#FBEAE8;color:var(--del)}
+/* Item 5: the detail-page header row (‹ / ☰) gets the standard gap
+   before the first card below it — one value for plan detail, habit
+   detail and the finance page alike. */
+.hd{margin-bottom:12px}
+/* Item 1: habit cards hug their content — the group card padding and
+   the row padding shrink on the habit page ONLY (other pages keep the
+   v45/v46 card rhythm). A two-line habit row no longer floats in a
+   tall card. */
+.hcard{padding:10px 14px;margin-bottom:12px}
+.hcard .task{padding:8px 0}
+/* Item 12: text buttons never wrap mid-label or spill — one line,
+   sized by the layout; icon/grid buttons keep their own internals. */
+button.pri,button.sec,.btn,.segbtn,.shopsegbtn,.pchip,.chip,.ctds,.mini,.lnk,.act button,.yrpick2 button,.fchip{white-space:nowrap}
+/* Item 13: a plan task's plan name + category ride ONE small line. */
+.pmeta{font-size:var(--fs5);color:var(--mut);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Item 7: plan images (detail hero, editor preview, card thumbnail). */
+.pimg{width:100%;max-height:240px;object-fit:cover;border-radius:var(--r-md);margin-top:10px;display:block}
+.pimgprev{width:100%;max-height:180px;object-fit:cover;border-radius:var(--r-md);margin-top:8px;display:block}
+.pthumb{width:44px;height:44px;object-fit:cover;border-radius:var(--r-sm);flex:none;align-self:center}
+/* Item 9/12: the settings action row gives the notify side more room
+   (its label is the long one in English) and trims button padding so
+   neither label can spill at 360px in any language. */
+.setrow>*:first-child{flex:1.3}
+.setrow>*:last-child{flex:.9}
+.setrow button{padding:12px 10px;font-size:14px}
+/* Item 12: the shopping segmented control sizes to content (flex auto)
+   at a slightly smaller size, so the longest labels (ja/en) fit their
+   segment at 360px instead of spilling. */
+.shopsegbtn{flex:1 1 auto;font-size:13px;padding:8px 8px}
+/* Item 8: the plan editor's per-task inline editor (date/time + memo). */
+.ptedit{border:var(--bw) solid var(--ln);border-radius:var(--r-md);padding:4px 10px 10px;margin:2px 0 10px;background:#F8FAFC}
+.ptedit label{margin-top:8px}
+/* Item 14: desktop (≥1024px) — the app stops being a stretched phone
+   column: wider measure, roomier calendar, 3-up year grid and stat
+   grids, centred modal dialogs, the plans rail clears the wider page
+   padding, and the FABs track the content edge. Phone layouts are
+   untouched (every rule lives inside this media query). */
+@media (min-width:1024px){
+  main{max-width:1080px;padding:20px 36px 140px}
+  .tabs{width:min(92vw,560px)}
+  dialog{width:min(560px,94vw);margin:auto;border:var(--bw) solid var(--ln)}
+  .calcard.mm .cd2{min-height:88px}
+  .yrgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hstm{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .finstat{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ideas{columns:3}
+  .prail{margin-left:-36px}
+  .fab{right:max(20px,calc(50% - 520px))}
+  .fab2{right:max(28px,calc(50% - 512px))}
+  .dual{gap:16px}
+}
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v46)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -603,11 +683,14 @@ Object.assign(T.zh,{compCal:'公司',listsPage:'購買清單',liAdd:'新增項�
 Object.assign(T.ja,{compCal:'会社',listsPage:'買い物リスト',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',evScope:'区分'});
 Object.assign(T.en,{compCal:'Company',listsPage:'Shopping list',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',evScope:'Scope'});
 Object.assign(T.zh,{master:'待買清單',todayList:'今日購買清單',slPh:'要買的東西…',slNone:'還沒有待買清單，按上方 ＋ 建立第一張（例如：超市、藥妝、網購）。',dayEmpty:'還沒有選購項目，去「待買清單」頁籤點選項目就會加入。',dayNone:'這天沒有購買清單。',backToday:'回到今日',shareBtn:'分享',copied2:'已複製 ✓',shopSql:'購買清單的資料表還沒建立，請先在 Supabase 執行 sql-v29.sql。',history:'購買記錄',histNone:'還沒有購買記錄。',nameReq:'名稱不可空白',memo:'備註',memoPh:'寫低備註（例如：2 包、特價先買）…'});
-Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物リスト',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。「買うものリスト」タブで項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v29.sql を実行してください。',history:'購入記録',histNone:'購入記録はまだありません。',nameReq:'名前を入力してください',memo:'メモ',memoPh:'メモを書く（例：2パック、特売なら買う）…'});
-Object.assign(T.en,{master:'To-buy lists',todayList:"Today's shopping list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the To-buy tab to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v29.sql in Supabase first.',history:'Purchase records',histNone:'No purchase records yet.',nameReq:'Name cannot be empty',memo:'Memo',memoPh:'Add a memo (e.g. 2 packs, buy if on sale)…'});
+Object.assign(T.ja,{master:'買うものリスト',todayList:'今日の買い物',slPh:'買うもの…',slNone:'買うものリストはまだありません。上の＋で最初の1つを作成（例：スーパー、薬局、通販）。',dayEmpty:'まだ選んでいません。「買うものリスト」タブで項目をタップすると追加されます。',dayNone:'この日の買い物リストはありません。',backToday:'今日に戻る',shareBtn:'共有',copied2:'コピーしました ✓',shopSql:'買い物リストのテーブルが未作成です。先にSupabaseで sql-v29.sql を実行してください。',history:'購入記録',histNone:'購入記録はまだありません。',nameReq:'名前を入力してください',memo:'メモ',memoPh:'メモを書く（例：2パック、特売なら買う）…'});
+Object.assign(T.en,{master:'To-buy lists',todayList:"Today's list",slPh:'Item to buy…',slNone:'No to-buy lists yet. Tap ＋ above to create the first one (e.g. Supermarket, Pharmacy, Online).',dayEmpty:'Nothing picked yet. Tap items in the To-buy tab to add them here.',dayNone:'No shopping list on this day.',backToday:'Back to today',shareBtn:'Share',copied2:'Copied ✓',shopSql:'The shopping-list tables are missing. Run sql-v29.sql in Supabase first.',history:'Purchase records',histNone:'No purchase records yet.',nameReq:'Name cannot be empty',memo:'Memo',memoPh:'Add a memo (e.g. 2 packs, buy if on sale)…'});
 Object.assign(T.zh,{pSearchPh:'搜尋計劃…',pFilter:'篩選',pClearF:'清除篩選',pStatus:'狀態',pNewType:'＋ 新增種類…',pPickTag:'已有的 #'});
 Object.assign(T.ja,{pSearchPh:'プランを検索…',pFilter:'絞り込み',pClearF:'絞り込みをクリア',pStatus:'状態',pNewType:'＋ 新しいタイプ…',pPickTag:'既存の #'});
 Object.assign(T.en,{pSearchPh:'Search plans…',pFilter:'Filter',pClearF:'Clear filters',pStatus:'Status',pNewType:'＋ New type…',pPickTag:'Existing #'});
+Object.assign(T.zh,{pImg:'圖片',pImgAdd:'上傳圖片',pImgDel:'刪除圖片',pImgHint:'選圖後會自動壓縮（約 300KB 以內）再儲存。',notifOn:'通知已開 ✓',notifOff:'通知未開'});
+Object.assign(T.ja,{pImg:'画像',pImgAdd:'画像を追加',pImgDel:'画像を削除',pImgHint:'選んだ画像は自動で圧縮（約300KB以内）して保存します。',notifOn:'通知オン ✓',notifOff:'通知オフ'});
+Object.assign(T.en,{pImg:'Image',pImgAdd:'Add image',pImgDel:'Remove image',pImgHint:'Picked images are auto-compressed (about 300KB max) before saving.',notifOn:'On ✓',notifOff:'Off'});
 let lang=localStorage.lang||'zh',color=localStorage.color||'#1E88E5',uname=localStorage.dname||'',session=null;
 const t=k=>T[lang][k],$=id=>document.getElementById(id),msg=s=>{$('m').textContent=s};
 const root=document.documentElement;
@@ -649,6 +732,7 @@ let mmPos={};try{mmPos=JSON.parse(localStorage.mmpos||'{}')}catch(e){}
 const PC=['#8A96A0','#8FA382','#F5A524','#E5484D'];
 let shareCals=[],calMembers=[],shareErr=false,evV20=false,habV21=false,evV24=false,evV33=false;
 let hlists=[],plans=[],pfin=[],planErr=false,planV23=false,habList=false,hlistView='all',planView=null,finCur=null;
+let planImgV46=false; // v46: plans.image column probe (sql-v46.sql); false = upload UI hidden, everything else unchanged
 let slists=[],litems=[],dlists=[],ditems=[],shopV25=false,shopList=null,shopDate=null,shopDay=null,dayNameV27=false,dayPinV28=false,noteV29=false,shopTab='master';
 let drEdit=false,planFlt='all',finPlan='all',dedupDone=false,_loadP=null;
 // v42: plans page keyword search + funnel filter state (ANDed with the rail)
@@ -692,11 +776,15 @@ const fmt=d=>new Date(d).toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang]
    date only in task rows; any other time renders in full via fmt(). */
 const fmtDue=d=>{const dt=new Date(d);return dt.getHours()===0&&dt.getMinutes()===0?dt.toLocaleString({zh:'zh-TW',ja:'ja-JP',en:'en-US'}[lang],{month:'numeric',day:'numeric'}):fmt(d)};
 const toL=d=>{d=new Date(d);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)};
-function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans,pfin,planV23,habList,slists,litems,dlists,ditems,shopV25,evV24,dayNameV27,dayPinV28,noteV29,evV33})}catch(e){}}
+/* v46: plan images (already ≤~300KB data URLs) are stripped from the
+   offline cache copy so a library of plan photos can never blow the
+   localStorage quota and silently kill the whole cache; the live rows
+   keep their image, and an online load restores it. */
+function cacheData(){try{localStorage.mdcache=JSON.stringify({tasks,cats,ideas,maps,habits,hlogs,events,ecats,langs,words,ssess,squiz,shareCals,calMembers,evV20,habV21,curMap,curLang,hlists,plans:plans.map(p=>{if(!p||!p.image)return p;const q={...p};delete q.image;return q}),pfin,planV23,planImgV46,habList,slists,litems,dlists,ditems,shopV25,evV24,dayNameV27,dayPinV28,noteV29,evV33})}catch(e){}}
 function hydrate(){
   try{const c=JSON.parse(localStorage.mdcache||'null');if(!c)return false;
   tasks=c.tasks||[];cats=c.cats||[];ideas=c.ideas||[];maps=c.maps||[];habits=c.habits||[];hlogs=c.hlogs||[];events=c.events||[];ecats=c.ecats||[];langs=c.langs||[];words=c.words||[];ssess=c.ssess||[];squiz=c.squiz||[];shareCals=c.shareCals||[];calMembers=c.calMembers||[];
-  evV20=!!c.evV20;habV21=!!c.habV21;curMap=c.curMap||curMap;if(c.curLang)curLang=c.curLang;hlists=c.hlists||[];plans=c.plans||[];pfin=c.pfin||[];planV23=!!c.planV23;habList=!!c.habList;planErr=false;
+  evV20=!!c.evV20;habV21=!!c.habV21;curMap=c.curMap||curMap;if(c.curLang)curLang=c.curLang;hlists=c.hlists||[];plans=c.plans||[];pfin=c.pfin||[];planV23=!!c.planV23;planImgV46=!!c.planImgV46;habList=!!c.habList;planErr=false;
   slists=c.slists||[];litems=c.litems||[];dlists=c.dlists||[];ditems=c.ditems||[];shopV25=!!c.shopV25;evV24=!!c.evV24;dayNameV27=!!c.dayNameV27;dayPinV28=!!c.dayPinV28;noteV29=!!c.noteV29;evV33=!!c.evV33;
   ideaErr=null;habitErr=null;evErr=null;langErr=null;shareErr=false;return true}catch(e){return false}
 }
@@ -820,6 +908,8 @@ async function loadDataImpl(){
   // presets can never be re-created on a later boot.
   try{const _pp=await sb.from('tasks').select('plan_id').limit(1);const _pe=await sb.from('events').select('plan_id').limit(1);planV23=!_pp.error&&!_pe.error}catch(_){planV23=false}
   try{const _pl2=await sb.from('habits').select('list_id').limit(1);habList=!_pl2.error}catch(_){habList=false}
+  // ===== v46: plan images (graceful if sql-v46.sql not run yet: no image column -> the upload UI stays hidden and plans load exactly as before) =====
+  try{const _pi=await sb.from('plans').select('image').limit(1);planImgV46=!_pi.error}catch(_){planImgV46=false}
   try{
     const pl=await sb.from('plans').select('*').order('created_at');
     planErr=!!pl.error;plans=pl.error?[]:pl.data;
@@ -841,9 +931,16 @@ const vname=()=>({all:t('all'),today:t('today'),tomorrow:t('tomorrow'),inbox:t('
 function row(x,sub){
   const k=kids(x.id).sort((a,b)=>(+a.done-+b.done)||cmp(a,b)),c=catOf(x.category_id),od=!x.done&&isOv(x);
   const p=k.length?Math.round(k.filter(y=>y.done).length/k.length*100):(x.done?100:x.progress||0);
+  /* v46 (item 13): a PLAN task's row in the To Do lists shows ONLY its
+     title, its date and its memo — the plan name and the category are
+     demoted to one small line underneath (the v45 .ptag chip is gone).
+     Plain tasks keep the v45 row exactly. */
+  const pl=!sub&&x.plan_id?planOf(x.plan_id):null;
+  const mid=pl?`${x.due_at||x.note?`<div class="meta">${[x.due_at?`<span class="${od?'od':''}">${fmtDue(x.due_at)}</span>`:'',x.note?esc(x.note.slice(0,60)):''].filter(Boolean).join(' · ')}</div>`:''}<div class="pmeta">🗂 ${esc(pl.title)}${c?' · '+esc((c.icon||'')+' '+catName(c)):''}</div>`
+    :`${x.note?`<div class="meta">${esc(x.note.slice(0,60))}</div>`:''}
+<div class="meta rw"><span class="${od?'od':''}">${x.due_at?fmtDue(x.due_at):''}</span>${sub?'':`<span class="cat2">${c?esc((c.icon||'')+' '+catName(c)):t('inbox')}</span>`}</div>`;
   return swpWrap('task',x.id,`<div class="task${sub?' sub':''}${x.done?' done':''}"><input type="checkbox" class="pc" style="--pc:${PC[x.importance]||PC[0]}" data-a="chk" data-id="${x.id}"${x.done?' checked':''} aria-label="${t('chk')}">
-<div class="tt" data-a="edit" data-id="${x.id}"><b>${x.icon?esc(x.icon)+' ':''}${esc(x.title)}</b>${x.note?`<div class="meta">${esc(x.note.slice(0,60))}</div>`:''}
-<div class="meta rw"><span class="${od?'od':''}">${x.due_at?fmtDue(x.due_at):''}</span>${sub?'':`<span class="cat2">${c?esc((c.icon||'')+' '+catName(c)):t('inbox')}</span>`}${!sub&&x.plan_id&&planOf(x.plan_id)?`<span class="ptag">🗂 ${esc(planOf(x.plan_id).title)}</span>`:''}</div>
+<div class="tt" data-a="edit" data-id="${x.id}"><b>${x.icon?esc(x.icon)+' ':''}${esc(x.title)}</b>${mid}
 ${(k.length||p)?`<div class="bar"><i style="width:${p}%"></i></div>`:''}</div></div>`)+k.map(y=>row(y,1)).join('');
 }
 function listFor(vw){
@@ -943,8 +1040,17 @@ function drawer(){
   return head+(drEdit?editRows(cats,'task'):`${it2('all',lic('inbox'),t('all'),n.length)}${it2('today',lic('cal'),t('today'),n.filter(todayP).length)}${it2('tomorrow',lic('sunrise'),t('tomorrow'),n.filter(tmrP).length)}
 ${cats.map(c=>it2(c.id,c.icon||'📁',esc(catName(c)),n.filter(x=>x.category_id===c.id).length)).join('')}${it2('done',lic('checkc'),t('completed'))}`)+'</aside>';
 }
-const setHTML0=()=>`<div class="card"><label for="nm">${t('name')}</label><input id="nm" type="text" maxlength="20" value="${esc(uname)}">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
-<p class="meta">${esc(session.user.email)}</p><div class="top"><button class="sec" data-a="lo">${t('out')}</button></div>`;
+/* v46 (item 9): the name field is GONE from settings — the stored
+   display name still drives the app title / share name where it exists
+   (both fall back cleanly: 'My Daily' title, email for sharing), but
+   nothing on this page asks for it any more. Notification + logout
+   share ONE row at the bottom of the settings card: the notify side is
+   the live 許可 button while permission is undecided, and a short
+   status button (通知已開 ✓ / 通知未開) once decided or unavailable. */
+const setHTML0=()=>{const sup='Notification'in window,st=sup?Notification.permission:'na';
+  const nBtn=st==='default'?`<button class="pri" data-a="nreq">${lic('bell',15)} ${t('notifBtn')}</button>`:`<button class="sec" disabled>${lic(st==='granted'?'bell':'belloff',15)} ${st==='granted'?t('notifOn'):t('notifOff')}</button>`;
+  return `<div class="card">${langSelect()}<label for="cl">${t('color')}</label><input id="cl" type="color" value="${color}"><div class="msg" id="m" role="status"></div></div>
+<p class="meta">${esc(session.user.email)}</p><div class="row setrow">${nBtn}<button class="sec" data-a="lo">${lic('logout',15)} ${t('out')}</button></div>`};
 const LOC={zh:'zh-TW',ja:'ja-JP',en:'en-US'},WK={zh:'一二三四五六日',ja:'月火水木金土日',en:'MTWTFSS'};
 const ICON={habit:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/>',todo:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l3 3 5-6"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',idea:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',study:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>',plan:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9.5 4a2.5 2.5 0 0 1 5 0M9 11h6M9 15h4"/>',lists:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/>',fin:'<path d="M12 3v9h9"/><path d="M20.5 15.5A9 9 0 1 1 12 3a9 9 0 0 1 8.5 12.5z"/><path d="M15.5 3.6A8 8 0 0 1 20.4 9H15.5z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'};
 const LIC={eye:'<path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',share:'<path d="M12 15V3.5"/><path d="M7 7.3L12 2.6l5 4.7"/><path d="M5 12.5V20a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 20v-7.5"/>',lock:'<rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/>',users:'<circle cx="9" cy="8" r="3.4"/><path d="M3.6 19.6c.6-3 2.7-4.7 5.4-4.7s4.8 1.7 5.4 4.7"/><path d="M15.6 5.1a3.4 3.4 0 0 1 0 5.8M17.9 15.3c1.5.8 2.4 2.2 2.7 4.3"/>',brief:'<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V6.5A2.5 2.5 0 0 1 11.5 4h1A2.5 2.5 0 0 1 15 6.5V8"/><path d="M3 13h18"/>',cart:'<circle cx="9.5" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 3.5h2.2l2.2 11a1.6 1.6 0 0 0 1.6 1.3h7.7a1.6 1.6 0 0 0 1.6-1.3L20 7.5H6"/>',stopw:'<path d="M9.5 2.8h5"/><path d="M12 2.8V6"/><circle cx="12" cy="13.2" r="7.3"/><path d="M12 9.9v3.3l2.5 1.7"/>',pin:'<path d="M12 21.2S5.8 15.6 5.8 10.6a6.2 6.2 0 0 1 12.4 0c0 5-6.2 10.6-6.2 10.6z"/><circle cx="12" cy="10.6" r="2.3"/>',sliders:'<path d="M4 8.5h9M17.5 8.5H20M4 15.5h3M11.5 15.5H20"/><circle cx="15" cy="8.5" r="2.3"/><circle cx="9" cy="15.5" r="2.3"/>',inbox:'<path d="M3.5 13.5L5.8 5A1.5 1.5 0 0 1 7.3 4h9.4a1.5 1.5 0 0 1 1.5 1l2.3 8.5V19a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19z"/><path d="M3.5 13.5H9l1.3 2h3.4l1.3-2h5.5"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',calplus:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M12 13.2v5M9.5 15.7h5"/>',sunrise:'<path d="M12 8.5V3"/><path d="M9.2 5.8L12 3l2.8 2.8"/><path d="M5.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M2.5 20h19"/><path d="M5 16.5H3M21 16.5h-2"/>',checkc:'<circle cx="12" cy="12" r="8.6"/><path d="M8.4 12.4l2.5 2.5 4.8-5.4"/>',alert:'<path d="M12 4.2L2.9 19.5h18.2z"/><path d="M12 10v4.2"/><path d="M12 17.3h.01"/>',tag:'<path d="M3.8 3.8h7L20.3 13.3a1.9 1.9 0 0 1 0 2.7l-4.3 4.3a1.9 1.9 0 0 1-2.7 0L3.8 10.8z"/><circle cx="8.2" cy="8.2" r="1.5"/>',chart:'<path d="M12 3v9h9"/><path d="M20.5 15.5A9 9 0 1 1 12 3a9 9 0 0 1 8.5 12.5z"/><path d="M15.5 3.6A8 8 0 0 1 20.4 9H15.5z"/>',coin:'<circle cx="12" cy="12" r="8.6"/><path d="M15.3 9.3c-.6-1-1.8-1.6-3.3-1.6-1.9 0-3.4 1.1-3.4 2.6 0 3.5 6.8 1.9 6.8 4.5 0 1.5-1.5 2.5-3.4 2.5-1.5 0-2.8-.6-3.5-1.7M12 5.2v13.6"/>',globe:'<circle cx="12" cy="12" r="8.8"/><path d="M3.2 12h17.6"/><path d="M12 3.2c2.6 2.5 3.9 5.4 3.9 8.8s-1.3 6.3-3.9 8.8c-2.6-2.5-3.9-5.4-3.9-8.8s1.3-6.3 3.9-8.8z"/>',logout:'<path d="M13.5 4.5H7A1.5 1.5 0 0 0 5.5 6v12A1.5 1.5 0 0 0 7 19.5h6.5"/><path d="M10 12h10.5"/><path d="M17.2 8.3L20.9 12l-3.7 3.7"/>',bell:'<path d="M6.2 16.2v-5.4a5.8 5.8 0 0 1 11.6 0v5.4l1.3 3.1H4.9z"/><path d="M10.1 21a2.1 2.1 0 0 0 3.8 0"/>',belloff:'<path d="M6.2 16.2v-5.4a5.8 5.8 0 0 1 10-4M17.8 16.2l1.3 3.1H4.9z"/><path d="M10.1 21a2.1 2.1 0 0 0 3.8 0"/><path d="M4 3.5l16 17"/>',trash:'<path d="M4 6.8h16"/><path d="M9.2 6.8V4.6A1.4 1.4 0 0 1 10.6 3.2h2.8a1.4 1.4 0 0 1 1.4 1.4v2.2"/><path d="M6.2 6.8l.9 12.4A1.6 1.6 0 0 0 8.7 20.7h6.6a1.6 1.6 0 0 0 1.6-1.5l.9-12.4"/><path d="M10 10.8v6M14 10.8v6"/>',palette:'<path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.2 0 1.9-.9 1.9-1.9 0-.8-.6-1.4-.6-2.2 0-.9.7-1.6 1.7-1.6h1.7a4.3 4.3 0 0 0 4.3-4.3c0-3.8-4-6-9-6z"/><circle cx="7.5" cy="10.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="11" cy="7" r="1.1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"/>',wifioff:'<path d="M2.5 9a15 15 0 0 1 5-3.4M21.5 9a15 15 0 0 0-8.3-3.9"/><path d="M5.2 12.8a10 10 0 0 1 3-2M18.8 12.8a10 10 0 0 0-2.5-1.7"/><path d="M8.6 16.2a5.2 5.2 0 0 1 4.9-.5"/><circle cx="12" cy="19.6" r="1.15" fill="currentColor" stroke="none"/><path d="M3.5 3.5l17 17"/>',note:'<rect x="4.5" y="4" width="15" height="16" rx="2"/><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4"/>',trophy:'<path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 5.8H4.6A2.4 2.4 0 0 0 7 9.2M17 5.8h2.4A2.4 2.4 0 0 1 17 9.2"/><path d="M12 14v2.8M8.8 20.5h6.4M12 16.8v3.7"/>'};
@@ -1005,14 +1111,26 @@ function calBy(f,t){
   // off the calendar); plans without module data show their dates.
   if(visPriv){
     plans.forEach(p=>{
-      if(!p.start_at||(p.modules&&!p.modules.time))return;
-      const st0=sod(new Date(p.start_at)),en0=sod(new Date(p.end_at||p.start_at));
+      // v46 (item 4): a module flag only hides the plan when it is
+      // EXPLICITLY off (0/false). Plans saved by older editors may carry
+      // a partial modules object with no `time` key at all — the old
+      // truthiness check silently dropped those plans from the calendar
+      // (the user's NARA plan). Missing flag = module on, as in the
+      // editor's own defaults.
+      if(!p.start_at||(p.modules&&(p.modules.time===0||p.modules.time===false)))return;
+      let st0=sod(new Date(p.start_at)),en0=sod(new Date(p.end_at||p.start_at));
+      // v46 (item 4): legacy rows can carry a REVERSED span (end before
+      // start — produced by the pre-v46 editor defaults). Normalise by
+      // swapping for display so the plan's NAME still appears across
+      // the span instead of vanishing; the stored data is only fixed
+      // when the plan is next saved (the v46 editor guard).
+      if(en0<st0){const t2=st0;st0=en0;en0=t2}
       for(let d=new Date(st0),i=0;d<=en0&&i<370;d.setDate(d.getDate()+1),i++)mark(new Date(d),planCalEv(p));
     });
     tasks.forEach(x=>{
       if(!x.plan_id||x.done||!x.due_at)return;
       const p=planOf(x.plan_id);
-      if(!p||(p.modules&&!p.modules.tasks))return;
+      if(!p||(p.modules&&(p.modules.tasks===0||p.modules.tasks===false)))return;
       mark(new Date(x.due_at),planTaskEv(x));
     });
   }
@@ -1028,6 +1146,13 @@ function dayParts(by,d){
   const items=(by[dkOf(d)]||[]).slice();
   return{items,evs:items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks:items.filter(x=>!x.start_at).sort(cmp)};
 }
+/* v46 (item 2): the day-detail section under the calendar follows the
+   DISPLAYED month — when month navigation (or a year jump) leaves the
+   selected day outside the month on screen, the selection moves into
+   that month keeping its day number, clamped to the month's last day
+   (Jan 31 -> Feb 28). Tapping any visible day (incl. the grey
+   neighbour-month cells, cmday/cday) already sets cs directly. */
+const calFollow=()=>{if(cs.getFullYear()!==cm.getFullYear()||cs.getMonth()!==cm.getMonth()){const last=new Date(cm.getFullYear(),cm.getMonth()+1,0).getDate();cs=new Date(cm.getFullYear(),cm.getMonth(),Math.min(cs.getDate(),last))}};
 const evViewer=e=>!!(e.calendar_id&&myCal(e.calendar_id)&&myCal(e.calendar_id).role==='viewer');
 function evRow(e){
   // v45 (item 7): virtual plan rows — private scope tag, plan chip, and
@@ -1151,7 +1276,8 @@ function openYearPick(){
   dlg.innerHTML=`<h3 style="margin:2px 0 10px">${t('yrSel')}</h3><div class="yrpick2">${btns}</div><div class="row"><button class="sec" id="yp-x">${t('cancel')}</button></div>`;
   dlg.showModal();
   dlg.querySelectorAll('[data-yr]').forEach(b=>b.onclick=()=>{const y=+b.dataset.yr;
-    if(['list','month','year'].includes(calView))cm=new Date(y,cm.getMonth(),1);
+    if(['list','month'].includes(calView)){cm=new Date(y,cm.getMonth(),1);calFollow()}
+    else if(calView==='year')cm=new Date(y,cm.getMonth(),1);
     else{const nd=new Date(y,cs.getMonth(),Math.min(cs.getDate(),new Date(y,cs.getMonth()+1,0).getDate()));cs=nd;cm=new Date(y,nd.getMonth(),1)}
     dlg.close();render()});
   $('yp-x').onclick=()=>dlg.close();
@@ -1328,8 +1454,11 @@ function openFocus(habit){
   renderChips();paintSnd();paint();
 }
 function openEvent(id){
-  const dlg=$('dlg'),b=new Date(cs);b.setHours(9,0,0,0);
-  const x=id?events.find(e=>e.id===id):{start_at:b.toISOString(),end_at:new Date(+b+36e5).toISOString(),category_id:ecats[0]?ecats[0].id:null,remind_min:null,all_day:false,repeat_kind:'none'};
+  const dlg=$('dlg'),b=new Date(cs);b.setHours(0,0,0,0);
+  // v46 (item 3): a NEW event starts at 00:00 on the selected day and its
+  // end mirrors the start (same day, 00:00) until the user edits the end
+  // directly — never the current time, never a stray +1h default.
+  const x=id?events.find(e=>e.id===id):{start_at:b.toISOString(),end_at:new Date(+b).toISOString(),category_id:ecats[0]?ecats[0].id:null,remind_min:null,all_day:false,repeat_kind:'none'};
   const L0=toL(x.start_at),L1=x.end_at?toL(x.end_at):L0;
   // v33: the カレンダー picker row is gone. 区分 is the single 3-way scope
   // (私人/共享/公司); an event on a shared calendar derives 共享 from its
@@ -1359,9 +1488,15 @@ ${evV24?`<div class="frow"><span>${t('evScope')}</span><select id="e-scope" aria
   // day) fills end = start+1h. Save below enforces the same rules.
   const _p2=n=>String(n).padStart(2,'0'),HHMM=d=>_p2(d.getHours())+':'+_p2(d.getMinutes()),_dt=(d,t)=>new Date(d+'T'+(t||'00:00'));
   let pvS={d:$('e-sd').value,t:$('e-st').value};
+  // v46 (item 3): for a NEW event the end is on auto-pilot (mirrors the
+  // start's date AND time) until the user edits an end field directly;
+  // from then on the v33 duration-preserving shift applies, exactly as
+  // it always has for existing events (etAuto starts false for edits).
+  let etAuto=!id;
   const onStart=()=>{
     const nd=$('e-sd').value,nt=$('e-st').value,edEl=$('e-ed'),etEl=$('e-et');
     if(!nd||!pvS.d){pvS={d:nd,t:nt};return}
+    if(etAuto){edEl.value=nd;etEl.value=nt;pvS={d:nd,t:nt};return}
     if(nt&&pvS.t){const delta=+_dt(nd,nt)-+_dt(pvS.d,pvS.t);
       if(delta&&edEl.value){const ne=new Date(+_dt(edEl.value,etEl.value)+delta);edEl.value=ymd(ne);if(etEl.value)etEl.value=HHMM(ne)}
     }else{const dd=Math.round((new Date(nd)-new Date(pvS.d))/864e5);
@@ -1370,6 +1505,7 @@ ${evV24?`<div class="frow"><span>${t('evScope')}</span><select id="e-scope" aria
     pvS={d:nd,t:nt};
   };
   const onEnd=()=>{
+    etAuto=false; // v46: a direct end edit ends the auto-mirror for good
     const sdEl=$('e-sd'),edEl=$('e-ed'),stEl=$('e-st'),etEl=$('e-et');
     if(!sdEl.value||!edEl.value||!stEl.value||!etEl.value)return;
     const s=_dt(sdEl.value,stEl.value),e=_dt(edEl.value,etEl.value);
@@ -1623,7 +1759,7 @@ function planListHTML(list0){
   if(pFTag)list=list.filter(p=>planTagsOf(p).includes(pFTag));
   const kw=pQ.trim().toLowerCase();
   if(kw)list=list.filter(p=>((p.title||'')+' '+(p.type||'')+' '+planTagsOf(p).map(g=>'#'+g).join(' ')).toLowerCase().includes(kw));
-  const row=p=>{const pr=planProg(p);return `<div class="task pcard"><span class="pst ${st4(p)}">${pr.st}</span><div class="tt" data-a="pview" data-id="${p.id}"><b>${esc(p.title)}</b>
+  const row=p=>{const pr=planProg(p);return `<div class="task pcard"><span class="pst ${st4(p)}">${pr.st}</span>${p.image?`<img class="pthumb" src="${p.image}" alt="">`:''}<div class="tt" data-a="pview" data-id="${p.id}"><b>${esc(p.title)}</b>
 <div class="meta rw"><span>${pPeriod(p)||''}</span></div>
 ${p.type||p.tag?`<div class="meta">${p.type?`<span class="tag" style="background:var(--ln)">${esc(p.type)}</span>`:''}${planTagsOf(p).map(g=>`<span class="tag" style="background:var(--ln)">#${esc(g)}</span>`).join('')}</div>`:''}
 ${p.people!=null?`<div class="meta">👥 ${p.people}</div>`:''}
@@ -1650,14 +1786,16 @@ function planTaskRow(x){
   return `<div class="task"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="ptask" data-id="${x.id}"${x.done?' checked':''}><div class="tt"><b>${esc(x.title)}</b>${det?`<div class="pdet">${det}</div>`:''}</div></div>`;
 }
 function planDetailHTML(p){
-  const M=p.modules||{},pr=planProg(p),ts=tasks.filter(x=>x.plan_id===p.id&&!x.parent_id).sort(cmp);
+  // v46 (item 6): the detail task list uses the SAME cmpDue order as the
+  // card timeline (planTasksOf), so node i on the timeline is row i here.
+  const M=p.modules||{},pr=planProg(p),ts=tasks.filter(x=>x.plan_id===p.id&&!x.parent_id).sort(cmpDue);
   const fes=finOf(p.id),curs=[...new Set(fes.map(f=>f.currency||'JPY'))];
   const info=[M.type&&p.type?`<div class="meta">${t('pType')}：${esc(p.type)}${planTagsOf(p).length?' · '+planTagsOf(p).map(g=>'#'+esc(g)).join(' '):''}</div>`:'',
     M.time&&pPeriod(p)?`<div class="meta">🗓 ${pPeriod(p)}</div>`:'',
     M.loc&&p.location?`<div class="meta">📍 ${esc(p.location)}</div>`:'',
     M.people&&p.people!=null?`<div class="meta">👥 ${p.people}</div>`:''].join('');
   return drawer()+`<div class="hd"><span><button class="sec ic" data-a="pback" aria-label="‹">‹</button> <button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button></span><span class="meta">${pr.st}${pr.ts.length?` · ${pr.dn}/${pr.ts.length} · ${pr.pct}%`:''}</span></div>
-<div class="card"><b style="font-size:19px">${esc(p.title)}</b>${info}${pr.ts.length?`<div class="pbar"><i style="width:${pr.pct}%"></i></div>`:''}</div>
+<div class="card"><b style="font-size:19px">${esc(p.title)}</b>${info}${p.image?`<img class="pimg" src="${p.image}" alt="">`:''}${pr.ts.length?`<div class="pbar"><i style="width:${pr.pct}%"></i></div>`:''}</div>
 ${M.tasks?`<div class="card"><b>${t('pTasks')}</b>${ts.length?ts.map(planTaskRow).join(''):`<p class="meta">—</p>`}</div>`:''}
 ${M.funds?`<div class="card"><b>${t('pFunds')}</b>${fes.length?fes.map(f=>`<div class="task"><span class="tag" style="background:${f.kind==='in'?'#E3F2E6':'#FDE8E8'}">${f.kind==='in'?t('pIn'):t('pOut')}</span><div class="tt"><b>${esc(f.content||'')}</b><div class="meta">${esc(f.entry_date||'')}</div></div><b>${(+f.amount||0).toLocaleString()} ${esc(f.currency||'JPY')}</b></div>`).join(''):`<p class="meta">—</p>`}</div>${curs.map(c=>finPie(fes.filter(f=>(f.currency||'JPY')===c).map(f=>({...f,_k:f.content||'—'})),t('pOut')+' · '+c,'out')).join('')}`:''}
 <div class="card"><div class="row"><button class="sec" data-a="pedit" data-id="${p.id}">✎ ${t('edit')}</button><button class="sec" data-a="pdel" data-id="${p.id}">${t('del')}</button></div></div>`;
@@ -1679,6 +1817,25 @@ ${finPie(byPlan,t('pOut')+' · '+t('pByPlan'),'out')}
 ${finPie(byPlan,t('pIn')+' · '+t('pByPlan'),'in')}
 ${finBars(es)}`;
 }
+/* v46 (item 7): client-side image compression for plan photos — downscale
+   to a 1280px long edge and JPEG-encode, stepping quality/size down until
+   the data URL is ~300KB territory. Only the compressed string ever
+   reaches storage, the offline cache path or the wire. */
+async function compressImg(file){
+  const url=URL.createObjectURL(file);
+  try{
+    const img=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=url});
+    let w=img.naturalWidth||img.width||0,h=img.naturalHeight||img.height||0;
+    if(!w||!h)throw new Error('bad image');
+    const MAX=1280;if(Math.max(w,h)>MAX){const s=MAX/Math.max(w,h);w=Math.max(1,Math.round(w*s));h=Math.max(1,Math.round(h*s))}
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+    cv.getContext('2d').drawImage(img,0,0,w,h);
+    let out=cv.toDataURL('image/jpeg',0.82);
+    if(out.length>400*1024)out=cv.toDataURL('image/jpeg',0.62);
+    if(out.length>400*1024){cv.width=Math.round(w*0.7);cv.height=Math.round(h*0.7);cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);out=cv.toDataURL('image/jpeg',0.6)}
+    return out;
+  }finally{try{URL.revokeObjectURL(url)}catch(_){}}
+}
 function openPlan(id){
   const dlg=$('dlg'),x=id?plans.find(p=>p.id===id):null;
   const M=Object.assign({type:1,tasks:1,loc:1,time:1,people:0,funds:1},x&&x.modules?x.modules:{});
@@ -1696,22 +1853,33 @@ function openPlan(id){
 <div id="p-newtype" style="display:none"><div class="tbar"><input id="p-typenew" type="text" maxlength="20" placeholder="${t('pType')}"><button type="button" class="pri" id="p-typeadd">＋</button></div></div>
 ${allTags.length?`<div class="dchips" id="p-tagpick" aria-label="${t('pPickTag')}">${allTags.map(g=>`<button type="button" class="pchip" data-ptag="${esc(g)}">#${esc(g)}</button>`).join('')}</div>`:''}</div>
 <div id="w-loc"><label>${t('pLoc')}</label><input id="p-loc" type="text" maxlength="120" value="${esc(x&&x.location||'')}"></div>
+${planImgV46?`<div id="w-img"><label>${t('pImg')}</label><div id="p-imgprev">${x&&x.image?`<img class="pimgprev" src="${x.image}" alt="">`:''}</div><p class="meta">${t('pImgHint')}</p><div class="row"><button type="button" class="sec" id="p-imgup">${t('pImgAdd')}</button><button type="button" class="sec" id="p-imgdel" style="${x&&x.image?'':'display:none'}">${t('pImgDel')}</button></div><input type="file" id="p-imgf" accept="image/*" style="display:none"></div>`:''}
 <div id="w-time"><div class="frow"><span>${t('start')}</span><span class="dtf"><input type="date" id="p-sd" value="${x&&x.start_at?toL(x.start_at).slice(0,10):''}" aria-label="${t('start')}"><input type="time" id="p-st" value="${x&&x.start_at?toL(x.start_at).slice(11,16):'00:00'}" aria-label="${t('start')}"></span></div><div class="frow"><span>${t('end')}</span><span class="dtf"><input type="date" id="p-ed" value="${x&&x.end_at?toL(x.end_at).slice(0,10):''}" aria-label="${t('end')}"><input type="time" id="p-et" value="${x&&x.end_at?toL(x.end_at).slice(11,16):'00:00'}" aria-label="${t('end')}"></span></div></div>
 <div id="w-people"><div class="frow"><span>${t('pPeople')}</span><input type="number" id="p-ppl" min="1" max="9999" style="width:90px;margin:0" value="${x&&x.people!=null?x.people:''}"></div></div>
-<div id="w-tasks"><label>${t('pTasks')}</label><div id="p-tasks"></div><div class="tbar"><input id="p-nt" type="text" maxlength="100" placeholder="${t('title')}"><input id="p-ntd" type="datetime-local"></div><div class="row"><button type="button" class="sec" id="p-at">＋ ${t('pAddTask')}</button></div></div>
+<div id="w-tasks"><label>${t('pTasks')}</label><div id="p-tasks"></div><div class="tbar"><input id="p-nt" type="text" maxlength="100" placeholder="${t('title')}"><input id="p-ntm" type="text" maxlength="200" placeholder="${t('memo')}"></div><div class="tbar"><input id="p-ntd" type="date" aria-label="${t('due')}"><input id="p-ntt" type="time" value="00:00" aria-label="${t('due')}"></div><div class="row"><button type="button" class="sec" id="p-at">＋ ${t('pAddTask')}</button></div></div>
 <div id="w-funds"><label>${t('pFunds')}</label><div id="p-fins"></div><div class="tbar"><select id="p-fk" style="flex:0 1 32%"><option value="out">${t('pOut')}</option><option value="in">${t('pIn')}</option></select><input id="p-fc" type="text" maxlength="40" placeholder="${t('pContent')}"><input id="p-fa" type="number" min="0" step="any" style="flex:0 1 30%" placeholder="${t('pAmt')}"></div><div class="tbar"><select id="p-fcur">${['JPY','CNY','HKD','USD','EUR','TWD','MOP'].map(c=>`<option${c==='JPY'?' selected':''}>${c}</option>`).join('')}</select><input id="p-fd" type="date" value="${ymd(new Date())}"></div><div class="row"><button type="button" class="sec" id="p-af">＋ ${t('pAddFin')}</button></div></div>
 <div class="tbar">${id?`<button class="sec" id="p-del">${t('del')}</button>`:''}<button class="pri snd" id="p-sv" aria-label="${t('save')}">↑</button></div>`;
   const paintMods=()=>{const map={type:'w-type',loc:'w-loc',time:'w-time',people:'w-people',tasks:'w-tasks',funds:'w-funds'};for(const k in map){const el=$(map[k]);if(el)el.style.display=M[k]?'':'none'}dlg.querySelectorAll('[data-mod]').forEach(b=>b.classList.toggle('on',!!M[b.dataset.mod]))};
   dlg.querySelectorAll('[data-mod]').forEach(b=>b.onclick=()=>{M[b.dataset.mod]=M[b.dataset.mod]?0:1;paintMods()});
-  const paintTasks=()=>{const w=$('p-tasks');if(!w)return;w.innerHTML=pTasks.length?pTasks.map(z=>`<div class="task"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-pt="${z.id}"${z.done?' checked':''}><div class="tt"><b>${esc(z.title)}</b>${z.due_at?`<div class="meta">${fmt(z.due_at)}</div>`:''}</div><button type="button" class="sec" data-ptdel="${z.id}" aria-label="${t('del')}">✕</button></div>`).join(''):`<p class="meta">—</p>`;
+  /* v46 (item 8): every plan task row carries an ✎ that opens an inline
+     editor for that task's own date/time + memo. Saving writes straight
+     through to the tasks row (existing plan) so the To Do lists, the
+     card timeline and the calendar all see the same values; for a new
+     plan the values ride along in pTasks and are inserted at plan save. */
+  const paintTasks=()=>{const w=$('p-tasks');if(!w)return;w.innerHTML=pTasks.length?pTasks.map(z=>`<div class="task"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-pt="${z.id}"${z.done?' checked':''}><div class="tt"><b>${esc(z.title)}</b>${z.due_at?`<div class="meta">${fmtDue(z.due_at)}</div>`:''}${z.note?`<div class="meta">${esc(z.note)}</div>`:''}</div><button type="button" class="sec" data-ptedit="${z.id}" aria-label="${t('edit')}">✎</button><button type="button" class="sec" data-ptdel="${z.id}" aria-label="${t('del')}">✕</button></div>${z._open?`<div class="ptedit"><label>${t('due')}</label><div class="dtf"><input type="date" data-ptd="${z.id}" value="${z.due_at?toL(z.due_at).slice(0,10):''}"><input type="time" data-ptt="${z.id}" value="${z.due_at?toL(z.due_at).slice(11,16):'00:00'}"></div><label>${t('memo')}</label><input type="text" data-ptm="${z.id}" maxlength="200" value="${esc(z.note||'')}"><div class="row"><button type="button" class="pri" data-ptsave="${z.id}">${t('save')}</button></div></div>`:''}`).join(''):`<p class="meta">—</p>`;
     w.querySelectorAll('[data-pt]').forEach(cb=>cb.onchange=async()=>{const z=pTasks.find(q=>q.id===cb.dataset.pt);if(!z)return;z.done=cb.checked;if(id){const{error}=await sb.from('tasks').update({done:z.done,progress:z.done?100:0}).eq('id',z.id);if(error)return alert(error.message);const rt=tasks.find(q=>q.id===z.id);if(rt){rt.done=z.done;rt.progress=z.done?100:0}}});
+    w.querySelectorAll('[data-ptedit]').forEach(b=>b.onclick=()=>{const z=pTasks.find(q=>q.id===b.dataset.ptedit);if(!z)return;z._open=!z._open;paintTasks()});
+    w.querySelectorAll('[data-ptsave]').forEach(b=>b.onclick=async()=>{const z=pTasks.find(q=>q.id===b.dataset.ptsave);if(!z)return;const dv=w.querySelector(`[data-ptd="${z.id}"]`).value,tv=w.querySelector(`[data-ptt="${z.id}"]`).value,mv=w.querySelector(`[data-ptm="${z.id}"]`).value.trim();
+      z.due_at=dv?new Date(dv+'T'+(tv||'00:00')).toISOString():null;z.note=mv||null;z._open=false;
+      if(id&&!String(z.id).startsWith('tmp')){const{error}=await sb.from('tasks').update({due_at:z.due_at,note:z.note}).eq('id',z.id);if(error)return alert(error.message);const rt=tasks.find(q=>q.id===z.id);if(rt){rt.due_at=z.due_at;rt.note=z.note}}
+      paintTasks()});
     w.querySelectorAll('[data-ptdel]').forEach(b=>b.onclick=async()=>{const zid=b.dataset.ptdel;if(id){const{error}=await sb.from('tasks').delete().eq('id',zid);if(error)return alert(error.message);tasks=tasks.filter(q=>q.id!==zid)}pTasks=pTasks.filter(q=>q.id!==zid);paintTasks()});};
   const paintFins=()=>{const w=$('p-fins');if(!w)return;w.innerHTML=pFin.length?pFin.map(f=>`<div class="task"><span class="tag" style="background:${f.kind==='in'?'#E3F2E6':'#FDE8E8'}">${f.kind==='in'?t('pIn'):t('pOut')}</span><div class="tt"><b>${esc(f.content||'')}</b><div class="meta">${esc(f.entry_date||'')}</div></div><b>${(+f.amount||0).toLocaleString()} ${esc(f.currency||'JPY')}</b><button type="button" class="sec" data-pfdel="${f.id}" aria-label="${t('del')}">✕</button></div>`).join(''):`<p class="meta">—</p>`;
     w.querySelectorAll('[data-pfdel]').forEach(b=>b.onclick=async()=>{const fid=b.dataset.pfdel;if(id){const{error}=await sb.from('plan_finance').delete().eq('id',fid);if(error)return alert(error.message);pfin=pfin.filter(q=>q.id!==fid)}pFin=pFin.filter(q=>q.id!==fid);paintFins()});};
-  $('p-at').onclick=async()=>{const tt=$('p-nt').value.trim();if(!tt)return;const due=$('p-ntd').value?new Date($('p-ntd').value).toISOString():null;
-    if(id){const v={title:tt,due_at:due};if(planV23)v.plan_id=id;const{data,error}=await sb.from('tasks').insert(v).select().single();if(error)return alert(error.message);tasks.push(data);pTasks.push({...data})}
-    else pTasks.push({id:'tmp'+Date.now()+Math.random(),title:tt,due_at:due,done:false});
-    $('p-nt').value='';$('p-ntd').value='';paintTasks()};
+  $('p-at').onclick=async()=>{const tt=$('p-nt').value.trim();if(!tt)return;const dv=$('p-ntd').value,due=dv?new Date(dv+'T'+($('p-ntt').value||'00:00')).toISOString():null,ntm=$('p-ntm').value.trim()||null;
+    if(id){const v={title:tt,due_at:due,note:ntm};if(planV23)v.plan_id=id;const{data,error}=await sb.from('tasks').insert(v).select().single();if(error)return alert(error.message);tasks.push(data);pTasks.push({...data})}
+    else pTasks.push({id:'tmp'+Date.now()+Math.random(),title:tt,due_at:due,note:ntm,done:false});
+    $('p-nt').value='';$('p-ntm').value='';$('p-ntd').value='';$('p-ntt').value='00:00';paintTasks()};
   $('p-af').onclick=async()=>{const amt=+$('p-fa').value;if(!(amt>0))return;const f={kind:$('p-fk').value,content:$('p-fc').value.trim()||'—',currency:$('p-fcur').value,amount:amt,entry_date:$('p-fd').value||ymd(new Date())};
     if(id){const{data,error}=await sb.from('plan_finance').insert({...f,plan_id:id}).select().single();if(error)return alert(error.message);pfin.push(data);pFin.push({...data})}
     else pFin.push({id:'tmp'+Date.now()+Math.random(),...f});
@@ -1724,6 +1892,25 @@ ${allTags.length?`<div class="dchips" id="p-tagpick" aria-label="${t('pPickTag')
   if(typeAddBtn)typeAddBtn.onclick=()=>{const n=$('p-typenew').value.trim();if(!n)return;const arr=planTypeStore();if(!arr.includes(n)){arr.push(n);planTypeSave(arr)}const o=document.createElement('option');o.value=n;o.textContent=n;typeSel.insertBefore(o,typeSel.options[typeSel.options.length-1]);typeSel.value=n;$('p-newtype').style.display='none';$('p-typenew').value=''};
   // v42: existing-tag picker chips append the tag to the # field (no dupes).
   dlg.querySelectorAll('[data-ptag]').forEach(b=>b.onclick=()=>{const inp=$('p-tag');if(!inp)return;const cur=planTagsOf({tag:inp.value});if(!cur.includes(b.dataset.ptag))cur.push(b.dataset.ptag);inp.value=cur.join(',')});
+  // v46 (item 7): plan image state — pImg is the pending data URL (or
+  // null); it is written only at plan save, and only when the image
+  // column exists (planImgV46 probe), so pre-SQL the editor has no
+  // upload UI at all and saves exactly as before.
+  let pImg=x?x.image||null:null;
+  const paintImg=()=>{const w=$('p-imgprev');if(w)w.innerHTML=pImg?`<img class="pimgprev" src="${pImg}" alt="">`:'';const d=$('p-imgdel');if(d)d.style.display=pImg?'':'none'};
+  if(planImgV46&&$('p-imgup')){
+    $('p-imgup').onclick=()=>$('p-imgf').click();
+    $('p-imgdel').onclick=()=>{pImg=null;paintImg()};
+    $('p-imgf').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{pImg=await compressImg(f);paintImg()}catch(_){alert(t('bgErr'))}e.target.value=''});
+  }
+  // v46 (item 3): entering/changing the start date pre-fills the end
+  // date with the SAME day until the user edits an end field directly;
+  // after that the end is never auto-overwritten again.
+  let pEndTouched=!!(x&&x.end_at);
+  const pSd=$('p-sd'),pEd=$('p-ed'),pEt=$('p-et');
+  if(pSd)pSd.addEventListener('change',()=>{if(!pEndTouched&&pSd.value&&pEd)pEd.value=pSd.value});
+  if(pEd)pEd.addEventListener('change',()=>{pEndTouched=true});
+  if(pEt)pEt.addEventListener('change',()=>{pEndTouched=true});
   $('p-sv').onclick=async()=>{
     const title=$('p-t').value.trim();if(!title)return;
     const typeVal=()=>{const sv=$('p-type').value;if(sv==='__new')return $('p-typenew').value.trim()||null;return sv||null};
@@ -1735,11 +1922,15 @@ ${allTags.length?`<div class="dchips" id="p-tagpick" aria-label="${t('pPickTag')
       start_at:M.time&&$('p-sd').value?new Date($('p-sd').value+'T'+($('p-st').value||'00:00')).toISOString():null,
       end_at:M.time&&$('p-ed').value?new Date($('p-ed').value+'T'+($('p-et').value||'00:00')).toISOString():null,
       people:M.people&&$('p-ppl').value?Math.max(1,Math.floor(+$('p-ppl').value)):null};
+    // v46 (item 3): save-time guard — an end before the start is
+    // auto-corrected to the start (same moment), never stored reversed.
+    if(v.start_at&&v.end_at&&v.end_at<v.start_at)v.end_at=v.start_at;
+    if(planImgV46)v.image=pImg;
     let pid=id;
     if(id){const{error}=await sb.from('plans').update(v).eq('id',id);if(error)return alert(error.message);Object.assign(x,v)}
     else{
       const{data,error}=await sb.from('plans').insert(v).select().single();if(error)return alert(error.message);plans.push(data);pid=data.id;
-      for(const z of pTasks){const tv={title:z.title,due_at:z.due_at||null,done:!!z.done,progress:z.done?100:0};if(planV23)tv.plan_id=pid;const r=await sb.from('tasks').insert(tv).select().single();if(!r.error&&r.data)tasks.push(r.data)}
+      for(const z of pTasks){const tv={title:z.title,due_at:z.due_at||null,note:z.note||null,done:!!z.done,progress:z.done?100:0};if(planV23)tv.plan_id=pid;const r=await sb.from('tasks').insert(tv).select().single();if(!r.error&&r.data)tasks.push(r.data)}
       for(const f of pFin){const r=await sb.from('plan_finance').insert({plan_id:pid,kind:f.kind,content:f.content,currency:f.currency,amount:f.amount,entry_date:f.entry_date}).select().single();if(!r.error&&r.data)pfin.push(r.data)}
     }
     const pl=plans.find(q=>q.id===pid);
@@ -2015,7 +2206,7 @@ async function delSlist(id){
   render();showUndo('slist',{c,its});
 }
 
-const notifCard=()=>{const sup='Notification'in window,st=sup?Notification.permission:'na';return `<div class="card"><b>${lic('bell',16)} ${t('notifT')}</b><p class="meta">${t('notifHint')}</p>${st==='granted'?`<p class="meta">${t('notifOk')}</p>`:st==='denied'||!sup?`<p class="meta">${t('notifNo')}</p>`:`<div class="row"><button class="pri" data-a="nreq">${t('notifBtn')}</button></div>`}</div>`};
+const notifCard=()=>{const sup='Notification'in window,st=sup?Notification.permission:'na';return `<div class="card"><b>${lic('bell',16)} ${t('notifT')}</b><p class="meta">${t('notifHint')}</p>${st==='granted'?`<p class="meta">${t('notifOk')}</p>`:st==='denied'||!sup?`<p class="meta">${t('notifNo')}</p>`:''}</div>`};
 const setHTML=()=>setHTML0()+notifCard();
 function pageTitle(){
   if(tab==='todo')return ''; // v41: the todo page carries its title in the new .calhd header row (like habit/cal)
@@ -2079,7 +2270,7 @@ ${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" 
     return `<div class="wd"><span>${WK[lang][(d.getDay()+6)%7]}</span>${pct>=1?`<span class="hd2 full${isT?' tdy':''}" style="background:var(--ac)">${d.getDate()}</span>`:`<span class="hd2${isT?' tdy':''}">${ringPct(pct,'#1E88E5')}<b>${d.getDate()}</b></span>`}</div>`}).join('')}</div>`:'';
   const actF=hlistView==='all'?act:act.filter(h=>h.list_id===hlistView);
   const actT=actF.filter(h=>hSched(h,new Date())),rest=actF.filter(h=>!hSched(h,new Date()));
-  const groups=['am','pm','night','any'].map(k=>{const gs=actT.filter(h=>(h.slot||'any')===k);return gs.length?`<div class="ghd"><b>${t('slot_'+k)}</b><span class="meta">${gs.length}</span></div><div class="card">${gs.map(rowH).join('')}</div>`:''}).join('')+(rest.length?`<div class="ghd"><b>${t('restToday')}</b><span class="meta">${rest.length}</span></div><div class="card">${rest.map(h=>`<div class="task" style="--hc:${esc(h.color||'#1E88E5')};opacity:.55"><div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b></div>${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" aria-label="focus">▶</button>`:''}<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`).join('')}</div>`:'');
+  const groups=['am','pm','night','any'].map(k=>{const gs=actT.filter(h=>(h.slot||'any')===k);return gs.length?`<div class="ghd"><b>${t('slot_'+k)}</b><span class="meta">${gs.length}</span></div><div class="card hcard">${gs.map(rowH).join('')}</div>`:''}).join('')+(rest.length?`<div class="ghd"><b>${t('restToday')}</b><span class="meta">${rest.length}</span></div><div class="card hcard">${rest.map(h=>`<div class="task" style="--hc:${esc(h.color||'#1E88E5')};opacity:.55"><div class="tt" data-a="hview" data-id="${h.id}"><b>${esc((h.icon||'')+' '+h.name)}</b></div>${habV21&&h.timer_min?`<button class="sec ic" data-a="hfocus" data-id="${h.id}" aria-label="focus">▶</button>`:''}<div class="stk"><b>${streak(h)}${t('days')}</b><span>${t('streak')}</span></div></div>`).join('')}</div>`:'');
   // v39: header mirrors the calendar top row (.calhd): square drawer button
   // left, page title centred, square slot on the right.
   // v40: the right slot holds two symbol buttons (stats panel / list page)
@@ -2506,10 +2697,10 @@ $('app').addEventListener('click',async e=>{
   else if(a==='tab'){tab=b.dataset.v;dr=false;drEdit=false;if(tab==='lists')shopDate=null;if(tab==='todo')shopSecOpen=false;render()}
   else if(a==='shoptab'){shopTab=b.dataset.v;render()}
   else if(a==='cday'){const[y,m,d]=b.dataset.v.split('-').map(Number);cs=new Date(y,m,d);cm=new Date(y,m,1);render()}
-  else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);render()}
+  else if(a==='cmo'){cm=new Date(cm.getFullYear(),cm.getMonth()+ +b.dataset.v,1);calFollow();render()}
   else if(a==='ctd'){cm=new Date();cs=new Date();render()}
   else if(a==='cnav'){const s=+b.dataset.v;
-    if(calView==='list'||calView==='month')cm=new Date(cm.getFullYear(),cm.getMonth()+s,1);
+    if(calView==='list'||calView==='month'){cm=new Date(cm.getFullYear(),cm.getMonth()+s,1);calFollow()}
     else if(calView==='year')cm=new Date(cm.getFullYear()+s,0,1);
     else if(calView==='week'){cs=new Date(cs.getFullYear(),cs.getMonth(),cs.getDate()+7*s);cm=new Date(cs.getFullYear(),cs.getMonth(),1)}
     else{cs=new Date(cs.getFullYear(),cs.getMonth(),cs.getDate()+s);cm=new Date(cs.getFullYear(),cs.getMonth(),1)}
@@ -2645,6 +2836,34 @@ document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.sho
 // v42: plans keyword search filters as you type — only the list container
 // re-renders, so the input keeps focus and caret while typing.
 document.addEventListener('input',e=>{if(e.target&&e.target.id==='pq'){pQ=e.target.value;const pl=document.getElementById('plist');if(pl)pl.innerHTML=planListHTML([...plans].sort((a,b)=>String(a.start_at||'9999').localeCompare(String(b.start_at||'9999'))||String(a.created_at).localeCompare(String(b.created_at))))}});
+/* v46 (item 10): page-level horizontal swipe switches between the six
+   main pages in tab-bar order (swipe left = next, right = previous, no
+   wrap-around). It arms ONLY for touches that start on plain page
+   content: never inside a dialog, the drawer, the plans rail, the
+   calendar grids/cards, row-level swipe zones (.swp/.hswp), horizontal
+   scrollers (.chips), the mind map, or any form control — and it fires
+   only when the horizontal travel is at least 72px and at least twice
+   the vertical travel, so scrolls and row swipes can never trigger it. */
+const TABORDER=['habit','todo','cal','lists','plan','set'];
+const SWIPE_SKIP='dialog,.dr,.prail,.calcard,.cg2,.wkrow,.swp,.hswp,.chips,.mmwrap,.lpchips,input,textarea,select,[data-noswipe]';
+let _swT=null;
+document.addEventListener('touchstart',e=>{
+  _swT=null;
+  if(!session||e.touches.length!==1)return;
+  if($('dlg').open||dr)return;
+  const t0=e.touches[0],el=e.target;
+  if(!el||!el.closest||!el.closest('#app')||el.closest('.tabs')||el.closest(SWIPE_SKIP))return;
+  _swT={x:t0.clientX,y:t0.clientY};
+},{passive:true});
+document.addEventListener('touchend',e=>{
+  if(!_swT)return;
+  const t0=e.changedTouches[0],dx=t0.clientX-_swT.x,dy=t0.clientY-_swT.y;_swT=null;
+  if($('dlg').open||dr)return;
+  if(Math.abs(dx)<72||Math.abs(dx)<2*Math.abs(dy))return;
+  const i=TABORDER.indexOf(tab);if(i<0)return;
+  const n=dx<0?i+1:i-1;if(n<0||n>=TABORDER.length)return;
+  tab=TABORDER[n];dr=false;drEdit=false;planView=null;hview=null;if(tab==='lists')shopDate=null;render();
+},{passive:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&session&&!$('dlg').open)loadData().then(()=>{if(tab!=='set')render()})});
 async function loadSettings(){
   if(OFFLINE)return;
