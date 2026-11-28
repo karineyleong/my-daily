@@ -27,7 +27,7 @@ button{font:inherit;font-size:var(--fs3);padding:12px 16px;border-radius:10px;bo
 .top{display:flex;justify-content:flex-end;gap:8px}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
 input[type=range]{width:100%;accent-color:var(--ac)}
-.hd{display:flex;justify-content:space-between;align-items:center;gap:12px}.ic{padding:8px 14px;font-size:18px}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:12px}.ic{padding:8px 12px;font-size:18px}
 .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
 .chip{white-space:nowrap;padding:6px 14px;border-radius:20px;border-color:var(--ln);background:var(--card);color:var(--ink)}
 .chip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
@@ -37,7 +37,7 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 .meta{font-size:var(--fs4);color:var(--mut);margin-top:2px}.od{color:#D9534F}
 .bar{height:6px;border-radius:3px;background:var(--ln);margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2))}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
-.tag{display:inline-block;font-size:var(--fs5);padding:1px 9px;border-radius:10px;margin-right:6px}
+.tag{display:inline-block;font-size:var(--fs5);padding:2px 8px;border-radius:10px;margin-right:6px}
 .act{display:flex;gap:6px;margin-top:8px}.act button{padding:4px 10px;font-size:14px}
 input[type=checkbox]{width:22px;height:22px;accent-color:var(--ac);margin-top:2px;flex:none}
 dialog{border:1px solid var(--ln);border-top:1px solid var(--ln);border-radius:14px;background:var(--card);color:var(--ink);width:min(92vw,400px);padding:18px}
@@ -178,7 +178,7 @@ main{padding-bottom:110px}.fab{bottom:calc(88px + env(safe-area-inset-bottom,0px
    must never inflate the track minimum and push the other column off-screen. */
 .shop{display:block}
 .shopseg{display:flex;gap:6px;margin:0 0 10px}
-.shopsegbtn{flex:1;padding:9px 10px;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:14px}
+.shopsegbtn{flex:1;padding:8px 12px;border-radius:99px;border:1px solid var(--ln);background:var(--card);color:var(--mut);cursor:pointer;font-size:14px}
 .shopsegbtn.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
 /* v42: shopping item rows go compact (timeline-style list): checkbox left,
    title, memo as a small grey sub-line, hairline dividers, tight rhythm —
@@ -382,7 +382,7 @@ dialog.full{height:93dvh;max-height:93dvh}
 .hswp.go-l .hswp-bg{background:#8A96A0}.hswp.go-l .hb-r{opacity:1}
 .hswp-in{position:relative;background:var(--card);transition:transform .18s ease;touch-action:pan-y}
 .hswp:first-child .task{border-top:0}
-.ptag{display:inline-block;font-size:var(--fs5);padding:0 8px;border-radius:9px;background:color-mix(in srgb,var(--ac) 16%,#fff);color:var(--ac);font-weight:700}
+.ptag{display:inline-block;font-size:var(--fs5);padding:2px 8px;border-radius:9px;background:color-mix(in srgb,var(--ac) 16%,#fff);color:var(--ac);font-weight:700}
 .dsec{font-size:var(--fs2);color:var(--mut);font-weight:700;margin:14px 2px 4px}
 .pbar{height:8px;border-radius:4px;background:var(--ln);overflow:hidden;margin-top:8px}.pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2))}
 .modsw{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
@@ -397,8 +397,69 @@ dialog.full{height:93dvh;max-height:93dvh}
 .pie-leg .task{padding:8px 0}
 .tabs button{padding:9px 2px}
 .tabs button svg{width:22px;height:22px}
-</style><link rel="stylesheet" href="responsive.css">
-</head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v43.1)</p></main><dialog id="dlg"></dialog>
+/* ===== v45 design pass =====
+   Item 1 (unified scale): header icon boxes are ALL .sec.ic — padding
+   8px 12px, 18px glyph, radius 10px, 1px var(--ln) border (the .ic rule
+   above now matches .btn's 12px horizontal padding); primary buttons
+   .btn = padding 12px 16px / radius 10px; small buttons (.btn.sm,
+   .dhd button, .act button) = 4px 10px; cards = padding 14px /
+   radius 14px / margin-bottom 12px; chips (.tag / .ptag) = 2px 8px at
+   --fs5; segmented controls (.shopsegbtn, .cp) share the 8px vertical
+   rhythm; type scale stays --fs1 20 / --fs2 13 / --fs3 15 / --fs4 13 /
+   --fs5 12. The calendar grid card (.calcard, 10px) stays denser on
+   purpose — it is a grid, not a content card. */
+/* Item 2: today's date number is WHITE on the blue circle in the month
+   grid too — the weekend rules (.cg2 .cd2:nth-child(7n…) .dn, spec
+   0,4,0) used to beat .cd2.td .dn (0,3,0) for color, leaving a blue or
+   red digit on the blue disc on Sat/Sun. This rule ties at 0,4,0 and
+   comes later, so white wins every day of the week. */
+.cg2 .cd2.td .dn{color:#fff}
+/* Item 6: task-row meta line — the category can shrink and ellipsise
+   but NEVER breaks mid-word; chips stay content-sized. */
+.meta.rw{align-items:center}
+.meta.rw>span:first-child{flex:none}
+.meta.rw .cat2{flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta.rw .ptag{flex:0 1 auto;min-width:0;max-width:46%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Item 8: the To Do single/dual switch is a pair of square .sec.ic
+   boxes (same box as every other page header); the active one takes
+   the accent fill, exactly like the calendar scope pills (.cp.on). */
+.dmwrap{display:flex;gap:6px}
+.dmwrap .sec.ic{display:flex;align-items:center;justify-content:center}
+.dmwrap .sec.ic.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+/* Item 1 (cont.): every header icon box inside a .calhd row is the SAME
+   box — fixed 38px height, content centred — so a text glyph (☰/＋)
+   and an SVG glyph can no longer produce different box heights
+   (measured before: 38px vs 36px). Scoped to .calhd so compact
+   in-content .sec.ic buttons (day nav, dialogs) keep their size. */
+.calhd .sec.ic{height:38px;display:inline-flex;align-items:center;justify-content:center}
+/* Item 3: plan-detail task rows — grey detail line under the title. */
+.pdet{font-size:var(--fs5);color:var(--mut);margin-top:2px;line-height:1.45;overflow-wrap:anywhere}
+/* Item 5: plan-card milestone timeline. */
+.pcard{position:relative}
+.pcard .tt{padding-right:62px}
+.pst{position:absolute;top:12px;right:12px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px}
+.pst.doing{background:color-mix(in srgb,var(--ac) 16%,#fff);color:var(--ac)}
+.pst.new{background:#EDF1F4;color:var(--mut)}
+.pst.over{background:#FBEAE8;color:#C0392B}
+.pst.done{background:#E3F2E1;color:#2E7D32}
+.ptl{margin:12px 2px 2px}
+.ptl .nodes{display:flex;align-items:flex-start}
+.ptl .nd{display:flex;flex-direction:column;align-items:center;flex:none;width:14px}
+.ptl .nd i{width:11px;height:11px;border-radius:50%;background:#C9D4DC;display:block}
+.ptl .nd.done i{background:#43A047}
+.ptl .nd.cur i{background:var(--ac);width:15px;height:15px;box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 25%,#fff)}
+.ptl .nd .pdt{font-size:9px;color:var(--mut);margin-top:3px;white-space:nowrap;transform:translateX(0)}
+.ptl .ln{flex:1;height:2px;background:#C9D4DC;margin-top:5px;min-width:6px}
+.ptl .ln.done{background:#43A047}
+.ptl .ln.cur{background:repeating-linear-gradient(90deg,var(--ac) 0 4px,transparent 4px 8px)}
+.ptl .eln{flex:none;align-self:flex-start;margin-top:1px;color:var(--mut);font-size:11px}
+.pprog{font-size:var(--fs5);color:var(--mut);margin-top:6px}
+.pempty{font-size:var(--fs5);color:var(--mut);margin-top:8px}
+/* Item 4: the 已買 (history) tab reuses the drawer rows' look, minus
+   the drawer: flat rows inside the third segmented tab. */
+.shop .hrow{display:flex;align-items:center;gap:6px;padding:9px 2px;border-bottom:1px solid var(--ln)}
+.shop .hrow .pinb{margin-left:auto}
+</style></head><body><main id="app"><p style="padding:16px;color:var(--mut)">Loading… (v45)</p></main><dialog id="dlg"></dialog>
 <script src="supabase.js"></script>
 <script src="course-it.js"></script>
 <script>
@@ -535,9 +596,9 @@ Object.assign(T.en,{fCustom:'Custom',fAlert:'End alert',fSound:'Sound',fSilent:'
 Object.assign(T.zh,{offMsg:'離線中 — 顯示本機資料',addOnly:'新增'});
 Object.assign(T.ja,{offMsg:'オフライン — 本機のデータを表示中',addOnly:'追加'});
 Object.assign(T.en,{offMsg:'Offline — showing local data',addOnly:'Add'});
-Object.assign(T.zh,{lk_interest:'興趣',lk_study:'學習',lk_life:'生活',lk_family:'家庭',lk_work:'工作',plans:'計劃',finance:'收支',planNew:'新增計劃',planSql:'計劃／收支的資料表還沒建立，請先在 Supabase 執行 sql-v23.sql。',planEmpty:'還沒有進行中的計劃，按「＋新增」建立第一個。',pType:'類型',pTag:'標籤',pTasks:'任務',pLoc:'地點',pTime:'時間',pPeople:'人數',pFunds:'資金',pModules:'版塊',pPeriod:'期間',pProg:'進度',pNotStarted:'未開始',pDone:'已完成',pDoing:'進行中',pOver:'已逾期',pIn:'收入',pOut:'支出',pBal:'結餘',pContent:'內容',pCur:'貨幣',pAmt:'金額',pDate:'日期',pAddTask:'加任務',pAddFin:'加一筆',pByPlan:'按計劃',pMonth:'按月推移',pShare:'佔比',fUnit:'單位',uH:'時',uM:'分',uS:'秒',hList:'分類',shareCal:'共享',allCals:'全部'});
-Object.assign(T.ja,{lk_interest:'趣味',lk_study:'学習',lk_life:'生活',lk_family:'家庭',lk_work:'仕事',plans:'プラン',finance:'収支',planNew:'プランを追加',planSql:'プラン／収支のテーブルが未作成です。先にSupabaseで sql-v23.sql を実行してください。',planEmpty:'進行中のプランはありません。「＋追加」で最初の1つを作成。',pType:'タイプ',pTag:'タグ',pTasks:'タスク',pLoc:'場所',pTime:'時間',pPeople:'人数',pFunds:'資金',pModules:'モジュール',pPeriod:'期間',pProg:'進捗',pNotStarted:'未開始',pDone:'完了',pDoing:'進行中',pOver:'期限切れ',pIn:'収入',pOut:'支出',pBal:'残高',pContent:'内容',pCur:'通貨',pAmt:'金額',pDate:'日付',pAddTask:'タスク追加',pAddFin:'1件追加',pByPlan:'プラン別',pMonth:'月別推移',pShare:'割合',fUnit:'単位',uH:'時間',uM:'分',uS:'秒',hList:'カテゴリ',shareCal:'共有',allCals:'すべて'});
-Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_family:'Family',lk_work:'Work',plans:'Plans',finance:'Finance',planNew:'New plan',planSql:'The Plans / Finance tables are missing. Run sql-v23.sql in Supabase first.',planEmpty:'No plans yet. Tap + New to create the first one.',pType:'Type',pTag:'Tag',pTasks:'Tasks',pLoc:'Location',pTime:'Time',pPeople:'People',pFunds:'Funds',pModules:'Sections',pPeriod:'Period',pProg:'Progress',pNotStarted:'Not started',pDone:'Done',pDoing:'In progress',pOver:'Overdue',pIn:'Income',pOut:'Expense',pBal:'Balance',pContent:'Item',pCur:'Currency',pAmt:'Amount',pDate:'Date',pAddTask:'Add task',pAddFin:'Add entry',pByPlan:'By plan',pMonth:'By month',pShare:'Share',fUnit:'Unit',uH:'hr',uM:'min',uS:'sec',hList:'List',shareCal:'Shared',allCals:'All'});
+Object.assign(T.zh,{lk_interest:'興趣',lk_study:'學習',lk_life:'生活',lk_family:'家庭',lk_work:'工作',plans:'計劃',finance:'收支',planNew:'新增計劃',planSql:'計劃／收支的資料表還沒建立，請先在 Supabase 執行 sql-v23.sql。',planEmpty:'還沒有進行中的計劃，按「＋新增」建立第一個。',pType:'類型',pTag:'標籤',pTasks:'任務',pLoc:'地點',pTime:'時間',pPeople:'人數',pFunds:'資金',pModules:'版塊',pPeriod:'期間',pProg:'進度',pNotStarted:'未開始',pDone:'已完成',pDoing:'進行中',pOver:'已逾期',pIn:'收入',pOut:'支出',pBal:'結餘',pContent:'內容',pCur:'貨幣',pAmt:'金額',pDate:'日期',pAddTask:'加任務',pAddFin:'加一筆',pByPlan:'按計劃',pMonth:'按月推移',pShare:'佔比',pTasksDone:'任務完成',pNoTasks:'尚無任務',fUnit:'單位',uH:'時',uM:'分',uS:'秒',hList:'分類',shareCal:'共享',allCals:'全部'});
+Object.assign(T.ja,{lk_interest:'趣味',lk_study:'学習',lk_life:'生活',lk_family:'家庭',lk_work:'仕事',plans:'プラン',finance:'収支',planNew:'プランを追加',planSql:'プラン／収支のテーブルが未作成です。先にSupabaseで sql-v23.sql を実行してください。',planEmpty:'進行中のプランはありません。「＋追加」で最初の1つを作成。',pType:'タイプ',pTag:'タグ',pTasks:'タスク',pLoc:'場所',pTime:'時間',pPeople:'人数',pFunds:'資金',pModules:'モジュール',pPeriod:'期間',pProg:'進捗',pNotStarted:'未開始',pDone:'完了',pDoing:'進行中',pOver:'期限切れ',pIn:'収入',pOut:'支出',pBal:'残高',pContent:'内容',pCur:'通貨',pAmt:'金額',pDate:'日付',pAddTask:'タスク追加',pAddFin:'1件追加',pByPlan:'プラン別',pMonth:'月別推移',pShare:'割合',pTasksDone:'タスク完了',pNoTasks:'タスクはまだありません',fUnit:'単位',uH:'時間',uM:'分',uS:'秒',hList:'カテゴリ',shareCal:'共有',allCals:'すべて'});
+Object.assign(T.en,{lk_interest:'Interests',lk_study:'Study',lk_life:'Life',lk_family:'Family',lk_work:'Work',plans:'Plans',finance:'Finance',planNew:'New plan',planSql:'The Plans / Finance tables are missing. Run sql-v23.sql in Supabase first.',planEmpty:'No plans yet. Tap + New to create the first one.',pType:'Type',pTag:'Tag',pTasks:'Tasks',pLoc:'Location',pTime:'Time',pPeople:'People',pFunds:'Funds',pModules:'Sections',pPeriod:'Period',pProg:'Progress',pNotStarted:'Not started',pDone:'Done',pDoing:'In progress',pOver:'Overdue',pIn:'Income',pOut:'Expense',pBal:'Balance',pContent:'Item',pCur:'Currency',pAmt:'Amount',pDate:'Date',pAddTask:'Add task',pAddFin:'Add entry',pByPlan:'By plan',pMonth:'By month',pShare:'Share',pTasksDone:'tasks done',pNoTasks:'No tasks yet',fUnit:'Unit',uH:'hr',uM:'min',uS:'sec',hList:'List',shareCal:'Shared',allCals:'All'});
 Object.assign(T.zh,{compCal:'公司',listsPage:'購買清單',liAdd:'新增項目',liEmpty:'還沒有項目，在下方新增第一個。',evScope:'類別'});
 Object.assign(T.ja,{compCal:'会社',listsPage:'買い物リスト',liAdd:'項目を追加',liEmpty:'項目はまだありません。下から最初の1つを追加。',evScope:'区分'});
 Object.assign(T.en,{compCal:'Company',listsPage:'Shopping list',liAdd:'Add item',liEmpty:'No items yet. Add the first one below.',evScope:'Scope'});
@@ -610,6 +671,16 @@ const evVisible=e=>e.calendar_id?(visShared&&calVis[e.calendar_id]!==false&&!!my
 const kids=id=>tasks.filter(x=>x.parent_id===id),catOf=id=>cats.find(c=>c.id===id);
 const T0=d=>d?+new Date(d):1e18;
 const cmp=(a,b)=>(b.importance-a.importance)||(T0(a.due_at)-T0(b.due_at))||(a.created_at<b.created_at?-1:1);
+/* v45 (item 6): the To Do default order — a manual sort_order wins where
+   one exists (the tasks table has no such column today, so this is a
+   no-op until one appears; list_items / day_list_items DO carry one and
+   keep their own ordering paths), then due datetime ascending (same-day
+   items order by their time), undated last, created_at as the tiebreak.
+   Completed items never enter these lists (pool() is undone-only), so
+   the done-sinks-to-bottom rule is untouched. */
+const SOV=x=>(x.sort_order==null||x.sort_order===''||isNaN(+x.sort_order))?null:+x.sort_order;
+const cmpDue=(a,b)=>{const sa=SOV(a),sb=SOV(b);if(sa!=null&&sb!=null&&sa!==sb)return sa-sb;const d=T0(a.due_at)-T0(b.due_at);if(d)return d;return a.created_at<b.created_at?-1:1};
+const planTasksOf=pid=>tasks.filter(x=>x.plan_id===pid&&!x.parent_id).sort(cmpDue);
 const sod=d=>{d=new Date(d);d.setHours(0,0,0,0);return d},nextDay=d=>{d=sod(d);d.setDate(d.getDate()+1);return d};
 const pool=()=>tasks.filter(x=>!x.parent_id&&!x.done);
 const isOv=x=>x.due_at&&new Date(x.due_at)<new Date();
@@ -772,7 +843,7 @@ function row(x,sub){
   const p=k.length?Math.round(k.filter(y=>y.done).length/k.length*100):(x.done?100:x.progress||0);
   return swpWrap('task',x.id,`<div class="task${sub?' sub':''}${x.done?' done':''}"><input type="checkbox" class="pc" style="--pc:${PC[x.importance]||PC[0]}" data-a="chk" data-id="${x.id}"${x.done?' checked':''} aria-label="${t('chk')}">
 <div class="tt" data-a="edit" data-id="${x.id}"><b>${x.icon?esc(x.icon)+' ':''}${esc(x.title)}</b>${x.note?`<div class="meta">${esc(x.note.slice(0,60))}</div>`:''}
-<div class="meta rw"><span class="${od?'od':''}">${x.due_at?fmtDue(x.due_at):''}</span>${sub?'':`<span>${c?esc((c.icon||'')+' '+catName(c)):t('inbox')}</span>`}${!sub&&x.plan_id&&planOf(x.plan_id)?`<span class="ptag">🗂 ${esc(planOf(x.plan_id).title)}</span>`:''}</div>
+<div class="meta rw"><span class="${od?'od':''}">${x.due_at?fmtDue(x.due_at):''}</span>${sub?'':`<span class="cat2">${c?esc((c.icon||'')+' '+catName(c)):t('inbox')}</span>`}${!sub&&x.plan_id&&planOf(x.plan_id)?`<span class="ptag">🗂 ${esc(planOf(x.plan_id).title)}</span>`:''}</div>
 ${(k.length||p)?`<div class="bar"><i style="width:${p}%"></i></div>`:''}</div></div>`)+k.map(y=>row(y,1)).join('');
 }
 function listFor(vw){
@@ -781,8 +852,8 @@ function listFor(vw){
   else{
     let p=pool();
     if(vw==='today')p=p.filter(todayP);else if(vw==='tomorrow')p=p.filter(tmrP);else if(vw==='inbox')p=p.filter(x=>!x.category_id);else if(vw!=='all')p=p.filter(x=>x.category_id===vw);
-    if(vw==='all'||vw==='today'){ov=p.filter(isOv).sort(cmp);p=p.filter(x=>!isOv(x))}
-    items=p.sort(cmp);
+    if(vw==='all'||vw==='today'){ov=p.filter(isOv).sort(cmpDue);p=p.filter(x=>!isOv(x))}
+    items=p.sort(cmpDue);
   }
   const sec=ov.length?`<div class="card"><div class="ovh"><b>${t('overdue')}</b><button class="lnk" data-a="pst">${t('postpone')}</button><button class="lnk" data-a="ovt">${ov.length} ${ovOpen?'▾':'▸'}</button></div>${ovOpen?ov.map(x=>row(x)).join(''):''}</div>`:'';
   // v41: an empty task view renders NOTHING (the old "還沒有待辦…" hint card
@@ -903,9 +974,15 @@ const dkOf=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
 function calBy(f,t){
   const w0=new Date(+sod(f)-45*864e5),w1=new Date(+sod(t)+45*864e5);
   const by={},mark=(d,x)=>{const k=dkOf(d);(by[k]=by[k]||[]).push(x)};
-  tasks.forEach(x=>{if(!x.done&&x.due_at)mark(new Date(x.due_at),x)});
+  // v45 (item 7): tasks belonging to a plan are NOT marked as plain task
+  // rows any more — they re-enter below as private plan items (tapping
+  // one opens the plan, not the task editor).
+  tasks.forEach(x=>{if(!x.done&&x.due_at&&!x.plan_id)mark(new Date(x.due_at),x)});
   const shift=(d0,k,kind)=>{const d=new Date(d0);if(kind==='daily')d.setDate(d.getDate()+k);else if(kind==='weekly')d.setDate(d.getDate()+7*k);else if(kind==='monthly')d.setMonth(d.getMonth()+k);else if(kind==='yearly')d.setFullYear(d.getFullYear()+k);return d};
-  events.filter(evVisible).forEach(e=>{
+  // v45 (item 7): legacy plan-linked events (created by the pre-v45
+  // syncPlanEvent) are filtered OUT — plans render from plan data only,
+  // so an old linked row would double-display.
+  events.filter(e=>evVisible(e)&&!e.plan_id).forEach(e=>{
     const st0=new Date(e.start_at),dur=(e.end_at?+new Date(e.end_at):+st0)-+st0,kind=e.repeat_kind||'none';
     let k0=0;
     if(kind==='daily')k0=Math.max(0,Math.floor((w0-st0)/864e5)-1);
@@ -919,14 +996,43 @@ function calBy(f,t){
       for(let d=sod(os),i=0;d<=oe&&i<42;d.setDate(d.getDate()+1),i++)mark(new Date(d),e);
     }
   });
+  // v45 (item 7): PLAN ITEMS, rendered from plan data at display time —
+  // NO events rows are created (the pre-v45 syncPlanEvent writer is
+  // gone). A dated plan appears on every day of its span; a dated plan
+  // task appears on its due date. Both are PRIVATE: they exist only
+  // while the 私人 scope pill (visPriv) is on. The module flags are
+  // honoured when present (a plan whose 時間/任務 module is off stays
+  // off the calendar); plans without module data show their dates.
+  if(visPriv){
+    plans.forEach(p=>{
+      if(!p.start_at||(p.modules&&!p.modules.time))return;
+      const st0=sod(new Date(p.start_at)),en0=sod(new Date(p.end_at||p.start_at));
+      for(let d=new Date(st0),i=0;d<=en0&&i<370;d.setDate(d.getDate()+1),i++)mark(new Date(d),planCalEv(p));
+    });
+    tasks.forEach(x=>{
+      if(!x.plan_id||x.done||!x.due_at)return;
+      const p=planOf(x.plan_id);
+      if(!p||(p.modules&&!p.modules.tasks))return;
+      mark(new Date(x.due_at),planTaskEv(x));
+    });
+  }
   return by;
 }
+/* v45 (item 7): virtual calendar rows for plans. _pv marks them as
+   display-only; evRow renders them with data-a="pcal" (tap → the plan
+   detail), never data-a="eedit", and they are never swipe-wrapped. */
+const _noTime=s=>{const d=new Date(s);return d.getHours()===0&&d.getMinutes()===0};
+const planCalEv=p=>({_pv:1,_plan:p.id,_ptask:null,id:'pv-'+p.id,title:p.title,start_at:p.start_at,end_at:p.end_at||p.start_at,all_day:false,no_time:_noTime(p.start_at),location:p.location||'',url:'',note:'',category_id:null,scope:'private',calendar_id:null,repeat_kind:'none'});
+const planTaskEv=x=>({_pv:1,_plan:x.plan_id,_ptask:x.id,id:'pvt-'+x.id,title:x.title,start_at:x.due_at,end_at:null,all_day:false,no_time:_noTime(x.due_at),location:'',url:'',note:x.note||'',category_id:null,scope:'private',calendar_id:null,repeat_kind:'none'});
 function dayParts(by,d){
   const items=(by[dkOf(d)]||[]).slice();
   return{items,evs:items.filter(x=>x.start_at).sort((a,b)=>a.start_at<b.start_at?-1:1),tks:items.filter(x=>!x.start_at).sort(cmp)};
 }
 const evViewer=e=>!!(e.calendar_id&&myCal(e.calendar_id)&&myCal(e.calendar_id).role==='viewer');
 function evRow(e){
+  // v45 (item 7): virtual plan rows — private scope tag, plan chip, and
+  // the tap target is the PLAN (data-a="pcal"), never the event editor.
+  if(e._pv)return `<div class="task ev" style="--hc:#8FA382"><span class="bar2"></span><div class="tt" data-a="pcal" data-id="${e._plan}">${e.no_time?'':`<div class="meta evtime">${hm(e.start_at)}</div>`}<div class="evtr"><b>${esc(e.title||'')}</b><span class="evsc">🔒 ${t('privCal')}</span></div>${e.location?`<div class="meta">📍 ${esc(e.location)}</div>`:''}${e.note?`<div class="meta evnote">📝 ${esc(e.note)}</div>`:''}<div class="meta"><span class="ptag">🗂 ${t('plan')}</span></div></div></div>`;
   const c=ecats.find(x=>x.id===e.category_id),map=e.location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}`:'';
   const _ro=evViewer(e);
   const scope=e.calendar_id?(calName(e.calendar_id)?`👥 ${esc(calName(e.calendar_id))}`:`👥 ${t('shareCal')}`):(e.scope==='company'?`💼 ${t('compCal')}`:e.scope==='shared'?`👥 ${t('shareCal')}`:`🔒 ${t('privCal')}`);
@@ -1425,19 +1531,13 @@ function finBars(entries){
   const mx=Math.max(1,...ks.map(k=>Math.max(by[k].i,by[k].o)));
   return `<div class="card"><b>${t('pMonth')}</b><div class="mb-row">${ks.map(k=>`<div class="mb-col"><div class="mb-bars"><i style="height:${Math.max(2,Math.round(by[k].i/mx*80))}px;background:#43A047"></i><i style="height:${Math.max(2,Math.round(by[k].o/mx*80))}px;background:#E5484D"></i></div><span>${k}</span></div>`).join('')}</div><p class="meta"><i style="display:inline-block;width:11px;height:11px;border-radius:3px;background:#43A047;vertical-align:-1px"></i> ${t('pIn')}　<i style="display:inline-block;width:11px;height:11px;border-radius:3px;background:#E5484D;vertical-align:-1px"></i> ${t('pOut')}</p></div>`;
 }
-async function syncPlanEvent(pl){
-  const linked=events.find(e=>e.plan_id===pl.id);
-  const want=pl.modules&&pl.modules.time&&pl.start_at;
-  if(want){
-    const v={title:pl.title,start_at:pl.start_at,end_at:pl.end_at||pl.start_at,location:pl.location||null};
-    if(planV23)v.plan_id=pl.id;
-    if(linked){const{error}=await sb.from('events').update(v).eq('id',linked.id);if(!error)Object.assign(linked,v)}
-    else{const{data,error}=await sb.from('events').insert(v).select().single();if(!error&&data)events.push(data)}
-  }else if(linked){
-    const{error}=await sb.from('events').delete().eq('id',linked.id);
-    if(!error)events=events.filter(e=>e.id!==linked.id);
-  }
-}
+/* v45 (item 7): syncPlanEvent is REMOVED. It used to mirror every dated
+   plan into a real events row (plan_id-linked); from v45 the calendar
+   renders plans from plan data at display time (see calBy), so no real
+   records are created, updated or needed. Legacy linked rows are
+   filtered out of every calendar view (calBy) and still deleted with
+   their plan (delPlan). The export picker lists only real events —
+   virtual plan items never enter it, by construction. */
 async function delPlan(id){
   const linked=events.filter(e=>e.plan_id===id);
   for(const ev of linked)await sb.from('events').delete().eq('id',ev.id);
@@ -1474,6 +1574,43 @@ function planSearchHTML(types){
   const panel=pFOpen?`<div class="pfilter"><label>${t('pStatus')}</label>${sel('status',pFStatus,[['new',t('pNotStarted')],['doing',t('pDoing')],['over',t('pOver')],['done',t('pDone')]])}<label>${t('pType')}</label>${sel('type',pFType,types.map(ty=>[ty,ty]))}<label>${t('pTag')}</label>${sel('tag',pFTag,allTags.map(g=>[g,'#'+g]))}<div class="row"><button class="sec" data-a="pfclear">${t('pClearF')}</button></div></div>`:'';
   return `<div class="psearch"><input id="pq" type="text" placeholder="${t('pSearchPh')}" value="${esc(pQ)}" aria-label="${t('pSearchPh')}"><button class="sec ic${(pFStatus||pFType||pFTag)?' on':''}" data-a="pfunnel" aria-label="${t('pFilter')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16l-6 7v5l-4 2v-7z"/></svg></button></div>`+panel;
 }
+// v45 (item 5): the plan card's milestone timeline (projectpulse-style).
+// Nodes are the plan's tasks in cmpDue order (manual sort_order, then due
+// datetime): done = green filled, the first undone = the enlarged blue
+// "current" node, later = grey. A segment is solid green once the node
+// after it is done, dashed blue while it leads into the current node.
+// More than 8 tasks are sampled evenly (first / current / last always
+// kept) with an ellipsis marker, so the row can never overflow the card.
+function planTimelineHTML(p,pr){
+  const ts=planTasksOf(p.id);
+  if(!ts.length)return `<div class="pempty">${t('pNoTasks')}</div>`;
+  const cur=ts.findIndex(x=>!x.done);
+  let idx=ts.map((x,i)=>i);
+  if(ts.length>8){
+    const keep=new Set([0,ts.length-1]);
+    if(cur>=0)keep.add(cur);
+    const step=(ts.length-1)/6;
+    for(let k=0;k<7;k++)keep.add(Math.round(k*step));
+    idx=[...keep].sort((a,b)=>a-b);
+  }
+  // segment state: solid green between two done nodes; the segment
+  // leading INTO the current node is the dashed one; anything after the
+  // current node stays plain.
+  const segCls=(from,to)=>(ts[from].done&&ts[to].done)?'done':(to===cur?'cur':'');
+  let h='<div class="ptl"><div class="nodes">';
+  idx.forEach((ti,k)=>{
+    const x=ts[ti];
+    const cls=x.done?'done':(ti===cur?'cur':'');
+    const dt=x.due_at?new Date(x.due_at):null;
+    h+=`<span class="nd ${cls}"><i></i>${dt?`<span class="pdt">${dt.getMonth()+1}/${dt.getDate()}</span>`:''}</span>`;
+    if(k<idx.length-1){
+      if(idx[k+1]>ti+1)h+=`<span class="ln ${segCls(ti,idx[k+1])}"></span><span class="eln">…</span>`;
+      h+=`<span class="ln ${segCls(ti,idx[k+1])}"></span>`;
+    }
+  });
+  h+='</div></div>';
+  return h+`<div class="pprog">${pr.dn}/${pr.ts.length} ${t('pTasksDone')}</div>`;
+}
 // v42: the filtered plan list (rail type/status AND funnel AND keyword).
 function planListHTML(list0){
   const stOf=p=>{const pr=planProg(p);return pr.ts.length&&pr.dn===pr.ts.length?'done':pr.st===t('pOver')?'over':'doing'};
@@ -1486,11 +1623,11 @@ function planListHTML(list0){
   if(pFTag)list=list.filter(p=>planTagsOf(p).includes(pFTag));
   const kw=pQ.trim().toLowerCase();
   if(kw)list=list.filter(p=>((p.title||'')+' '+(p.type||'')+' '+planTagsOf(p).map(g=>'#'+g).join(' ')).toLowerCase().includes(kw));
-  const row=p=>{const pr=planProg(p);return `<div class="task"><div class="tt" data-a="pview" data-id="${p.id}"><b>${esc(p.title)}</b>
-<div class="meta rw"><span>${pPeriod(p)||''}</span><span>${pr.st}${pr.ts.length?` · ${pr.dn}/${pr.ts.length}`:''}</span></div>
+  const row=p=>{const pr=planProg(p);return `<div class="task pcard"><span class="pst ${st4(p)}">${pr.st}</span><div class="tt" data-a="pview" data-id="${p.id}"><b>${esc(p.title)}</b>
+<div class="meta rw"><span>${pPeriod(p)||''}</span></div>
 ${p.type||p.tag?`<div class="meta">${p.type?`<span class="tag" style="background:var(--ln)">${esc(p.type)}</span>`:''}${planTagsOf(p).map(g=>`<span class="tag" style="background:var(--ln)">#${esc(g)}</span>`).join('')}</div>`:''}
 ${p.people!=null?`<div class="meta">👥 ${p.people}</div>`:''}
-${pr.ts.length?`<div class="pbar"><i style="width:${pr.pct}%"></i></div>`:''}</div></div>`};
+${planTimelineHTML(p,pr)}</div></div>`};
   return list.length?`<div class="card">${list.map(row).join('')}</div>`:`<div class="card"><p class="meta">${t('planEmpty')}</p></div>`;
 }
 // v42: create a new plan type from the rail's ＋ tab (same dialog pattern as
@@ -1504,6 +1641,14 @@ function openPlanType(){
   if(!dlg.open)dlg.showModal();
   const inp=$('pt-n');inp.focus();
 }
+// v45 (item 3): a plan-detail task row — under the title, ONE grey detail
+// line (.pdet) joins the fields that exist (due date/time via fmtDue, so
+// 00:00 stays date-only, and the memo/note). Nothing present → no line,
+// no placeholder space.
+function planTaskRow(x){
+  const det=[x.due_at?fmtDue(x.due_at):'',x.note?esc(x.note):''].filter(Boolean).join(' · ');
+  return `<div class="task"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="ptask" data-id="${x.id}"${x.done?' checked':''}><div class="tt"><b>${esc(x.title)}</b>${det?`<div class="pdet">${det}</div>`:''}</div></div>`;
+}
 function planDetailHTML(p){
   const M=p.modules||{},pr=planProg(p),ts=tasks.filter(x=>x.plan_id===p.id&&!x.parent_id).sort(cmp);
   const fes=finOf(p.id),curs=[...new Set(fes.map(f=>f.currency||'JPY'))];
@@ -1513,7 +1658,7 @@ function planDetailHTML(p){
     M.people&&p.people!=null?`<div class="meta">👥 ${p.people}</div>`:''].join('');
   return drawer()+`<div class="hd"><span><button class="sec ic" data-a="pback" aria-label="‹">‹</button> <button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button></span><span class="meta">${pr.st}${pr.ts.length?` · ${pr.dn}/${pr.ts.length} · ${pr.pct}%`:''}</span></div>
 <div class="card"><b style="font-size:19px">${esc(p.title)}</b>${info}${pr.ts.length?`<div class="pbar"><i style="width:${pr.pct}%"></i></div>`:''}</div>
-${M.tasks?`<div class="card"><b>${t('pTasks')}</b>${ts.length?ts.map(x=>`<div class="task"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="ptask" data-id="${x.id}"${x.done?' checked':''}><div class="tt"><b>${esc(x.title)}</b>${x.due_at?`<div class="meta">${fmt(x.due_at)}</div>`:''}</div></div>`).join(''):`<p class="meta">—</p>`}</div>`:''}
+${M.tasks?`<div class="card"><b>${t('pTasks')}</b>${ts.length?ts.map(planTaskRow).join(''):`<p class="meta">—</p>`}</div>`:''}
 ${M.funds?`<div class="card"><b>${t('pFunds')}</b>${fes.length?fes.map(f=>`<div class="task"><span class="tag" style="background:${f.kind==='in'?'#E3F2E6':'#FDE8E8'}">${f.kind==='in'?t('pIn'):t('pOut')}</span><div class="tt"><b>${esc(f.content||'')}</b><div class="meta">${esc(f.entry_date||'')}</div></div><b>${(+f.amount||0).toLocaleString()} ${esc(f.currency||'JPY')}</b></div>`).join(''):`<p class="meta">—</p>`}</div>${curs.map(c=>finPie(fes.filter(f=>(f.currency||'JPY')===c).map(f=>({...f,_k:f.content||'—'})),t('pOut')+' · '+c,'out')).join('')}`:''}
 <div class="card"><div class="row"><button class="sec" data-a="pedit" data-id="${p.id}">✎ ${t('edit')}</button><button class="sec" data-a="pdel" data-id="${p.id}">${t('del')}</button></div></div>`;
 }
@@ -1598,7 +1743,8 @@ ${allTags.length?`<div class="dchips" id="p-tagpick" aria-label="${t('pPickTag')
       for(const f of pFin){const r=await sb.from('plan_finance').insert({plan_id:pid,kind:f.kind,content:f.content,currency:f.currency,amount:f.amount,entry_date:f.entry_date}).select().single();if(!r.error&&r.data)pfin.push(r.data)}
     }
     const pl=plans.find(q=>q.id===pid);
-    if(pl)await syncPlanEvent(pl);
+    // v45 (item 7): no syncPlanEvent call — plans reach the calendar
+    // through the display layer only; saving a plan writes NO events.
     dlg.close();planView=pid;render();
   };
   if($('p-del'))$('p-del').onclick=async()=>{if(!confirm(t('confirmDel')))return;await delPlan(id);dlg.close();planView=null;render()};
@@ -1699,7 +1845,7 @@ async function shareDayList(){
   if(!dlg.open)dlg.showModal();
 }
 function shopHTML(){
-  if(!shopV25)return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('listsPage')}</span><span></span></div><div class="card"><p class="meta">${t('shopSql')}</p></div>`;
+  if(!shopV25)return `<div class="calhd habhd"><span></span><span class="habttl">${t('listsPage')}</span><span></span></div><div class="card"><p class="meta">${t('shopSql')}</p></div>`;
   const td=ymd(new Date()),vd=shopDate||td;
   if(shopList&&!slists.some(c=>c.id===shopList))shopList=null;
   if(!shopList&&slists.length)shopList=slists[0].id;
@@ -1743,7 +1889,20 @@ function shopHTML(){
     +daySel
     +(dIts.length?`<div class="meta">${dn}/${dIts.length}</div>`+dIts.map(i=>swpWrap('ditem',i.id,`<div class="task srow${i.done?' done':''}"><input type="checkbox" class="pc" style="--pc:#8A96A0" data-a="dtog" data-id="${i.id}"${i.done?' checked':''} aria-label="${t('chk')}"><div class="tt" data-a="dtog" data-id="${i.id}"><b>${esc(i.title)}</b>${memoLine('dmemo',i.id,i.note)}</div></div>`)).join(''):`<p class="meta">${vd===td?t('dayEmpty'):t('dayNone')}</p>`)
     +`</div>`;
-  const seg=`<div class="shopseg" role="tablist"><button class="shopsegbtn${shopTab==='master'?' on':''}" data-a="shoptab" data-v="master" role="tab" aria-selected="${shopTab==='master'}">${t('master')}</button><button class="shopsegbtn${shopTab==='day'?' on':''}" data-a="shoptab" data-v="day" role="tab" aria-selected="${shopTab==='day'}">${t('todayList')}</button></div>`;
+  // v45 (item 4): the THIRD tab — 已買. The purchase history that lived in
+  // the side drawer moves here wholesale: same rows (title over a grey
+  // date line, item count), same actions (tap = the read-only content
+  // sheet, ✎ rename, 📌 pin), same ordering (pinned first, then newest
+  // date first, cap 30). The shopping page's ☰ drawer entry is GONE —
+  // the drawer held nothing else.
+  const histRows=[...dlists].sort((a,b)=>((b.pinned?1:0)-(a.pinned?1:0))||(a.list_date<b.list_date?1:a.list_date>b.list_date?-1:0)||String(b.created_at||'').localeCompare(String(a.created_at||''))).slice(0,30);
+  const hrow=d=>{const cnt=ditems.filter(i=>i.day_list_id===d.id).length;
+    return `<div class="hrow"><button class="di" data-a="dgo2" data-id="${d.id}"><span class="ic2">${lic('cal')}</span><span class="nm hnm"><span class="ht1">${esc(dayName(d))}</span><span class="ht2">${fmtDayS(d.list_date)}</span></span><i>${cnt||''}</i></button>`
+    +(dayPinV28?`<button class="sec ic pinb${d.pinned?' on':''}" data-a="dpin" data-id="${d.id}" aria-pressed="${d.pinned?'true':'false'}" aria-label="Pin">${lic('pin',16)}</button>`:'')
+    +(dayNameV27?`<button class="sec ic" data-a="dren" data-id="${d.id}" aria-label="${t('edit')}">✎</button>`:'')
+    +`</div>`};
+  const hist=`<div class="shopflat">`+(histRows.length?histRows.map(hrow).join(''):`<p class="meta">${t('histNone')}</p>`)+`</div>`;
+  const seg=`<div class="shopseg" role="tablist"><button class="shopsegbtn${shopTab==='master'?' on':''}" data-a="shoptab" data-v="master" role="tab" aria-selected="${shopTab==='master'}">${t('master')}</button><button class="shopsegbtn${shopTab==='day'?' on':''}" data-a="shoptab" data-v="day" role="tab" aria-selected="${shopTab==='day'}">${t('todayList')}</button><button class="shopsegbtn${shopTab==='hist'?' on':''}" data-a="shoptab" data-v="hist" role="tab" aria-selected="${shopTab==='hist'}">${t('history')}</button></div>`;
   // v41: header adopts the .calhd single row — drawer button left, centred
   // title, and (item 11, superseding item 10's empty slot) two compact icon
   // buttons on the right, moved up from the columns: ＋ = the master list's
@@ -1753,7 +1912,10 @@ function shopHTML(){
   // (data-a="dladd", new day list) stays where it was (in the day tab, v44).
   // v44: below the header sit the segmented tabs; only the active tab's
   // flat list renders.
-  return drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('listsPage')}</span><span class="habbtns"><button class="sec ic" data-a="sladd" aria-label="${t('newList')}">＋</button><button class="sec ic" data-a="dshare" aria-label="${t('shareBtn')}">${lic('share',20)}</button></span></div><div class="shop">${seg}${shopTab==='day'?day:master}</div>`;
+  // v45: the header's left slot is now an empty spacer (no ☰ — the
+  // history drawer is the third tab now); the right slot keeps the two
+  // icon buttons (＋ new master list, share).
+  return `<div class="calhd habhd"><span></span><span class="habttl">${t('listsPage')}</span><span class="habbtns"><button class="sec ic" data-a="sladd" aria-label="${t('newList')}">＋</button><button class="sec ic" data-a="dshare" aria-label="${t('shareBtn')}">${lic('share',20)}</button></span></div><div class="shop">${seg}${shopTab==='day'?day:shopTab==='hist'?hist:master}</div>`;
 }
 // v27: today's shopping lists as a section on the To Do page — a second VIEW of
 // the same dlists/ditems arrays, never a copy into tasks. Ticking a box here
@@ -1881,7 +2043,7 @@ function appView(){
   // button left, centred i18n title, the 單版/雙版 switch in the right slot.
   // The old two-row header (big list-name title + .hd row) is gone; the
   // current list stays identifiable by the drawer's selected row.
-  else body=drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('todoTitle')}</span><span class="habbtns"><span class="seg"><button class="segbtn${dual?'':' on'}" data-a="dmode" data-v="1" aria-label="${t('sv')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="2"/></svg></button><button class="segbtn${dual?' on':''}" data-a="dmode" data-v="2" aria-label="${t('dv')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="2"/><rect x="13" y="4" width="8" height="16" rx="2"/></svg></button></span></span></div>`+listHTML()+todoShopHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">${lic('stopw',22)}</button>`;
+  else body=drawer()+`<div class="calhd habhd"><button class="sec ic" data-a="dr" aria-label="${t('menu')}">☰</button><span class="habttl">${t('todoTitle')}</span><span class="habbtns"><span class="dmwrap"><button class="sec ic${dual?'':' on'}" data-a="dmode" data-v="1" aria-label="${t('sv')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="2"/></svg></button><button class="sec ic${dual?' on':''}" data-a="dmode" data-v="2" aria-label="${t('dv')}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="2"/><rect x="13" y="4" width="8" height="16" rx="2"/></svg></button></span></span></div>`+listHTML()+todoShopHTML()+(view==='done'?'':`<button class="fab" data-a="add" aria-label="${t('addTask')}">＋</button>`)+`<button class="fab2" data-a="focus" aria-label="${t('focus')}">${lic('stopw',22)}</button>`;
   const _pt=pageTitle();$('app').innerHTML=(_pt?`<div class="appt">${_pt}</div>`:'')+(OFFLINE?`<div class="offbar">${lic('wifioff',13)} ${t('offMsg')}</div>`:'')+body+tabbar();requestAnimationFrame(()=>{fitMM();bindDrag()})+(toastMsg?`<div class="toast">${esc(toastMsg)}</div>`:'');
   if(session&&Date.now()-_cacheAt>1500){_cacheAt=Date.now();cacheData()}
   if(tab==='set')bind();
@@ -2403,6 +2565,7 @@ $('app').addEventListener('click',async e=>{
   else if(a==='focus')openFocus()
   else if(a==='nplan')openPlan()
   else if(a==='pview'){planView=id;tab='plan';dr=false;render()}
+  else if(a==='pcal'){planView=id;tab='plan';dr=false;render()}
   else if(a==='pback'){planView=null;render()}
   else if(a==='pedit')openPlan(id)
   else if(a==='pdel'){if(confirm(t('confirmDel'))){await delPlan(id);planView=null;render()}}
@@ -2781,5 +2944,4 @@ sb.auth.onAuthStateChange((_e,s)=>{session=s;try{if(s)localStorage.mdsess=JSON.s
 setTimeout(()=>{if(!rendered)render()},2500);
 sb.auth.getSession().then(({data})=>{if(!data.session){session=null;render()}});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
-</script><script src="responsive.js"></script>
-</body></html>
+</script></body></html>
